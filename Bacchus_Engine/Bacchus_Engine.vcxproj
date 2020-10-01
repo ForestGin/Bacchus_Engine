@@ -83,7 +83,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
-    <ClInclude Include="EngineUI.h" />
+    <ClInclude Include="BacchusInterface.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="imgui\examples\imgui_impl_opengl3.h" />
@@ -109,7 +109,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="EngineUI.cpp" />
+    <ClCompile Include="BacchusInterface.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_sdl.cpp" />

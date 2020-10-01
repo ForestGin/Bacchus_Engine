@@ -7,7 +7,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleCamera3D.h"
-#include "EngineUI.h"
+#include "BacchusInterface.h"
 
 #include <list>
 
@@ -18,7 +18,7 @@ public:
 	ModuleInput* input;
 	ModuleRenderer3D* renderer3D;
 	ModuleSceneIntro* scene_intro;
-	EngineUI* engine_ui;
+	BacchusInterface* bacchusinterface;
 	ModuleCamera3D* camera;
 
 private:
