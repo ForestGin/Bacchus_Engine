@@ -33,6 +33,8 @@ bool BacchusInterface::Start()
 	ImGui_ImplOpenGL3_Init();
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 
+	
+
 	return ret;
 }
 
@@ -60,8 +62,8 @@ update_status BacchusInterface::PreUpdate(float dt)
 // Update
 update_status BacchusInterface::Update(float dt)
 {
-	bool show_demo_wndow = true;
-	ImGui::ShowDemoWindow(&show_demo_wndow);
+	//bool show_demo_window = false;
+	//ImGui::ShowDemoWindow(&show_demo_window);
 
 	//ImGuiIO& io = ImGui::GetIO();
 
@@ -71,10 +73,17 @@ update_status BacchusInterface::Update(float dt)
 		{
 			if (ImGui::MenuItem("Exit"))
 				return update_status::UPDATE_STOP;
+			if (ImGui::MenuItem("Demo"))
+				show_demo_window = true;
 
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
+	}
+
+	if (show_demo_window == true)
+	{
+		ImGui::ShowDemoWindow(&show_demo_window);
 	}
 
 	return UPDATE_CONTINUE;
