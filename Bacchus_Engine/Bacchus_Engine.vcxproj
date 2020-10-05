@@ -14,7 +14,7 @@
     <ProjectGuid>{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}</ProjectGuid>
     <RootNamespace>SDLGame</RootNamespace>
     <ProjectName>Bacchus_Engine</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\Game</OutDir>
-    <IncludePath>F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\imgui;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glew\include;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Game</OutDir>
