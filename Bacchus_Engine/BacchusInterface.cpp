@@ -92,9 +92,34 @@ update_status BacchusInterface::Update(float dt)
 
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu("Configuration"))
+		{
+			if (ImGui::MenuItem("Open"))
+				config_window = true;
+			if (ImGui::MenuItem("Close"))
+				config_window = false;
+
+			ImGui::EndMenu();
+		}
+
 		ImGui::EndMainMenuBar();
 	}
 
+	//CONFIG WINDOW LOGIC
+	if (config_window == true)
+	{
+		ImGui::Begin("Configuration", &config_window, ImGuiWindowFlags_MenuBar);
+		if (ImGui::BeginMenuBar())
+		{
+
+			ImGui::EndMenuBar();
+		}
+
+		ImGui::End();
+	}
+	
+	//DEMO WINDOW LOGIC
 	if (show_demo_window == true)
 	{
 		ImGui::ShowDemoWindow(&show_demo_window);
