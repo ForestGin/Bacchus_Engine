@@ -88,7 +88,7 @@ update_status BacchusInterface::Update(float dt)
 			if (ImGui::MenuItem("Report a bug"))
 				App->RequestBrowser("https://github.com/ForestGin/Bacchus_Engine/issues");
 			if (ImGui::MenuItem("About"))
-				App->RequestBrowser("https://github.com/ForestGin/Bacchus_Engine");
+				about_window = true;
 
 			ImGui::EndMenu();
 		}
@@ -110,10 +110,18 @@ update_status BacchusInterface::Update(float dt)
 	if (config_window == true)
 	{
 		ImGui::Begin("Configuration", &config_window, ImGuiWindowFlags_MenuBar);
-		if (ImGui::BeginMenuBar())
+		
+		if (ImGui::CollapsingHeader("Application"))
+		{
+	
+		}
+		if (ImGui::CollapsingHeader("Window"))
 		{
 
-			ImGui::EndMenuBar();
+		}
+		if (ImGui::CollapsingHeader("Hardware"))
+		{
+
 		}
 
 		ImGui::End();
@@ -124,6 +132,41 @@ update_status BacchusInterface::Update(float dt)
 	{
 		ImGui::ShowDemoWindow(&show_demo_window);
 	}
+
+	//ABOUT MODAL WINDOW
+	if (about_window == true)
+	{
+		ImGui::Begin("About Bacchus Engine");
+
+		ImGui::Text("Bacchus Engine v0.0\n");
+		ImGui::Text("An engine made for and by borreichs\n\n");
+		ImGui::Text("By Pol Bosch & Oscar Larios\n\n");
+		ImGui::Text("3rd Party Libraries used: \n");
+		ImGui::BulletText("SDL v2.0.12");
+		ImGui::BulletText("Glew v2.0.0");
+		ImGui::BulletText("ImGui v1.78");
+		ImGui::BulletText("MathGeoLib v1.5\n\n");
+
+		ImGui::Text("License\n\n");
+		ImGui::Text("MIT License\n\n");
+		ImGui::Text("Copyright(c) 2020 Pol Bosch & Oscar Larios\n\n");
+		ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the 'Software'), to deal\n");
+		ImGui::Text("in the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and /or sell\n");
+		ImGui::Text("copies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions : \n");
+		ImGui::Text("\n");
+		ImGui::Text("The above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n");
+		ImGui::Text("\n");
+		ImGui::Text("THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, \n");
+		ImGui::Text("FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n");
+		ImGui::Text("LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n");
+		ImGui::Text("SOFTWARE.\n");
+
+
+		ImGui::End();
+	}
+
+
+
 
 	
 
