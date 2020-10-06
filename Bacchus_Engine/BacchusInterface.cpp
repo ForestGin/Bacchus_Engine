@@ -78,6 +78,20 @@ update_status BacchusInterface::Update(float dt)
 
 			ImGui::EndMenu();
 		}
+		
+		if (ImGui::BeginMenu("Help"))
+		{
+			if (ImGui::MenuItem("Documentation"))
+				App->RequestBrowser("https://github.com/ForestGin/Bacchus_Engine");
+			if (ImGui::MenuItem("Download latest"))
+				App->RequestBrowser("https://github.com/ForestGin/Bacchus_Engine/releases");
+			if (ImGui::MenuItem("Report a bug"))
+				App->RequestBrowser("https://github.com/ForestGin/Bacchus_Engine/issues");
+			if (ImGui::MenuItem("About"))
+				App->RequestBrowser("https://github.com/ForestGin/Bacchus_Engine");
+
+			ImGui::EndMenu();
+		}
 		ImGui::EndMainMenuBar();
 	}
 
