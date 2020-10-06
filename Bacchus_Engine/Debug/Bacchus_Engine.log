@@ -1,19 +1,14 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  imgui_impl_opengl3.cpp
-  imgui_impl_sdl.cpp
-  imgui.cpp
-  pugixml.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\ostream(535,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\ostream(528): message : while compiling class template member function 'std::basic_ostream<wchar_t,std::char_traits<wchar_t>> &std::basic_ostream<wchar_t,std::char_traits<wchar_t>>::write(const _Elem *,std::streamsize)'
-          with
-          [
-              _Elem=wchar_t
-          ]
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\PugiXml\src\pugixml.cpp(4401): message : see reference to function template instantiation 'std::basic_ostream<wchar_t,std::char_traits<wchar_t>> &std::basic_ostream<wchar_t,std::char_traits<wchar_t>>::write(const _Elem *,std::streamsize)' being compiled
-          with
-          [
-              _Elem=wchar_t
-          ]
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\PugiXml\src\pugixml.cpp(4385): message : see reference to class template instantiation 'std::basic_ostream<wchar_t,std::char_traits<wchar_t>>' being compiled
-  Generating Code...
-  Bacchus_Engine.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  Primitive.cpp
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(194,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(195,52): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(195,35): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(204,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(205,53): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(205,36): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(213,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(215,52): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(215,35): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(216,52): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(216,35): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
