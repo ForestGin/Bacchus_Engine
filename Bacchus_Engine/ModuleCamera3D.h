@@ -1,10 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-//#include "glmath.h"
-
-#include "MathGeoLib/include/Math/float3.h"
-#include "MathGeoLib/include/Math/float4x4.h"
+#include "glmath.h"
 
 class ModuleCamera3D : public Module
 {
@@ -16,9 +13,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void Look(const math::float3& Position, const math::float3& Reference, bool RotateAroundReference = false);
-	void LookAt(const math::float3& Spot);
-	void Move(const math::float3& Movement);
+	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
+	void LookAt(const vec3 &Spot);
+	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
 
 private:
@@ -27,9 +24,9 @@ private:
 
 public:
 	
-	math::float3 X, Y, Z, Position, Reference;
+	vec3 X, Y, Z, Position, Reference;
 
 private:
 
-	math::float4x4 ViewMatrix, ViewMatrixInverse;
+	mat4x4 ViewMatrix, ViewMatrixInverse;
 };
