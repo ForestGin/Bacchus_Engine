@@ -88,7 +88,7 @@ update_status BacchusInterface::Update(float dt)
 			if (ImGui::MenuItem("Report a bug"))
 				App->RequestBrowser("https://github.com/ForestGin/Bacchus_Engine/issues");
 			if (ImGui::MenuItem("About"))
-				about_window = true;
+				about_window = !about_window;
 
 			ImGui::EndMenu();
 		}
@@ -113,15 +113,15 @@ update_status BacchusInterface::Update(float dt)
 		
 		if (ImGui::CollapsingHeader("Application"))
 		{
-	
+			fps_window = true;
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{
-
+			window_window = true;
 		}
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
-
+			Hardware();
 		}
 
 		ImGui::End();
@@ -164,10 +164,6 @@ update_status BacchusInterface::Update(float dt)
 
 		ImGui::End();
 	}
-
-
-
-
 	
 
 	return UPDATE_CONTINUE;
@@ -187,4 +183,77 @@ update_status BacchusInterface::PostUpdate(float dt)
 
 
 	return UPDATE_CONTINUE;
+}
+
+void BacchusInterface::Hardware()
+{
+	ImGui::Text("SDL Version: ");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "2.0.12");
+	ImGui::Text("CPUs: ");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d (Cache: %ikb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+	ImGui::Text("System RAM: ");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%iGb", SDL_GetSystemRAM() / 1000);
+	ImGui::Text("Caps: ");
+	ImGui::SameLine();
+
+	if (SDL_Has3DNow() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "3DNow, ");
+	}
+	ImGui::SameLine();
+	if (SDL_HasAVX() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX, ");
+	}
+	ImGui::SameLine();
+	if (SDL_HasAVX2() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX2, ");
+	}
+	ImGui::SameLine();
+	if (SDL_HasAltiVec() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "AltiVec, ");
+	}
+	ImGui::SameLine();
+	if (SDL_HasMMX() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "MMX, ");
+	}
+
+	if (SDL_HasRDTSC() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "RDTSC, ");
+	}
+	ImGui::SameLine();
+	if (SDL_HasSSE() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE, ");
+	}
+	ImGui::SameLine();
+	if (SDL_HasSSE2() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE2, ");
+	}
+	ImGui::SameLine();
+	if (SDL_HasSSE3() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE3, ");
+	}
+	ImGui::SameLine();
+	if (SDL_HasSSE41() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE41, ");
+	}
+	ImGui::SameLine();
+	if (SDL_HasSSE42() == true) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE42, ");
+	}
+	ImGui::Text("GPU: ");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", glGetString(GL_RENDERER));
+	ImGui::Text("Brand: ");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", glGetString(GL_VENDOR));
+	/*ImGui::Text("VRAM Budget: ");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", glGetString(GL_GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX));*/
+	ImGui::Text("VRAM Usage: ");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d Mb", glGetString(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX));
+	
+	  
 }

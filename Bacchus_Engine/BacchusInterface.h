@@ -23,4 +23,7 @@ private:
 	bool show_demo_window = false;
 	bool config_window = false;
 	bool about_window = false;
+	bool fps_window = false;
+	bool window_window = false;
+	void Hardware();
 };
