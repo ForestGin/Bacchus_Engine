@@ -3,7 +3,7 @@
 #include "BacchusInterface.h"
 
 #include "imgui/imgui_internal.h"
-#include <gl/GL.h>
+#include <gl/GLU.h>
 
 BacchusInterface::BacchusInterface(Application* app, bool start_enabled) : Module(app, start_enabled) {}
 
