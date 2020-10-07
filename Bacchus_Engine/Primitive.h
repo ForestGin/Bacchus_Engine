@@ -1,7 +1,10 @@
 
 #pragma once
-#include "glmath.h"
+
 #include "Color.h"
+
+#include "MathGeoLib/include/Math/float3.h"
+#include "MathGeoLib/include/Math/float4x4.h"
 
 enum PrimitiveTypes
 {
@@ -22,14 +25,14 @@ public:
 	virtual void	Render() const;
 	virtual void	InnerRender() const;
 	void			SetPos(float x, float y, float z);
-	void			SetRotation(float angle, const vec3 &u);
+	void			SetRotation(float angle, const math::float3& u);
 	void			Scale(float x, float y, float z);
 	PrimitiveTypes	GetType() const;
 
 public:
 	
 	Color color;
-	mat4x4 transform;
+	math::float4x4 transform;
 	bool axis,wire;
 
 protected:
@@ -37,33 +40,33 @@ protected:
 };
 
 // ============================================
-class Cube : public Primitive
+class PrimiCube : public Primitive
 {
 public :
-	Cube();
-	Cube(float sizeX, float sizeY, float sizeZ);
+	PrimiCube();
+	PrimiCube(float sizeX, float sizeY, float sizeZ);
 	void InnerRender() const;
 	void Size(float x, float y, float z);
 public:
-	vec3 size;
+	math::float3 size;
 };
 
 // ============================================
-class Sphere : public Primitive
+class PrimiSphere : public Primitive
 {
 public:
-	Sphere();
-	Sphere(float radius);
+	PrimiSphere();
+	PrimiSphere(float radius);
 public:
 	float radius;
 };
 
 // ============================================
-class Cylinder : public Primitive
+class PrimiCylinder : public Primitive
 {
 public:
-	Cylinder();
-	Cylinder(float radius, float height);
+	PrimiCylinder();
+	PrimiCylinder(float radius, float height);
 	void InnerRender() const;
 public:
 	float radius;
@@ -71,15 +74,15 @@ public:
 };
 
 // ============================================
-class Line : public Primitive
+class PrimiLine : public Primitive
 {
 public:
-	Line();
-	Line(float x, float y, float z);
+	PrimiLine();
+	PrimiLine(float x, float y, float z);
 	void InnerRender() const;
 public:
-	vec3 origin;
-	vec3 destination;
+	math::float3 origin;
+	math::float3 destination;
 };
 
 // ============================================
@@ -90,6 +93,6 @@ public:
 	PrimiPlane(float x, float y, float z, float d);
 	void InnerRender() const;
 public:
-	vec3 normal;
+	math::float3 normal;
 	float constant;
 };
