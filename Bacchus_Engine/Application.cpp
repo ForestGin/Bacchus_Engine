@@ -26,6 +26,10 @@ Application::Application()
 	
 	// Renderer last!
 	AddModule(renderer3D);
+
+	fps = 0.0f;
+	cap = 60;
+	capped_ms = -1;
 }
 
 Application::~Application()
@@ -73,13 +77,33 @@ bool Application::Init()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	dt = (float)ms_timer.Read() / 1000.0f;
-	ms_timer.Start();
+	dt = (float)frame_time.Read();
+	frame_time.Start();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	if (cap > 0)
+	{
+		capped_ms = 1000 / cap;
+	}
+
+	// Framerate calculations --
+	if (last_sec_frame_time.Read() > 1000)
+	{
+		last_sec_frame_time.Start();
+		fps = last_sec_frame_count;
+		last_sec_frame_count = 0;
+	}
+
+	Uint32 last_frame_ms = frame_time.Read();
+
+	if (capped_ms > 0 && last_frame_ms < capped_ms)
+	{
+		PerfTimer t;
+		SDL_Delay(capped_ms - last_frame_ms);
+	}
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -138,3 +162,4 @@ void Application::RequestBrowser(const char* url) const
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
+

@@ -23,8 +23,8 @@ private:
 	bool show_demo_window = false;
 	bool config_window = false;
 	bool about_window = false;
-	bool fps_window = false;
 
 	void  WindowConfig();
 	void Hardware();
+	void FPSGraph();
 };

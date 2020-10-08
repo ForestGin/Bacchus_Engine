@@ -113,7 +113,7 @@ update_status BacchusInterface::Update(float dt)
 		
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			fps_window = true;
+			FPSGraph();
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{
@@ -287,4 +287,29 @@ void BacchusInterface::WindowConfig()
 		if (App->window->fulldesktop) SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		else { SDL_SetWindowFullscreen(App->window->window, App->window->flags); }
 	}
+}
+
+void BacchusInterface::FPSGraph()
+{
+	ImGui::InputText("App Name", TITLE, 20);
+	ImGui::InputText("Organitzation", ORGANIZATION, 20);
+
+	if (App->fps_log.size() != 30)
+	{
+		App->fps_log.push_back(App->fps);
+		App->ms_log.push_back(App->dt * 1000);
+	}
+	else
+	{
+		App->fps_log.erase(App->fps_log.begin());
+		App->fps_log.push_back(App->fps);
+		App->ms_log.erase(App->ms_log.begin());
+		App->ms_log.push_back(App->dt * 1000);
+	}
+
+	char title[25];
+	sprintf_s(title, 25, "Framerate %.1f", App->fps_log[App->fps_log.size() - 1]);
+	ImGui::PlotHistogram("##framerate", &App->fps_log[0], App->fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+	sprintf_s(title, 25, "Milliseconds %.1f", App->ms_log[App->ms_log.size() - 1]);
+	ImGui::PlotHistogram("##framerate", &App->ms_log[0], App->ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 }

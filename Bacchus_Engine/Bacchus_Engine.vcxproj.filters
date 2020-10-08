@@ -33,6 +33,7 @@
     <ClCompile Include="imgui\imgui_widgets.cpp">
       <Filter>External Libs\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="PerfTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -73,6 +74,8 @@
     <ClInclude Include="imgui\imstb_truetype.h">
       <Filter>External Libs\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="PerfTimer.h" />
+    <ClInclude Include="p2Defs.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">

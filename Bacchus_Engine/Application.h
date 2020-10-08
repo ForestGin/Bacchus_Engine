@@ -1,6 +1,7 @@
 #pragma once
 #include "Globals.h"
 #include "Timer.h"
+#include "PerfTimer.h"
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
@@ -21,10 +22,20 @@ public:
 	BacchusInterface* bacchusinterface;
 	ModuleCamera3D* camera;
 
+	std::vector<float> fps_log;
+	std::vector<float> ms_log;
+	float	dt;
+	float fps;
+	int cap;
+	int	 capped_ms;
+	Timer last_sec_frame_time;
+	Uint32 last_sec_frame_count = 0;
+	Timer frame_time;
+	PerfTimer ptimer;
+
 private:
 
 	Timer	ms_timer;
-	float	dt;
 	std::list<Module*> list_modules;
 
 public:
