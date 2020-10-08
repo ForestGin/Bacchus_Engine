@@ -117,7 +117,7 @@ update_status BacchusInterface::Update(float dt)
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{
-			window_window = true;
+			WindowConfig();
 		}
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
@@ -248,12 +248,43 @@ void BacchusInterface::Hardware()
 	ImGui::Text("Brand: ");
 	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", glGetString(GL_VENDOR));
-	/*ImGui::Text("VRAM Budget: ");
-	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", glGetString(GL_GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX));*/
 	ImGui::Text("VRAM Usage: ");
 	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d Mb", glGetString(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX));
 	
 	  
+}
+
+void BacchusInterface::WindowConfig()
+{
+
+	if (ImGui::SliderFloat("Brightness", &App->window->brightness, 0.0f, 1.0f)) {
+		SDL_SetWindowBrightness(App->window->window, App->window->brightness);
+		SDL_UpdateWindowSurface(App->window->window);
+	};
+
+	if (ImGui::SliderInt("Width", &App->window->width, 0, 1920) || ImGui::SliderInt("Height", &App->window->height, 0, 1080)) {
+		SDL_SetWindowSize(App->window->window, App->window->width, App->window->height);
+		SDL_UpdateWindowSurface(App->window->window);
+	};
+
+	if (ImGui::Checkbox("FullScreen", &App->window->fullscreen)) {
+		if (App->window->fullscreen) SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN);
+		else { SDL_SetWindowFullscreen(App->window->window, App->window->flags); }
+	}
+	ImGui::SameLine();
+	if (ImGui::Checkbox("Resizable", &App->window->resizable)) {
+		if (App->window->resizable)SDL_SetWindowResizable(App->window->window, SDL_TRUE);
+		else { SDL_SetWindowResizable(App->window->window, SDL_FALSE); }
+	}
+
+	if (ImGui::Checkbox("Borderless", &App->window->borderless)) {
+		if (App->window->borderless) SDL_SetWindowBordered(App->window->window, SDL_FALSE);
+		else { SDL_SetWindowBordered(App->window->window, SDL_TRUE); }
+	}
+	ImGui::SameLine();
+	if (ImGui::Checkbox("Full Desktop", &App->window->fulldesktop)) {
+		if (App->window->fulldesktop) SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		else { SDL_SetWindowFullscreen(App->window->window, App->window->flags); }
+	}
 }

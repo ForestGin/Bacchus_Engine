@@ -21,11 +21,22 @@ public:
 	void SetTitle(const char* title);
 
 public:
+
+	float brightness = 1.0;
+	bool resizable = false;
+	bool fullscreen = false;
+	bool borderless = false;
+	bool fulldesktop = false;
+	int width;
+	int height;
+	Uint32 flags;
 	//The window we'll be rendering to
 	SDL_Window* window;
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
+
+
 };
 
 #endif // __ModuleWindow_H__
