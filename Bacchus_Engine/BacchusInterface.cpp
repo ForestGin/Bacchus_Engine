@@ -180,7 +180,8 @@ update_status BacchusInterface::Update(float dt)
 	if (console_window == true)
 	{
 		ImGui::Begin("Console");
-		ImGui::Text(console_text.begin());
+		ImGui::TextUnformatted(console_text.begin());
+		ImGui::SetScrollHere(1.0f);
 		ImGui::End();
 	}
 
@@ -337,7 +338,7 @@ void BacchusInterface::FPSGraph()
 
 }
 
-void BacchusInterface::ConsoleText(std::string console_Text) 
+void BacchusInterface::ConsoleText(std::string console_Text)
 {
 	console_text.appendf(console_Text.c_str());
 }

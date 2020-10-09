@@ -42,6 +42,9 @@ private:
 	Timer	ms_timer;
 	std::list<Module*> list_modules;
 
+	JSON_Value* config_file;
+	const char* config_path;
+
 public:
 
 	Timer T;

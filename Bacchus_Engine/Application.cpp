@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "JSON/parson.h"
 
 Application::Application()
 {
@@ -30,6 +31,8 @@ Application::Application()
 	fps = 0.0f;
 	cap = 60;
 	capped_ms = -1;
+
+	config_path = "../Game/Config/Settings.JSON";
 }
 
 Application::~Application()

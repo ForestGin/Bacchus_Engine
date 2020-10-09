@@ -4,6 +4,7 @@
 #include "imgui/imgui.h"
 #include "imgui/examples/imgui_impl_sdl.h"
 #include "imgui/examples/imgui_impl_opengl3.h"
+#include "JSON/parson.h"
 #include <string>
 
 class Application;
@@ -53,6 +54,11 @@ public:
 		return true; 
 	}
 
-	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-	{}
+	virtual bool Load(JSON_Object* object) {
+		return true;
+	}
+
+	virtual bool Save(JSON_Object* object) {
+		return true;
+	}
 };
