@@ -131,6 +131,10 @@ update_status BacchusInterface::Update(float dt)
 		{
 			Hardware();
 		}
+		if (ImGui::CollapsingHeader("Mouse"))
+		{
+			App->input->MousePos();
+		}
 
 		ImGui::End();
 	}
