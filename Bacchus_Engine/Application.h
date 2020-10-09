@@ -30,6 +30,7 @@ public:
 	int	 capped_ms;
 	Timer last_sec_frame_time;
 	Uint32 last_sec_frame_count = 0;
+	Uint64 frame_count = 0;
 	Timer frame_time;
 	PerfTimer ptimer;
 

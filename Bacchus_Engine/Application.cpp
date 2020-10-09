@@ -77,6 +77,9 @@ bool Application::Init()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
+
+	frame_count++;
+	last_sec_frame_count++;
 	dt = (float)frame_time.Read();
 	frame_time.Start();
 }

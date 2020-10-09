@@ -297,14 +297,14 @@ void BacchusInterface::FPSGraph()
 	if (App->fps_log.size() != 30)
 	{
 		App->fps_log.push_back(App->fps);
-		App->ms_log.push_back(App->dt * 1000);
+		App->ms_log.push_back(App->dt);
 	}
 	else
 	{
 		App->fps_log.erase(App->fps_log.begin());
 		App->fps_log.push_back(App->fps);
 		App->ms_log.erase(App->ms_log.begin());
-		App->ms_log.push_back(App->dt * 1000);
+		App->ms_log.push_back(App->dt);
 	}
 
 	char title[25];
@@ -312,4 +312,5 @@ void BacchusInterface::FPSGraph()
 	ImGui::PlotHistogram("##framerate", &App->fps_log[0], App->fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 	sprintf_s(title, 25, "Milliseconds %.1f", App->ms_log[App->ms_log.size() - 1]);
 	ImGui::PlotHistogram("##framerate", &App->ms_log[0], App->ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+
 }
