@@ -1,5 +1,11 @@
 #pragma once
 
+#include "glew/include/glew.h"
+#include "imgui/imgui.h"
+#include "imgui/examples/imgui_impl_sdl.h"
+#include "imgui/examples/imgui_impl_opengl3.h"
+#include <string>
+
 class Application;
 struct PhysBody3D;
 

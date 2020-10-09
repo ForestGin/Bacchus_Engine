@@ -5,6 +5,8 @@
 #include "imgui/imgui_internal.h"
 #include <gl/GLU.h>
 
+#include <string>
+
 BacchusInterface::BacchusInterface(Application* app, bool start_enabled) : Module(app, start_enabled) {}
 
 BacchusInterface::~BacchusInterface() {}
@@ -62,10 +64,6 @@ update_status BacchusInterface::PreUpdate(float dt)
 // Update
 update_status BacchusInterface::Update(float dt)
 {
-	//bool show_demo_window = false;
-	//ImGui::ShowDemoWindow(&show_demo_window);
-
-	//ImGuiIO& io = ImGui::GetIO();
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -99,6 +97,16 @@ update_status BacchusInterface::Update(float dt)
 				config_window = true;
 			if (ImGui::MenuItem("Close"))
 				config_window = false;
+
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Console"))
+		{
+			if (ImGui::MenuItem("Open"))
+				console_window = true;
+			if (ImGui::MenuItem("Close"))
+				console_window = false;
 
 			ImGui::EndMenu();
 		}
@@ -165,6 +173,12 @@ update_status BacchusInterface::Update(float dt)
 		ImGui::End();
 	}
 	
+	if (console_window == true)
+	{
+		ImGui::Begin("Console");
+		ImGui::Text(console_text.begin());
+		ImGui::End();
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -268,6 +282,10 @@ void BacchusInterface::WindowConfig()
 		SDL_UpdateWindowSurface(App->window->window);
 	};
 
+	ImGui::Text("Refresh Rate: ");
+	ImGui::SameLine();
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%f", App->fps);
+
 	if (ImGui::Checkbox("FullScreen", &App->window->fullscreen)) {
 		if (App->window->fullscreen) SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN);
 		else { SDL_SetWindowFullscreen(App->window->window, App->window->flags); }
@@ -313,4 +331,9 @@ void BacchusInterface::FPSGraph()
 	sprintf_s(title, 25, "Milliseconds %.1f", App->ms_log[App->ms_log.size() - 1]);
 	ImGui::PlotHistogram("##framerate", &App->ms_log[0], App->ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 
+}
+
+void BacchusInterface::ConsoleText(std::string console_Text) 
+{
+	console_text.appendf(console_Text.c_str());
 }

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _APPLICATION_
+#define _APPLICATION_
+
 #include "Globals.h"
 #include "Timer.h"
 #include "PerfTimer.h"
@@ -11,6 +13,7 @@
 #include "BacchusInterface.h"
 
 #include <list>
+#include <vector>
 
 class Application
 {
@@ -57,3 +60,7 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
+
+extern Application* App;
+
+#endif //_APPLICATION_

@@ -1,14 +1,14 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   BacchusInterface.cpp
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(202,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(206,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(210,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(214,30): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(218,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(222,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(226,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(230,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(234,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(238,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(242,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(216,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(220,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(224,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(228,30): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(232,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(236,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(240,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(244,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(248,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(252,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(256,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
   Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
