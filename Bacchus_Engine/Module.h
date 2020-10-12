@@ -54,11 +54,11 @@ public:
 		return true; 
 	}
 
-	virtual bool Load(JSON_Object* object) {
-		return true;
-	}
+	//virtual bool Load(JSON_Object* object) {
+	//	return true;
+	//}
 
-	virtual bool Save(JSON_Object* object) {
-		return true;
-	}
+	//virtual bool Save(JSON_Object* object) {
+	//	return true;
+	//}
 };

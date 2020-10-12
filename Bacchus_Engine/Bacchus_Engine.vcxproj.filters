@@ -34,6 +34,12 @@
       <Filter>External Libs\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="PerfTimer.cpp" />
+    <ClCompile Include="JSON\parson.c">
+      <Filter>External Libs\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="JasonReader.cpp">
+      <Filter>External Libs\JSON</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -76,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="p2Defs.h" />
+    <ClInclude Include="JSON\parson.h">
+      <Filter>External Libs\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="JasonReader.h">
+      <Filter>External Libs\JSON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">
@@ -83,6 +95,9 @@
     </Filter>
     <Filter Include="External Libs\ImGui">
       <UniqueIdentifier>{eab0a17a-fa65-4031-9814-b3c184bc7291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External Libs\JSON">
+      <UniqueIdentifier>{434d20a6-3c43-4e93-897a-aba67ca6db2f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

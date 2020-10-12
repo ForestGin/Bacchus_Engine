@@ -1,5 +1,7 @@
 #include "Application.h"
-#include "JSON/parson.h"
+#include "JasonReader.h"
+
+#include <string>
 
 Application::Application()
 {
@@ -32,7 +34,6 @@ Application::Application()
 	cap = 60;
 	capped_ms = -1;
 
-	config_path = "../Game/Config/Settings.JSON";
 }
 
 Application::~Application()
@@ -50,6 +51,8 @@ Application::~Application()
 bool Application::Init()
 {
 	bool ret = true;
+
+	pilar = json_parse_file((std::string("config_files/paths.json")).data());
 
 	T.d = true;
 	T.Start();
@@ -168,4 +171,12 @@ void Application::RequestBrowser(const char* url) const
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
+
+void Application::JasonReading()
+{
+	JSON_Value* test;
+	GetJsonValueFromPath(pilar, "test", &test);
+	ImGui::Text(json_object_get_string(json_value_get_object(test), "testing_phrase"));
+}
+
 

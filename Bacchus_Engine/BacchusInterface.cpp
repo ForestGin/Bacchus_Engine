@@ -314,6 +314,8 @@ void BacchusInterface::WindowConfig()
 
 void BacchusInterface::FPSGraph()
 {
+	App->JasonReading();
+
 	ImGui::InputText("App Name", TITLE, 20);
 	ImGui::InputText("Organitzation", ORGANIZATION, 20);
 
