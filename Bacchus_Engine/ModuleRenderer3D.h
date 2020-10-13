@@ -19,6 +19,7 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
+	
 
 public:
 

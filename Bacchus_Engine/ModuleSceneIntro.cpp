@@ -41,5 +41,79 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
+	//TEST DRAW OPENGL USING DIRECT MODE
+
+	glLineWidth(2.0f);
+
+	glBegin(GL_TRIANGLES);
+
+		glColor3f(1.f,1.f,1.f);
+		//
+		glVertex3f(0.f, 0.f, 0.f);
+		glVertex3f(2.f, 0.f, 0.f);
+		glVertex3f(0.f, 2.f, 0.f);
+		//
+		glVertex3f(2.f, 0.f, 0.f);
+		glVertex3f(2.f, 2.f, 0.f);
+		glVertex3f(0.f, 2.f, 0.f);
+		//
+		glVertex3f(0.f, 2.f, 0.f);
+		glVertex3f(2.f, 2.f, 0.f);
+		glVertex3f(0.f, 2.f, -2.f);
+		//
+		glVertex3f(2.f, 2.f, 0.f);
+		glVertex3f(2.f, 2.f, -2.f);
+		glVertex3f(0.f, 2.f, -2.f);
+		//
+		glVertex3f(2.f, 0.f, 0.f);
+		glVertex3f(2.f, 0.f, -2.f);
+		glVertex3f(2.f, 2.f, 0.f);
+		//
+		glVertex3f(2.f, 0.f, -2.f);
+		glVertex3f(2.f, 2.f, -2.f);
+		glVertex3f(2.f, 2.f, 0.f);
+		//
+		glVertex3f(2.f, 0.f, -2.f);
+		glVertex3f(2.f, 2.f, -2.f);
+		glVertex3f(0.f, 2.f, -2.f);
+		//
+		glVertex3f(2.f, 0.f, -2.f);
+		glVertex3f(0.f, 2.f, -2.f);
+		glVertex3f(0.f, 0.f, -2.f);
+		//
+		glVertex3f(0.f, 0.f, -2.f);
+		glVertex3f(0.f, 2.f, -2.f);
+		glVertex3f(0.f, 2.f, 0.f);
+		//
+		glVertex3f(0.f, 2.f, 0.f);
+		glVertex3f(0.f, 0.f, 0.f);
+		glVertex3f(0.f, 0.f, -2.f);
+		//
+		glVertex3f(0.f, 0.f, 0.f);
+		glVertex3f(2.f, 0.f, 0.f);
+		glVertex3f(0.f, 0.f, -2.f);
+		//
+		glVertex3f(2.f, 0.f, 0.f);
+		glVertex3f(2.f, 0.f, -2.f);
+		glVertex3f(0.f, 0.f, -2.f);
+
+	glEnd();
+
+	//USING GL_VERTEX_ARRAYS
+	//uint my_id = 0;
+	//GLfloat* vertices = new GLfloat[36 * 3];
+
+	//glGenBuffers(1, (GLuint*) & (my_id));
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);
+
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//// … bind and use other buffers
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glDisableClientState(GL_VERTEX_ARRAY);
+	
+
 	return UPDATE_CONTINUE;
 }

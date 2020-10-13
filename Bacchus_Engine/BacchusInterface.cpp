@@ -135,6 +135,10 @@ update_status BacchusInterface::Update(float dt)
 		{
 			App->input->MousePos();
 		}
+		if (ImGui::CollapsingHeader("Renderer"))
+		{
+			//try to enable-disable face culling
+		}
 
 		ImGui::End();
 	}
@@ -342,5 +346,5 @@ void BacchusInterface::FPSGraph()
 
 void BacchusInterface::ConsoleText(std::string console_Text)
 {
-	console_text.appendf(console_Text.c_str());
+	//console_text.appendf(console_Text.c_str());
 }
