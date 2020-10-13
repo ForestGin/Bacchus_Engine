@@ -3,6 +3,9 @@
 #include "Globals.h"
 #include "Primitive.h"
 
+#include <array>
+
+using namespace std;
 
 class ModuleSceneIntro : public Module
 {
@@ -16,5 +19,10 @@ public:
 	bool CleanUp();
 
 public:
-	uint cube_id;
+	uint cube_id;//array 
+
+	uint indices_id = 0;
+	uint buffIndicesID = 0;
+	array<float, 24> cube;
+	array<uint, 36> cubeIndices;
 };

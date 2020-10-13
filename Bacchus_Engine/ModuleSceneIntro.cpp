@@ -76,6 +76,20 @@ bool ModuleSceneIntro::Start()
 	glBindBuffer(GL_ARRAY_BUFFER, cube_id);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108, cubeArray, GL_STATIC_DRAW);
 
+	//indices
+
+	cube = { 2.f,1.f,.0f,   1.f,1.f,.0f,   1.f,.0f,.0f,   2.f,.0f,.0f,    2.f,.0f,-1.f,   2.f,1.f,-1.f,   1.f,1.f,-1.f,   1.f,.0f,-1.f };
+
+	glGenBuffers(1, (GLuint*) & (indices_id));
+	glBindBuffer(GL_ARRAY_BUFFER, indices_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cube.size(), &cube[0], GL_STATIC_DRAW);
+
+	cubeIndices = { 0,1,2 , 2,3,0 , 0,3,4 , 4,5,0 ,  0,5,6,  6,1,0,  1,6,7  , 7,2,1,  7,4,3,  3,2,7 , 4,7,6,  6,5,4};
+
+	glGenBuffers(1, (GLuint*) & (buffIndicesID));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffIndicesID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * cubeIndices.size(), &cubeIndices[0], GL_STATIC_DRAW);
+
 
 	return ret;
 }
@@ -169,6 +183,20 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glColor3b(100, 51, 55);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+	//USING INDICES
+
+	
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, indices_id);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glColor3b(87, 164, 229);
+	glDrawArrays(GL_TRIANGLES, 0, cubeIndices.size());
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffIndicesID);
+	glDrawElements(GL_TRIANGLES, cubeIndices.size(), GL_UNSIGNED_INT, NULL);
+
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	return UPDATE_CONTINUE;
