@@ -22,6 +22,50 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 
+	float cubeArray[] = { -1.f, 0.f, 0.f, 
+		0.f, 0.f, 0.f, 
+		-1.f, 1.f, 0.f,
+		0.f, 0.f, 0.f,
+		0.f, 1.f, 0.f, 
+		-1.f, 1.f, 0.f, 
+		-1.f, 1.f, 0.f, 
+		0.f, 1.f, 0.f, 
+		-1.f, 1.f, -1.f,
+		0.f, 1.f, 0.f,
+		0.f, 1.f, -1.f,
+		-1.f, 1.f, -1.f,
+		-1.f, 0.f, 0.f, 
+		-1.f, 0.f, -1.f, 
+		-1.f, 1.f, 0.f, 
+		0.f, 0.f, -1.f, 
+		0.f, 1.f, -1.f, 
+		0.f, 1.f, 0.f,
+		-1.f, 0.f, -1.f, 
+		-1.f, 1.f, -1.f,
+		-2.f, 1.f, -1.f, 
+		0.f, 0.f, -1.f, 
+		-1.f, 1.f, -1.f,
+		-1.f, 0.f, -1.f,
+	    -2.f, 0.f, -1.f, 
+		-2.f, 1.f, -1.f,
+		-2.f, 1.f, 0.f, 
+		-1.f, 1.f, 0.f, 
+		-1.f, 0.f, 0.f, 
+		-1.f, 0.f, -1.f,
+		-2.f, 0.f, 0.f, 
+		-1.f, 0.f, 0.f, 
+		-1.f, 0.f, -1.f, 
+		0.f, 0.f, 0.f, 
+		0.f, 0.f, -1.f,
+		-1.f, 0.f, -1.f
+	};
+
+	cube_id = 0;
+	glGenBuffers(1, (GLuint*) & (cube_id));
+	glBindBuffer(GL_ARRAY_BUFFER, cube_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108, cubeArray, GL_STATIC_DRAW);
+
+
 	return ret;
 }
 
@@ -41,79 +85,80 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleSceneIntro::PostUpdate(float dt)
+{
+
 	//TEST DRAW OPENGL USING DIRECT MODE
+	glDisable(GL_CULL_FACE);
 
 	glLineWidth(2.0f);
 
 	glBegin(GL_TRIANGLES);
 
-		glColor3f(1.f,1.f,1.f);
-		//
-		glVertex3f(0.f, 0.f, 0.f);
-		glVertex3f(2.f, 0.f, 0.f);
-		glVertex3f(0.f, 2.f, 0.f);
-		//
-		glVertex3f(2.f, 0.f, 0.f);
-		glVertex3f(2.f, 2.f, 0.f);
-		glVertex3f(0.f, 2.f, 0.f);
-		//
-		glVertex3f(0.f, 2.f, 0.f);
-		glVertex3f(2.f, 2.f, 0.f);
-		glVertex3f(0.f, 2.f, -2.f);
-		//
-		glVertex3f(2.f, 2.f, 0.f);
-		glVertex3f(2.f, 2.f, -2.f);
-		glVertex3f(0.f, 2.f, -2.f);
-		//
-		glVertex3f(2.f, 0.f, 0.f);
-		glVertex3f(2.f, 0.f, -2.f);
-		glVertex3f(2.f, 2.f, 0.f);
-		//
-		glVertex3f(2.f, 0.f, -2.f);
-		glVertex3f(2.f, 2.f, -2.f);
-		glVertex3f(2.f, 2.f, 0.f);
-		//
-		glVertex3f(2.f, 0.f, -2.f);
-		glVertex3f(2.f, 2.f, -2.f);
-		glVertex3f(0.f, 2.f, -2.f);
-		//
-		glVertex3f(2.f, 0.f, -2.f);
-		glVertex3f(0.f, 2.f, -2.f);
-		glVertex3f(0.f, 0.f, -2.f);
-		//
-		glVertex3f(0.f, 0.f, -2.f);
-		glVertex3f(0.f, 2.f, -2.f);
-		glVertex3f(0.f, 2.f, 0.f);
-		//
-		glVertex3f(0.f, 2.f, 0.f);
-		glVertex3f(0.f, 0.f, 0.f);
-		glVertex3f(0.f, 0.f, -2.f);
-		//
-		glVertex3f(0.f, 0.f, 0.f);
-		glVertex3f(2.f, 0.f, 0.f);
-		glVertex3f(0.f, 0.f, -2.f);
-		//
-		glVertex3f(2.f, 0.f, 0.f);
-		glVertex3f(2.f, 0.f, -2.f);
-		glVertex3f(0.f, 0.f, -2.f);
+	glColor3f(1.f, 1.f, 1.f);
+	//face1
+	glVertex3f(0.f, 0.f, 0.f);
+	glVertex3f(1.f, 0.f, 0.f);
+	glVertex3f(0.f, 1.f, 0.f);
+	//
+	glVertex3f(1.f, 0.f, 0.f);
+	glVertex3f(1.f, 1.f, 0.f);
+	glVertex3f(0.f, 1.f, 0.f);
+	//face2
+	glVertex3f(0.f, 1.f, 0.f);
+	glVertex3f(1.f, 1.f, 0.f);
+	glVertex3f(0.f, 1.f, -1.f);
+	//
+	glVertex3f(1.f, 1.f, 0.f);
+	glVertex3f(1.f, 1.f, -1.f);
+	glVertex3f(0.f, 1.f, -1.f);
+	//face3
+	glVertex3f(1.f, 0.f, 0.f);
+	glVertex3f(1.f, 0.f, -1.f);
+	glVertex3f(1.f, 1.f, 0.f);
+	//
+	glVertex3f(1.f, 0.f, -1.f);
+	glVertex3f(1.f, 1.f, -1.f);
+	glVertex3f(1.f, 1.f, 0.f);
+	//face4
+	glVertex3f(1.f, 0.f, -1.f);
+	glVertex3f(1.f, 1.f, -1.f);
+	glVertex3f(0.f, 1.f, -1.f);
+	//
+	glVertex3f(1.f, 0.f, -1.f);
+	glVertex3f(0.f, 1.f, -1.f);
+	glVertex3f(0.f, 0.f, -1.f);
+	//face5
+	glVertex3f(0.f, 0.f, -1.f);
+	glVertex3f(0.f, 1.f, -1.f);
+	glVertex3f(0.f, 1.f, 0.f);
+	//
+	glVertex3f(0.f, 1.f, 0.f);
+	glVertex3f(0.f, 0.f, 0.f);
+	glVertex3f(0.f, 0.f, -1.f);
+	//face6
+	glVertex3f(0.f, 0.f, 0.f);
+	glVertex3f(1.f, 0.f, 0.f);
+	glVertex3f(0.f, 0.f, -1.f);
+	//
+	glVertex3f(1.f, 0.f, 0.f);
+	glVertex3f(1.f, 0.f, -1.f);
+	glVertex3f(0.f, 0.f, -1.f);
 
 	glEnd();
 
 	//USING GL_VERTEX_ARRAYS
-	//uint my_id = 0;
-	//GLfloat* vertices = new GLfloat[36 * 3];
 
-	//glGenBuffers(1, (GLuint*) & (my_id));
-	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);
-
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	//glVertexPointer(3, GL_FLOAT, 0, NULL);
-	//// … bind and use other buffers
-	//glDrawArrays(GL_TRIANGLES, 0, 36);
-	//glDisableClientState(GL_VERTEX_ARRAY);
-	
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, cube_id);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glColor3b(100, 51, 55);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDisableClientState(GL_VERTEX_ARRAY);
 
 	return UPDATE_CONTINUE;
 }
