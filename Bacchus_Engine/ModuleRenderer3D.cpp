@@ -154,4 +154,3 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
-float3x3 yfytf;

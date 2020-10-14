@@ -1,2 +1,0 @@
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Debug\MathGeoLib.pdb
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\MathGeoLib\Debug\MathGeoLib.pdb
