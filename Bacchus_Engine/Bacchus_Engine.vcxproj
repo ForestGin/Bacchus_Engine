@@ -42,11 +42,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\Game</OutDir>
-    <IncludePath>F:\Bacchus_Engine\Bacchus_Engine\JSON;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\imgui;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glew\include;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Bacchus_Engine\MathGeoLib\include;$(SolutionDir)Bacchus_Engine\JSON;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\imgui;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glew\include;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\libx86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Game</OutDir>
-    <IncludePath>F:\Bacchus_Engine\Bacchus_Engine\JSON;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Bacchus_Engine\MathGeoLib\include;$(SolutionDir)Bacchus_Engine\JSON;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\libx86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -60,6 +62,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(SolutionDir)Bacchus_Engine\MathGeoLib\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>MathGeoLib.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -78,6 +82,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(SolutionDir)Bacchus_Engine\MathGeoLib\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>MathGeoLib.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

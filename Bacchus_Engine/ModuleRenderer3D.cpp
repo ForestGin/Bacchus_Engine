@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "SDL\include\SDL_opengl.h"
+#include "MathGeoLib/include/MathGeoLib.h"
 
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
@@ -152,3 +153,5 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+float3x3 yfytf;

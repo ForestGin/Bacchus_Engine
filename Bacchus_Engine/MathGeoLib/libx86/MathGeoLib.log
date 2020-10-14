@@ -1,0 +1,26 @@
+﻿  AABB.cpp
+  Capsule.cpp
+  Circle.cpp
+  Frustum.cpp
+  Line.cpp
+  LineSegment.cpp
+  OBB.cpp
+  Plane.cpp
+  Polygon.cpp
+  Ray.cpp
+  Sphere.cpp
+  Triangle.cpp
+  TriangleMesh.cpp
+  float2.cpp
+  float3.cpp
+  float3x3.cpp
+  float3x4.cpp
+  float4.cpp
+  float4x4.cpp
+  Quat.cpp
+  Generating Code...
+  Compiling...
+  SSEMath.cpp
+  Clock.cpp
+  Generating Code...
+  MathGeoLib.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Debug\MathGeoLib.lib
