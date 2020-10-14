@@ -5,6 +5,11 @@
 #include "imgui/imgui_internal.h"
 #include <gl/GLU.h>
 
+#include "Assimp/include/cimport.h"
+#include "Assimp/include/scene.h"
+#include "Assimp/include/postprocess.h"
+#pragma comment (lib, "Assimp/libx86/assimp.lib")
+
 #include <string>
 
 BacchusInterface::BacchusInterface(Application* app, bool start_enabled) : Module(app, start_enabled) {}
@@ -15,7 +20,7 @@ bool BacchusInterface::Start()
 {
 	LOG("Loading Engine UI...");
 	bool ret = true;
-
+	
 	// Initialize imgui
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -47,6 +52,7 @@ bool BacchusInterface::CleanUp()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
+	//aiDetachAllLogStreams();
 
 	return true;
 }

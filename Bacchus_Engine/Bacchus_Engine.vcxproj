@@ -42,11 +42,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\Game</OutDir>
-    <IncludePath>F:\Bacchus_Engine\Bacchus_Engine\JSON;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\imgui;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glew\include;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <IncludePath>F:\Bacchus_Engine\Bacchus_Engine\Assimp\include;F:\Bacchus_Engine\Bacchus_Engine\JSON;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\imgui;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glew\include;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Game</OutDir>
-    <IncludePath>F:\Bacchus_Engine\Bacchus_Engine\JSON;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <IncludePath>F:\Bacchus_Engine\Bacchus_Engine\Assimp\include;F:\Bacchus_Engine\Bacchus_Engine\JSON;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -55,11 +55,14 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,6 +74,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -78,6 +82,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
