@@ -153,4 +153,4 @@ ASALocalRun/
 *.log
 *.tlog
 *.log
-Bacchus_Engine/.vs/Bacchus_Engine/v16/.suo
+*/.vs/Bacchus_Engine/v16/.suo
