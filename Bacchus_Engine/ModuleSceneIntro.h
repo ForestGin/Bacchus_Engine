@@ -21,8 +21,6 @@ public:
 public:
 	uint cube_id;//array 
 
-	uint indices_id = 0;
-	uint buffIndicesID = 0;
-	array<float, 24> cube;
-	array<uint, 36> cubeIndices;
+	uint indices_id;
+	uint buffIndicesID;
 };
