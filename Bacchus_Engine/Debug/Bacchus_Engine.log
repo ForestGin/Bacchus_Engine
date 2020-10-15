@@ -1,5 +1,6 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   Application.cpp
+<<<<<<< HEAD
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Application.cpp(105,9): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Application.cpp(111,37): warning C4018: '<': signed/unsigned mismatch
   Color.cpp
@@ -47,12 +48,28 @@ C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(778,33): 
   imgui_widgets.cpp
   JasonReader.cpp
   Light.cpp
+=======
+F:\Bacchus_Engine\Bacchus_Engine\Application.cpp(107,9): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+  BacchusInterface.cpp
+F:\Bacchus_Engine\Bacchus_Engine\Application.cpp(113,37): warning C4018: '<': signed/unsigned mismatch
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(227,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(231,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(235,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(239,30): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(243,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(247,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(251,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(255,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(259,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(263,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+>>>>>>> origin/Assimp
   log.cpp
   Main.cpp
   ModuleCamera3D.cpp
   ModuleInput.cpp
   ModuleRenderer3D.cpp
   ModuleSceneIntro.cpp
+<<<<<<< HEAD
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(123,2): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(210,2): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(280,2): warning C4305: 'initializing': truncation from 'double' to 'float'
@@ -94,3 +111,9 @@ C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Primitive.cpp(216,35
   Generating Code...
   parson.c
   Bacchus_Engine.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
+=======
+  ModuleWindow.cpp
+  Generating Code...
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(267,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+  Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
+>>>>>>> origin/Assimp
