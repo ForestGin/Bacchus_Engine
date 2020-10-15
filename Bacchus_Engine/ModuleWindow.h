@@ -18,7 +18,18 @@ public:
 	bool Init();
 	bool CleanUp();
 
+	bool IsFullScreen() const { return fullscreen; }
+	bool IsResizable() const { return resizable; }
+	bool IsBorderless() const { return borderless; }
+	bool IsFullScreenDesktop() const { return fulldesktop; }
+
+
+
 	void SetTitle(const char* title);
+	void SetFullScreen(bool _fullscreen);
+	void SetResizable(bool _resizable);
+	void SetBorderless(bool borderless);
+	void SetFullScreenDesktop(bool fullsdesktop);
 
 public:
 
@@ -27,6 +38,7 @@ public:
 	bool fullscreen = false;
 	bool borderless = false;
 	bool fulldesktop = false;
+
 	int width;
 	int height;
 	Uint32 flags;

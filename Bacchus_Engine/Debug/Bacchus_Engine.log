@@ -18,12 +18,16 @@ F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(283,26): warning C4805: '=
 F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(287,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
 F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(291,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
 F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(295,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(299,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(334,27): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(340,26): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(345,27): warning C4552: '!=': result of expression not used
   Main.cpp
   ModuleCamera3D.cpp
   ModuleInput.cpp
   ModuleRenderer3D.cpp
   ModuleSceneIntro.cpp
-F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(299,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(351,27): warning C4552: '!=': result of expression not used
 F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(205,21): warning C4309: 'argument': truncation of constant value
   ModuleWindow.cpp
   log.cpp
