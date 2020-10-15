@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Globals.h"
 #include "BacchusInterface.h"
+#include "ModuleRenderer3D.h"
 
 #include "imgui/imgui_internal.h"
 #include <gl/GLU.h>
@@ -134,6 +135,43 @@ update_status BacchusInterface::Update(float dt)
 		if (ImGui::CollapsingHeader("Mouse"))
 		{
 			App->input->MousePos();
+		}
+		if (ImGui::CollapsingHeader("Renderer"))
+		{
+			//wireframe mode
+			if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe))
+			{
+				App->renderer3D->wireframe != App->renderer3D->wireframe;
+			
+			}
+
+			//try to enable-disable face culling
+			if (ImGui::Checkbox("Culling", &App->renderer3D->culling))
+			{
+				App->renderer3D->culling != App->renderer3D->culling;
+
+			}
+
+			//depth-test
+			if (ImGui::Checkbox("Depth", &App->renderer3D->depth))
+			{
+				App->renderer3D->depth != App->renderer3D->depth;
+
+			}
+
+			//lightning
+			if (ImGui::Checkbox("Lights", &App->renderer3D->lightning))
+			{
+				App->renderer3D->lightning != App->renderer3D->lightning;
+
+			}
+
+			//color material
+			if (ImGui::Checkbox("Color Material", &App->renderer3D->color_mat))
+			{
+				App->renderer3D->color_mat != App->renderer3D->color_mat;
+
+			}
 		}
 
 		ImGui::End();
@@ -292,23 +330,26 @@ void BacchusInterface::WindowConfig()
 	ImGui::TextColored(ImVec4(1, 1, 0, 1), "%f", App->fps);
 
 	if (ImGui::Checkbox("FullScreen", &App->window->fullscreen)) {
-		if (App->window->fullscreen) SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN);
-		else { SDL_SetWindowFullscreen(App->window->window, App->window->flags); }
+		App->window->fullscreen = App->window->IsFullScreen();
+		App->window->fullscreen != App->window->fullscreen;
+		App->window->SetFullScreen(App->window->fullscreen);
 	}
 	ImGui::SameLine();
 	if (ImGui::Checkbox("Resizable", &App->window->resizable)) {
-		if (App->window->resizable)SDL_SetWindowResizable(App->window->window, SDL_TRUE);
-		else { SDL_SetWindowResizable(App->window->window, SDL_FALSE); }
+		App->window->resizable = App->window->IsResizable();
+		App->window->resizable != App->window->resizable;
+		App->window->SetResizable(App->window->resizable);
 	}
-
 	if (ImGui::Checkbox("Borderless", &App->window->borderless)) {
-		if (App->window->borderless) SDL_SetWindowBordered(App->window->window, SDL_FALSE);
-		else { SDL_SetWindowBordered(App->window->window, SDL_TRUE); }
+		App->window->borderless = App->window->IsBorderless();
+		App->window->borderless != App->window->borderless;
+		App->window->SetBorderless(App->window->borderless);
 	}
 	ImGui::SameLine();
 	if (ImGui::Checkbox("Full Desktop", &App->window->fulldesktop)) {
-		if (App->window->fulldesktop) SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-		else { SDL_SetWindowFullscreen(App->window->window, App->window->flags); }
+		App->window->fulldesktop = App->window->IsFullScreenDesktop();
+		App->window->fulldesktop!= App->window->fulldesktop;
+		App->window->SetFullScreenDesktop(App->window->fulldesktop);
 	}
 }
 
@@ -342,5 +383,5 @@ void BacchusInterface::FPSGraph()
 
 void BacchusInterface::ConsoleText(std::string console_Text)
 {
-	console_text.appendf(console_Text.c_str());
+	//console_text.appendf(console_Text.c_str());
 }

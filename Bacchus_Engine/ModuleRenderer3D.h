@@ -15,10 +15,12 @@ public:
 
 	bool Init();
 	update_status PreUpdate(float dt);
+	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
 	void OnResize(int width, int height);
+	
 
 public:
 
@@ -26,4 +28,10 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	bool wireframe;
+	bool culling;
+	bool depth;
+	bool lightning;
+	bool color_mat;
 };
