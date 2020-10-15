@@ -1,3 +1,17 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  ModuleCamera3D.cpp
+  BacchusInterface.cpp
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(144,32): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(233,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(237,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(241,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(245,30): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(249,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(253,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(257,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(261,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(265,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(269,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+  ModuleRenderer3D.cpp
+  Generating Code...
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(273,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
   Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe

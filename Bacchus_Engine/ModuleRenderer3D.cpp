@@ -10,6 +10,7 @@
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	wireframe = false;
 }
 
 // Destructor
@@ -122,7 +123,15 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+update_status ModuleRenderer3D::Update(float dt)
+{
+	if(wireframe == true)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else if(wireframe == false)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	return UPDATE_CONTINUE;
+}
 
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
@@ -154,6 +163,5 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
-
 
 

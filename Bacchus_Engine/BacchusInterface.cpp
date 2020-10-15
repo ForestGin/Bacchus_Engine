@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Globals.h"
 #include "BacchusInterface.h"
+#include "ModuleRenderer3D.h"
 
 #include "imgui/imgui_internal.h"
 #include <gl/GLU.h>
@@ -137,6 +138,13 @@ update_status BacchusInterface::Update(float dt)
 		}
 		if (ImGui::CollapsingHeader("Renderer"))
 		{
+			//wireframe mode
+			if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe))
+			{
+				App->renderer3D->wireframe != App->renderer3D->wireframe;
+			
+			}
+
 			//try to enable-disable face culling
 		}
 
