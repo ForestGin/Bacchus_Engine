@@ -151,6 +151,27 @@ update_status BacchusInterface::Update(float dt)
 				App->renderer3D->culling != App->renderer3D->culling;
 
 			}
+
+			//depth-test
+			if (ImGui::Checkbox("Depth", &App->renderer3D->depth))
+			{
+				App->renderer3D->depth != App->renderer3D->depth;
+
+			}
+
+			//lightning
+			if (ImGui::Checkbox("Lights", &App->renderer3D->lightning))
+			{
+				App->renderer3D->lightning != App->renderer3D->lightning;
+
+			}
+
+			//color material
+			if (ImGui::Checkbox("Color Material", &App->renderer3D->color_mat))
+			{
+				App->renderer3D->color_mat != App->renderer3D->color_mat;
+
+			}
 		}
 
 		ImGui::End();

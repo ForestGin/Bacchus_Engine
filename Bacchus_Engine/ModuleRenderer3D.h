@@ -31,5 +31,7 @@ public:
 
 	bool wireframe;
 	bool culling;
-
+	bool depth;
+	bool lightning;
+	bool color_mat;
 };

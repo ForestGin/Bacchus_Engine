@@ -12,6 +12,9 @@ ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Modul
 {
 	wireframe = false;
 	culling = false;
+	depth = false;
+	lightning = false;
+	color_mat = false;
 }
 
 // Destructor
@@ -93,10 +96,10 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		glEnable(GL_DEPTH_TEST);
+		/*glEnable(GL_DEPTH_TEST);*/
 		//glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
-		glEnable(GL_LIGHTING);
+		/*glEnable(GL_LIGHTING);*/
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
@@ -135,6 +138,21 @@ update_status ModuleRenderer3D::Update(float dt)
 		glEnable(GL_CULL_FACE);
 	else if (culling == false)
 		glDisable(GL_CULL_FACE);
+
+	if (depth == true)
+		glEnable(GL_DEPTH_TEST);
+	else if (depth == false)
+		glDisable(GL_DEPTH_TEST);
+
+	if (lightning == true)
+		glEnable(GL_LIGHTING);
+	else if (lightning == false)
+		glDisable(GL_LIGHTING);
+
+	if (color_mat == true)
+		glEnable(GL_COLOR_MATERIAL);
+	else if (color_mat == false)
+		glDisable(GL_COLOR_MATERIAL);
 
 	return UPDATE_CONTINUE;
 }
