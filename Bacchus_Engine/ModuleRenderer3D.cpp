@@ -11,6 +11,7 @@
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	wireframe = false;
+	culling = false;
 }
 
 // Destructor
@@ -93,7 +94,7 @@ bool ModuleRenderer3D::Init()
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
 		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
+		//glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
@@ -129,6 +130,11 @@ update_status ModuleRenderer3D::Update(float dt)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else if(wireframe == false)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	if (culling == true)
+		glEnable(GL_CULL_FACE);
+	else if (culling == false)
+		glDisable(GL_CULL_FACE);
 
 	return UPDATE_CONTINUE;
 }

@@ -146,6 +146,11 @@ update_status BacchusInterface::Update(float dt)
 			}
 
 			//try to enable-disable face culling
+			if (ImGui::Checkbox("Culling", &App->renderer3D->culling))
+			{
+				App->renderer3D->culling != App->renderer3D->culling;
+
+			}
 		}
 
 		ImGui::End();
