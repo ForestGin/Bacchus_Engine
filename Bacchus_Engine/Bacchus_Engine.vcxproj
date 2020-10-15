@@ -43,10 +43,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\Game</OutDir>
     <IncludePath>F:\Bacchus_Engine\Bacchus_Engine\Assimp\include;F:\Bacchus_Engine\Bacchus_Engine\JSON;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\imgui;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glew\include;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Bacchus_Engine\Assimp\libx86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Game</OutDir>
     <IncludePath>F:\Bacchus_Engine\Bacchus_Engine\Assimp\include;F:\Bacchus_Engine\Bacchus_Engine\JSON;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Bacchus_Engine\Assimp\libx86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -61,8 +63,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\Bacchus_Engine\Bacchus_Engine\Assimp\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,14 +84,15 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\Bacchus_Engine\Bacchus_Engine\Assimp\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="BacchusInterface.h" />
+    <ClInclude Include="FileSystem.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="imgui\examples\imgui_impl_opengl3.h" />
@@ -118,6 +121,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="BacchusInterface.cpp" />
+    <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_sdl.cpp" />
