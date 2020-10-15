@@ -40,7 +40,6 @@
     <ClCompile Include="JasonReader.cpp">
       <Filter>External Libs\JSON</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -89,7 +88,6 @@
     <ClInclude Include="JasonReader.h">
       <Filter>External Libs\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">

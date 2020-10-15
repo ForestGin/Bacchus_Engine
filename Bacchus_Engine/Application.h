@@ -11,8 +11,6 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleCamera3D.h"
 #include "BacchusInterface.h"
-#include "FileSystem.h"
-
 #include "JSON/parson.h"
 
 #include <list>
@@ -39,7 +37,6 @@ public:
 	Uint64 frame_count = 0;
 	Timer frame_time;
 	PerfTimer ptimer;
-	/*FileSystem* file_system;*/
 
 	JSON_Value* pilar;
 
