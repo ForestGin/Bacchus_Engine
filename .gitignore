@@ -331,3 +331,8 @@ ASALocalRun/
 
 # Don't ignore .meta files from assets folder / subfolders
 !GATE_Engine/Game/Assets/**/*.meta
+Bacchus_Engine/Game/Bacchus_Engine.pdb
+Bacchus_Engine/.vs/Bacchus_Engine/v16/.suo
+Bacchus_Engine/.vs/Bacchus_Engine/v16/Browse.VC.db
+Bacchus_Engine/Debug/Bacchus_Engine.log
+Bacchus_Engine/Debug/Bacchus_Engine.tlog/CL.read.1.tlog
