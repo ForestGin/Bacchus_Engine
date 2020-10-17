@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
-#include "glew/include/glew.h"
+#include "glew/include/GL/glew.h"
 
 #define MAX_LIGHTS 8
 

@@ -2,11 +2,13 @@
 #include "Module.h"
 #include "Globals.h"
 
+#include "glew/include/GL/glew.h"
 #include "imgui/imgui.h"
 #include "imgui/examples/imgui_impl_sdl.h"
 #include "imgui/examples/imgui_impl_opengl3.h"
 #include "MathGeoLib\include\MathGeoLib.h"
 
+#include "SDL/include/SDL_opengl.h"
 
 #include <string>
 
@@ -22,6 +24,7 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 	void ConsoleText(std::string console_Text);
+	void DockSpace() const;
 	ImGuiTextBuffer console_text;
 
 public:
@@ -30,7 +33,7 @@ public:
 	bool about_window = false;
 	bool console_window = false;
 
-	void  WindowConfig();
+	void WindowConfig();
 	void Hardware();
 	void FPSGraph();
 

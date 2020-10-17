@@ -55,7 +55,12 @@
 #endif
 
 #define SDL_HAS_CAPTURE_AND_GLOBAL_MOUSE    SDL_VERSION_ATLEAST(2,0,4)
+#define SDL_HAS_WINDOW_ALPHA                SDL_VERSION_ATLEAST(2,0,5)
+#define SDL_HAS_ALWAYS_ON_TOP               SDL_VERSION_ATLEAST(2,0,5)
+#define SDL_HAS_USABLE_DISPLAY_BOUNDS       SDL_VERSION_ATLEAST(2,0,5)
+#define SDL_HAS_PER_MONITOR_DPI             SDL_VERSION_ATLEAST(2,0,4)
 #define SDL_HAS_VULKAN                      SDL_VERSION_ATLEAST(2,0,6)
+#define SDL_HAS_MOUSE_FOCUS_CLICKTHROUGH    SDL_VERSION_ATLEAST(2,0,5)
 
 // Data
 static SDL_Window*  g_Window = NULL;
@@ -64,6 +69,11 @@ static bool         g_MousePressed[3] = { false, false, false };
 static SDL_Cursor*  g_MouseCursors[ImGuiMouseCursor_COUNT] = {};
 static char*        g_ClipboardTextData = NULL;
 static bool         g_MouseCanUseGlobalState = true;
+
+// Forward Declarations
+static void ImGui_ImplSDL2_UpdateMonitors();
+static void ImGui_ImplSDL2_InitPlatformInterface(SDL_Window* window, void* sdl_gl_context);
+static void ImGui_ImplSDL2_ShutdownPlatformInterface();
 
 static const char* ImGui_ImplSDL2_GetClipboardText(void*)
 {
@@ -135,7 +145,10 @@ static bool ImGui_ImplSDL2_Init(SDL_Window* window)
     // Setup back-end capabilities flags
     ImGuiIO& io = ImGui::GetIO();
     io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;       // We can honor GetMouseCursor() values (optional)
-    io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;        // We can honor io.WantSetMousePos requests (optional, rarely used)
+    io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+#if SDL_HAS_CAPTURE_AND_GLOBAL_MOUSE
+    io.BackendFlags |= ImGuiBackendFlags_PlatformHasViewports;  // We can create multi-viewports on the Platform side (optional)
+#endif// We can honor io.WantSetMousePos requests (optional, rarely used)
     io.BackendPlatformName = "imgui_impl_sdl";
 
     // Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array.
@@ -184,7 +197,9 @@ static bool ImGui_ImplSDL2_Init(SDL_Window* window)
     SDL_SysWMinfo wmInfo;
     SDL_VERSION(&wmInfo.version);
     SDL_GetWindowWMInfo(window, &wmInfo);
-    io.ImeWindowHandle = wmInfo.info.win.window;
+    //io.ImeWindowHandle = wmInfo.info.win.window;
+    /*if (SDL_GetWindowWMInfo(window, &info))
+        main_viewport->PlatformHandleRaw = info.info.win.window;*/
 #else
     (void)window;
 #endif

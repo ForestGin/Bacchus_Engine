@@ -3,8 +3,15 @@
 #include "BacchusInterface.h"
 #include "ModuleRenderer3D.h"
 
+#include "imgui/imgui.h"
+#include "imgui/examples/imgui_impl_sdl.h"
+#include "imgui/examples/imgui_impl_opengl3.h"
 #include "imgui/imgui_internal.h"
+#include "imgui/ImGuizmo/ImGuizmo.h"
 #include <gl/GLU.h>
+
+#include "SDL/include/SDL_opengl.h"
+#include "glew/include/GL/glew.h"
 
 #include <string>
 
@@ -21,8 +28,10 @@ bool BacchusInterface::Start()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;		// Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls ImGuiWindowFlags_MenuBar
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;			// Enable Window Docking (Under Active Development)
+	/*io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;*/
 
 	io.DisplaySize.x = 1280.0f;
 	io.DisplaySize.y = 720.0f;
@@ -58,6 +67,11 @@ update_status BacchusInterface::PreUpdate(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
+
+	//ImGuizmo::BeginFrame();
+
+	// Begin dock space
+	//DockSpace();
 
 	return UPDATE_CONTINUE;
 }
@@ -237,7 +251,8 @@ update_status BacchusInterface::PostUpdate(float dt)
 	
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
-
+	// End dock space
+	//ImGui::End();
 
 	return UPDATE_CONTINUE;
 }
@@ -385,3 +400,17 @@ void BacchusInterface::ConsoleText(std::string console_Text)
 {
 	//console_text.appendf(console_Text.c_str());
 }
+
+//void BacchusInterface::DockSpace() const
+//{
+//	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+//	window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+//	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+//
+//	static bool p_open = true;
+//	ImGui::Begin("DockSpace Demo", &p_open, window_flags);
+//
+//	ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+//	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+//	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+//}

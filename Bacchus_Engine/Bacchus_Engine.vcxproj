@@ -42,12 +42,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\Game</OutDir>
-    <IncludePath>C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\PhysFS\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Assimp\include;$(SolutionDir)Bacchus_Engine\MathGeoLib\include;$(SolutionDir)Bacchus_Engine\JSON;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\imgui;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glew\include;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\PhysFS\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glew\include\GL;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Assimp\include;$(SolutionDir)Bacchus_Engine\MathGeoLib\include;$(SolutionDir)Bacchus_Engine\JSON;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\imgui;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glew\include;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\PhysFS\libx86;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\libx86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Game</OutDir>
-    <IncludePath>C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\PhysFS\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Assimp\include;$(SolutionDir)Bacchus_Engine\MathGeoLib\include;$(SolutionDir)Bacchus_Engine\JSON;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\PhysFS\include;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glew\include\GL;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Assimp\include;$(SolutionDir)Bacchus_Engine\MathGeoLib\include;$(SolutionDir)Bacchus_Engine\JSON;F:\Bacchus_Engine\Bacchus_Engine\SDL\include;F:\Bacchus_Engine\Bacchus_Engine\glew\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\PhysFS\libx86;C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\libx86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
