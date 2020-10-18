@@ -1,14 +1,7 @@
 #pragma once
 
-#include "glew/include/GL/glew.h"
-#include "imgui/imgui.h"
-#include "imgui/examples/imgui_impl_sdl.h"
-#include "imgui/examples/imgui_impl_opengl3.h"
 #include "JSON/parson.h"
 #include <string>
-
-class Application;
-struct PhysBody3D;
 
 class Module
 {
@@ -16,9 +9,8 @@ private :
 	bool enabled;
 
 public:
-	Application* App;
 
-	Module(Application* parent, bool start_enabled = true) : App(parent)
+	Module(bool start_enabled = true)
 	{}
 
 	virtual ~Module()
@@ -54,11 +46,11 @@ public:
 		return true; 
 	}
 
-	//virtual bool Load(JSON_Object* object) {
-	//	return true;
-	//}
+	/*virtual void SaveStatus(json& file) const {}
 
-	//virtual bool Save(JSON_Object* object) {
-	//	return true;
-	//}
+	virtual void LoadStatus(const json& file) {}*/
+
+protected:
+
+	std::string name = "Undefined";
 };
