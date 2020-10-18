@@ -3,6 +3,8 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 
+#include "Math.h"
+
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -329,6 +331,12 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	//mathgeolib tests
+	math::Sphere sphere;
+	float3 spherepos = float3(0.0, 0.0, 0.0);
+	sphere.pos = spherepos;
+	sphere.r = 3.0f;
+
 	PrimiPlane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
