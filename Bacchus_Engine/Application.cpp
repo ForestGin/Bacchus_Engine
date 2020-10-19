@@ -6,6 +6,8 @@
 #include "BacchusInterface.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
+#include "FileSystem.h"
+#include "ModuleResources.h"
 
 Application::Application()
 {
@@ -14,18 +16,20 @@ Application::Application()
 	last_fps = -1;
 	capped_ms = 1000 / 60; // Get Display RR!!
 	fps_counter = 0;
-	/*appName = "";
+	appName = "";
 	configpath = "Settings/EditorConfig.json";
-	log = "Application Logs:";*/
+	log = "Application Logs:";
 	RandomNumber = new math::LCG();
 
-
+	//.-.-.-.-.-.-
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	bacchusinterface = new BacchusInterface(this);
+	bacchusinterface = new BacchusInterface(this, true);
+	fs = new FileSystem(this, true, ASSETS_FOLDER);
+	resources = new ModuleResources(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -35,6 +39,8 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(fs);
+	AddModule(resources);
 
 	//Scene
 	AddModule(scene_intro);
@@ -63,14 +69,20 @@ bool Application::Init()
 {
 	bool ret = true;
 
-	//// --- Load App data from JSON files ---
-	//json config = JLoader.Load(configpath.data());
+	// --- Load App data from JSON files ---
+	json config = JLoader.Load(configpath.data());
 
-	//// --- Create Config with default values if load fails ---
 	//if (config.is_null())
 	//{
-	//	config = GetDefaultConfig();
+	//	//call defaultconfig
 	//}
+
+	// --- Reading App Name/ Org Name from json file ---
+	std::string tmp = config["Application"]["Title"];
+	appName = tmp;
+
+	std::string tmp2 = config["Application"]["Organization"];
+	orgName = tmp2;
 
 	//// --- Reading App Name/ Org Name from json file ---
 	//std::string tmp = config["Application"]["Title"];
@@ -84,7 +96,7 @@ bool Application::Init()
 
 	while(item != list_modules.end() && ret == true)
 	{
-		ret = (*item)->Init();
+		ret = (*item)->Init(/*config*/);
 		++item;
 	}
 
@@ -136,6 +148,50 @@ void Application::FinishUpdate()
 	// --- Send data to GUI- PanelSettings Historiograms
 	//App->bacchusinterface->LogFPS((float)last_fps, (float)last_frame_ms);
 
+}
+
+void Application::SaveAllStatus()
+{
+	//json config = GetDefaultConfig();
+
+	//std::string tmp = appName;
+	//config["Application"]["Title"] = tmp;
+	//std::string tmp2 = orgName;
+	//config["Application"]["Organization"] = tmp2;
+
+	//// --- Call Save of all modules ---
+
+	//std::list<Module*>::const_iterator item = list_modules.begin();
+
+	//while (item != list_modules.end())
+	//{
+	//	(*item)->SaveStatus(config);
+	//	item++;
+	//}
+
+	//JLoader.Save(configpath.data(), config);
+}
+
+void Application::LoadAllStatus(json& file)
+{
+	// --- Reading App name from json file ---
+	std::string tmp = file["Application"]["Title"];
+	appName = tmp;
+
+	std::string tmp2 = file["Application"]["Organization"];
+	orgName = tmp2;
+
+	// --- Call Load of all modules ---
+
+	json config = JLoader.Load(configpath.data());
+
+	std::list<Module*>::const_iterator item = list_modules.begin();
+
+	while (item != list_modules.end())
+	{
+		(*item)->LoadStatus(config);
+		item++;
+	}
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -207,21 +263,29 @@ uint Application::GetMaxFramerate() const
 		return 0;
 }
 
-//const char* Application::GetAppName() const
-//{
-//	return appName.data();
-//}
-//
-//void Application::SetAppName(const char* name)
-//{
-//	appName.assign(name);
-//	App->window->SetWinTitle(appName.data());
-//}
-//
-//void Application::SetOrganizationName(const char* name)
-//{
-//	orgName = name;
-//}
+
+
+void Application::SetAppName(const char* name)
+{
+	appName.assign(name);
+	App->window->SetTitle(appName.data());
+}
+
+void Application::SetOrganizationName(const char* name)
+{
+	orgName = name;
+}
+
+const char* Application::GetAppName() const
+{
+	return appName.data();
+}
+
+const char* Application::GetOrganizationName() const
+{
+	return orgName.data();
+}
+
 
 //json Application::GetDefaultConfig() const
 //{
@@ -255,19 +319,5 @@ uint Application::GetMaxFramerate() const
 //
 //	return config;
 //}
-
-// ---------------------------------------------
-LCG& Application::GetRandom()
-{
-	return *RandomNumber;
-}
-
-// ---------------------------------------------
-void Application::RequestBrowser(const char* url) const
-{
-	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
-}
-
-
 
 

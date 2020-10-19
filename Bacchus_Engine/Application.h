@@ -9,7 +9,7 @@
 #include "PerfTimer.h"
 #include "MathGeoLib/include/Algorithm/Random/LCG.h"
 
-#include "JSON/parson.h"
+//#include "JSON/parson.h"
 
 class Module;
 class ModuleWindow;
@@ -18,6 +18,8 @@ class ModuleSceneIntro;
 class ModuleRenderer3D;
 class ModuleCamera3D;
 class BacchusInterface;
+class FileSystem;
+class ModuleResources;
 
 class Application
 {
@@ -45,6 +47,21 @@ public:
 
 	void Log(const char* entry);
 	void ClearLogsFromConsole();
+	FileSystem* fs = nullptr;
+	ModuleResources* resources = nullptr;
+
+	std::vector<float> fps_log;
+	std::vector<float> ms_log;
+	float	dt;
+	float fps;
+	int cap;
+	int	 capped_ms;
+	Timer last_sec_frame_time;
+	Uint32 last_sec_frame_count = 0;
+	Uint64 frame_count = 0;
+	Timer frame_time;
+	PerfTimer ptimer;
+
 
 private:
 
@@ -53,6 +70,10 @@ private:
 	Timer				ms_timer;
 	Timer				fps_timer;
 	float				dt = 0;
+	std::string			appName;
+	std::string			orgName;
+	std::string			configpath;
+	JSONLoader			JLoader;
 
 	Uint32				frames;
 	int					fps_counter;
@@ -80,6 +101,9 @@ private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+	void SaveAllStatus();
+	void LoadAllStatus(json& file);
 };
 
 extern Application* App;

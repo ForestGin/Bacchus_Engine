@@ -17,7 +17,7 @@ void log(const char file[], int line, const char* format, ...);
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
 #define HAVE_M_PI
-
+const float M_PI = 3.14159265359f;
 
 typedef unsigned int uint;
 
@@ -38,4 +38,6 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
 #define TITLE "BACCHUS ENGINE"
-#define ORGANIZATION "UPS CITM BCN"
+#define ORGANIZATION "UPC CITM BCN"
+#define ASSETS_FOLDER "/Assets/"
+#define SETTINGS_FOLDER "/Settings/"
