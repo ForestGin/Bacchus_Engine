@@ -38,4 +38,6 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
 #define TITLE "BACCHUS ENGINE"
-#define ORGANIZATION "UPS CITM BCN"
+#define ORGANIZATION "UPC CITM BCN"
+#define ASSETS_FOLDER "/Assets/"
+#define SETTINGS_FOLDER "/Settings/"

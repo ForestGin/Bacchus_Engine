@@ -12,6 +12,7 @@
 #include "ModuleCamera3D.h"
 #include "BacchusInterface.h"
 #include "JSONLoader.h"
+#include "FileSystem.h"
 
 #include <list>
 #include <vector>
@@ -19,12 +20,13 @@
 class Application
 {
 public:
-	ModuleWindow* window;
-	ModuleInput* input;
-	ModuleRenderer3D* renderer3D;
-	ModuleSceneIntro* scene_intro;
-	BacchusInterface* bacchusinterface;
-	ModuleCamera3D* camera;
+	ModuleWindow* window = nullptr;
+	ModuleInput* input = nullptr;
+	ModuleRenderer3D* renderer3D = nullptr;
+	ModuleSceneIntro* scene_intro = nullptr;
+	BacchusInterface* bacchusinterface = nullptr;
+	ModuleCamera3D* camera = nullptr;
+	FileSystem* fs = nullptr;
 
 	std::vector<float> fps_log;
 	std::vector<float> ms_log;
@@ -44,6 +46,9 @@ private:
 	Timer	ms_timer;
 	std::list<Module*> list_modules;
 
+	std::string			appName;
+	std::string			orgName;
+	std::string			configpath;
 	JSONLoader			JLoader;
 
 public:
@@ -58,6 +63,11 @@ public:
 	bool CleanUp();
 	void RequestBrowser(const char* url) const;
 	
+	void SetAppName(const char* name);
+	void SetOrganizationName(const char* name);
+	const char* GetAppName() const;
+	const char* GetOrganizationName() const;
+	/*json GetDefaultConfig() const;*/
 
 private:
 
@@ -66,7 +76,7 @@ private:
 	void FinishUpdate();
 
 	void SaveAllStatus();
-	void LoadAllStatus();
+	void LoadAllStatus(json& file);
 };
 
 extern Application* App;

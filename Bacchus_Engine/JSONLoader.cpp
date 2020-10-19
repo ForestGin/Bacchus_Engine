@@ -1,32 +1,50 @@
 #include "JSONLoader.h"
-#include <assert.h>
 #include <fstream>
-
-// for convenience
-using json = nlohmann::json;
+#include <iomanip>
 
 json JSONLoader::Load(const char* File) const
 {
-	if (File == nullptr)
-	{
-		assert(File != nullptr);
-	}
+
+	bool ret = true;
 
 	// --- Create JSON object ---
 	json jsonfile;
 
-	// --- Load File ---
-	std::ifstream ifs(File);
-	assert(!ifs.fail());
-
-	// --- Parse File, put data in jsonfile ---
-	try
+	if (File == nullptr)
 	{
-		jsonfile = json::parse(ifs);
+		ret = false;
+		LOG("|[error]: JSONLoader::Load : %c was nullptr", File);
 	}
-	catch (json::parse_error & e)
+
+	else
 	{
-		LOG("Parse Error in loading file: %c", e.what());
+
+		// --- Load File ---
+		std::ifstream ifs;
+		ifs.open(File);
+
+		if (!ifs.is_open())
+		{
+			LOG("|[error]: JSONLoader::Save could not open File: %c", File);
+			ret = false;
+		}
+
+		else
+		{
+			// --- Parse File, put data in jsonfile ---
+			try
+			{
+				jsonfile = json::parse(ifs);
+			}
+			catch (json::parse_error & e)
+			{
+				LOG("|[error]: Parse Error in loading file: %c", e.what());
+			}
+
+			ifs.close();
+
+		}
+
 	}
 
 	return jsonfile;
@@ -34,11 +52,24 @@ json JSONLoader::Load(const char* File) const
 
 bool JSONLoader::Save(const char* File, json jsonfile)
 {
-	// --- Save to File, create if it does not exist ---
-	std::ofstream file(File);
-	assert(file.fail());
+	// --- Save to File, overwrite if exists ---
+	// Note setw, used to prettify JSON file (adding newlines and spaces)
 
-	file << jsonfile;
+	bool ret = true;
 
-	return true;
+	std::ofstream file;
+	file.open(File);
+
+	if (!file.is_open())
+	{
+		LOG("|[error]: JSONLoader::Save could not open File: %c", File);
+		ret = false;
+	}
+	else
+	{
+		file << std::setw(4) << jsonfile << std::endl;
+		file.close();
+	}
+
+	return ret;
 }

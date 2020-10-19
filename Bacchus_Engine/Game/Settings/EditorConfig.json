@@ -1,6 +1,7 @@
 {
   "Application": {
-    "Title": "Bacchus Engine"
+    	"Organization": "UPC CITM BCN",
+        "Title": "BACCHUS ENGINE"
   },
 
    "GUI": {

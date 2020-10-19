@@ -5,12 +5,17 @@
 
 Application::Application()
 {
+	appName = "";
+	configpath = "Settings/EditorConfig.json";
+
+	//.-.-.-.-.-.-
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	bacchusinterface = new BacchusInterface(this, true);
+	fs = new FileSystem(this, true, ASSETS_FOLDER);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -20,6 +25,7 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(fs);
 
 	//Scene
 	AddModule(scene_intro);
@@ -53,7 +59,19 @@ bool Application::Init()
 	bool ret = true;
 
 	// --- Load App data from JSON files ---
-	json config = JLoader.Load("Settings/EditorConfig.json");
+	json config = JLoader.Load(configpath.data());
+
+	//if (config.is_null())
+	//{
+	//	//call defaultconfig
+	//}
+
+	// --- Reading App Name/ Org Name from json file ---
+	std::string tmp = config["Application"]["Title"];
+	appName = tmp;
+
+	std::string tmp2 = config["Application"]["Organization"];
+	orgName = tmp2;
 
 	T.d = true;
 	T.Start();
@@ -118,20 +136,38 @@ void Application::FinishUpdate()
 
 void Application::SaveAllStatus()
 {
-	/*json config = JLoader.Load("Settings/EditorConfig.json");
+	//json config = GetDefaultConfig();
 
-	std::list<Module*>::const_iterator item = list_modules.begin();
+	//std::string tmp = appName;
+	//config["Application"]["Title"] = tmp;
+	//std::string tmp2 = orgName;
+	//config["Application"]["Organization"] = tmp2;
 
-	while (item != list_modules.end())
-	{
-		(*item)->LoadStatus(config);
-		item++;
-	}*/
+	//// --- Call Save of all modules ---
+
+	//std::list<Module*>::const_iterator item = list_modules.begin();
+
+	//while (item != list_modules.end())
+	//{
+	//	(*item)->SaveStatus(config);
+	//	item++;
+	//}
+
+	//JLoader.Save(configpath.data(), config);
 }
 
-void Application::LoadAllStatus()
+void Application::LoadAllStatus(json& file)
 {
-	json config = JLoader.Load("Settings/EditorConfig.json");
+	// --- Reading App name from json file ---
+	std::string tmp = file["Application"]["Title"];
+	appName = tmp;
+
+	std::string tmp2 = file["Application"]["Organization"];
+	orgName = tmp2;
+
+	// --- Call Load of all modules ---
+
+	json config = JLoader.Load(configpath.data());
 
 	std::list<Module*>::const_iterator item = list_modules.begin();
 
@@ -200,5 +236,60 @@ void Application::RequestBrowser(const char* url) const
 }
 
 
+
+void Application::SetAppName(const char* name)
+{
+	appName.assign(name);
+	App->window->SetTitle(appName.data());
+}
+
+void Application::SetOrganizationName(const char* name)
+{
+	orgName = name;
+}
+
+const char* Application::GetAppName() const
+{
+	return appName.data();
+}
+
+const char* Application::GetOrganizationName() const
+{
+	return orgName.data();
+}
+
+
+//json Application::GetDefaultConfig() const
+//{
+//	// --- Create Config with default values ---
+//	json config = {
+//		{"Application", {
+//
+//		}},
+//
+//		{"GUI", {
+//
+//		}},
+//
+//		{"Window", {
+//			{"width", 1024},
+//			{"height", 720},
+//			{"fullscreen", false},
+//			{"resizable", true},
+//			{"borderless", false},
+//			{"fullscreenDesktop", false}
+//		}},
+//
+//		{"Input", {
+//
+//		}},
+//
+//		{"Renderer3D", {
+//			{"VSync", true}
+//		}},
+//	};
+//
+//	return config;
+//}
 
 
