@@ -365,6 +365,7 @@
     <ClInclude Include="MathGeoLib\include\Time\Clock.h">
       <Filter>External Libs\MathGeoLib\Time</Filter>
     </ClInclude>
+    <ClInclude Include="OpenGL.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">

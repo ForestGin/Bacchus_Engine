@@ -10,7 +10,7 @@
 class BacchusInterface : public Module
 {
 public: 
-	BacchusInterface(Application* app, bool start_enabled = true);
+	BacchusInterface(bool start_enabled = true);
 	~BacchusInterface();
 
 	bool Start();

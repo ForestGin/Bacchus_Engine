@@ -1,22 +1,25 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
-#include "SDL\include\SDL_opengl.h"
-#include "MathGeoLib/include/MathGeoLib.h"
+#include "ModuleWindow.h"
+#include "ModuleCamera3D.h"
+#include "ModuleSceneIntro.h"
+//#include "ModuleSceneManager.h"
 
-#include "imgui/imgui_internal.h"
+#include "BacchusInterface.h"
+
+#include "OpenGL.h"
+#include "Imgui/imgui.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "glew/libx86/glew32.lib")
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(start_enabled)
+//#include "mmgr/mmgr.h"
+
+ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module(start_enabled)
 {
-	wireframe = false;
-	culling = false;
-	depth = false;
-	lightning = false;
-	color_mat = false;
+	
 }
 
 // Destructor
@@ -31,29 +34,37 @@ bool ModuleRenderer3D::Init()
 	
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
+	
 	if(context == NULL)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		LOG("|[error]: OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
-
-	glewInit();
 	
 	if(ret == true)
 	{
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			LOG("|[error]: Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+
+		// Initialize glew
+		GLenum error = glewInit();
+
+		if (error != GL_NO_ERROR)
+		{
+			LOG("|[error]: Error initializing glew! %s\n"/*, glewGetErrorString(error)*/);
+			ret = false;
+		}
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
 		//Check for error
-		GLenum error = glGetError();
+		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG("|[error]: Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -65,7 +76,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG("|[error]: Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 		
@@ -98,15 +109,22 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		/*glEnable(GL_DEPTH_TEST);*/
-		//glEnable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
-		/*glEnable(GL_LIGHTING);*/
+		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+
+		// Transparency and color merge
+		// glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+
 	}
 
+	LOG("OpenGL Version: %s", glGetString(GL_VERSION));
+	LOG("Glew Version: %s", glewGetString(GLEW_VERSION));
+
 	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	OnResize(App->window->GetWindowWidth(), App->window->GetWindowHeight());
 
 	return ret;
 }
@@ -114,13 +132,19 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	// Reset Buffers to default values
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glLoadIdentity();
 
+	// Set Model View as current
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
-	// light 0 on cam pos
+	// Update OpenGL Capabilities
+	UpdateGLCapabilities();
+
+	// light 0 on cam pos, Render lights
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
@@ -129,35 +153,35 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleRenderer3D::Update(float dt)
-{
-	if(wireframe == true)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else if(wireframe == false)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	if (culling == true)
-		glEnable(GL_CULL_FACE);
-	else if (culling == false)
-		glDisable(GL_CULL_FACE);
-
-	if (depth == true)
-		glEnable(GL_DEPTH_TEST);
-	else if (depth == false)
-		glDisable(GL_DEPTH_TEST);
-
-	if (lightning == true)
-		glEnable(GL_LIGHTING);
-	else if (lightning == false)
-		glDisable(GL_LIGHTING);
-
-	if (color_mat == true)
-		glEnable(GL_COLOR_MATERIAL);
-	else if (color_mat == false)
-		glDisable(GL_COLOR_MATERIAL);
-
-	return UPDATE_CONTINUE;
-}
+//update_status ModuleRenderer3D::Update(float dt)
+//{
+//	if(wireframe == true)
+//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//	else if(wireframe == false)
+//		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+//
+//	if (culling == true)
+//		glEnable(GL_CULL_FACE);
+//	else if (culling == false)
+//		glDisable(GL_CULL_FACE);
+//
+//	if (depth == true)
+//		glEnable(GL_DEPTH_TEST);
+//	else if (depth == false)
+//		glDisable(GL_DEPTH_TEST);
+//
+//	if (lightning == true)
+//		glEnable(GL_LIGHTING);
+//	else if (lightning == false)
+//		glDisable(GL_LIGHTING);
+//
+//	if (color_mat == true)
+//		glEnable(GL_COLOR_MATERIAL);
+//	else if (color_mat == false)
+//		glDisable(GL_COLOR_MATERIAL);
+//
+//	return UPDATE_CONTINUE;
+//}
 
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
@@ -171,11 +195,45 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
 
+	// --- Draw Level geometry --- // To be destroyed
+	//App->scene_intro->Draw();
+
+	// --- Draw Level Geometry ---
+	//App->scene_manager->Draw();
+
+	// --- Draw everything and swap buffers ---
+	//App->gui->Draw();
+
+	// To prevent problems with viewports
+	SDL_GL_MakeCurrent(App->window->window, context);
 	SDL_GL_DeleteContext(context);
 
 	return true;
 }
 
+void ModuleRenderer3D::UpdateGLCapabilities()
+{
+	if (!depth_test)
+		glDisable(GL_DEPTH_TEST);
+	else
+		glEnable(GL_DEPTH_TEST);
+
+	if (!cull_face)
+		glDisable(GL_CULL_FACE);
+	else
+		glEnable(GL_CULL_FACE);
+
+	if (!lighting)
+		glDisable(GL_LIGHTING);
+	else
+		glEnable(GL_LIGHTING);
+
+	if (!color_material)
+		glDisable(GL_COLOR_MATERIAL);
+	else
+		glEnable(GL_COLOR_MATERIAL);
+
+}
 
 void ModuleRenderer3D::OnResize(int width, int height)
 {
@@ -190,3 +248,34 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
+bool ModuleRenderer3D::SetVSync(bool vsync)
+{
+	bool ret = true;
+
+	this->vsync = vsync;
+
+	if (this->vsync)
+	{
+
+		if (SDL_GL_SetSwapInterval(1) == -1)
+		{
+			ret = false;
+			LOG("|[error]: Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+		}
+	}
+	else {
+
+		if (SDL_GL_SetSwapInterval(0) == -1)
+		{
+			ret = false;
+			LOG("|[error]: Warning: Unable to set immediate updates! SDL Error: %s\n", SDL_GetError());
+		}
+	}
+
+	return ret;
+}
+
+bool ModuleRenderer3D::GetVSync() const
+{
+	return vsync;
+}

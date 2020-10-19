@@ -2,6 +2,9 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
+#include "ModuleCamera3D.h"
+
+#include "OpenGL.h"
 
 #include "Math.h"
 

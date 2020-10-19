@@ -1,6 +1,9 @@
 #include "Application.h"
 #include "Globals.h"
 #include "BacchusInterface.h"
+#include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleInput.h"
 
 #include "imgui/imgui.h"
 #include "imgui/examples/imgui_impl_sdl.h"
@@ -8,9 +11,10 @@
 #include "imgui/imgui_internal.h"
 #include "imgui/ImGuizmo/ImGuizmo.h"
 
-#include <string>
+#include "OpenGL.h"
 
-BacchusInterface::BacchusInterface(Application* app, bool start_enabled) : Module(start_enabled) {}
+
+BacchusInterface::BacchusInterface(bool start_enabled) : Module(start_enabled) {}
 
 BacchusInterface::~BacchusInterface() {}
 
@@ -170,33 +174,33 @@ update_status BacchusInterface::Update(float dt)
 			
 			}
 
-			//try to enable-disable face culling
-			if (ImGui::Checkbox("Culling", &App->renderer3D->culling))
-			{
-				App->renderer3D->culling != App->renderer3D->culling;
+			////try to enable-disable face culling
+			//if (ImGui::Checkbox("Culling", &App->renderer3D->culling))
+			//{
+			//	App->renderer3D->culling != App->renderer3D->culling;
 
-			}
+			//}
 
-			//depth-test
-			if (ImGui::Checkbox("Depth", &App->renderer3D->depth))
-			{
-				App->renderer3D->depth != App->renderer3D->depth;
+			////depth-test
+			//if (ImGui::Checkbox("Depth", &App->renderer3D->depth))
+			//{
+			//	App->renderer3D->depth != App->renderer3D->depth;
 
-			}
+			//}
 
-			//lightning
-			if (ImGui::Checkbox("Lights", &App->renderer3D->lightning))
-			{
-				App->renderer3D->lightning != App->renderer3D->lightning;
+			////lightning
+			//if (ImGui::Checkbox("Lights", &App->renderer3D->lightning))
+			//{
+			//	App->renderer3D->lightning != App->renderer3D->lightning;
 
-			}
+			//}
 
-			//color material
-			if (ImGui::Checkbox("Color Material", &App->renderer3D->color_mat))
-			{
-				App->renderer3D->color_mat != App->renderer3D->color_mat;
+			////color material
+			//if (ImGui::Checkbox("Color Material", &App->renderer3D->color_mat))
+			//{
+			//	App->renderer3D->color_mat != App->renderer3D->color_mat;
 
-			}
+			//}
 		}
 
 		ImGui::End();
@@ -391,7 +395,7 @@ void BacchusInterface::WindowConfig()
 
 void BacchusInterface::FPSGraph()
 {
-	App->JasonReading();
+	/*App->JasonReading();
 
 	ImGui::InputText("App Name", TITLE, 20);
 	ImGui::InputText("Organitzation", ORGANIZATION, 20);
@@ -413,7 +417,7 @@ void BacchusInterface::FPSGraph()
 	sprintf_s(title, 25, "Framerate %.1f", App->fps_log[App->fps_log.size() - 1]);
 	ImGui::PlotHistogram("##framerate", &App->fps_log[0], App->fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 	sprintf_s(title, 25, "Milliseconds %.1f", App->ms_log[App->ms_log.size() - 1]);
-	ImGui::PlotHistogram("##framerate", &App->ms_log[0], App->ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+	ImGui::PlotHistogram("##framerate", &App->ms_log[0], App->ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));*/
 
 }
 

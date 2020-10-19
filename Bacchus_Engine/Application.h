@@ -2,53 +2,69 @@
 #define _APPLICATION_
 
 #include "Globals.h"
+#include <list>
+#include <string>
+#include <vector>
 #include "Timer.h"
 #include "PerfTimer.h"
-#include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleSceneIntro.h"
-#include "ModuleCamera3D.h"
-#include "BacchusInterface.h"
+#include "MathGeoLib/include/Algorithm/Random/LCG.h"
+
 #include "JSON/parson.h"
 
-#include <list>
-#include <vector>
+class Module;
+class ModuleWindow;
+class ModuleInput;
+class ModuleSceneIntro;
+class ModuleRenderer3D;
+class ModuleCamera3D;
+class BacchusInterface;
 
 class Application
 {
 public:
-	ModuleWindow* window;
-	ModuleInput* input;
-	ModuleRenderer3D* renderer3D;
-	ModuleSceneIntro* scene_intro;
-	BacchusInterface* bacchusinterface;
-	ModuleCamera3D* camera;
+	ModuleWindow* window = nullptr;
+	ModuleInput* input = nullptr;
+	ModuleRenderer3D* renderer3D = nullptr;
+	ModuleSceneIntro* scene_intro = nullptr;
+	BacchusInterface* bacchusinterface = nullptr;
+	ModuleCamera3D* camera = nullptr;
 
-	std::vector<float> fps_log;
-	std::vector<float> ms_log;
-	float	dt;
-	float fps;
-	int cap;
-	int	 capped_ms;
-	Timer last_sec_frame_time;
-	Uint32 last_sec_frame_count = 0;
-	Uint64 frame_count = 0;
-	Timer frame_time;
-	PerfTimer ptimer;
+public:
+	// Getts
+	uint GetMaxFramerate() const;
+	const char* GetAppName() const;
+	const char* GetOrganizationName() const;
+	//json GetDefaultConfig() const;
+	std::vector<std::string>& GetLogs();
+	LCG& GetRandom();
 
-	JSON_Value* pilar;
+	// Sets
+	void SetMaxFramerate(uint maxFramerate);
+	void SetAppName(const char* name);
+	void SetOrganizationName(const char* name);
+
+	void Log(const char* entry);
+	void ClearLogsFromConsole();
 
 private:
 
-	Timer	ms_timer;
 	std::list<Module*> list_modules;
 
+	Timer				ms_timer;
+	Timer				fps_timer;
+	float				dt = 0;
+
+	Uint32				frames;
+	int					fps_counter;
+	int					last_fps;
+	uint				capped_ms;
+	uint				last_frame_ms;
+
+	//JSON_Value* pilar;
+
+	LCG* RandomNumber = nullptr;
 
 public:
-
-	Timer T;
 
 	Application();
 	~Application();
@@ -57,7 +73,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void RequestBrowser(const char* url) const;
-	void JasonReading();
+	//void JasonReading();
 
 private:
 
