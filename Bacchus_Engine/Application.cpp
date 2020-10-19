@@ -1,5 +1,12 @@
 #include "Application.h"
-
+#include "ModuleWindow.h"
+#include "ModuleCamera3D.h"
+#include "ModuleInput.h"
+#include "BacchusInterface.h"
+#include "ModuleSceneIntro.h"
+#include "ModuleRenderer3D.h"
+#include "FileSystem.h"
+#include "Resources.h"
 
 #include <string>
 
@@ -16,6 +23,7 @@ Application::Application()
 	camera = new ModuleCamera3D(this);
 	bacchusinterface = new BacchusInterface(this, true);
 	fs = new FileSystem(this, true, ASSETS_FOLDER);
+	resources = new Resources(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -26,6 +34,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(fs);
+	AddModule(resources);
 
 	//Scene
 	AddModule(scene_intro);

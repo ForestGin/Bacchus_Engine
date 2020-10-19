@@ -38,6 +38,7 @@
       <Filter>External Libs\JSON</Filter>
     </ClCompile>
     <ClCompile Include="FileSystem.cpp" />
+    <ClCompile Include="Resources.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -87,6 +88,7 @@
       <Filter>External Libs\JSON</Filter>
     </ClInclude>
     <ClInclude Include="FileSystem.h" />
+    <ClInclude Include="Resources.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">

@@ -17,6 +17,16 @@
 #include <list>
 #include <vector>
 
+class Module;
+class ModuleWindow;
+class ModuleInput;
+class ModuleSceneIntro;
+class ModuleRenderer3D;
+class ModuleCamera3D;
+class BacchusInterface;
+class FileSystem;
+class Resources;
+
 class Application
 {
 public:
@@ -27,6 +37,7 @@ public:
 	BacchusInterface* bacchusinterface = nullptr;
 	ModuleCamera3D* camera = nullptr;
 	FileSystem* fs = nullptr;
+	Resources* resources = nullptr;
 
 	std::vector<float> fps_log;
 	std::vector<float> ms_log;

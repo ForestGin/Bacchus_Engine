@@ -2,8 +2,76 @@
   Application.cpp
 F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-F:\Bacchus_Engine\Bacchus_Engine\Application.cpp(124,9): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-  JSONLoader.cpp
+F:\Bacchus_Engine\Bacchus_Engine\Application.cpp(133,9): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+  BacchusInterface.cpp
+F:\Bacchus_Engine\Bacchus_Engine\Application.cpp(139,37): warning C4018: '<': signed/unsigned mismatch
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(167,32): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(174,30): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(181,28): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(188,32): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(195,32): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(283,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(287,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(291,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(295,30): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(299,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(303,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(307,26): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(311,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(315,27): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(319,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(323,28): warning C4805: '==': unsafe mix of type 'SDL_bool' and type 'bool' in operation
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(358,27): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(364,26): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(369,27): warning C4552: '!=': result of expression not used
+  FileSystem.cpp
+F:\Bacchus_Engine\Bacchus_Engine\BacchusInterface.cpp(375,27): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  log.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Main.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ModuleCamera3D.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ModuleInput.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ModuleRenderer3D.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ModuleSceneIntro.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(123,2): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(210,2): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(280,2): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(426,25): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(426,19): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(426,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(434,25): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(434,18): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(434,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(441,25): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(441,18): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(441,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(448,22): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(448,17): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(448,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(455,25): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(455,18): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(455,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(462,25): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(462,19): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+  ModuleWindow.cpp
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(462,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Resources.cpp
   Generating Code...
-F:\Bacchus_Engine\Bacchus_Engine\Application.cpp(130,37): warning C4018: '<': signed/unsigned mismatch
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
   Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
