@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModuleResources.h"
 
 #include "imgui/imgui_internal.h"
 
@@ -113,6 +114,14 @@ update_status ModuleInput::PreUpdate(float dt)
 				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
 					App->renderer3D->OnResize(e.window.data1, e.window.data2);
 			}
+			break;
+
+			case SDL_DROPFILE:
+
+				if (e.drop.type == SDL_DROPFILE)
+					App->resources->LoadFBX(e.drop.file);
+
+				break;
 		}
 	}
 

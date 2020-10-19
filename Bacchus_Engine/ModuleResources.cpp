@@ -1,5 +1,7 @@
+#include "Application.h"
 #include "ModuleResources.h"
 #include "ResourceMesh.h"
+
 
 #include "glew/include/GL/glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -26,57 +28,27 @@ bool ModuleResources::CleanUp()
 	return true;
 }
 
-bool ModuleResources::LoadFile(const char* path)
+bool ModuleResources::LoadFBX(const char* path)
 {
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
+
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 
 		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
-			// Call mesh importer
+			// --- Create new Resource mesh to store current scene mesh data ---
+			ResourceMesh* new_mesh = new ResourceMesh;
+			meshes.push_back(new_mesh);
 
+			// --- Get Scene mesh number i ---
+			aiMesh* mesh = scene->mMeshes[i];
 
+			// --- Import mesh data (fill new_mesh)---
+			new_mesh->ImportMesh(mesh);
 		}
-		aiMesh* mesh = scene->mMeshes[0];
-
-		// --- Vertices ---
-		verticesSize = mesh->mNumVertices;
-		Vertices = new float3[mesh->mNumVertices];
-
-		for (unsigned i = 0; i < mesh->mNumVertices; ++i)
-		{
-			Vertices[i] = *((float3*)&mesh->mVertices[i]);
-		}
-
-		// --- Indices ---
-		IndicesSize = mesh->mNumFaces * 3;
-		Indices = new uint[IndicesSize];
-
-		for (unsigned j = 0; j < mesh->mNumFaces; ++j)
-		{
-			const aiFace& face = mesh->mFaces[j];
-
-			assert(face.mNumIndices == 3); // Only triangles
-
-			Indices[j * 3] = face.mIndices[0];
-			Indices[j * 3 + 1] = face.mIndices[1];
-			Indices[j * 3 + 2] = face.mIndices[2];
-		}
-
-		glGenBuffers(1, (GLuint*)&VerticesID); // create buffer
-		glBindBuffer(GL_ARRAY_BUFFER, VerticesID); // start using created buffer
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * verticesSize, Vertices, GL_STATIC_DRAW); // send vertices to VRAM
-		glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
-
-
-		glGenBuffers(1, (GLuint*)&IndicesID); // create buffer
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndicesID); // start using created buffer
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * IndicesSize, Indices, GL_STATIC_DRAW); // send vertices to VRAM
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
-
 		aiReleaseImport(scene);
 
 
@@ -112,23 +84,27 @@ bool ModuleResources::Init(/*json file*/)
 
 bool ModuleResources::Start()
 {
-	LoadFile("Assets/warrior.FBX");
+	/*LoadFile("Assets/warrior.FBX");*/
 
 	return true;
 }
 
 void ModuleResources::Draw()
 {
-	glEnableClientState(GL_VERTEX_ARRAY); // enable client-side capability
+	for (uint i = 0; i < meshes.size(); ++i)
+	{
+		glEnableClientState(GL_VERTEX_ARRAY); // enable client-side capability
 
-	glBindBuffer(GL_ARRAY_BUFFER, VerticesID); // start using created buffer (vertices)
-	glVertexPointer(3, GL_FLOAT, 0, NULL); // Use selected buffer as vertices 
+		glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->VerticesID); // start using created buffer (vertices)
+		glVertexPointer(3, GL_FLOAT, 0, NULL); // Use selected buffer as vertices 
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndicesID); // start using created buffer (indices)
-	glDrawElements(GL_TRIANGLES, IndicesSize, GL_UNSIGNED_INT, NULL); // render primitives from array data
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->IndicesID); // start using created buffer (indices)
+		glDrawElements(GL_TRIANGLES, meshes[i]->IndicesSize, GL_UNSIGNED_INT, NULL); // render primitives from array data
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer (vertices)
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer (indices)
+		glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer (vertices)
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer (indices)
 
-	glDisableClientState(GL_VERTEX_ARRAY); // disable client-side capability
+		glDisableClientState(GL_VERTEX_ARRAY); // disable client-side capability
+	}
+
 }

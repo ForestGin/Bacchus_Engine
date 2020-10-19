@@ -5,6 +5,7 @@
 //#include "Math.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLib.h"
+#include <vector>
 
 class ResourceMesh;
 
@@ -22,19 +23,12 @@ public:
 	//update_status PostUpdate(float dt);
 	void Draw();
 	bool CleanUp();
-	bool LoadFile(const char* path);
+	bool LoadFBX(const char* path);
 
 
 private:
 
-	ResourceMesh* model = nullptr;
-	float3* Vertices = nullptr;
-	uint VerticesID = 0; // unique vertex in VRAM
-	uint verticesSize = 0;
-
-	uint* Indices = nullptr;
-	uint IndicesID = 0; // index in VRAM
-	uint IndicesSize = 0;
+	std::vector<ResourceMesh*> meshes;
 
 };
 
