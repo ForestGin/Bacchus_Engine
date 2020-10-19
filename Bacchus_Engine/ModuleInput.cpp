@@ -1,13 +1,15 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModuleRenderer3D.h"
 #include "ModuleResources.h"
 
+#include "imgui.h"
 #include "imgui/imgui_internal.h"
 
 #define MAX_KEYS 300
 
-ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(start_enabled)
 {
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
@@ -117,11 +119,12 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_DROPFILE:
-
+			{
 				if (e.drop.type == SDL_DROPFILE)
 					App->resources->LoadFBX(e.drop.file);
 
 				break;
+			}
 		}
 	}
 

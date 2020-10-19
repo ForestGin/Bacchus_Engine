@@ -1,17 +1,12 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
 
-ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleWindow::ModuleWindow(bool start_enabled) : Module(start_enabled)
 {
 	window = NULL;
 	screen_surface = NULL;
-	width = 0;
-	height = 0;
-	fullscreen = WIN_FULLSCREEN;
-	resizable = WIN_RESIZABLE;
-	borderless = WIN_BORDERLESS;
-	fulldesktop = WIN_FULLSCREEN_DESKTOP;
 }
 
 // Destructor
@@ -32,14 +27,25 @@ bool ModuleWindow::Init(/*json file*/)
 	}
 	else
 	{
-		//Create window
-		width = SCREEN_WIDTH * SCREEN_SIZE;
-		height = SCREEN_HEIGHT * SCREEN_SIZE;
+		// --- Get Display Data ---
+		SDL_DisplayMode display;
+		SDL_GetCurrentDisplayMode(0, &display);
+		display_Width = display.w;
+		display_Height = display.h;
+
+		// --- Assign Display Specific values to code vars ---
+		screen_width = uint(display.w * 0.75f);
+		screen_height = uint(display.h * 0.75f);
+		RefreshRate = display.refresh_rate;
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
-		//Use OpenGL 2.1
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+		//Use OpenGL 3.1
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE); // deprecated functions are disabled
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
 		if(WIN_FULLSCREEN == true)
 		{
@@ -61,7 +67,7 @@ bool ModuleWindow::Init(/*json file*/)
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
 
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, flags);
 
 		if(window == NULL)
 		{
@@ -76,6 +82,16 @@ bool ModuleWindow::Init(/*json file*/)
 	}
 
 	return ret;
+}
+
+bool ModuleWindow::Start()
+{
+	SetWinBrightness(1.0f);
+
+	// Force to trigger a chain of events to refresh aspect ratios	
+	SDL_SetWindowSize(window, screen_width, screen_height);
+
+	return true;
 }
 
 // Called before quitting
@@ -99,42 +115,175 @@ void ModuleWindow::SetTitle(const char* title)
 	SDL_SetWindowTitle(window, title);
 }
 
-
-void ModuleWindow::SetFullScreen(bool _fullscreen)
+void ModuleWindow::SetWindowWidth(uint width)
 {
+	screen_width = width;
+	UpdateWindowSize();
+}
 
-	Uint32 fullsFlag = _fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_MINIMIZED;
-	fullscreen = _fullscreen;
-	SDL_SetWindowFullscreen(window, fullsFlag);
+void ModuleWindow::SetWindowHeight(uint height)
+{
+	screen_height = height;
+	UpdateWindowSize();
+}
+
+uint ModuleWindow::GetWindowWidth()
+{
+	return screen_width;
+}
+
+uint ModuleWindow::GetWindowHeight()
+{
+	return screen_height;
+}
+
+uint ModuleWindow::GetDisplayRefreshRate()
+{
+	uint refreshRate = 0;
+
+	SDL_DisplayMode desktopDisplay;
+	if (SDL_GetDesktopDisplayMode(0, &desktopDisplay) == 0)
+		refreshRate = desktopDisplay.refresh_rate;
+	else
+		LOG("|[error]: SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+
+	RefreshRate = refreshRate;
+
+	return refreshRate;
+}
+
+void ModuleWindow::GetWinMaxMinSize(uint& min_width, uint& min_height, uint& max_width, uint& max_height) const
+{
+	// --- Function used to set bounds to window resize by user ---
+
+	max_width = display_Width;
+	max_height = display_Height;
+	min_width = 640;
+	min_height = 480;
+
+	SDL_DisplayMode dm;
+	if (SDL_GetDesktopDisplayMode(0, &dm) != 0)
+	{
+		LOG("|[error]: SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+	}
+	else
+	{
+		max_width = dm.w;
+		max_height = dm.h;
+	}
+}
+
+//void ModuleWindow::SaveStatus(json& file) const
+//{
+//
+//}
+//
+//void ModuleWindow::LoadStatus(const json& file)
+//{
+//
+//}
+
+void ModuleWindow::SetFullscreen(bool value)
+{
+	if (value != fullscreen)
+	{
+		fullscreen = value;
+		if (fullscreen == true)
+		{
+			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0)
+				LOG("|[error]: Could not switch to fullscreen: %s\n", SDL_GetError());
+			fullscreen_desktop = false;
+
+		}
+		else
+		{
+			if (SDL_SetWindowFullscreen(window, 0) != 0)
+				LOG("|[error]: Could not switch to windowed: %s\n", SDL_GetError());
+
+			//  --- To keep a default window size on deactivation ---
+			SetWindowWidth(uint(display_Width * 0.75f));
+			SetWindowHeight(uint(display_Height * 0.75f));
+		}
+	}
+
 }
 
 void ModuleWindow::SetResizable(bool _resizable)
 {
 	resizable = _resizable;
-	SDL_bool res = SDL_bool(_resizable);
-	SDL_SetWindowResizable(window, res);
 }
 void ModuleWindow::SetBorderless(bool _borderless)
 {
-	borderless = _borderless;
-	SDL_bool bord = SDL_bool(!_borderless);
-	SDL_SetWindowBordered(window, bord);
+	if (_borderless != borderless && fullscreen == false && fullscreen_desktop == false)
+	{
+		borderless = _borderless;
+		SDL_SetWindowBordered(window, (SDL_bool)!borderless);
+	}
 }
 
-void ModuleWindow::SetFullScreenDesktop(bool _fulldesktop)
+void ModuleWindow::SetFullscreenDesktop(bool value)
 {
-	fulldesktop = _fulldesktop;
-	SDL_DisplayMode dMode;
-	SDL_GetDesktopDisplayMode(0, &dMode);
+	if (value != fullscreen_desktop)
+	{
+		fullscreen_desktop = value;
+		if (fullscreen_desktop == true)
+		{
+			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) != 0)
+				LOG("|[error]: Could not switch to fullscreen desktop: %s\n", SDL_GetError());
+			fullscreen = false;
 
-	if (_fulldesktop)
-	{
-		SDL_SetWindowSize(window, dMode.w, dMode.h);
-		SDL_SetWindowPosition(window, 0, 0);
+		}
+		else
+		{
+			if (SDL_SetWindowFullscreen(window, 0) != 0)
+				LOG("|[error]: Could not switch to windowed: %s\n", SDL_GetError());
+
+			//  --- To keep a default window size on deactivation ---
+			SetWindowWidth(uint(display_Width * 0.75f));
+			SetWindowHeight(uint(display_Height * 0.75f));
+		}
 	}
-	else
-	{
-		SDL_SetWindowSize(window, dMode.w / 2, dMode.h / 2);
-		SDL_SetWindowPosition(window, dMode.w / 4, dMode.h / 4);
-	}
+}
+
+bool ModuleWindow::IsFullscreen()
+{
+	return fullscreen;
+}
+
+bool ModuleWindow::IsResizable()
+{
+	return resizable;
+}
+
+bool ModuleWindow::IsBorderless()
+{
+	return borderless;
+}
+
+bool ModuleWindow::IsFullscreenDesktop()
+{
+	return fullscreen_desktop;
+}
+
+void ModuleWindow::SetWinBrightness(float value)
+{
+	CAP(value); // Force values from 0 to 1
+	if (SDL_SetWindowBrightness(window, value) != 0)
+		LOG("|[error]: Could not change window brightness: %s\n", SDL_GetError());
+}
+
+void ModuleWindow::SetWinTitle(const char* name)
+{
+	SDL_SetWindowTitle(window, name);
+}
+
+float ModuleWindow::GetWinBrightness()
+{
+	return SDL_GetWindowBrightness(window);
+}
+
+void ModuleWindow::UpdateWindowSize() const
+{
+	SDL_SetWindowSize(window, screen_width, screen_height);
+	App->renderer3D->OnResize(screen_width, screen_height);
 }

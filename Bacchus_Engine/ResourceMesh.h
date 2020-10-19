@@ -3,9 +3,7 @@
 
 #include "Globals.h"
 #include "Res.h"
-
-#include "MathGeoLib/include/MathBuildConfig.h"
-#include "MathGeoLib/include/MathGeoLib.h"
+#include "Math.h"
 
 struct aiMesh;
 

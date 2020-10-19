@@ -1,4 +1,6 @@
 #include "Application.h"
+#include "Globals.h"
+
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
@@ -8,12 +10,17 @@
 #include "FileSystem.h"
 #include "ModuleResources.h"
 
-#include <string>
-
 Application::Application()
 {
+	frames = 0;
+	last_frame_ms = -1;
+	last_fps = -1;
+	capped_ms = 1000 / 60; // Get Display RR!!
+	fps_counter = 0;
 	appName = "";
 	configpath = "Settings/EditorConfig.json";
+	log = "Application Logs:";
+	RandomNumber = new math::LCG();
 
 	//.-.-.-.-.-.-
 	window = new ModuleWindow(this);
@@ -21,7 +28,7 @@ Application::Application()
 	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	bacchusinterface = new BacchusInterface(this, true);
+	bacchusinterface = new BacchusInterface(this);
 	fs = new FileSystem(this, true, ASSETS_FOLDER);
 	resources = new ModuleResources(this);
 
@@ -45,10 +52,6 @@ Application::Application()
 	// Renderer last!
 	AddModule(renderer3D);
 
-	fps = 0.0f;
-	cap = 60;
-	capped_ms = -1;
-
 }
 
 Application::~Application()
@@ -70,10 +73,10 @@ bool Application::Init()
 	// --- Load App data from JSON files ---
 	json config = JLoader.Load(configpath.data());
 
-	//if (config.is_null())
-	//{
-	//	//call defaultconfig
-	//}
+	if (config.is_null())
+	{
+		//call defaultconfig
+	}
 
 	// --- Reading App Name/ Org Name from json file ---
 	std::string tmp = config["Application"]["Title"];
@@ -81,9 +84,6 @@ bool Application::Init()
 
 	std::string tmp2 = config["Application"]["Organization"];
 	orgName = tmp2;
-
-	T.d = true;
-	T.Start();
 
 	// Call Init() in all modules
 	std::list<Module*>::iterator item= list_modules.begin();
@@ -95,7 +95,7 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
+	//LOG("Application Start --------------");
 	item = list_modules.begin();
 
 	while(item != list_modules.end() && ret == true)
@@ -105,6 +105,9 @@ bool Application::Init()
 	}
 	
 	ms_timer.Start();
+
+	SetMaxFramerate(App->window->GetDisplayRefreshRate());
+
 	return ret;
 }
 
@@ -112,35 +115,33 @@ bool Application::Init()
 void Application::PrepareUpdate()
 {
 
-	frame_count++;
-	last_sec_frame_count++;
-	dt = (float)frame_time.Read();
-	frame_time.Start();
+	dt = (float)ms_timer.Read() / 1000.0f;
+	ms_timer.Start();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
-	if (cap > 0)
+	// Recap on framecount and fps
+	++frames;
+	++fps_counter;
+
+	if (fps_timer.Read() >= 1000)
 	{
-		capped_ms = 1000 / cap;
+		last_fps = fps_counter;
+		fps_counter = 0;
+		fps_timer.Start();
 	}
 
-	// Framerate calculations --
-	if (last_sec_frame_time.Read() > 1000)
-	{
-		last_sec_frame_time.Start();
-		fps = last_sec_frame_count;
-		last_sec_frame_count = 0;
-	}
+	last_frame_ms = ms_timer.Read();
 
-	Uint32 last_frame_ms = frame_time.Read();
-
-	if (capped_ms > 0 && last_frame_ms < capped_ms)
-	{
-		PerfTimer t;
+	// cap fps
+	if (capped_ms > 0 && (last_frame_ms < capped_ms))
 		SDL_Delay(capped_ms - last_frame_ms);
-	}
+
+	// --- Send data to GUI- PanelSettings Historiograms
+	//App->bacchusinterface->LogFPS((float)last_fps, (float)last_frame_ms);
+
 }
 
 void Application::SaveAllStatus()
@@ -218,6 +219,7 @@ update_status Application::Update()
 	}
 
 	FinishUpdate();
+
 	return ret;
 }
 
@@ -239,9 +241,20 @@ void Application::AddModule(Module* mod)
 	list_modules.push_back(mod);
 }
 
-void Application::RequestBrowser(const char* url) const
+void Application::SetMaxFramerate(uint maxFramerate)
 {
-	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+	if (maxFramerate > 0)
+		capped_ms = 1000 / maxFramerate;
+	else
+		capped_ms = 0;
+}
+
+uint Application::GetMaxFramerate() const
+{
+	if (capped_ms > 0)
+		return (uint)((1.0f / (float)capped_ms) * 1000.0f);
+	else
+		return 0;
 }
 
 
@@ -300,5 +313,10 @@ const char* Application::GetOrganizationName() const
 //
 //	return config;
 //}
+
+void Application::RequestBrowser(const char* url) const
+{
+	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
 
 

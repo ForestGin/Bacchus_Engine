@@ -2,11 +2,7 @@
 #include "ModuleResources.h"
 #include "ResourceMesh.h"
 
-
-#include "glew/include/GL/glew.h"
-#include "SDL/include/SDL_opengl.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
+#include "OpenGL.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -60,7 +56,7 @@ bool ModuleResources::LoadFBX(const char* path)
 	return true;
 }
 
-ModuleResources::ModuleResources(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleResources::ModuleResources(bool start_enabled) : Module(start_enabled)
 {
 }
 
@@ -76,15 +72,12 @@ bool ModuleResources::Init(/*json file*/)
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
-
-
-
 	return true;
 }
 
 bool ModuleResources::Start()
 {
-	/*LoadFile("Assets/warrior.FBX");*/
+	//LoadFile("Assets/warrior.FBX");
 
 	return true;
 }
@@ -106,5 +99,4 @@ void ModuleResources::Draw()
 
 		glDisableClientState(GL_VERTEX_ARRAY); // disable client-side capability
 	}
-
 }

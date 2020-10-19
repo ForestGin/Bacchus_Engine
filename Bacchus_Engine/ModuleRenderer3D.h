@@ -3,24 +3,31 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
-#include "glew/include/GL/glew.h"
+//#include "JSONLoader.h"
 
 #define MAX_LIGHTS 8
 
 class ModuleRenderer3D : public Module
 {
 public:
-	ModuleRenderer3D(Application* app, bool start_enabled = true);
+	ModuleRenderer3D(bool start_enabled = true);
 	~ModuleRenderer3D();
 
 	bool Init(/*json file*/);
 	update_status PreUpdate(float dt);
-	update_status Update(float dt);
+	//update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	void UpdateGLCapabilities();
+
 	void OnResize(int width, int height);
-	
+
+	// Sets 
+	bool SetVSync(bool vsync);
+
+	// Gets
+	bool GetVSync() const;
 
 public:
 
@@ -29,9 +36,11 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	bool wireframe;
-	bool culling;
-	bool depth;
-	bool lightning;
-	bool color_mat;
+	// Flags
+	bool vsync = true;
+	bool depth_test = true;
+	bool cull_face = true;
+	bool lighting = true;
+	bool color_material = true;
+	bool wireframe = false;
 };

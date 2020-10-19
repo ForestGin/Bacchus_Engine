@@ -2,9 +2,11 @@
 #define __MODULE_RESOURCES_H__
 
 #include "Module.h"
-//#include "Math.h"
+#include "Math.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLib.h"
+#include <vector>
+
 #include <vector>
 
 class ResourceMesh;
@@ -13,7 +15,7 @@ class ModuleResources : public Module
 {
 public:
 
-	ModuleResources(Application* app, bool start_enabled = true);
+	ModuleResources(bool start_enabled = true);
 	~ModuleResources();
 
 	bool Init(/*json file*/);

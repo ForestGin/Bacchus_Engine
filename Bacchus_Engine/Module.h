@@ -1,14 +1,7 @@
 #pragma once
 
-#include "glew/include/GL/glew.h"
-#include "imgui/imgui.h"
-#include "imgui/examples/imgui_impl_sdl.h"
-#include "imgui/examples/imgui_impl_opengl3.h"
 #include <string>
 #include "JSONLoader.h"
-
-class Application;
-struct PhysBody3D;
 
 class Module
 {
@@ -16,9 +9,8 @@ private :
 	bool enabled;
 
 public:
-	Application* App;
 
-	Module(Application* parent, bool start_enabled = true) : App(parent)
+	Module(bool start_enabled = true)
 	{}
 
 	virtual ~Module()

@@ -1,33 +1,4 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  log.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  ModuleSceneIntro.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(123,2): warning C4305: 'initializing': truncation from 'double' to 'float'
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(210,2): warning C4305: 'initializing': truncation from 'double' to 'float'
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(280,2): warning C4305: 'initializing': truncation from 'double' to 'float'
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(426,25): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(426,19): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(426,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(434,25): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(434,18): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(434,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(441,25): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(441,18): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(441,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(448,22): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(448,17): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(448,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(455,25): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(455,18): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(455,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(462,25): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(462,19): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-  ModuleResources.cpp
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneIntro.cpp(462,12): warning C4244: 'argument': conversion from 'float' to 'GLbyte', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  Generating Code...
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-  Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  ModuleRenderer3D.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Bacchus_Engine.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe

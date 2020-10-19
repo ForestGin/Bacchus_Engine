@@ -1,24 +1,20 @@
 #include "Application.h"
 #include "Globals.h"
 #include "BacchusInterface.h"
+#include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleInput.h"
 
 #include "imgui/imgui.h"
 #include "imgui/examples/imgui_impl_sdl.h"
 #include "imgui/examples/imgui_impl_opengl3.h"
 #include "imgui/imgui_internal.h"
 #include "imgui/ImGuizmo/ImGuizmo.h"
-#include <gl/GLU.h>
 
-#include "SDL/include/SDL_opengl.h"
-#include "glew/include/GL/glew.h"
+#include "OpenGL.h"
 
-#include <string>
 
-BacchusInterface::BacchusInterface(Application* app, bool start_enabled) : Module(app, start_enabled) 
-{
-	name = "GUI";
-}
+BacchusInterface::BacchusInterface(bool start_enabled) : Module(start_enabled) {}
 
 BacchusInterface::~BacchusInterface() {}
 
@@ -45,8 +41,8 @@ bool BacchusInterface::Start()
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;			// Enable Window Docking (Under Active Development)
 	/*io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;*/
 
-	io.DisplaySize.x = 1280.0f;
-	io.DisplaySize.y = 720.0f;
+	//io.DisplaySize.x = App->window->width;
+	//io.DisplaySize.y = App->window->height;
 	io.IniFilename = "imgui.ini";
 
 	// Setup Dear ImGui style
@@ -62,19 +58,9 @@ bool BacchusInterface::Start()
 	return ret;
 }
 
-bool BacchusInterface::CleanUp()
-{
-	LOG("Unloading Bacchus...");
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
-
-
-	return true;
-}
-
 update_status BacchusInterface::PreUpdate(float dt)
 {
+	//Starting Frame
 
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
@@ -88,9 +74,37 @@ update_status BacchusInterface::PreUpdate(float dt)
 // Update
 update_status BacchusInterface::Update(float dt)
 {
+	ImGuiWindowFlags docking_window_flags = 0;
+
+	if (docking_window == true)
+	{
+		docking_window_flags |= ImGuiWindowFlags_NoMove;
+		docking_window_flags |= ImGuiWindowFlags_NoBackground;
+		docking_window_flags |= ImGuiWindowFlags_NoTitleBar;
+		docking_window_flags |= ImGuiWindowFlags_NoDocking;
+		docking_window_flags |= ImGuiWindowFlags_NoInputs;
+
+		if (ImGui::Begin("Master Window", &docking_window, docking_window_flags))
+		{
+			
+		}
+
+		if (docking_window)
+		{
+			// Declare Central dockspace
+			dockspaceID = ImGui::GetID("HUB_DockSpace");
+			ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode/*|ImGuiDockNodeFlags_NoResize*/);
+		}
+		ImGui::End();
+	}
+	
+	ImGuiWindowFlags window_flags = 0;
 
 	if (ImGui::BeginMainMenuBar())
 	{
+		window_flags |= ImGuiWindowFlags_NoBackground;
+		window_flags |= ImGuiWindowFlags_NoTitleBar;
+
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("Exit"))
@@ -168,33 +182,33 @@ update_status BacchusInterface::Update(float dt)
 			
 			}
 
-			//try to enable-disable face culling
-			if (ImGui::Checkbox("Culling", &App->renderer3D->culling))
-			{
-				App->renderer3D->culling != App->renderer3D->culling;
+			////try to enable-disable face culling
+			//if (ImGui::Checkbox("Culling", &App->renderer3D->culling))
+			//{
+			//	App->renderer3D->culling != App->renderer3D->culling;
 
-			}
+			//}
 
-			//depth-test
-			if (ImGui::Checkbox("Depth", &App->renderer3D->depth))
-			{
-				App->renderer3D->depth != App->renderer3D->depth;
+			////depth-test
+			//if (ImGui::Checkbox("Depth", &App->renderer3D->depth))
+			//{
+			//	App->renderer3D->depth != App->renderer3D->depth;
 
-			}
+			//}
 
-			//lightning
-			if (ImGui::Checkbox("Lights", &App->renderer3D->lightning))
-			{
-				App->renderer3D->lightning != App->renderer3D->lightning;
+			////lightning
+			//if (ImGui::Checkbox("Lights", &App->renderer3D->lightning))
+			//{
+			//	App->renderer3D->lightning != App->renderer3D->lightning;
 
-			}
+			//}
 
-			//color material
-			if (ImGui::Checkbox("Color Material", &App->renderer3D->color_mat))
-			{
-				App->renderer3D->color_mat != App->renderer3D->color_mat;
+			////color material
+			//if (ImGui::Checkbox("Color Material", &App->renderer3D->color_mat))
+			//{
+			//	App->renderer3D->color_mat != App->renderer3D->color_mat;
 
-			}
+			//}
 		}
 
 		ImGui::End();
@@ -264,6 +278,17 @@ update_status BacchusInterface::PostUpdate(float dt)
 	//ImGui::End();
 
 	return UPDATE_CONTINUE;
+}
+
+bool BacchusInterface::CleanUp()
+{
+	LOG("Unloading Bacchus...");
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
+
+	return true;
 }
 
 void BacchusInterface::Hardware()
@@ -338,13 +363,12 @@ void BacchusInterface::Hardware()
 
 void BacchusInterface::WindowConfig()
 {
-
-	if (ImGui::SliderFloat("Brightness", &App->window->brightness, 0.0f, 1.0f)) {
-		SDL_SetWindowBrightness(App->window->window, App->window->brightness);
+	/*if (ImGui::SliderFloat("Brightness", brightness, 0.0f, 1.0f)) {
+		SDL_SetWindowBrightness(App->window->window, App->window->GetWinBrightness());
 		SDL_UpdateWindowSurface(App->window->window);
 	};
 
-	if (ImGui::SliderInt("Width", &App->window->width, 0, 1920) || ImGui::SliderInt("Height", &App->window->height, 0, 1080)) {
+	if (ImGui::SliderInt("Width", App->window->GetWindowWidth(), 0, 1920) || ImGui::SliderInt("Height", &App->window->height, 0, 1080)) {
 		SDL_SetWindowSize(App->window->window, App->window->width, App->window->height);
 		SDL_UpdateWindowSurface(App->window->window);
 	};
@@ -374,7 +398,7 @@ void BacchusInterface::WindowConfig()
 		App->window->fulldesktop = App->window->IsFullScreenDesktop();
 		App->window->fulldesktop!= App->window->fulldesktop;
 		App->window->SetFullScreenDesktop(App->window->fulldesktop);
-	}
+	}*/
 }
 
 void BacchusInterface::FPSGraph()
@@ -383,7 +407,7 @@ void BacchusInterface::FPSGraph()
 	ImGui::InputText("App Name", TITLE, 20);
 	ImGui::InputText("Organitzation", ORGANIZATION, 20);
 
-	if (App->fps_log.size() != 30)
+	/*if (App->fps_log.size() != 30)
 	{
 		App->fps_log.push_back(App->fps);
 		App->ms_log.push_back(App->dt);
@@ -400,7 +424,7 @@ void BacchusInterface::FPSGraph()
 	sprintf_s(title, 25, "Framerate %.1f", App->fps_log[App->fps_log.size() - 1]);
 	ImGui::PlotHistogram("##framerate", &App->fps_log[0], App->fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 	sprintf_s(title, 25, "Milliseconds %.1f", App->ms_log[App->ms_log.size() - 1]);
-	ImGui::PlotHistogram("##framerate", &App->ms_log[0], App->ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+	ImGui::PlotHistogram("##framerate", &App->ms_log[0], App->ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));*/
 
 }
 
