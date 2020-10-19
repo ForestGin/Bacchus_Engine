@@ -143,6 +143,7 @@ ASALocalRun/
 *Bacchus_Engine/v16/Browse.VC.db
 *Bacchus_Engine.log
 *Bacchus_Engine.tlog/CL.read.1.tlog
+
 *.db
 *.log
 *.tlog
@@ -151,6 +152,6 @@ ASALocalRun/
 *.db-shm
 *.db-wal
 *.log
-*.tlog
+
 *.log
 */.vs/Bacchus_Engine/v16/.suo
