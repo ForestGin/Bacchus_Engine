@@ -13,6 +13,7 @@
 #include "BacchusInterface.h"
 #include "JSONLoader.h"
 #include "FileSystem.h"
+#include "ModuleResources.h"
 
 #include <list>
 #include <vector>
@@ -25,7 +26,7 @@ class ModuleRenderer3D;
 class ModuleCamera3D;
 class BacchusInterface;
 class FileSystem;
-class Resources;
+class ModuleResources;
 
 class Application
 {
@@ -37,7 +38,7 @@ public:
 	BacchusInterface* bacchusinterface = nullptr;
 	ModuleCamera3D* camera = nullptr;
 	FileSystem* fs = nullptr;
-	Resources* resources = nullptr;
+	ModuleResources* resources = nullptr;
 
 	std::vector<float> fps_log;
 	std::vector<float> ms_log;

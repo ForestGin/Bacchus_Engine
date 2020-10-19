@@ -38,7 +38,15 @@
       <Filter>External Libs\JSON</Filter>
     </ClCompile>
     <ClCompile Include="FileSystem.cpp" />
-    <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Res.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMesh.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleResources.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -88,7 +96,18 @@
       <Filter>External Libs\JSON</Filter>
     </ClInclude>
     <ClInclude Include="FileSystem.h" />
-    <ClInclude Include="Resources.h" />
+    <ClInclude Include="Res.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="VSresource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMesh.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResources.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">
@@ -99,6 +118,9 @@
     </Filter>
     <Filter Include="External Libs\JSON">
       <UniqueIdentifier>{434d20a6-3c43-4e93-897a-aba67ca6db2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{8a808a4e-5f19-4c3c-b961-1533cc512dc4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
