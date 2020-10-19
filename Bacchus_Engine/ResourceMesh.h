@@ -3,7 +3,9 @@
 
 #include "Globals.h"
 #include "Res.h"
+#include "Math.h"
 
+struct aiMesh;
 
 class ResourceMesh : public Res
 {
@@ -12,11 +14,11 @@ public:
 	ResourceMesh();
 	virtual ~ResourceMesh();
 
-	void Import(const char* path);
+	void ImportMesh(aiMesh* mesh);
 
 public:
 
-	float* Vertices = nullptr;
+	float3* Vertices = nullptr;
 	uint VerticesID = 0; // unique vertex in VRAM
 	uint verticesSize = 0;
 

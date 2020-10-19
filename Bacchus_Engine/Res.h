@@ -6,7 +6,7 @@
 class Res
 {
 public:
-	enum ResType
+	enum class ResType
 	{
 		none = 0,
 		mesh

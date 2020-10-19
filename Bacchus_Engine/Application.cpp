@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Globals.h"
 
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
@@ -27,7 +28,7 @@ Application::Application()
 	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	bacchusinterface = new BacchusInterface(this, true);
+	bacchusinterface = new BacchusInterface(this);
 	fs = new FileSystem(this, true, ASSETS_FOLDER);
 	resources = new ModuleResources(this);
 
@@ -72,10 +73,10 @@ bool Application::Init()
 	// --- Load App data from JSON files ---
 	json config = JLoader.Load(configpath.data());
 
-	//if (config.is_null())
-	//{
-	//	//call defaultconfig
-	//}
+	if (config.is_null())
+	{
+		//call defaultconfig
+	}
 
 	// --- Reading App Name/ Org Name from json file ---
 	std::string tmp = config["Application"]["Title"];
@@ -83,13 +84,6 @@ bool Application::Init()
 
 	std::string tmp2 = config["Application"]["Organization"];
 	orgName = tmp2;
-
-	//// --- Reading App Name/ Org Name from json file ---
-	//std::string tmp = config["Application"]["Title"];
-	//appName = tmp;
-
-	//std::string tmp2 = config["Application"]["Organization"];
-	//orgName = tmp2;
 
 	// Call Init() in all modules
 	std::list<Module*>::iterator item= list_modules.begin();
@@ -101,7 +95,7 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
+	//LOG("Application Start --------------");
 	item = list_modules.begin();
 
 	while(item != list_modules.end() && ret == true)
@@ -319,5 +313,10 @@ const char* Application::GetOrganizationName() const
 //
 //	return config;
 //}
+
+void Application::RequestBrowser(const char* url) const
+{
+	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
 
 

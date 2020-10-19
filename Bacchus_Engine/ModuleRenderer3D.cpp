@@ -189,15 +189,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	App->resources->Draw();
 
-	SDL_GL_SwapWindow(App->window->window);
-	return UPDATE_CONTINUE;
-}
-
-// Called before quitting
-bool ModuleRenderer3D::CleanUp()
-{
-	LOG("Destroying 3D Renderer");
-
 	// --- Draw Level geometry --- // To be destroyed
 	//App->scene_intro->Draw();
 
@@ -209,6 +200,15 @@ bool ModuleRenderer3D::CleanUp()
 
 	// To prevent problems with viewports
 	SDL_GL_MakeCurrent(App->window->window, context);
+	SDL_GL_SwapWindow(App->window->window);
+	return UPDATE_CONTINUE;
+}
+
+// Called before quitting
+bool ModuleRenderer3D::CleanUp()
+{
+	LOG("Destroying 3D Renderer");
+
 	SDL_GL_DeleteContext(context);
 
 	return true;

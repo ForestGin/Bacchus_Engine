@@ -8,8 +8,7 @@
 #include "Timer.h"
 #include "PerfTimer.h"
 #include "MathGeoLib/include/Algorithm/Random/LCG.h"
-
-//#include "JSON/parson.h"
+#include "JSONLoader.h"
 
 class Module;
 class ModuleWindow;
@@ -30,6 +29,8 @@ public:
 	ModuleSceneIntro* scene_intro = nullptr;
 	BacchusInterface* bacchusinterface = nullptr;
 	ModuleCamera3D* camera = nullptr;
+	FileSystem* fs = nullptr;
+	ModuleResources* resources = nullptr;
 
 public:
 	// Getts
@@ -47,21 +48,6 @@ public:
 
 	void Log(const char* entry);
 	void ClearLogsFromConsole();
-	FileSystem* fs = nullptr;
-	ModuleResources* resources = nullptr;
-
-	std::vector<float> fps_log;
-	std::vector<float> ms_log;
-	float	dt;
-	float fps;
-	int cap;
-	int	 capped_ms;
-	Timer last_sec_frame_time;
-	Uint32 last_sec_frame_count = 0;
-	Uint64 frame_count = 0;
-	Timer frame_time;
-	PerfTimer ptimer;
-
 
 private:
 
@@ -70,18 +56,19 @@ private:
 	Timer				ms_timer;
 	Timer				fps_timer;
 	float				dt = 0;
-	std::string			appName;
-	std::string			orgName;
-	std::string			configpath;
-	JSONLoader			JLoader;
 
 	Uint32				frames;
 	int					fps_counter;
 	int					last_fps;
 	uint				capped_ms;
-	uint				last_frame_ms;
+	uint					last_frame_ms;
 
-	//JSON_Value* pilar;
+	JSONLoader			JLoader;
+	std::string			appName;
+	std::string			orgName;
+	std::string			configpath;
+	std::string			log;
+	std::vector<std::string> logs;
 
 	LCG* RandomNumber = nullptr;
 
@@ -94,7 +81,6 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void RequestBrowser(const char* url) const;
-	//void JasonReading();
 
 private:
 

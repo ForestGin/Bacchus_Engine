@@ -407,7 +407,7 @@ void BacchusInterface::FPSGraph()
 	ImGui::InputText("App Name", TITLE, 20);
 	ImGui::InputText("Organitzation", ORGANIZATION, 20);
 
-	if (App->fps_log.size() != 30)
+	/*if (App->fps_log.size() != 30)
 	{
 		App->fps_log.push_back(App->fps);
 		App->ms_log.push_back(App->dt);

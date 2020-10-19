@@ -3,6 +3,7 @@
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
+#include "OpenGL.h"
 
 ResourceMesh::ResourceMesh() : Res(Res::ResType::mesh)
 {
@@ -12,24 +13,42 @@ ResourceMesh::~ResourceMesh()
 {
 }
 
-void ResourceMesh::Import(const char* path)
+void ResourceMesh::ImportMesh(aiMesh* mesh)
 {
-	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
+    // --- Vertices ---
+    this->verticesSize = mesh->mNumVertices;
+    this->Vertices = new float3[mesh->mNumVertices];
 
-	if (scene != nullptr && scene->HasMeshes())
-	{
-		// Use scene->mNumMeshes to iterate on scene->mMeshes array
+    for (unsigned j = 0; j < mesh->mNumVertices; ++j)
+    {
+        this->Vertices[j] = *((float3*)&mesh->mVertices[j]);
+    }
 
-		for (uint i = 0; i < scene->mNumMeshes; ++i)
-		{
-			// Call mesh importer
-		}
+    glGenBuffers(1, (GLuint*)&this->VerticesID); // create buffer
+    glBindBuffer(GL_ARRAY_BUFFER, this->VerticesID); // start using created buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * this->verticesSize, this->Vertices, GL_STATIC_DRAW); // send vertices to VRAM
+    glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
 
 
+    // --- Indices ---
+    this->IndicesSize = mesh->mNumFaces * 3;
+    this->Indices = new uint[this->IndicesSize];
 
-		aiReleaseImport(scene);
-	}
-	else
-		LOG("|[error]: Error loading scene %s", path);
+    for (unsigned j = 0; j < mesh->mNumFaces; ++j)
+    {
+        const aiFace& face = mesh->mFaces[j];
+
+        assert(face.mNumIndices == 3); // Only triangles
+
+        this->Indices[j * 3] = face.mIndices[0];
+        this->Indices[j * 3 + 1] = face.mIndices[1];
+        this->Indices[j * 3 + 2] = face.mIndices[2];
+    }
+
+
+    glGenBuffers(1, (GLuint*)&this->IndicesID); // create buffer
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->IndicesID); // start using created buffer
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * this->IndicesSize, this->Indices, GL_STATIC_DRAW); // send vertices to VRAM
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
 
 }
