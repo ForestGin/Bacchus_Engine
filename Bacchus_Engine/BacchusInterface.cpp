@@ -15,9 +15,21 @@
 
 #include <string>
 
-BacchusInterface::BacchusInterface(Application* app, bool start_enabled) : Module(app, start_enabled) {}
+BacchusInterface::BacchusInterface(Application* app, bool start_enabled) : Module(app, start_enabled) 
+{
+	name = "GUI";
+}
 
 BacchusInterface::~BacchusInterface() {}
+
+bool BacchusInterface::Init(json file)
+{
+	
+
+	/*LoadStatus(file);*/
+
+	return true;
+}
 
 bool BacchusInterface::Start()
 {
@@ -45,7 +57,7 @@ bool BacchusInterface::Start()
 	ImGui_ImplOpenGL3_Init();
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 
-	
+	/*ret = LoadEditorConfig();*/
 
 	return ret;
 }
@@ -69,9 +81,6 @@ update_status BacchusInterface::PreUpdate(float dt)
 	ImGui::NewFrame();
 
 	//ImGuizmo::BeginFrame();
-
-	// Begin dock space
-	//DockSpace();
 
 	return UPDATE_CONTINUE;
 }
@@ -370,7 +379,6 @@ void BacchusInterface::WindowConfig()
 
 void BacchusInterface::FPSGraph()
 {
-	App->JasonReading();
 
 	ImGui::InputText("App Name", TITLE, 20);
 	ImGui::InputText("Organitzation", ORGANIZATION, 20);
@@ -414,3 +422,23 @@ void BacchusInterface::ConsoleText(std::string console_Text)
 //	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
 //	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 //}
+
+//bool BacchusInterface::LoadEditorConfig() const
+//{
+//	// json EditorConfig = JLoader.Load("EditorConfig.json");
+//
+//
+//	return true;
+//}
+
+void BacchusInterface::SaveStatus(json file) const
+{
+
+
+
+};
+
+void BacchusInterface::LoadStatus(json file)
+{
+	
+};

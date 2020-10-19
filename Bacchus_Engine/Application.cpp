@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "JasonReader.h"
+
 
 #include <string>
 
@@ -52,7 +52,8 @@ bool Application::Init()
 {
 	bool ret = true;
 
-	pilar = json_parse_file((std::string("config_files/paths.json")).data());
+	// --- Load App data from JSON files ---
+	json config = JLoader.Load("Settings/EditorConfig.json");
 
 	T.d = true;
 	T.Start();
@@ -62,7 +63,7 @@ bool Application::Init()
 
 	while(item != list_modules.end() && ret == true)
 	{
-		ret = (*item)->Init();
+		ret = (*item)->Init(/*config*/);
 		++item;
 	}
 
@@ -112,6 +113,32 @@ void Application::FinishUpdate()
 	{
 		PerfTimer t;
 		SDL_Delay(capped_ms - last_frame_ms);
+	}
+}
+
+void Application::SaveAllStatus()
+{
+	/*json config = JLoader.Load("Settings/EditorConfig.json");
+
+	std::list<Module*>::const_iterator item = list_modules.begin();
+
+	while (item != list_modules.end())
+	{
+		(*item)->LoadStatus(config);
+		item++;
+	}*/
+}
+
+void Application::LoadAllStatus()
+{
+	json config = JLoader.Load("Settings/EditorConfig.json");
+
+	std::list<Module*>::const_iterator item = list_modules.begin();
+
+	while (item != list_modules.end())
+	{
+		(*item)->LoadStatus(config);
+		item++;
 	}
 }
 
@@ -172,11 +199,6 @@ void Application::RequestBrowser(const char* url) const
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
-void Application::JasonReading()
-{
-	JSON_Value* test;
-	GetJsonValueFromPath(pilar, "test", &test);
-	ImGui::Text(json_object_get_string(json_value_get_object(test), "testing_phrase"));
-}
+
 
 

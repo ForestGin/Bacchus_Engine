@@ -11,7 +11,7 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleCamera3D.h"
 #include "BacchusInterface.h"
-#include "JSON/parson.h"
+#include "JSONLoader.h"
 
 #include <list>
 #include <vector>
@@ -38,13 +38,13 @@ public:
 	Timer frame_time;
 	PerfTimer ptimer;
 
-	JSON_Value* pilar;
 
 private:
 
 	Timer	ms_timer;
 	std::list<Module*> list_modules;
 
+	JSONLoader			JLoader;
 
 public:
 
@@ -57,13 +57,16 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void RequestBrowser(const char* url) const;
-	void JasonReading();
+	
 
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+	void SaveAllStatus();
+	void LoadAllStatus();
 };
 
 extern Application* App;

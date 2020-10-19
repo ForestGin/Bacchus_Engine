@@ -11,6 +11,9 @@
 #include "SDL/include/SDL_opengl.h"
 
 #include <string>
+#include "JSONLoader.h"
+
+class JSONLoader;
 
 class BacchusInterface : public Module
 {
@@ -18,6 +21,7 @@ public:
 	BacchusInterface(Application* app, bool start_enabled = true);
 	~BacchusInterface();
 
+	bool Init(json file);
 	bool Start();
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
@@ -36,6 +40,12 @@ public:
 	void WindowConfig();
 	void Hardware();
 	void FPSGraph();
+	//bool LoadEditorConfig() const;
+	void SaveStatus(json file) const override;
+
+	void LoadStatus(const json file) override;
+
+	
 
 	
 };

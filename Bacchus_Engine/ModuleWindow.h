@@ -15,7 +15,7 @@ public:
 	// Destructor
 	virtual ~ModuleWindow();
 
-	bool Init();
+	bool Init(/*json file*/);
 	bool CleanUp();
 
 	bool IsFullScreen() const { return fullscreen; }

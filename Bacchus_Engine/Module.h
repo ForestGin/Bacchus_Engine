@@ -4,8 +4,8 @@
 #include "imgui/imgui.h"
 #include "imgui/examples/imgui_impl_sdl.h"
 #include "imgui/examples/imgui_impl_opengl3.h"
-#include "JSON/parson.h"
 #include <string>
+#include "JSONLoader.h"
 
 class Application;
 struct PhysBody3D;
@@ -24,7 +24,7 @@ public:
 	virtual ~Module()
 	{}
 
-	virtual bool Init() 
+	virtual bool Init(/*json file*/)
 	{
 		return true; 
 	}
@@ -54,11 +54,11 @@ public:
 		return true; 
 	}
 
-	//virtual bool Load(JSON_Object* object) {
-	//	return true;
-	//}
+	virtual void SaveStatus(json file) const {};
 
-	//virtual bool Save(JSON_Object* object) {
-	//	return true;
-	//}
+	virtual void LoadStatus(const json file) {};
+
+protected:
+
+	std::string name = "Undefined";
 };
