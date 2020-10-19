@@ -145,7 +145,7 @@ ASALocalRun/
 *Bacchus_Engine.tlog/CL.read.1.tlog
 *.db
 *.log
-*.tlog
+
 *.exe
 *.ilk
 *.db-shm
