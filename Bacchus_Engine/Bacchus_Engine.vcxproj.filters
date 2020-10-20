@@ -34,12 +34,6 @@
       <Filter>External Libs\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="PerfTimer.cpp" />
-    <ClCompile Include="JSON\parson.c">
-      <Filter>External Libs\JSON</Filter>
-    </ClCompile>
-    <ClCompile Include="JasonReader.cpp">
-      <Filter>External Libs\JSON</Filter>
-    </ClCompile>
     <ClCompile Include="MathGeoLib\include\Geometry\AABB.cpp">
       <Filter>External Libs\MathGeoLib\Geometry</Filter>
     </ClCompile>
@@ -136,6 +130,17 @@
     <ClCompile Include="MathGeoLib\include\Time\Clock.cpp">
       <Filter>External Libs\MathGeoLib\Time</Filter>
     </ClCompile>
+    <ClCompile Include="FileSystem.cpp" />
+    <ClCompile Include="JSONLoader.cpp" />
+    <ClCompile Include="Res.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleResources.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMesh.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -178,12 +183,6 @@
     </ClInclude>
     <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="p2Defs.h" />
-    <ClInclude Include="JSON\parson.h">
-      <Filter>External Libs\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="JasonReader.h">
-      <Filter>External Libs\JSON</Filter>
-    </ClInclude>
     <ClInclude Include="Math.h" />
     <ClInclude Include="MathGeoLib\include\MathBuildConfig.h">
       <Filter>External Libs\MathGeoLib</Filter>
@@ -366,6 +365,18 @@
       <Filter>External Libs\MathGeoLib\Time</Filter>
     </ClInclude>
     <ClInclude Include="OpenGL.h" />
+    <ClInclude Include="FileSystem.h" />
+    <ClInclude Include="JSONLoader.h" />
+    <ClInclude Include="JSON\json.hpp" />
+    <ClInclude Include="Res.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResources.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMesh.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">
@@ -391,6 +402,9 @@
     </Filter>
     <Filter Include="External Libs\MathGeoLib\Time">
       <UniqueIdentifier>{4e1ce4b7-8d0f-41a6-ac51-1820280a1fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{e7051c93-2e44-4242-9f36-e4aabf618c5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

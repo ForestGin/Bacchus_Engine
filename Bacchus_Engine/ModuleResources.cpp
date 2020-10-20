@@ -21,6 +21,18 @@ bool ModuleResources::CleanUp()
 	// detach log stream
 	aiDetachAllLogStreams();
 
+
+	for (uint i = 0; i < meshes.size(); ++i)
+	{
+		glDeleteBuffers(1, (GLuint*)&meshes[i]->VBO);
+		glDeleteBuffers(1, (GLuint*)&meshes[i]->IBO);
+
+		RELEASE_ARRAY(meshes[i]->Vertices);
+		RELEASE_ARRAY(meshes[i]->Indices);
+
+		delete meshes[i];
+	}
+
 	return true;
 }
 
@@ -69,7 +81,6 @@ bool ModuleResources::Init(/*json file*/)
 	// Stream log messages to Debug window
 	struct aiLogStream stream;
 	stream.callback = MyAssimpCallback;
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
 	return true;
@@ -77,26 +88,55 @@ bool ModuleResources::Init(/*json file*/)
 
 bool ModuleResources::Start()
 {
-	//LoadFile("Assets/warrior.FBX");
+	//LoadFile("Assets/warrior.fbx");
 
 	return true;
 }
 
 void ModuleResources::Draw()
 {
+	
+
 	for (uint i = 0; i < meshes.size(); ++i)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY); // enable client-side capability
 
-		glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->VerticesID); // start using created buffer (vertices)
-		glVertexPointer(3, GL_FLOAT, 0, NULL); // Use selected buffer as vertices 
+		// --- SHOULD CREATE DRAW FUNCTION IN RENDERER TO DRAW MESHES ---
+		glBindVertexArray(meshes[i]->VAO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->IBO);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->IndicesID); // start using created buffer (indices)
-		glDrawElements(GL_TRIANGLES, meshes[i]->IndicesSize, GL_UNSIGNED_INT, NULL); // render primitives from array data
+		glDrawElements(GL_TRIANGLES, meshes[i]->IndicesSize, GL_UNSIGNED_INT, NULL);
 
-		glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer (vertices)
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer (indices)
+		/*glBindBuffer(GL_ARRAY_BUFFER, 0);*/
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 
 		glDisableClientState(GL_VERTEX_ARRAY); // disable client-side capability
+
+
+		
+
+		if (meshes[i]->Vertices->normal)
+		{
+			glBegin(GL_LINES);
+			glLineWidth(1.0f);
+			uint Normal_length = 1;
+
+			glColor4f(0.0f, 0.5f, 0.5f, 1.0f);
+
+			for (uint j = 0; j < meshes[i]->verticesSize; ++j)
+			{
+				glVertex3f(meshes[i]->Vertices[j].position[0], meshes[i]->Vertices[j].position[1], meshes[i]->Vertices[j].position[2]);
+				glVertex3f(meshes[i]->Vertices[j].position[0] + meshes[i]->Vertices[j].normal[0] * Normal_length, meshes[i]->Vertices[j].position[1] + meshes[i]->Vertices[j].normal[1] * Normal_length, meshes[i]->Vertices[j].position[2] + meshes[i]->Vertices[j].normal[2] * Normal_length);
+			}
+
+			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+			glEnd();
+
+		}
+
 	}
+
+
 }

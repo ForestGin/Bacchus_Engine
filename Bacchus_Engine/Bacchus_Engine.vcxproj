@@ -185,7 +185,6 @@
     <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="VSresource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
