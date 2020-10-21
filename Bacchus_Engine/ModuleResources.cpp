@@ -11,25 +11,47 @@
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
 
+
 void MyAssimpCallback(const char* msg, char* userData)
 {
 	LOG("[Assimp]: %s", msg);
 }
 
+ModuleResources::ModuleResources(bool start_enabled) : Module(start_enabled)
+{
+}
+
+ModuleResources::~ModuleResources()
+{
+}
+
+bool ModuleResources::Init(/*json file*/)
+{
+	// --- Stream LOG messages to MyAssimpCallback, that sends them to console ---
+	struct aiLogStream stream;
+	stream.callback = MyAssimpCallback;
+	aiAttachLogStream(&stream);
+
+	return true;
+}
+
+bool ModuleResources::Start()
+{
+	LoadFBX("Assets/BakerHouse.fbx");
+
+	return true;
+}
+
+
 bool ModuleResources::CleanUp()
 {
-	// detach log stream
+	// --- Detach assimp log stream ---
 	aiDetachAllLogStreams();
 
 
+	// -- Release all buffer data and own stored data ---
 	for (uint i = 0; i < meshes.size(); ++i)
 	{
-		glDeleteBuffers(1, (GLuint*)&meshes[i]->VBO);
-		glDeleteBuffers(1, (GLuint*)&meshes[i]->IBO);
-
-		RELEASE_ARRAY(meshes[i]->Vertices);
-		RELEASE_ARRAY(meshes[i]->Indices);
-
 		delete meshes[i];
 	}
 
@@ -38,12 +60,13 @@ bool ModuleResources::CleanUp()
 
 bool ModuleResources::LoadFBX(const char* path)
 {
+	// --- Import scene from path ---
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
 
-		// Use scene->mNumMeshes to iterate on scene->mMeshes array
+		// --- Use scene->mNumMeshes to iterate on scene->mMeshes array ---
 
 		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
@@ -57,6 +80,8 @@ bool ModuleResources::LoadFBX(const char* path)
 			// --- Import mesh data (fill new_mesh)---
 			new_mesh->ImportMesh(mesh);
 		}
+
+		// --- Free scene ---
 		aiReleaseImport(scene);
 
 
@@ -68,55 +93,28 @@ bool ModuleResources::LoadFBX(const char* path)
 	return true;
 }
 
-ModuleResources::ModuleResources(bool start_enabled) : Module(start_enabled)
-{
-}
-
-ModuleResources::~ModuleResources()
-{
-}
-
-bool ModuleResources::Init(/*json file*/)
-{
-	// Stream log messages to Debug window
-	struct aiLogStream stream;
-	stream.callback = MyAssimpCallback;
-	aiAttachLogStream(&stream);
-
-	return true;
-}
-
-bool ModuleResources::Start()
-{
-	//LoadFile("Assets/warrior.fbx");
-
-	return true;
-}
 
 void ModuleResources::Draw()
 {
-	
+		
 
 	for (uint i = 0; i < meshes.size(); ++i)
 	{
+
 		glEnableClientState(GL_VERTEX_ARRAY); // enable client-side capability
 
-		// --- SHOULD CREATE DRAW FUNCTION IN RENDERER TO DRAW MESHES ---
-		glBindVertexArray(meshes[i]->VAO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->IBO);
+		glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->VerticesID); // start using created buffer (vertices)
+		glVertexPointer(3, GL_FLOAT, 0, NULL); // Use selected buffer as vertices 
 
-		glDrawElements(GL_TRIANGLES, meshes[i]->IndicesSize, GL_UNSIGNED_INT, NULL);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->IndicesID); // start using created buffer (indices)
+		glDrawElements(GL_TRIANGLES, meshes[i]->IndicesSize, GL_UNSIGNED_INT, NULL); // render primitives from array data
 
-		/*glBindBuffer(GL_ARRAY_BUFFER, 0);*/
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer (vertices)
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer (indices)
 
 		glDisableClientState(GL_VERTEX_ARRAY); // disable client-side capability
 
-
-		
-
-		if (meshes[i]->Vertices->normal)
+		if (meshes[i]->Normals)
 		{
 			glBegin(GL_LINES);
 			glLineWidth(1.0f);
@@ -124,10 +122,10 @@ void ModuleResources::Draw()
 
 			glColor4f(0.0f, 0.5f, 0.5f, 1.0f);
 
-			for (uint j = 0; j < meshes[i]->verticesSize; ++j)
+			for (uint j = 0; j < meshes[i]->VerticesSize; ++j)
 			{
-				glVertex3f(meshes[i]->Vertices[j].position[0], meshes[i]->Vertices[j].position[1], meshes[i]->Vertices[j].position[2]);
-				glVertex3f(meshes[i]->Vertices[j].position[0] + meshes[i]->Vertices[j].normal[0] * Normal_length, meshes[i]->Vertices[j].position[1] + meshes[i]->Vertices[j].normal[1] * Normal_length, meshes[i]->Vertices[j].position[2] + meshes[i]->Vertices[j].normal[2] * Normal_length);
+				glVertex3f(meshes[i]->Vertices[j].x, meshes[i]->Vertices[j].y, meshes[i]->Vertices[j].z);
+				glVertex3f(meshes[i]->Vertices[j].x + meshes[i]->Normals[j].x * Normal_length, meshes[i]->Vertices[j].y + meshes[i]->Normals[j].y * Normal_length, meshes[i]->Vertices[j].z + meshes[i]->Normals[j].z * Normal_length);
 			}
 
 			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -136,7 +134,6 @@ void ModuleResources::Draw()
 
 		}
 
+
 	}
-
-
 }
