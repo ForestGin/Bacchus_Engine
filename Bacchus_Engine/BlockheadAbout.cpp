@@ -28,7 +28,7 @@ bool BlockheadAbout::Draw()
 		ImGui::Text("Initial steps into game engine development");
 		ImGui::Text("By Oscar Larios and Pol Bosch (ForestGin)");
 
-		// --- Libraries ---
+		// --- Libraries --- //REVISION
 		/*ImGui::Text("Libraries");
 		ImGui::Spacing();
 

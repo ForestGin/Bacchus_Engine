@@ -14,7 +14,7 @@
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
-#pragma comment (lib, "glew/libx86/glew32.lib"
+#pragma comment (lib, "glew/libx86/glew32.lib")
 
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module(start_enabled)
 {
@@ -165,7 +165,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//App->scene_manager->Draw();
 
 	// --- Draw everything and swap buffers ---
-	App->bacchusinterface->Draw();
+	//App->bacchusinterface->Draw();
 
 	// To prevent problems with viewports
 	SDL_GL_MakeCurrent(App->window->window, context);
