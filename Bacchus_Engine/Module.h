@@ -46,9 +46,9 @@ public:
 		return true; 
 	}
 
-	virtual void SaveStatus(json file) const {};
+	virtual void SaveStatus(json file) const {}
 
-	virtual void LoadStatus(const json file) {};
+	virtual void LoadStatus(const json file) {}
 
 protected:
 

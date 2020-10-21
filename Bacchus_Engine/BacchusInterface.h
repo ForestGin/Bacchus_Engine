@@ -2,13 +2,17 @@
 #define __BACCHUS_INTERFACE_H__
 
 #include "Module.h"
-#include "Globals.h"
-#include "imgui/imgui.h"
 
-#include <string>
-#include "JSONLoader.h"
+#include <vector>
 
-class JSONLoader;
+class Blockhead;
+class BlockheadSettings;
+class BlockheadAbout;
+class BlockheadConsole;
+class BlockheadInspector;
+class BlockheadHierarchy;
+//class BlockheadScene;
+//class BlockheadToolbar;
 
 class BacchusInterface : public Module
 {
@@ -23,31 +27,39 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	void ConsoleText(std::string console_Text);
+	void Draw() const;
+	//void DockSpace() const;
+	void RequestBrowser(const char* url) const;
 
-	ImGuiTextBuffer console_text;
+	void LogFPS(float fps, float ms);
+
+	void SaveStatus(json& file) const override;
+
+	void LoadStatus(const json& file) override;
+
+	void HandleInput(SDL_Event* event);
+
+	bool IsKeyboardCaptured();
 
 public:
-	int window_with = 0;
-	int window_height = 0;
-	ImGuiID dockspaceID = 0;
-	bool docking_window = true;
+
+	BlockheadSettings* panelSettings = nullptr;
+	BlockheadAbout* panelAbout = nullptr;
+	BlockheadConsole* panelConsole = nullptr;
+	BlockheadInspector* panelInspector = nullptr;
+	BlockheadHierarchy* panelHierarchy = nullptr;
+	//BlockheadScene* panelScene = nullptr;
+	//BlockheadToolbar* panelToolbar = nullptr;
+
+private:
+
 	bool show_demo_window = false;
-	bool config_window = false;
-	bool about_window = false;
-	bool console_window = false;
+	bool docking_window = true;
+	bool capture_keyboard = false;
+	bool capture_mouse = false;
 
-	void WindowConfig();
-	void Hardware();
-	void FPSGraph();
-	//bool LoadEditorConfig() const;
-	void SaveStatus(json file) const override;
+	std::vector<Blockhead*> blockheads;
 
-	void LoadStatus(const json file) override;
-
-	
-
-	
 };
 
 #endif

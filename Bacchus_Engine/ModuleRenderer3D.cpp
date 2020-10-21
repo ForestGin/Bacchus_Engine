@@ -14,9 +14,7 @@
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
-#pragma comment (lib, "glew/libx86/glew32.lib")
-
-//#include "mmgr/mmgr.h"
+#pragma comment (lib, "glew/libx86/glew32.lib"
 
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module(start_enabled)
 {
@@ -28,9 +26,10 @@ ModuleRenderer3D::~ModuleRenderer3D()
 {}
 
 // Called before render is available
-bool ModuleRenderer3D::Init(/*json file*/)
+bool ModuleRenderer3D::Init(json file)
 {
 	LOG("Creating 3D Renderer context");
+
 	bool ret = true;
 	
 	//Create context
@@ -154,36 +153,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-//update_status ModuleRenderer3D::Update(float dt)
-//{
-//	if(wireframe == true)
-//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-//	else if(wireframe == false)
-//		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-//
-//	if (culling == true)
-//		glEnable(GL_CULL_FACE);
-//	else if (culling == false)
-//		glDisable(GL_CULL_FACE);
-//
-//	if (depth == true)
-//		glEnable(GL_DEPTH_TEST);
-//	else if (depth == false)
-//		glDisable(GL_DEPTH_TEST);
-//
-//	if (lightning == true)
-//		glEnable(GL_LIGHTING);
-//	else if (lightning == false)
-//		glDisable(GL_LIGHTING);
-//
-//	if (color_mat == true)
-//		glEnable(GL_COLOR_MATERIAL);
-//	else if (color_mat == false)
-//		glDisable(GL_COLOR_MATERIAL);
-//
-//	return UPDATE_CONTINUE;
-//}
-
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
@@ -196,7 +165,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//App->scene_manager->Draw();
 
 	// --- Draw everything and swap buffers ---
-	//App->gui->Draw();
+	App->bacchusinterface->Draw();
 
 	// To prevent problems with viewports
 	SDL_GL_MakeCurrent(App->window->window, context);
