@@ -144,6 +144,7 @@
     <ClCompile Include="BlockheadSettings.cpp">
       <Filter>EditorBlockheads</Filter>
     </ClCompile>
+    <ClCompile Include="BacchusHardware.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -384,6 +385,7 @@
     <ClInclude Include="BlockheadSettings.h">
       <Filter>EditorBlockheads</Filter>
     </ClInclude>
+    <ClInclude Include="BacchusHardware.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">

@@ -37,14 +37,14 @@ bool BacchusInterface::Init(json file)
 	blockheadSettings = new BlockheadSettings("Settings");
 	blockheads.push_back(blockheadSettings);
 
-	blockheadConsole = new BlockheadConsole("Console");
+	/*blockheadConsole = new BlockheadConsole("Console");
 	blockheads.push_back(blockheadConsole);
 
 	blockheadInspector = new BlockheadInspector("Inspector");
 	blockheads.push_back(blockheadInspector);
 
 	blockheadHierarchy = new BlockheadHierarchy("Hierarchy");
-	blockheads.push_back(blockheadHierarchy);
+	blockheads.push_back(blockheadHierarchy);*/
 
 	/*blockheadScene = new PanelScene("Scene");
 	blockheads.push_back(blockheadScene);
@@ -84,6 +84,8 @@ bool BacchusInterface::Start()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 
 	/*ret = LoadEditorConfig();*/
+
+	ImGuiID dockspaceID = 0;
 
 	return ret;
 }

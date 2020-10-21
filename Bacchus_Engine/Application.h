@@ -16,7 +16,9 @@ class ModuleInput;
 class ModuleSceneIntro;
 class ModuleRenderer3D;
 class ModuleCamera3D;
+
 class BacchusInterface;
+class BacchusHardware;
 class FileSystem;
 class ModuleResources;
 
@@ -27,7 +29,9 @@ public:
 	ModuleInput* input = nullptr;
 	ModuleRenderer3D* renderer3D = nullptr;
 	ModuleSceneIntro* scene_intro = nullptr;
+
 	BacchusInterface* bacchusinterface = nullptr;
+	BacchusHardware* hardware = nullptr;
 	ModuleCamera3D* camera = nullptr;
 	FileSystem* fs = nullptr;
 	ModuleResources* resources = nullptr;

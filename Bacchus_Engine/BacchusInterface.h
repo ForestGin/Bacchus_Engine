@@ -58,8 +58,6 @@ private:
 	bool capture_keyboard = false;
 	bool capture_mouse = false;
 
-	ImGuiID dockspaceID = 0;
-
 	std::vector<Blockhead*> blockheads;
 
 };

@@ -5,6 +5,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
 #include "BacchusInterface.h"
+#include "BacchusHardware.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
 #include "FileSystem.h"
@@ -29,6 +30,7 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	bacchusinterface = new BacchusInterface(this);
+	hardware = new BacchusHardware(true);
 	fs = new FileSystem(this, true, ASSETS_FOLDER);
 	resources = new ModuleResources(this);
 
@@ -37,18 +39,19 @@ Application::Application()
 	// They will CleanUp() in reverse order
 
 	// Main Modules
+	AddModule(hardware);
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
 	AddModule(fs);
 	AddModule(resources);
 
+	//Engine UI
+	AddModule(bacchusinterface);
+
 	//Scene
 	AddModule(scene_intro);
 
-	//Engine UI
-	AddModule(bacchusinterface);
-	
 	// Renderer last!
 	AddModule(renderer3D);
 
