@@ -6,8 +6,8 @@
 #include <vector>
 
 class Blockhead;
-class BlockheadSettings;
 class BlockheadAbout;
+class BlockheadSettings;
 class BlockheadConsole;
 class BlockheadInspector;
 class BlockheadHierarchy;
@@ -43,13 +43,13 @@ public:
 
 public:
 
-	BlockheadSettings* panelSettings = nullptr;
-	BlockheadAbout* panelAbout = nullptr;
-	BlockheadConsole* panelConsole = nullptr;
-	BlockheadInspector* panelInspector = nullptr;
-	BlockheadHierarchy* panelHierarchy = nullptr;
-	//BlockheadScene* panelScene = nullptr;
-	//BlockheadToolbar* panelToolbar = nullptr;
+	BlockheadSettings*	blockheadSettings = nullptr;
+	BlockheadAbout*		blockheadAbout = nullptr;
+	BlockheadConsole*	blockheadConsole = nullptr;
+	BlockheadInspector* blockheadInspector = nullptr;
+	BlockheadHierarchy* blockheadHierarchy = nullptr;
+	//BlockheadScene*	blockheadScene = nullptr;
+	//BlockheadToolbar* blockheadToolbar = nullptr;
 
 private:
 
@@ -57,6 +57,8 @@ private:
 	bool docking_window = true;
 	bool capture_keyboard = false;
 	bool capture_mouse = false;
+
+	ImGuiID dockspaceID = 0;
 
 	std::vector<Blockhead*> blockheads;
 

@@ -3,7 +3,15 @@
 #include "BacchusInterface.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
-#include "ModuleInput.h"
+
+#include "Blockhead.h"
+#include "BlockheadAbout.h"
+#include "BlockheadSettings.h"
+//#include "BlockheadConsole.h"
+//#include "BlockheadInspector.h"
+//#include "BlockheadHierarchy.h"
+//#include "BlockheadScene.h"
+//#include "BlockheadToolbar.h"
 
 #include "imgui/imgui.h"
 #include "imgui/examples/imgui_impl_sdl.h"
@@ -14,15 +22,37 @@
 #include "OpenGL.h"
 
 
-BacchusInterface::BacchusInterface(bool start_enabled) : Module(start_enabled) {}
+BacchusInterface::BacchusInterface(bool start_enabled) : Module(start_enabled) 
+{
+	name = "GUI";
+}
 
 BacchusInterface::~BacchusInterface() {}
 
 bool BacchusInterface::Init(json file)
 {
-	
+	blockheadAbout = new BlockheadAbout("About");
+	blockheads.push_back(blockheadAbout);
 
-	/*LoadStatus(file);*/
+	blockheadSettings = new BlockheadSettings("Settings");
+	blockheads.push_back(blockheadSettings);
+
+	blockheadConsole = new BlockheadConsole("Console");
+	blockheads.push_back(blockheadConsole);
+
+	blockheadInspector = new BlockheadInspector("Inspector");
+	blockheads.push_back(blockheadInspector);
+
+	blockheadHierarchy = new BlockheadHierarchy("Hierarchy");
+	blockheads.push_back(blockheadHierarchy);
+
+	/*blockheadScene = new PanelScene("Scene");
+	blockheads.push_back(blockheadScene);
+
+	blockheadToolbar = new PanelToolbar("Toolbar");
+	blockheads.push_back(blockheadToolbar);*/
+
+	LoadStatus(file);
 
 	return true;
 }

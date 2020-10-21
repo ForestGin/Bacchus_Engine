@@ -94,6 +94,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Blockhead.h" />
+    <ClInclude Include="BlockheadAbout.h" />
+    <ClInclude Include="BlockheadSettings.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="BacchusInterface.h" />
     <ClInclude Include="FileSystem.h" />
@@ -189,6 +192,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Blockhead.cpp" />
+    <ClCompile Include="BlockheadAbout.cpp" />
+    <ClCompile Include="BlockheadSettings.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="BacchusInterface.cpp" />
     <ClCompile Include="FileSystem.cpp" />

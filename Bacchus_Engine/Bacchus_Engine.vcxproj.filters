@@ -34,12 +34,6 @@
       <Filter>External Libs\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="PerfTimer.cpp" />
-    <ClCompile Include="JSON\parson.c">
-      <Filter>External Libs\JSON</Filter>
-    </ClCompile>
-    <ClCompile Include="JasonReader.cpp">
-      <Filter>External Libs\JSON</Filter>
-    </ClCompile>
     <ClCompile Include="MathGeoLib\include\Geometry\AABB.cpp">
       <Filter>External Libs\MathGeoLib\Geometry</Filter>
     </ClCompile>
@@ -136,6 +130,20 @@
     <ClCompile Include="MathGeoLib\include\Time\Clock.cpp">
       <Filter>External Libs\MathGeoLib\Time</Filter>
     </ClCompile>
+    <ClCompile Include="FileSystem.cpp" />
+    <ClCompile Include="JSONLoader.cpp" />
+    <ClCompile Include="Res.cpp" />
+    <ClCompile Include="ResourceMesh.cpp" />
+    <ClCompile Include="ModuleResources.cpp" />
+    <ClCompile Include="Blockhead.cpp">
+      <Filter>EditorBlockheads</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockheadAbout.cpp">
+      <Filter>EditorBlockheads</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockheadSettings.cpp">
+      <Filter>EditorBlockheads</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -178,12 +186,6 @@
     </ClInclude>
     <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="p2Defs.h" />
-    <ClInclude Include="JSON\parson.h">
-      <Filter>External Libs\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="JasonReader.h">
-      <Filter>External Libs\JSON</Filter>
-    </ClInclude>
     <ClInclude Include="Math.h" />
     <ClInclude Include="MathGeoLib\include\MathBuildConfig.h">
       <Filter>External Libs\MathGeoLib</Filter>
@@ -366,6 +368,22 @@
       <Filter>External Libs\MathGeoLib\Time</Filter>
     </ClInclude>
     <ClInclude Include="OpenGL.h" />
+    <ClInclude Include="FileSystem.h" />
+    <ClInclude Include="JSONLoader.h" />
+    <ClInclude Include="JSON\json.hpp" />
+    <ClInclude Include="Res.h" />
+    <ClInclude Include="ResourceMesh.h" />
+    <ClInclude Include="ModuleResources.h" />
+    <ClInclude Include="VSresource.h" />
+    <ClInclude Include="Blockhead.h">
+      <Filter>EditorBlockheads</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockheadAbout.h">
+      <Filter>EditorBlockheads</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockheadSettings.h">
+      <Filter>EditorBlockheads</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">
@@ -391,6 +409,9 @@
     </Filter>
     <Filter Include="External Libs\MathGeoLib\Time">
       <UniqueIdentifier>{4e1ce4b7-8d0f-41a6-ac51-1820280a1fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorBlockheads">
+      <UniqueIdentifier>{64e7dd28-b920-4950-b274-804d5b951506}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,7 @@ public:
 	ModuleInput(Application* app, bool start_enabled = true);
 	~ModuleInput();
 
-	bool Init(/*json file*/);
+	bool Init(json file);
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 
@@ -48,6 +48,11 @@ public:
 		return mouse_z;
 	}
 
+	int GetMouseWheel() const
+	{
+		return mouse_wheel;
+	}
+
 	int GetMouseXMotion() const
 	{
 		return mouse_x_motion;
@@ -66,6 +71,7 @@ private:
 	int mouse_x;
 	int mouse_y;
 	int mouse_z;
+	int mouse_wheel;
 	int mouse_x_motion;
 	int mouse_y_motion;
 	//int mouse_z_motion;
