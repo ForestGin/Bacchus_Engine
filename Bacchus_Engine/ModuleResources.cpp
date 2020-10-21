@@ -38,7 +38,7 @@ bool ModuleResources::Init(/*json file*/)
 bool ModuleResources::Start()
 {
 	LoadFBX("Assets/BakerHouse.fbx");
-	HouseTexID = App->tex->CreateTextureFromFile("Assets/Baker_house.png");
+	HouseTexID = App->tex->CreateTextureFromFile("Assets/Lenna.png");
 
 	return true;
 }
