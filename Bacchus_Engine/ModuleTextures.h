@@ -17,10 +17,14 @@ public:
 	bool Start();
 	bool CleanUp();
 
-	// Images
+	uint LoadCheckImage() const;
+	uint CreateTextureFromFile(const char* path) const;
+	uint CreateTextureFromPixels(int internalFormat, uint width, uint height, uint format, const void* pixels, bool CheckersTexture = false) const;
+	uint GetCheckerTextureID() const;
 
 private:
 
+	uint CheckerTexID = 0;
 };
 
 #endif 

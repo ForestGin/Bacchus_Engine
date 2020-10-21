@@ -26,12 +26,12 @@ public:
 	void Draw();
 	bool CleanUp();
 	bool LoadFBX(const char* path);
-
+	uint GetNumMeshes() const;
 
 private:
 
 	std::vector<ResourceMesh*> meshes;
-	uint ImageName = 0;
+	uint HouseTexID = 0;
 
 };
 

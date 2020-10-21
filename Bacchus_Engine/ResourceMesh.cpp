@@ -19,59 +19,76 @@ ResourceMesh::~ResourceMesh()
 	RELEASE_ARRAY(Indices);
 	RELEASE_ARRAY(Normals);
 	RELEASE_ARRAY(TexCoords);
+	RELEASE_ARRAY(Colours);
 }
 
 void ResourceMesh::ImportMesh(aiMesh* mesh)
 {
-	// --- Vertices ---
+	//Vertices
 	this->VerticesSize = mesh->mNumVertices;
-	this->Vertices = new float3[mesh->mNumVertices * 3];
+	this->Vertices = new float3[mesh->mNumVertices];
 
-	memcpy(Vertices, mesh->mVertices, sizeof(float3) * VerticesSize * 3);
+	for (uint i = 0; i < mesh->mNumVertices; ++i)
+	{
+		Vertices[i].x = mesh->mVertices[i].x;
+		Vertices[i].y = mesh->mVertices[i].y;
+		Vertices[i].z = mesh->mVertices[i].z;
+	}
 
 	glGenBuffers(1, (GLuint*)&this->VerticesID); // create buffer
 	glBindBuffer(GL_ARRAY_BUFFER, this->VerticesID); // start using created buffer
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * this->VerticesSize * 3, this->Vertices, GL_STATIC_DRAW); // send vertices to VRAM
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * this->VerticesSize, this->Vertices, GL_STATIC_DRAW); // send vertices to VRAM
 	glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
 
-	// --- Normals ---
+	//Normals
 	if (mesh->HasNormals())
 	{
 		NormalsSize = mesh->mNumVertices;
 		Normals = new float3[NormalsSize];
-		memcpy(Normals, mesh->mNormals, sizeof(float3) * NormalsSize);
+		for (uint i = 0; i < mesh->mNumVertices; ++i)
+		{
+			Normals[i].x = mesh->mNormals[i].x;
+			Normals[i].y = mesh->mNormals[i].y;
+			Normals[i].z = mesh->mNormals[i].z;
+		}
 	}
 
-	// --- Texture Coordinates ---
+	//Texture Coordinates
 
 	if (mesh->HasTextureCoords(0))
 	{
-		TexCoords = new float2[mesh->mNumVertices * 2];
+		TexCoords = new float[mesh->mNumVertices * 2];
 
 		for (uint j = 0; j < mesh->mNumVertices; ++j)
 		{
-			memcpy(&TexCoords[j].x, &mesh->mTextureCoords[0][j].x, sizeof(float));
-			memcpy(&TexCoords[j].y, &mesh->mTextureCoords[0][j].y, sizeof(float));
+			TexCoords[j * 2] = mesh->mTextureCoords[0][j].x;
+			TexCoords[(j * 2) + 1] = mesh->mTextureCoords[0][j].y;
 		}
 
 	}
 
 
-	glGenBuffers(1, (GLuint*)&this->TexID); // create buffer
-	glBindBuffer(GL_ARRAY_BUFFER, this->TexID); // start using created buffer
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float2) * this->VerticesSize, this->TexCoords, GL_STATIC_DRAW); // send vertices to VRAM
+	glGenBuffers(1, (GLuint*)&this->TextureCoordsID); // create buffer
+	glBindBuffer(GL_ARRAY_BUFFER, this->TextureCoordsID); // start using created buffer
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * this->VerticesSize*2, this->TexCoords, GL_STATIC_DRAW); // send vertices to VRAM
 	glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
 
-	// --- Colours ---
+	//Colours
 
 	if (mesh->HasVertexColors(0))
 	{
-		ColoursSize = VerticesSize;
+		ColoursSize = mesh->mNumVertices;
 		Colours = new unsigned char[ColoursSize * 4];
-		memcpy(Colours, mesh->mColors, sizeof(unsigned char) * ColoursSize * 4);
+		for (uint i = 0; i < mesh->mNumVertices; ++i)
+		{
+			Colours[4 * i] = mesh->mColors[0][i].r;
+			Colours[(4 * i) + 1] = mesh->mColors[0][i].g;
+			Colours[(4 * i) + 2] = mesh->mColors[0][i].b;
+			Colours[(4 * i) + 3] = mesh->mColors[0][i].a;
+		}
 	}
 
-	// --- Indices ---
+	//Indices
 	this->IndicesSize = mesh->mNumFaces * 3;
 	this->Indices = new uint[this->IndicesSize];
 

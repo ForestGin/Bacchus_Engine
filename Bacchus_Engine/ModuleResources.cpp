@@ -1,8 +1,8 @@
 #include "Application.h"
 #include "ModuleResources.h"
 #include "ResourceMesh.h"
-
 #include "OpenGL.h"
+#include "ModuleTextures.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -38,6 +38,7 @@ bool ModuleResources::Init(/*json file*/)
 bool ModuleResources::Start()
 {
 	LoadFBX("Assets/BakerHouse.fbx");
+	HouseTexID = App->tex->CreateTextureFromFile("Assets/Baker_house.png");
 
 	return true;
 }
@@ -45,43 +46,47 @@ bool ModuleResources::Start()
 
 bool ModuleResources::CleanUp()
 {
-	// --- Detach assimp log stream ---
+	//Detach assimp log stream
 	aiDetachAllLogStreams();
 
 
-	// -- Release all buffer data and own stored data ---
+	//Release all buffer data and own stored data
 	for (uint i = 0; i < meshes.size(); ++i)
 	{
 		delete meshes[i];
 	}
+
+	//Delete sample Image texture
+	if (HouseTexID > 0)
+		glDeleteTextures(1, (GLuint*)&HouseTexID);
 
 	return true;
 }
 
 bool ModuleResources::LoadFBX(const char* path)
 {
-	// --- Import scene from path ---
+	//Import scene from path
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
 
-		// --- Use scene->mNumMeshes to iterate on scene->mMeshes array ---
+		//Use scene->mNumMeshes to iterate on scene->mMeshes array
 
 		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
-			// --- Create new Resource mesh to store current scene mesh data ---
+			//Create new Resource mesh to store current scene mesh data
 			ResourceMesh* new_mesh = new ResourceMesh;
 			meshes.push_back(new_mesh);
 
-			// --- Get Scene mesh number i ---
+			// Get Scene mesh number i
 			aiMesh* mesh = scene->mMeshes[i];
 
-			// --- Import mesh data (fill new_mesh)---
+			// Import mesh data (fill new_mesh)
 			new_mesh->ImportMesh(mesh);
 		}
 
-		// --- Free scene ---
+		// Free scene
 		aiReleaseImport(scene);
 
 
@@ -101,6 +106,15 @@ void ModuleResources::Draw()
 	for (uint i = 0; i < meshes.size(); ++i)
 	{
 
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, HouseTexID);
+		glActiveTexture(GL_TEXTURE0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->TextureCoordsID);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+		// Drawing mesh
 		glEnableClientState(GL_VERTEX_ARRAY); // enable client-side capability
 
 		glBindBuffer(GL_ARRAY_BUFFER, meshes[i]->VerticesID); // start using created buffer (vertices)
@@ -114,7 +128,13 @@ void ModuleResources::Draw()
 
 		glDisableClientState(GL_VERTEX_ARRAY); // disable client-side capability
 
-		if (meshes[i]->Normals)
+		//
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		//Drawing Vertex Normals
+		/*if (meshes[i]->Normals)
 		{
 			glBegin(GL_LINES);
 			glLineWidth(1.0f);
@@ -132,8 +152,13 @@ void ModuleResources::Draw()
 
 			glEnd();
 
-		}
+		}*/
 
 
 	}
+}
+
+uint ModuleResources::GetNumMeshes() const
+{
+	return meshes.size();
 }
