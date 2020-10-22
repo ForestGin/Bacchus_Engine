@@ -72,6 +72,9 @@ bool BacchusEditor::Start()
 
 	io.IniFilename = "imgui.ini";
 
+	//Font
+	io.FontDefault = io.Fonts->AddFontFromFileTTF("../Assets/Fonts/QuattrocentoSans/QuattrocentoSans-Bold.ttf", 15);
+
 	// Setup Dear ImGui style
 	//ImGui::StyleColorsDark();
 	//ImGui::StyleColorsClassic();
