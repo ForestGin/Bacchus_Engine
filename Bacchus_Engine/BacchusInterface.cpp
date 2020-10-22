@@ -17,7 +17,6 @@
 #include "imgui/examples/imgui_impl_sdl.h"
 #include "imgui/examples/imgui_impl_opengl3.h"
 #include "imgui/imgui_internal.h"
-#include "imgui/ImGuizmo/ImGuizmo.h"
 
 #include "OpenGL.h"
 
@@ -93,8 +92,6 @@ update_status BacchusInterface::PreUpdate(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
-
-	//ImGuizmo::BeginFrame();
 
 	return UPDATE_CONTINUE;
 }

@@ -53,7 +53,7 @@ bool BlockheadSettings::Draw()
 
 void BlockheadSettings::ApplicationNode() const
 {
-	// --- Application name ---
+	// Application name
 	static char appName[100];
 	if (App->GetAppName() != nullptr)
 		strcpy_s(appName, 100, App->GetAppName());
@@ -62,7 +62,7 @@ void BlockheadSettings::ApplicationNode() const
 
 	ImGui::Separator();
 
-	// --- Organization name ---
+	// Organization name 
 	static char orgName[100];
 	if (App->GetOrganizationName() != nullptr)
 		strcpy_s(orgName, 100, App->GetOrganizationName());
@@ -70,13 +70,13 @@ void BlockheadSettings::ApplicationNode() const
 		App->SetOrganizationName(orgName);
 
 	ImGui::Separator();
-	// --- Cap frames ---
+	// Cap frames
 	int maxFramerate = App->GetMaxFramerate();
 	if (ImGui::SliderInt("Max FPS", &maxFramerate, 0, App->window->GetDisplayRefreshRate()))
 		App->SetMaxFramerate(maxFramerate);
 
 	ImGui::SameLine();
-	// --- VSync ---
+	// VSync
 	bool vsync = App->renderer3D->GetVSync();
 	if (ImGui::Checkbox("Use VSync", &vsync))
 	{
@@ -89,42 +89,15 @@ void BlockheadSettings::ApplicationNode() const
 	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%i", App->GetMaxFramerate());
 
-	// --- Framerate && Ms ---
+	// Framerate && Ms 
 	char title[25];
 	sprintf_s(title, 25, "Framerate %.1f", FPS_Tracker[FPS_Tracker.size() - 1]);
 	ImGui::PlotHistogram("##Framerate", &FPS_Tracker[0], FPS_Tracker.size(), 0, title, 0.0f, 100.0f, ImVec2(500, 75));
 	sprintf_s(title, 25, "Milliseconds %0.1f", MS_Tracker[MS_Tracker.size() - 1]);
 	ImGui::PlotHistogram("##Milliseconds", &MS_Tracker[0], MS_Tracker.size(), 0, title, 0.0f, 40.0f, ImVec2(500, 75));
 
-	// --- Memory ---
-	//sMStats MemoryStats = m_getMemoryStatistics(); // Using mmgr 
-	//static int speed = 0;
-	//static std::vector<float> Memory(100); // Hom many units/lines we want in the plot
-	//if (++speed > 25) // How fast the plot is plotted :)
-	//{
-	//	speed = 0;
-	//	if (Memory.size() == 100)
-	//	{
-	//		for (uint i = 0; i < 100 - 1; ++i)
-	//			Memory[i] = Memory[i + 1];
+	// Memory 
 
-	//		Memory[100 - 1] = (float)MemoryStats.totalReportedMemory;
-	//	}
-	//	else
-	//		Memory.push_back((float)MemoryStats.totalReportedMemory);
-	//}
-
-	//ImGui::PlotHistogram("##Memory", &Memory[0], Memory.size(), 0, "Memory Consumption", 0.0f, (float)MemoryStats.peakReportedMemory * 1.2f, ImVec2(500, 75));
-
-	//ImGui::Text("Total Reported Memory: %u", MemoryStats.totalReportedMemory);
-	//ImGui::Text("Total Actual Memory: %u", MemoryStats.totalActualMemory);
-	//ImGui::Text("Peak Reported Memory: %u", MemoryStats.peakReportedMemory);
-	//ImGui::Text("Peak Actual Memory: %u", MemoryStats.peakActualMemory);
-	//ImGui::Text("Accumulated Reported Memory: %u", MemoryStats.accumulatedReportedMemory);
-	//ImGui::Text("Accumulated Actual Memory: %u", MemoryStats.accumulatedActualMemory);
-	//ImGui::Text("Accumulated Alloc Unit Count: %u", MemoryStats.accumulatedAllocUnitCount);
-	//ImGui::Text("Total Alloc Unit Count: %u", MemoryStats.totalAllocUnitCount);
-	//ImGui::Text("Peak Alloc Unit Count: %u", MemoryStats.peakAllocUnitCount);
 }
 
 void BlockheadSettings::WindowNode() const

@@ -29,7 +29,7 @@ bool BlockheadAbout::Draw()
 		ImGui::Text("By Oscar Larios and Pol Bosch (ForestGin)");
 
 		// --- Libraries --- //REVISION
-		/*ImGui::Text("Libraries");
+		ImGui::Text("Libraries");
 		ImGui::Spacing();
 
 		SDL_version version;
@@ -46,19 +46,11 @@ bool BlockheadAbout::Draw()
 		if (ImGui::Button("ImGui")) { App->bacchusinterface->RequestBrowser("https://github.com/ocornut/imgui"); }
 		ImGui::SameLine(); ImGui::TextWrapped("%s", ImGui::GetVersion());
 
-		if (ImGui::Button("ImGuizmo")) { App->bacchusinterface->RequestBrowser("https://github.com/CedricGuillemet/ImGuizmo"); }
-		ImGui::SameLine(); ImGui::TextWrapped("1.0");
-
 		if (ImGui::Button("MathGeoLib")) { App->bacchusinterface->RequestBrowser("https://github.com/juj/MathGeoLib"); }
 		ImGui::SameLine(); ImGui::TextWrapped("1.5");
 
 		if (ImGui::Button("JSON For Modern C++")) { App->bacchusinterface->RequestBrowser("https://github.com/nlohmann/json"); }
 		ImGui::SameLine(); ImGui::TextWrapped("3.7.0");
-
-		if (ImGui::Button("MMGR")) { App->bacchusinterface->RequestBrowser("http://www.paulnettle.com/"); }
-		ImGui::Spacing();
-		ImGui::Separator();
-		ImGui::Spacing();*/
 
 		// --- License ---
 
