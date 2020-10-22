@@ -29,6 +29,7 @@ public:
 	bool Exists(const char* file) const;
 	bool IsDirectory(const char* file) const;
 	void CreateDirectory(const char* directory);
+	void GetDirectoryFromPath(std::string& directory);
 	void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const;
 	bool CopyFromOutsideFS(const char* full_path, const char* destination);
 	bool Copy(const char* source, const char* destination);
@@ -40,7 +41,6 @@ public:
 	unsigned int Load(const char* path, const char* file, char** buffer) const;
 	unsigned int Load(const char* file, char** buffer) const;
 	SDL_RWops* Load(const char* file) const;
-	void* BassLoad(const char* file) const;
 
 	// IO interfaces for other libs to handle files via PHYSfs
 	aiFileIO* GetAssimpIO();

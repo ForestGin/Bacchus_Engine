@@ -7,7 +7,7 @@
 
 
 struct aiMesh;
-
+struct aiScene;
 
 
 class ResourceMesh : public Res
@@ -17,7 +17,7 @@ public:
 	ResourceMesh();
 	virtual ~ResourceMesh();
 
-	void ImportMesh(aiMesh* mesh);
+	void ImportMesh(const aiMesh* mesh, uint MATTextureID);
 
 public:
 
@@ -34,13 +34,13 @@ public:
 
 	float* TexCoords = nullptr;
 	uint  TextureCoordsID = 0;
+
 	uint TexCoordsSize = 0;
-	uint  TexID = 0;
+	uint  TextureID = 0;
 
 	unsigned char* Colours = nullptr;
 	uint ColoursSize = 0;
 
-	uint ImageName = 0;
 };
 
 #endif

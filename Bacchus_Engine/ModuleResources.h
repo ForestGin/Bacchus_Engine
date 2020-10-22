@@ -10,6 +10,9 @@
 #include <vector>
 
 class ResourceMesh;
+class aiScene;
+
+#define NORMAL_LENGTH 1
 
 class ModuleResources : public Module
 {
@@ -20,18 +23,19 @@ public:
 
 	bool Init(/*json file*/);
 	bool Start();
-	//update_status PreUpdate(float dt);
-	//update_status Update(float dt);
-	//update_status PostUpdate(float dt);
-	void Draw();
+	void Draw() const;
 	bool CleanUp();
 	bool LoadFBX(const char* path);
 	uint GetNumMeshes() const;
+	void GetTextureIDFromSceneMaterial(const aiScene& scene, uint& texture_ID, std::string& directory);
+
+private:
+	void DrawMesh(const ResourceMesh* mesh) const;
+	void DrawNormals(const ResourceMesh* mesh) const;
 
 private:
 
 	std::vector<ResourceMesh*> meshes;
-	uint HouseTexID = 0;
 
 };
 

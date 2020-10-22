@@ -151,13 +151,7 @@ uint ModuleTextures::CreateTextureFromFile(const char* path) const
 
 	uint texName = 0;
 
-	// If there are no meshes stop 
-	if (App->resources->GetNumMeshes() <= 0)
-	{
-		LOG("|[error]: Error at loading texture from path. ERROR: Scene does not contain any mesh");
-		return texName;
-	}
-	else if (path == nullptr)
+	if (path == nullptr)
 	{
 		LOG("|[error]: Error at loading texture from path. ERROR: Path %s was nullptr", path);
 		return texName;

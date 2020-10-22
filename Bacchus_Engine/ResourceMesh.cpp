@@ -14,6 +14,8 @@ ResourceMesh::~ResourceMesh()
 {
 	glDeleteBuffers(1, (GLuint*)&VerticesID);
 	glDeleteBuffers(1, (GLuint*)&IndicesID);
+	glDeleteBuffers(1, (GLuint*)&TextureCoordsID);
+	glDeleteBuffers(1, (GLuint*)&TextureID);
 
 	RELEASE_ARRAY(Vertices);
 	RELEASE_ARRAY(Indices);
@@ -22,7 +24,7 @@ ResourceMesh::~ResourceMesh()
 	RELEASE_ARRAY(Colours);
 }
 
-void ResourceMesh::ImportMesh(aiMesh* mesh)
+void ResourceMesh::ImportMesh(const aiMesh* mesh, uint MATTextureID)
 {
 	//Vertices
 	this->VerticesSize = mesh->mNumVertices;
@@ -107,4 +109,19 @@ void ResourceMesh::ImportMesh(aiMesh* mesh)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->IndicesID); // start using created buffer
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * this->IndicesSize, this->Indices, GL_STATIC_DRAW); // send vertices to VRAM
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
+
+	//Material
+
+	this->TextureID = MATTextureID;
+
+	//if (scene->HasMaterials())
+	//{
+	//	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+
+	//	if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+	//	{
+	//		aiString Texture_path;
+	//		material->GetTexture(aiTextureType_DIFFUSE,0, &Texture_path);
+	//	}
+	//}
 }
