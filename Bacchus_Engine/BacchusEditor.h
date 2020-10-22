@@ -31,6 +31,9 @@ public:
 	void DockingSpace() const;
 	void RequestBrowser(const char* url) const;
 
+	void SetDarkThemeColors();
+	void SetLightThemeColors();
+
 	void LogFPS(float fps, float ms);
 
 	/*void SaveStatus(json& file) const override;

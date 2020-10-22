@@ -73,8 +73,9 @@ bool BacchusEditor::Start()
 	io.IniFilename = "imgui.ini";
 
 	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsDark();
 	//ImGui::StyleColorsClassic();
+	SetDarkThemeColors();
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplOpenGL3_Init();
@@ -313,6 +314,45 @@ void BacchusEditor::DockingSpace() const
 void BacchusEditor::RequestBrowser(const char* url) const
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+
+void BacchusEditor::SetDarkThemeColors()
+{
+	auto& colors = ImGui::GetStyle().Colors;
+
+	//Window Background
+	colors[ImGuiCol_WindowBg] =				ImVec4{ 0.f, 0.f, 0.f, 0.8f };
+	
+	//Headers
+	colors[ImGuiCol_Header] =				ImVec4{ 0.420f, 0.023f, 0.125f, 0.8f };
+	colors[ImGuiCol_HeaderHovered] =		ImVec4{ 0.420f, 0.023f, 0.125f, 0.7f };
+	colors[ImGuiCol_HeaderActive] =			ImVec4{ 1.f, 1.f, 1.f, 0.7f };
+
+	//Buttons
+	colors[ImGuiCol_Button] =				ImVec4{ 0.420f, 0.023f, 0.125f, 0.8f };
+	colors[ImGuiCol_ButtonHovered] =		ImVec4{ 0.420f, 0.023f, 0.125f, 0.7f };
+	colors[ImGuiCol_ButtonActive] =			ImVec4{ 1.f, 1.f, 1.f, 0.7f };
+
+	//Frame Bg
+	colors[ImGuiCol_FrameBg] =				ImVec4{ 1.f, 1.f, 1.f, 0.2f };
+	colors[ImGuiCol_FrameBgHovered] =		ImVec4{ 1.f, 1.f, 1.f, 0.3f };
+	colors[ImGuiCol_FrameBgActive] =		ImVec4{ 1.f, 1.f, 1.f, 0.4f };
+
+	//Tabs
+	colors[ImGuiCol_Tab] =					ImVec4{ 0.f, 0.f, 0.f, 0.5f };
+	colors[ImGuiCol_TabHovered] =			ImVec4{ 1.f, 1.f, 1.f, 0.4f };
+	colors[ImGuiCol_TabActive] =			ImVec4{ 0.520f, 0.023f, 0.225f, 0.8f };
+	colors[ImGuiCol_TabUnfocused] =			ImVec4{ 0.f, 0.f, 0.f, 0.4f };
+	colors[ImGuiCol_TabUnfocusedActive] =	ImVec4{ 1.f, 1.f, 1.f, 0.2f };
+
+	//Titles
+	colors[ImGuiCol_TitleBg] =				ImVec4{ 1.f, 1.f, 1.f, 0.2f };
+	colors[ImGuiCol_TitleBgActive] =		ImVec4{ 0.420f, 0.023f, 0.125f, 0.8f };
+	colors[ImGuiCol_TitleBgCollapsed] =		ImVec4{ 0.420f, 0.023f, 0.125f, 0.8f };
+
+	//Docking
+	colors[ImGuiCol_DockingEmptyBg] = ImVec4{ 1.f, 1.f, 1.f, 0.6f };
+	colors[ImGuiCol_DockingPreview] = ImVec4{ 1.f, 1.f, 1.f, 0.4f };
 }
 
 //void BacchusEditor::SaveStatus(json& file) const
