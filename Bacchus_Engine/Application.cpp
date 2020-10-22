@@ -76,7 +76,7 @@ bool Application::Init()
 {
 	bool ret = true;
 
-	// --- Load App data from JSON files ---
+	//Load App data from JSON files
 	json config = JLoader.Load(configpath.data());
 
 	if (config.is_null())
@@ -84,7 +84,7 @@ bool Application::Init()
 		//call defaultconfig
 	}
 
-	// --- Reading App Name/ Org Name from json file ---
+	// Reading App Name/ Org Name from json file
 	std::string tmp = config["Application"]["Title"];
 	appName = tmp;
 
@@ -145,8 +145,8 @@ void Application::FinishUpdate()
 	if (capped_ms > 0 && (last_frame_ms < capped_ms))
 		SDL_Delay(capped_ms - last_frame_ms);
 
-	// --- Send data to GUI- PanelSettings Historiograms
-	//App->bacchuseditor->LogFPS((float)last_fps, (float)last_frame_ms);
+	//Send data to GUI- PanelSettings Historiograms
+	App->bacchuseditor->LogFPS((float)last_fps, (float)last_frame_ms);
 
 }
 
@@ -174,14 +174,14 @@ void Application::SaveAllStatus()
 
 void Application::LoadAllStatus(json& file)
 {
-	// --- Reading App name from json file ---
+	//Reading App name from json file
 	std::string tmp = file["Application"]["Title"];
 	appName = tmp;
 
 	std::string tmp2 = file["Application"]["Organization"];
 	orgName = tmp2;
 
-	// --- Call Load of all modules ---
+	//Call Load of all modules
 
 	json config = JLoader.Load(configpath.data());
 
@@ -286,6 +286,25 @@ const char* Application::GetOrganizationName() const
 	return orgName.data();
 }
 
+void Application::Log(const char* entry)
+{
+	// --- Append all logs to a string so we can print them on console --- 
+	log.append(entry);
+
+	std::string to_add = entry;
+	logs.push_back(to_add);
+}
+
+void Application::ClearLogsFromConsole()
+{
+	logs.erase(logs.begin(), logs.end());
+	logs.clear();
+}
+
+std::vector<std::string>& Application::GetLogs()
+{
+	return logs;
+}
 
 //json Application::GetDefaultConfig() const
 //{

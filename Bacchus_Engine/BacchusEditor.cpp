@@ -7,7 +7,7 @@
 #include "Blockhead.h"
 #include "BlockheadAbout.h"
 #include "BlockheadSettings.h"
-//#include "BlockheadConsole.h"
+#include "BlockheadConsole.h"
 //#include "BlockheadInspector.h"
 //#include "BlockheadHierarchy.h"
 //#include "BlockheadScene.h"
@@ -36,9 +36,9 @@ bool BacchusEditor::Init(/*json file*/)
 	blockheadSettings = new BlockheadSettings("Settings");
 	blockheads.push_back(blockheadSettings);
 
-	/*blockheadConsole = new BlockheadConsole("Console");
+	blockheadConsole = new BlockheadConsole("Console");
 	blockheads.push_back(blockheadConsole);
-
+	/*
 	blockheadInspector = new BlockheadInspector("Inspector");
 	blockheads.push_back(blockheadInspector);
 
@@ -153,10 +153,10 @@ update_status BacchusEditor::Update(float dt)
 
 		if (ImGui::BeginMenu("Window"))
 		{
-			/*if (ImGui::MenuItem("Console"))
+			if (ImGui::MenuItem("Console"))
 			{
 				blockheadConsole->OnOff();
-			}*/
+			}
 
 			if (ImGui::MenuItem("Configuration"))
 			{
@@ -335,4 +335,10 @@ void BacchusEditor::HandleInput(SDL_Event* event)
 bool BacchusEditor::IsKeyboardCaptured()
 {
 	return capture_keyboard;
+}
+
+void BacchusEditor::LogFPS(float fps, float ms)
+{
+	if (blockheadSettings != nullptr)
+		blockheadSettings->AddFPS(fps, ms);
 }

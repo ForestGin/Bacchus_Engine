@@ -1,30 +1,7 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  Application.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(21,1): warning C4005: 'RELEASE': macro redefinition
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(27): message : see previous definition of 'RELEASE'
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(32,1): warning C4005: 'RELEASE_ARRAY': macro redefinition
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(34): message : see previous definition of 'RELEASE_ARRAY'
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  BacchusEditor.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(21,1): warning C4005: 'RELEASE': macro redefinition
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(27): message : see previous definition of 'RELEASE'
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(32,1): warning C4005: 'RELEASE_ARRAY': macro redefinition
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(34): message : see previous definition of 'RELEASE_ARRAY'
-  BlockheadAbout.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(21,1): warning C4005: 'RELEASE': macro redefinition
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(27): message : see previous definition of 'RELEASE'
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(32,1): warning C4005: 'RELEASE_ARRAY': macro redefinition
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(34): message : see previous definition of 'RELEASE_ARRAY'
-  ModuleRenderer3D.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(21,1): warning C4005: 'RELEASE': macro redefinition
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(27): message : see previous definition of 'RELEASE'
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(32,1): warning C4005: 'RELEASE_ARRAY': macro redefinition
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(34): message : see previous definition of 'RELEASE_ARRAY'
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   log.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(21,1): warning C4005: 'RELEASE': macro redefinition
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(27): message : see previous definition of 'RELEASE'
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(32,1): warning C4005: 'RELEASE_ARRAY': macro redefinition
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(34): message : see previous definition of 'RELEASE_ARRAY'
-  Generating Code...
-  Bacchus_Engine.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
+F:\Bacchus_Engine\Bacchus_Engine\p2Defs.h(21,1): warning C4005: 'RELEASE': macro redefinition
+F:\Bacchus_Engine\Bacchus_Engine\Globals.h(27): message : see previous definition of 'RELEASE'
+F:\Bacchus_Engine\Bacchus_Engine\p2Defs.h(32,1): warning C4005: 'RELEASE_ARRAY': macro redefinition
+F:\Bacchus_Engine\Bacchus_Engine\Globals.h(34): message : see previous definition of 'RELEASE_ARRAY'
+  Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe

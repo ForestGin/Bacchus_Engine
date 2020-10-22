@@ -146,6 +146,9 @@
     <ClCompile Include="BacchusHardware.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="BacchusEditor.cpp" />
+    <ClCompile Include="BlockheadConsole.cpp">
+      <Filter>EditorBlockheads</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -387,6 +390,9 @@
     <ClInclude Include="BacchusHardware.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="BacchusEditor.h" />
+    <ClInclude Include="BlockheadConsole.h">
+      <Filter>EditorBlockheads</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">

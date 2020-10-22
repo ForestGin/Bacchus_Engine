@@ -103,12 +103,12 @@ void BlockheadSettings::ApplicationNode() const
 void BlockheadSettings::WindowNode() const
 {
 	ImGui::Separator();
-	// --- Brightness ---
+	//Brightness
 	float brightness = App->window->GetWinBrightness();
 	if (ImGui::SliderFloat("Window Brightness", &brightness, 0.0f, 1.0f))
 		App->window->SetWinBrightness(brightness);
 
-	// --- Window ReSize ---
+	// Window ReSize
 	uint width, height, min_width, min_height, max_width, max_height;
 	App->window->GetWinMaxMinSize(min_width, min_height, max_width, max_height);
 	width = App->window->GetWindowWidth();
@@ -121,13 +121,13 @@ void BlockheadSettings::WindowNode() const
 
 	ImGui::Separator();
 
-	// --- Refresh Rate Indicator ---
+	//Refresh Rate Indicator
 	ImGui::Text("Refresh Rate:");
 	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%u", App->window->GetDisplayRefreshRate());
 
 
-	// --- Window Flags ---
+	//Window Flags
 	bool fullscreen = App->window->IsFullscreen();
 	bool fullscreen_desktop = App->window->IsFullscreenDesktop();
 	bool resizable = App->window->IsResizable();
@@ -156,7 +156,7 @@ void BlockheadSettings::WindowNode() const
 void BlockheadSettings::InputNode() const
 {
 	ImGui::Separator();
-	// --- Mouse position
+	//Mouse position
 	int mouse_x, mouse_y;
 	mouse_x = App->input->GetMouseX();
 	mouse_y = App->input->GetMouseY();
@@ -164,14 +164,14 @@ void BlockheadSettings::InputNode() const
 	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%i,%i", mouse_x, mouse_y);
 
-	// --- Mouse Motion ---
+	//Mouse Motion
 	mouse_x = App->input->GetMouseXMotion();
 	mouse_y = App->input->GetMouseYMotion();
 	ImGui::Text("Mouse Motion:");
 	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%i,%i", mouse_x, mouse_y);
 
-	// --- Mouse Wheel acc ---
+	//Mouse Wheel acc
 	int wheel = App->input->GetMouseWheel();
 	ImGui::Text("Mouse Wheel:");
 	ImGui::SameLine();
@@ -185,12 +185,12 @@ void BlockheadSettings::HardwareNode() const
 	hw_info hardware_info = App->hardware->GetInfo();
 
 	ImGui::Separator();
-	// --- SDL Version ---
+	//SDL Version 
 	ImGui::Text("SDL Version:");	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%s", hardware_info.sdl_version);
 	ImGui::Separator();
 
-	// --- CPU ---
+	//CPU
 	ImGui::Text("CPU Logic Cores:");	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%i", hardware_info.cpu_count);
 
@@ -223,13 +223,13 @@ void BlockheadSettings::HardwareNode() const
 		ImGui::TextColored(ImVec4(255, 255, 0, 255), "%s", "avx2");
 
 	ImGui::Separator();
-	// --- RAM ---
+	//RAM
 	ImGui::Text("RAM Memory (Gb)"); ImGui::SameLine();
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%f", hardware_info.ram_gb);
 
 	ImGui::Separator();
 
-	// --- GPU --- 
+	// GPU
 	ImGui::Text("GPU Vendor");	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%s", hardware_info.gpu_vendor.data());
 
@@ -254,7 +254,7 @@ void BlockheadSettings::AddFPS(float fps, float ms)
 {
 	static uint counter = 0;
 
-	// --- If the plot historiogram is already full we shift ---
+	// If the plot historiogram is already full we shift 
 	if (counter == FPS_TRACKER_SIZE)
 	{
 		for (uint i = 0; i < FPS_TRACKER_SIZE - 1; ++i)

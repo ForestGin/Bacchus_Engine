@@ -54,3 +54,4 @@ enum update_status
 #define ORGANIZATION "UPC CITM BCN"
 #define ASSETS_FOLDER "/Assets/"
 #define SETTINGS_FOLDER "/Settings/"
+#define MAX_BUF_SIZE 4096
