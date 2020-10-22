@@ -116,6 +116,18 @@ void FileSystem::CreateDirectory(const char* directory)
 	PHYSFS_mkdir(directory);
 }
 
+void FileSystem::GetDirectoryFromPath(std::string& directory)
+{
+	// Normalize string, replacing \\ for /
+	NormalizePath(directory);
+
+	//Count until the last /
+	uint count = directory.find_last_of("/");
+
+	//Finally remove the file name, obtaining the directory
+	directory = directory.substr(0, count + 1);
+}
+
 void FileSystem::DiscoverFiles(const char* directory, vector<string>& file_list, vector<string>& dir_list) const
 {
 	char** rc = PHYSFS_enumerateFiles(directory);
@@ -251,8 +263,8 @@ void FileSystem::NormalizePath(std::string& full_path) const
 	{
 		if (*it == '\\')
 			*it = '/';
-		else
-			*it = tolower(*it);
+		/*else
+			*it = tolower(*it);*/
 	}
 }
 
@@ -314,15 +326,7 @@ SDL_RWops* FileSystem::Load(const char* file) const
 		return nullptr;
 }
 
-void* FileSystem::BassLoad(const char* file) const
-{
-	PHYSFS_file* fs_file = PHYSFS_openRead(file);
 
-	if (fs_file == nullptr)
-		LOG("File System error while opening file %s: %s\n", file, PHYSFS_getLastError());
-
-	return (void*)fs_file;
-}
 
 int close_sdl_rwops(SDL_RWops* rw)
 {

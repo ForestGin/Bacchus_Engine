@@ -21,6 +21,7 @@ class BacchusInterface;
 class BacchusHardware;
 class FileSystem;
 class ModuleResources;
+class ModuleTextures;
 
 class Application
 {
@@ -35,6 +36,7 @@ public:
 	ModuleCamera3D* camera = nullptr;
 	FileSystem* fs = nullptr;
 	ModuleResources* resources = nullptr;
+	ModuleTextures* tex = nullptr;
 
 public:
 	// Getts

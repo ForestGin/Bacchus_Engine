@@ -10,6 +10,7 @@
 #include "ModuleRenderer3D.h"
 #include "FileSystem.h"
 #include "ModuleResources.h"
+#include "ModuleTextures.h"
 
 Application::Application()
 {
@@ -33,6 +34,7 @@ Application::Application()
 	hardware = new BacchusHardware(true);
 	fs = new FileSystem(this, true, ASSETS_FOLDER);
 	resources = new ModuleResources(this);
+	tex = new ModuleTextures(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -45,6 +47,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(fs);
 	AddModule(resources);
+	AddModule(tex);
 
 	//Scene
 	AddModule(scene_intro);

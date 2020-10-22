@@ -1,11 +1,14 @@
 #ifndef __RESOURCE_MESH_H__
 #define __RESOURCE_MESH_H__
 
-#include "Globals.h"
 #include "Res.h"
 #include "Math.h"
 
+
+
 struct aiMesh;
+struct aiScene;
+
 
 class ResourceMesh : public Res
 {
@@ -14,17 +17,30 @@ public:
 	ResourceMesh();
 	virtual ~ResourceMesh();
 
-	void ImportMesh(aiMesh* mesh);
+	void ImportMesh(const aiMesh* mesh, uint MATTextureID);
 
 public:
 
 	float3* Vertices = nullptr;
 	uint VerticesID = 0; // unique vertex in VRAM
-	uint verticesSize = 0;
+	uint VerticesSize = 0;
 
 	uint* Indices = nullptr;
 	uint IndicesID = 0; // index in VRAM
 	uint IndicesSize = 0;
+
+	float3* Normals = nullptr;
+	uint NormalsSize = 0;
+
+	float* TexCoords = nullptr;
+	uint  TextureCoordsID = 0;
+
+	uint TexCoordsSize = 0;
+	uint  TextureID = 0;
+
+	unsigned char* Colours = nullptr;
+	uint ColoursSize = 0;
+
 };
 
 #endif
