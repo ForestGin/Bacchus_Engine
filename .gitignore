@@ -151,6 +151,6 @@ ASALocalRun/
 *.db-shm
 *.db-wal
 *.log
-*.tlog
+
 *.log
 */.vs/Bacchus_Engine/v16/.suo
