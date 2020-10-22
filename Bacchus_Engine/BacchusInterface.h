@@ -20,7 +20,7 @@ public:
 	BacchusInterface(bool start_enabled = true);
 	~BacchusInterface();
 
-	bool Init(json file);
+	bool Init(/*json file*/);
 	bool Start();
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);

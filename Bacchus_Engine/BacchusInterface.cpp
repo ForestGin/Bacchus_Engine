@@ -29,7 +29,7 @@ BacchusInterface::BacchusInterface(bool start_enabled) : Module(start_enabled)
 
 BacchusInterface::~BacchusInterface() {}
 
-bool BacchusInterface::Init(json file)
+bool BacchusInterface::Init(/*json file*/)
 {
 	blockheadAbout = new BlockheadAbout("About");
 	blockheads.push_back(blockheadAbout);
@@ -52,7 +52,7 @@ bool BacchusInterface::Init(json file)
 	blockheadToolbar = new PanelToolbar("Toolbar");
 	blockheads.push_back(blockheadToolbar);*/
 
-	LoadStatus(file);
+	//LoadStatus(file);
 
 	return true;
 }

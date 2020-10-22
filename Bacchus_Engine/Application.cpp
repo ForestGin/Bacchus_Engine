@@ -46,11 +46,11 @@ Application::Application()
 	AddModule(fs);
 	AddModule(resources);
 
-	//Engine UI
-	AddModule(bacchusinterface);
-
 	//Scene
 	AddModule(scene_intro);
+
+	//Engine UI
+	AddModule(bacchusinterface);
 
 	// Renderer last!
 	AddModule(renderer3D);

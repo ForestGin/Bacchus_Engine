@@ -26,7 +26,7 @@ ModuleRenderer3D::~ModuleRenderer3D()
 {}
 
 // Called before render is available
-bool ModuleRenderer3D::Init(json file)
+bool ModuleRenderer3D::Init(/*json file*/)
 {
 	LOG("Creating 3D Renderer context");
 
@@ -165,7 +165,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//App->scene_manager->Draw();
 
 	// --- Draw everything and swap buffers ---
-	//App->bacchusinterface->Draw();
+	App->bacchusinterface->Draw();
 
 	// To prevent problems with viewports
 	SDL_GL_MakeCurrent(App->window->window, context);
