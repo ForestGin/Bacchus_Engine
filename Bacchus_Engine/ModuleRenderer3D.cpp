@@ -7,7 +7,7 @@
 #include "ModuleResources.h"
 //#include "ModuleSceneManager.h"
 
-#include "BacchusInterface.h"
+#include "BacchusEditor.h"
 
 #include "OpenGL.h"
 #include "Imgui/imgui.h"
@@ -167,7 +167,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//App->scene_manager->Draw();
 
 	// --- Draw everything and swap buffers ---
-	App->bacchusinterface->Draw();
+	App->bacchuseditor->Draw();
 
 	// To prevent problems with viewports
 	SDL_GL_MakeCurrent(App->window->window, context);

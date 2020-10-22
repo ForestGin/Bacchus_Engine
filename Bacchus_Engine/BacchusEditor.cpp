@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "Globals.h"
-#include "BacchusInterface.h"
+#include "BacchusEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 
@@ -21,14 +21,14 @@
 #include "OpenGL.h"
 
 
-BacchusInterface::BacchusInterface(bool start_enabled) : Module(start_enabled) 
+BacchusEditor::BacchusEditor(bool start_enabled) : Module(start_enabled) 
 {
 	name = "GUI";
 }
 
-BacchusInterface::~BacchusInterface() {}
+BacchusEditor::~BacchusEditor() {}
 
-bool BacchusInterface::Init(/*json file*/)
+bool BacchusEditor::Init(/*json file*/)
 {
 	blockheadAbout = new BlockheadAbout("About");
 	blockheads.push_back(blockheadAbout);
@@ -56,7 +56,7 @@ bool BacchusInterface::Init(/*json file*/)
 	return true;
 }
 
-bool BacchusInterface::Start()
+bool BacchusEditor::Start()
 {
 	LOG("Loading Engine UI...");
 	bool ret = true;
@@ -85,44 +85,49 @@ bool BacchusInterface::Start()
 	return ret;
 }
 
-update_status BacchusInterface::PreUpdate(float dt)
+update_status BacchusEditor::PreUpdate(float dt)
 {
 	//Starting Frame
-
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
+	
+	//Starting Docking Space
+	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable)
+	{
+		DockingSpace();
+	}
 
 	return UPDATE_CONTINUE;
 }
 
 // Update
-update_status BacchusInterface::Update(float dt)
+update_status BacchusEditor::Update(float dt)
 {
-	ImGuiWindowFlags docking_window_flags = 0;
-	ImGuiID dockspaceID = 0;
+	//ImGuiWindowFlags docking_window_flags = 0;
+	//ImGuiID dockspaceID = 0;
 
-	if (docking_window == true)
-	{
-		docking_window_flags |= ImGuiWindowFlags_NoMove;
-		docking_window_flags |= ImGuiWindowFlags_NoBackground;
-		docking_window_flags |= ImGuiWindowFlags_NoTitleBar;
-		docking_window_flags |= ImGuiWindowFlags_NoDocking;
-		docking_window_flags |= ImGuiWindowFlags_NoInputs;
+	//if (docking_window == true)
+	//{
+	//	docking_window_flags |= ImGuiWindowFlags_NoMove;
+	//	docking_window_flags |= ImGuiWindowFlags_NoBackground;
+	//	docking_window_flags |= ImGuiWindowFlags_NoTitleBar;
+	//	docking_window_flags |= ImGuiWindowFlags_NoDocking;
+	//	docking_window_flags |= ImGuiWindowFlags_NoInputs;
 
-		if (ImGui::Begin("Master Window", &docking_window, docking_window_flags))
-		{
-			
-		}
+	//	if (ImGui::Begin("Master Window", &docking_window, docking_window_flags))
+	//	{
+	//		
+	//	}
 
-		if (docking_window)
-		{
-			// Declare Central dockspace
-			dockspaceID = ImGui::GetID("HUB_DockSpace");
-			ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode/*|ImGuiDockNodeFlags_NoResize*/);
-		}
-		ImGui::End();
-	}
+	//	if (docking_window)
+	//	{
+	//		// Declare Central dockspace
+	//		dockspaceID = ImGui::GetID("HUB_DockSpace");
+	//		ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode/*|ImGuiDockNodeFlags_NoResize*/);
+	//	}
+	//	ImGui::End();
+	//}
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -221,24 +226,24 @@ update_status BacchusInterface::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-update_status BacchusInterface::PostUpdate(float dt)
+update_status BacchusEditor::PostUpdate(float dt)
 {
 
-	// Iterate panels and draw
+	//Iterate panels and draw
 	for (uint i = 0; i < blockheads.size(); ++i)
 	{
 		if (blockheads[i]->IsEnabled())
 			blockheads[i]->Draw();
 	}
 
-	// End dock space
-	//if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable)
-	//ImGui::End();
+	//Ending docking space
+	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable)
+	ImGui::End();
 
 	return UPDATE_CONTINUE;
 }
 
-bool BacchusInterface::CleanUp()
+bool BacchusEditor::CleanUp()
 {
 	bool ret = true;
 
@@ -257,7 +262,7 @@ bool BacchusInterface::CleanUp()
 	return ret;
 }
 
-void BacchusInterface::Draw() const
+void BacchusEditor::Draw() const
 {
 	// Render
 	ImGui::Render();
@@ -271,43 +276,63 @@ void BacchusInterface::Draw() const
 
 }
 
-//void BacchusInterface::DockSpace() const
-//{
-//	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-//	window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-//	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-//
-//	static bool p_open = true;
-//	ImGui::Begin("DockSpace Demo", &p_open, window_flags);
-//
-//	ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
-//	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
-//	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
-//}
+void BacchusEditor::DockingSpace() const
+{
+	// Adapt to main Window
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->Pos);
+	ImGui::SetNextWindowSize(viewport->Size);
+	ImGui::SetNextWindowViewport(viewport->ID);
 
-void BacchusInterface::RequestBrowser(const char* url) const
+	// Docking window flags
+	ImGuiWindowFlags window_flags = 0;
+	window_flags |= ImGuiWindowFlags_MenuBar; 
+	window_flags |= ImGuiWindowFlags_NoDocking;
+	window_flags |= ImGuiWindowFlags_NoTitleBar;
+	window_flags |= ImGuiWindowFlags_NoCollapse;
+	window_flags |= ImGuiWindowFlags_NoResize;
+	window_flags |= ImGuiWindowFlags_NoMove;
+	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus;
+	window_flags |= ImGuiWindowFlags_NoNavFocus;
+	window_flags |= ImGuiWindowFlags_NoBackground;
+
+	//Docking Window Style
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 1.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 1.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.0f, 1.0f));
+
+	static bool p_open = true;
+	ImGui::Begin("DockSpace Demo", &p_open, window_flags);
+	ImGui::PopStyleVar(3);
+
+	ImGuiID dockspace_id = ImGui::GetID("MyDockingspace");
+	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+}
+
+void BacchusEditor::RequestBrowser(const char* url) const
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
-//void BacchusInterface::SaveStatus(json& file) const
+//void BacchusEditor::SaveStatus(json& file) const
 //{
 //
 //
 //
 //};
 //
-//void BacchusInterface::LoadStatus(const json& file)
+//void BacchusEditor::LoadStatus(const json& file)
 //{
 //	
 //};
 
-void BacchusInterface::HandleInput(SDL_Event* event)
+void BacchusEditor::HandleInput(SDL_Event* event)
 {
 	ImGui_ImplSDL2_ProcessEvent(event);
 }
 
-bool BacchusInterface::IsKeyboardCaptured()
+bool BacchusEditor::IsKeyboardCaptured()
 {
 	return capture_keyboard;
 }

@@ -4,7 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
-#include "BacchusInterface.h"
+#include "BacchusEditor.h"
 #include "BacchusHardware.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
@@ -30,7 +30,7 @@ Application::Application()
 	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	bacchusinterface = new BacchusInterface(this);
+	bacchuseditor = new BacchusEditor(this);
 	hardware = new BacchusHardware(true);
 	fs = new FileSystem(this, true, ASSETS_FOLDER);
 	resources = new ModuleResources(this);
@@ -53,7 +53,7 @@ Application::Application()
 	AddModule(scene_intro);
 
 	//Engine UI
-	AddModule(bacchusinterface);
+	AddModule(bacchuseditor);
 
 	// Renderer last!
 	AddModule(renderer3D);
@@ -146,7 +146,7 @@ void Application::FinishUpdate()
 		SDL_Delay(capped_ms - last_frame_ms);
 
 	// --- Send data to GUI- PanelSettings Historiograms
-	//App->bacchusinterface->LogFPS((float)last_fps, (float)last_frame_ms);
+	//App->bacchuseditor->LogFPS((float)last_fps, (float)last_frame_ms);
 
 }
 

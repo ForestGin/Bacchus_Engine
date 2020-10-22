@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="BacchusInterface.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />
@@ -145,11 +144,12 @@
       <Filter>EditorBlockheads</Filter>
     </ClCompile>
     <ClCompile Include="BacchusHardware.cpp" />
+    <ClCompile Include="ModuleTextures.cpp" />
+    <ClCompile Include="BacchusEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
-    <ClInclude Include="BacchusInterface.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Light.h" />
@@ -375,7 +375,6 @@
     <ClInclude Include="Res.h" />
     <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="ModuleResources.h" />
-    <ClInclude Include="VSresource.h" />
     <ClInclude Include="Blockhead.h">
       <Filter>EditorBlockheads</Filter>
     </ClInclude>
@@ -386,6 +385,8 @@
       <Filter>EditorBlockheads</Filter>
     </ClInclude>
     <ClInclude Include="BacchusHardware.h" />
+    <ClInclude Include="ModuleTextures.h" />
+    <ClInclude Include="BacchusEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">

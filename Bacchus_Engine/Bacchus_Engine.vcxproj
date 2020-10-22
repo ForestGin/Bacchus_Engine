@@ -99,7 +99,7 @@
     <ClInclude Include="BlockheadAbout.h" />
     <ClInclude Include="BlockheadSettings.h" />
     <ClInclude Include="Color.h" />
-    <ClInclude Include="BacchusInterface.h" />
+    <ClInclude Include="BacchusEditor.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
@@ -198,7 +198,7 @@
     <ClCompile Include="BlockheadAbout.cpp" />
     <ClCompile Include="BlockheadSettings.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="BacchusInterface.cpp" />
+    <ClCompile Include="BacchusEditor.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_opengl3.cpp" />

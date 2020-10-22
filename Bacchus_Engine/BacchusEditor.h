@@ -1,5 +1,5 @@
-#ifndef __BACCHUS_INTERFACE_H__
-#define __BACCHUS_INTERFACE_H__
+#ifndef __BACCHUS_EDITOR_H__
+#define __BACCHUS_EDITOR_H__
 
 #include "Module.h"
 
@@ -14,11 +14,11 @@ class BlockheadHierarchy;
 //class BlockheadScene;
 //class BlockheadToolbar;
 
-class BacchusInterface : public Module
+class BacchusEditor : public Module
 {
 public: 
-	BacchusInterface(bool start_enabled = true);
-	~BacchusInterface();
+	BacchusEditor(bool start_enabled = true);
+	~BacchusEditor();
 
 	bool Init(/*json file*/);
 	bool Start();
@@ -28,7 +28,7 @@ public:
 	bool CleanUp();
 
 	void Draw() const;
-	//void DockSpace() const;
+	void DockingSpace() const;
 	void RequestBrowser(const char* url) const;
 
 	void LogFPS(float fps, float ms);
