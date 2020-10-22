@@ -247,12 +247,16 @@ bool BacchusEditor::CleanUp()
 {
 	bool ret = true;
 
-	// Iterate panels and delete 
+	
 	for (uint i = 0; i < blockheads.size(); ++i)
 	{
 		delete blockheads[i];
 		blockheads[i] = nullptr;
 	}
+
+	blockheadSettings = nullptr;
+	blockheadAbout = nullptr;
+	blockheadConsole = nullptr;
 
 	LOG("Unloading Bacchus...");
 	ImGui_ImplOpenGL3_Shutdown();

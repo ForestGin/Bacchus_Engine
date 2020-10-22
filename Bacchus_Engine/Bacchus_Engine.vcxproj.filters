@@ -149,6 +149,7 @@
     <ClCompile Include="BlockheadConsole.cpp">
       <Filter>EditorBlockheads</Filter>
     </ClCompile>
+    <ClCompile Include="Globals.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />

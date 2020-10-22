@@ -51,7 +51,10 @@ bool BlockheadConsole::Draw()
 					ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0, 255, 255, 255));
 
 				if (!filter.PassFilter(item))
+				{
+					ImGui::PopStyleColor();
 					continue;
+				}
 
 				ImGui::TextUnformatted(item);
 

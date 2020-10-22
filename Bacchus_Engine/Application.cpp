@@ -288,7 +288,7 @@ const char* Application::GetOrganizationName() const
 
 void Application::Log(const char* entry)
 {
-	// --- Append all logs to a string so we can print them on console --- 
+	//Append all logs to a string so we can print them on console 
 	log.append(entry);
 
 	std::string to_add = entry;
