@@ -28,7 +28,7 @@ BacchusEditor::BacchusEditor(bool start_enabled) : Module(start_enabled)
 
 BacchusEditor::~BacchusEditor() {}
 
-bool BacchusEditor::Init(/*json file*/)
+bool BacchusEditor::Init(json file)
 {
 	blockheadAbout = new BlockheadAbout("About");
 	blockheads.push_back(blockheadAbout);
@@ -51,7 +51,7 @@ bool BacchusEditor::Init(/*json file*/)
 	blockheadToolbar = new PanelToolbar("Toolbar");
 	blockheads.push_back(blockheadToolbar);*/
 
-	//LoadStatus(file);
+	LoadStatus(file);
 
 	return true;
 }
@@ -319,17 +319,24 @@ void BacchusEditor::RequestBrowser(const char* url) const
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
-//void BacchusEditor::SaveStatus(json& file) const
-//{
-//
-//
-//
-//};
-//
-//void BacchusEditor::LoadStatus(const json& file)
-//{
-//	
-//};
+void BacchusEditor::SaveStatus(json& file) const
+{
+	for (uint i = 0; i < blockheads.size(); ++i)
+		file["GUI"][blockheads[i]->GetName()] = blockheads[i]->IsEnabled();
+
+
+};
+
+void BacchusEditor::LoadStatus(const json& file)
+{
+	for (uint i = 0; i < blockheads.size(); ++i)
+	{
+		if (file["GUI"].find(blockheads[i]->GetName()) != file["GUI"].end())
+			blockheads[i]->SetOnOff(file["GUI"][blockheads[i]->GetName()]);
+		else
+			LOG("|[error]: Could not find sub-node %s in GUI JSON Node, please check JSON EditorConfig", blockheads[i]->GetName());
+	}
+};
 
 void BacchusEditor::HandleInput(SDL_Event* event)
 {

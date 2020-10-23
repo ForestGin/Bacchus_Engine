@@ -4,10 +4,22 @@
         "Title": "BACCHUS ENGINE"
   },
 
-   "GUI": {
-    
-  }
-	
-
-
+  "GUI": {
+        "About": false,
+        "Console": true,
+        "Settings": true
+        
+    },
+    "Input": null,
+    "Renderer3D": {
+        "VSync": true
+    },
+    "Window": {
+        "borderless": false,
+        "fullscreen": false,
+        "fullscreenDesktop": false,
+        "height": 720,
+        "resizable": true,
+        "width": 1024
+    }
 }

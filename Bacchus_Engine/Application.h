@@ -43,7 +43,7 @@ public:
 	uint GetMaxFramerate() const;
 	const char* GetAppName() const;
 	const char* GetOrganizationName() const;
-	//json GetDefaultConfig() const;
+	json GetDefaultConfig() const;
 	std::vector<std::string>& GetLogs();
 	LCG& GetRandom();
 

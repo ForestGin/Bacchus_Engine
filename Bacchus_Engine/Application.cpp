@@ -82,6 +82,7 @@ bool Application::Init()
 	if (config.is_null())
 	{
 		//call defaultconfig
+		config = GetDefaultConfig();
 	}
 
 	// Reading App Name/ Org Name from json file
@@ -92,11 +93,11 @@ bool Application::Init()
 	orgName = tmp2;
 
 	// Call Init() in all modules
-	std::list<Module*>::iterator item= list_modules.begin();
+	std::list<Module*>::const_iterator item= list_modules.begin();
 
 	while(item != list_modules.end() && ret == true)
 	{
-		ret = (*item)->Init(/*config*/);
+		ret = (*item)->Init(config);
 		++item;
 	}
 
@@ -152,24 +153,24 @@ void Application::FinishUpdate()
 
 void Application::SaveAllStatus()
 {
-	//json config = GetDefaultConfig();
+	json config = GetDefaultConfig();
 
-	//std::string tmp = appName;
-	//config["Application"]["Title"] = tmp;
-	//std::string tmp2 = orgName;
-	//config["Application"]["Organization"] = tmp2;
+	std::string tmp = appName;
+	config["Application"]["Title"] = tmp;
+	std::string tmp2 = orgName;
+	config["Application"]["Organization"] = tmp2;
 
-	//// --- Call Save of all modules ---
+	// --- Call Save of all modules ---
 
-	//std::list<Module*>::const_iterator item = list_modules.begin();
+	std::list<Module*>::const_iterator item = list_modules.begin();
 
-	//while (item != list_modules.end())
-	//{
-	//	(*item)->SaveStatus(config);
-	//	item++;
-	//}
+	while (item != list_modules.end())
+	{
+		(*item)->SaveStatus(config);
+		item++;
+	}
 
-	//JLoader.Save(configpath.data(), config);
+	JLoader.Save(configpath.data(), config);
 }
 
 void Application::LoadAllStatus(json& file)
@@ -306,38 +307,38 @@ std::vector<std::string>& Application::GetLogs()
 	return logs;
 }
 
-//json Application::GetDefaultConfig() const
-//{
-//	// --- Create Config with default values ---
-//	json config = {
-//		{"Application", {
-//
-//		}},
-//
-//		{"GUI", {
-//
-//		}},
-//
-//		{"Window", {
-//			{"width", 1024},
-//			{"height", 720},
-//			{"fullscreen", false},
-//			{"resizable", true},
-//			{"borderless", false},
-//			{"fullscreenDesktop", false}
-//		}},
-//
-//		{"Input", {
-//
-//		}},
-//
-//		{"Renderer3D", {
-//			{"VSync", true}
-//		}},
-//	};
-//
-//	return config;
-//}
+json Application::GetDefaultConfig() const
+{
+	// --- Create Config with default values ---
+	json config = {
+		{"Application", {
+
+		}},
+
+		{"GUI", {
+
+		}},
+
+		{"Window", {
+			{"width", 1024},
+			{"height", 720},
+			{"fullscreen", false},
+			{"resizable", true},
+			{"borderless", false},
+			{"fullscreenDesktop", false}
+		}},
+
+		{"Input", {
+
+		}},
+
+		{"Renderer3D", {
+			{"VSync", true}
+		}},
+	};
+
+	return config;
+}
 
 void Application::RequestBrowser(const char* url) const
 {

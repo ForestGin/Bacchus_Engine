@@ -21,7 +21,7 @@ public:
 	ModuleResources(bool start_enabled = true);
 	~ModuleResources();
 
-	bool Init(/*json file*/);
+	bool Init(json file);
 	bool Start();
 	void Draw() const;
 	bool CleanUp();
