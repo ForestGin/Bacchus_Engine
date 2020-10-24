@@ -18,7 +18,7 @@
 
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module(start_enabled)
 {
-	
+
 }
 
 // Destructor
@@ -187,6 +187,11 @@ bool ModuleRenderer3D::CleanUp()
 
 void ModuleRenderer3D::UpdateGLCapabilities()
 {
+	if (!wireframe)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
 	if (!depth_test)
 		glDisable(GL_DEPTH_TEST);
 	else
@@ -198,9 +203,9 @@ void ModuleRenderer3D::UpdateGLCapabilities()
 		glEnable(GL_CULL_FACE);
 
 	if (!lighting)
-		glDisable(GL_LIGHTING);
-	else
 		glEnable(GL_LIGHTING);
+	else
+		glDisable(GL_LIGHTING);
 
 	if (!color_material)
 		glDisable(GL_COLOR_MATERIAL);

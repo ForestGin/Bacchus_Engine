@@ -44,6 +44,11 @@ bool BlockheadSettings::Draw()
 			HardwareNode();
 			ImGui::Separator();
 		}
+		if (ImGui::CollapsingHeader("Renderer"))
+		{
+			RendererNode();
+			ImGui::Separator();
+		}
 	}
 	ImGui::End();
 
@@ -248,6 +253,37 @@ void BlockheadSettings::HardwareNode() const
 
 	ImGui::Text("VRAM Usage"); ImGui::SameLine();
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%f", hardware_info.vram_mb_usage);
+}
+
+void BlockheadSettings::RendererNode() const
+{
+	//wireframe
+	if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe))
+	{
+		App->renderer3D->wireframe != App->renderer3D->wireframe;
+
+	}
+
+	//depth-test
+	if (ImGui::Checkbox("Depth", &App->renderer3D->depth_test))
+	{
+		App->renderer3D->depth_test != App->renderer3D->depth_test;
+
+	}
+
+	//lightning
+	if (ImGui::Checkbox("Lights", &App->renderer3D->lighting))
+	{
+		App->renderer3D->lighting != App->renderer3D->lighting;
+
+	}
+
+	//color material
+	if (ImGui::Checkbox("Color Material", &App->renderer3D->color_material))
+	{
+		App->renderer3D->color_material != App->renderer3D->color_material;
+
+	}
 }
 
 void BlockheadSettings::AddFPS(float fps, float ms)
