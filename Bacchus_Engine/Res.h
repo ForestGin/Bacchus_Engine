@@ -11,13 +11,16 @@ public:
 	enum class ResType
 	{
 		Unknown = 0,
-		Mesh
+		Mesh,
+		Renderer
 	};
 
 public:
 
 	Res(GameObject* ContainerGO, Res::ResType type);
 	virtual ~Res();
+
+	Res::ResType GetType();
 
 private:
 	GameObject* GO = nullptr;

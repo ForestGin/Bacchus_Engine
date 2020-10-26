@@ -13,7 +13,7 @@
 
 using namespace std;
 
-FileSystem::FileSystem(Application* app, bool start_enabled, const char* game_path) : Module(true)
+FileSystem::FileSystem(bool start_enabled, const char* game_path) : Module(true)
 {
 	name = "File System";
 

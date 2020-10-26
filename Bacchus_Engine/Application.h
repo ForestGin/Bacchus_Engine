@@ -22,6 +22,7 @@ class BacchusHardware;
 class FileSystem;
 class ModuleResources;
 class ModuleTextures;
+class ModuleSceneManager;
 
 class Application
 {
@@ -37,6 +38,7 @@ public:
 	FileSystem* fs = nullptr;
 	ModuleResources* resources = nullptr;
 	ModuleTextures* tex = nullptr;
+	ModuleSceneManager* scene_manager = nullptr;
 
 public:
 	// Getts

@@ -154,6 +154,8 @@
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>mmgr</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleSceneManager.cpp" />
+    <ClCompile Include="ResourceRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -405,6 +407,8 @@
     <ClInclude Include="mmgr\nommgr.h">
       <Filter>mmgr</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSceneManager.h" />
+    <ClInclude Include="ResourceRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">

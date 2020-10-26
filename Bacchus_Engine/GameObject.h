@@ -5,6 +5,7 @@
 #include "Res.h"
 #include <list>
 #include <string>
+#include "Math.h"
 
 class GameObject
 {
@@ -14,17 +15,27 @@ public:
 	GameObject(const char* name);
 	virtual ~GameObject();
 
-	// --- Getters ---
-	uint GetUID() const;
+	
+	uint			GetUID() const;
+	float3			GetPosition();
+	float4x4        GetLocalTransform();
+	Res*			GetResource(Res::ResType type);
+
+	
 	Res* AddResource(Res::ResType type);
 
-private:
-	// Unique Identifier
-	uint UID = 0;
+	
+	void			SetPosition(float x, float y, float z);
+	void			SetRotationAxisAngle(const float3& rot_axis, float degrees_angle);
+	void			Scale(float x, float y, float z);
+	void			SetLocalTransform(float4x4 new_transform);
 
-public:
-	std::list<Res*> components;
+private:
+	
+	uint UID = 0;
+	float4x4 Local_transform = math::float4x4::identity;
 	std::string name;
+	std::list<Res*> components;
 };
 
 #endif

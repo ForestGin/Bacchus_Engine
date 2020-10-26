@@ -116,7 +116,17 @@ void ModuleResources::Draw() const
 
 	for (uint i = 0; i < game_objects.size(); ++i)
 	{
-		std::list<Res*>::const_iterator it = game_objects[i]->components.begin();
+		ResourceMesh* mesh = (ResourceMesh*)game_objects[i]->GetResource(Res::ResType::Mesh);
+
+		if (mesh)
+		{
+			DrawMesh(mesh);
+			DrawNormals(mesh);
+		}
+		else
+		{
+			LOG("|[error]: Could not find Mesh component in current game object");
+		}
 	}
 }
 

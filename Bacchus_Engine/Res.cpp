@@ -12,3 +12,8 @@ Res::Res(GameObject* ContainerGO, Res::ResType type)
 Res::~Res()
 {
 }
+
+Res::ResType Res::GetType()
+{
+	return type;
+}

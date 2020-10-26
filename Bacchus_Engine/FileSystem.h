@@ -13,7 +13,7 @@ class FileSystem : public Module
 {
 public:
 
-	FileSystem(Application* app, bool start_enabled = true, const char* game_path = nullptr);
+	FileSystem(bool start_enabled = true, const char* game_path = nullptr);
 
 	// Destructor
 	~FileSystem();
