@@ -14,7 +14,7 @@ class ResourceMesh : public Res
 {
 public:
 
-	ResourceMesh();
+	ResourceMesh(GameObject* ContainerGO);
 	virtual ~ResourceMesh();
 
 	void ImportMesh(const aiMesh* mesh, uint MATTextureID);

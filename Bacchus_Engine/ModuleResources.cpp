@@ -4,6 +4,7 @@
 #include "OpenGL.h"
 #include "ModuleTextures.h"
 #include "FileSystem.h"
+#include "GameObject.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -12,6 +13,7 @@
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
 
+#include "mmgr/mmgr.h"
 
 void MyAssimpCallback(const char* msg, char* userData)
 {
@@ -51,9 +53,9 @@ bool ModuleResources::CleanUp()
 
 
 	//Release all buffer data and own stored data
-	for (uint i = 0; i < meshes.size(); ++i)
+	for (uint i = 0; i < game_objects.size(); ++i)
 	{
-		delete meshes[i];
+		delete game_objects[i];
 	}
 
 	return true;
@@ -81,9 +83,12 @@ bool ModuleResources::LoadFBX(const char* path)
 
 		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
-			//Create new Resource mesh to store current scene mesh data
-			ResourceMesh* new_mesh = new ResourceMesh;
-			meshes.push_back(new_mesh);
+			GameObject* new_object = new GameObject("GO");
+
+			ResourceMesh* new_mesh = (ResourceMesh*)new_object->AddResource(Res::ResType::Mesh);
+
+			
+			game_objects.push_back(new_object);
 
 			// Get Scene mesh number i
 			aiMesh* mesh = scene->mMeshes[i];
@@ -109,16 +114,15 @@ void ModuleResources::Draw() const
 {
 		
 
-	for (uint i = 0; i < meshes.size(); ++i)
+	for (uint i = 0; i < game_objects.size(); ++i)
 	{
-		DrawMesh(meshes[i]);
-		DrawNormals(meshes[i]);
+		std::list<Res*>::const_iterator it = game_objects[i]->components.begin();
 	}
 }
 
 uint ModuleResources::GetNumMeshes() const
 {
-	return meshes.size();
+	return game_objects.size();
 }
 
 void ModuleResources::GetTextureIDFromSceneMaterial(const aiScene& scene, uint& texture_ID, std::string& directory)

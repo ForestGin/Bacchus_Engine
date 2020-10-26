@@ -5,8 +5,11 @@
 #include "Assimp/include/cfileio.h"
 #include "OpenGL.h"
 #include "Globals.h"
+#include "GameObject.h"
 
-ResourceMesh::ResourceMesh() : Res(Res::ResType::mesh)
+#include "mmgr/mmgr.h"
+
+ResourceMesh::ResourceMesh(GameObject* ContainerGO) : Res(ContainerGO, Res::ResType::Mesh)
 {
 }
 
@@ -17,11 +20,31 @@ ResourceMesh::~ResourceMesh()
 	glDeleteBuffers(1, (GLuint*)&TextureCoordsID);
 	glDeleteBuffers(1, (GLuint*)&TextureID);
 
-	RELEASE_ARRAY(Vertices);
-	RELEASE_ARRAY(Indices);
-	RELEASE_ARRAY(Normals);
-	RELEASE_ARRAY(TexCoords);
-	RELEASE_ARRAY(Colours);
+	if (Vertices)
+	{
+		delete[] Vertices;
+		Vertices = nullptr;
+	}
+	if (Indices)
+	{
+		delete[] Indices;
+		Indices = nullptr;
+	}
+	if (Normals)
+	{
+		delete[] Normals;
+		Normals = nullptr;
+	}
+	if (TexCoords)
+	{
+		delete[] TexCoords;
+		TexCoords = nullptr;
+	}
+	if (Colours)
+	{
+		delete[] Colours;
+		Colours = nullptr;
+	}
 }
 
 void ResourceMesh::ImportMesh(const aiMesh* mesh, uint MATTextureID)

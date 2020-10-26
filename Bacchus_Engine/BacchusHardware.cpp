@@ -4,6 +4,8 @@
 
 #include "OpenGL.h"
 
+#include "mmgr/mmgr.h"
+
 BacchusHardware::BacchusHardware(bool start_enabled) : Module(start_enabled)
 {
 	// --- Retrieve SDL Version ---

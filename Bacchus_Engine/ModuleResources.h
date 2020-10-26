@@ -11,6 +11,7 @@
 
 class ResourceMesh;
 class aiScene;
+class GameObject;
 
 #define NORMAL_LENGTH 1
 
@@ -35,7 +36,7 @@ private:
 
 private:
 
-	std::vector<ResourceMesh*> meshes;
+	std::vector<GameObject*> game_objects;
 
 };
 

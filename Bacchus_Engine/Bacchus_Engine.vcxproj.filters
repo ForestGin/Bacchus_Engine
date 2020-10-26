@@ -150,6 +150,10 @@
       <Filter>EditorBlockheads</Filter>
     </ClCompile>
     <ClCompile Include="Globals.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="mmgr\mmgr.cpp">
+      <Filter>mmgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -394,6 +398,13 @@
     <ClInclude Include="BlockheadConsole.h">
       <Filter>EditorBlockheads</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="mmgr\mmgr.h">
+      <Filter>mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="mmgr\nommgr.h">
+      <Filter>mmgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">
@@ -422,6 +433,9 @@
     </Filter>
     <Filter Include="EditorBlockheads">
       <UniqueIdentifier>{64e7dd28-b920-4950-b274-804d5b951506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mmgr">
+      <UniqueIdentifier>{39a87082-935f-4fdd-bad8-15e9198e6f87}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,8 @@
 #include "ModuleRenderer3D.h"
 #include "BacchusHardware.h"
 
+#include "mmgr/mmgr.h"
+
 BlockheadSettings::BlockheadSettings(char* name) : Blockhead(name), FPS_Tracker(FPS_TRACKER_SIZE), MS_Tracker(FPS_TRACKER_SIZE)
 {
 
@@ -103,6 +105,26 @@ void BlockheadSettings::ApplicationNode() const
 
 	// Memory 
 
+	sMStats memStats = m_getMemoryStatistics();
+
+	static std::vector<float> memory(100);
+
+	for (uint i = memory.size() - 1; i > 0; --i)
+		memory[i] = memory[i - 1];
+
+	memory[0] = (float)memStats.peakActualMemory;
+
+	ImGui::PlotHistogram("##RAMusage", &memory.front(), memory.size(), 0, "Ram Usage", 0.0f, (float)memStats.peakReportedMemory * 1.2f, ImVec2(310, 100));
+
+	ImGui::Text("Total Reported Mem: %u", memStats.totalReportedMemory);
+	ImGui::Text("Total Actual Mem: %u", memStats.totalActualMemory);
+	ImGui::Text("Peak Reported Mem: %u", memStats.peakReportedMemory);
+	ImGui::Text("Peak Actual Mem: %u", memStats.peakActualMemory);
+	ImGui::Text("Accumulated Reported Mem: %u", memStats.accumulatedReportedMemory);
+	ImGui::Text("Accumulated Actual Mem: %u", memStats.accumulatedActualMemory);
+	ImGui::Text("Acumulated Alloc Unit Count: %u", memStats.accumulatedAllocUnitCount);
+	ImGui::Text("Total Alloc Unit Count: %u", memStats.totalAllocUnitCount);
+	ImGui::Text("Peak Alloc Unit Count: %u", memStats.peakAllocUnitCount);
 }
 
 void BlockheadSettings::WindowNode() const

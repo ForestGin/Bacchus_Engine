@@ -1,8 +1,12 @@
-
 #include "Res.h"
+#include "GameObject.h"
 
-Res::Res(Res::ResType type)
+#include "mmgr/mmgr.h"
+
+Res::Res(GameObject* ContainerGO, Res::ResType type)
 {
+	GO = ContainerGO;
+	this->type = type;
 }
 
 Res::~Res()

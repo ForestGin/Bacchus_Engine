@@ -12,6 +12,8 @@
 #include "ModuleResources.h"
 #include "ModuleTextures.h"
 
+#include "mmgr/mmgr.h"
+
 Application::Application()
 {
 	frames = 0;
@@ -69,7 +71,13 @@ Application::~Application()
 		delete(*item);
 		++item;
 	}
-	list_modules.clear();
+	
+
+	if (RandomNumber)
+	{
+		delete RandomNumber;
+		RandomNumber = nullptr;
+	}
 }
 
 bool Application::Init()
@@ -343,6 +351,11 @@ json Application::GetDefaultConfig() const
 void Application::RequestBrowser(const char* url) const
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+
+LCG& Application::GetRandom()
+{
+	return *RandomNumber;
 }
 
 

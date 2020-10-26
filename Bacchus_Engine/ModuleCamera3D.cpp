@@ -3,6 +3,8 @@
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
 
+#include "mmgr/mmgr.h"
+
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(start_enabled)
 {
 	CalculateViewMatrix();

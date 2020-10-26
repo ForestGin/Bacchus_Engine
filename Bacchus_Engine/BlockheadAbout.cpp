@@ -6,6 +6,8 @@
 
 #include "OpenGL.h"
 
+#include "mmgr/mmgr.h"
+
 BlockheadAbout::BlockheadAbout(char* name) : Blockhead(name)
 {
 }

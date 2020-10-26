@@ -3,19 +3,25 @@
 
 #include "Globals.h"
 
+class GameObject;
+
 class Res
 {
 public:
 	enum class ResType
 	{
-		none = 0,
-		mesh
+		Unknown = 0,
+		Mesh
 	};
 
 public:
 
-	Res(Res::ResType type);
+	Res(GameObject* ContainerGO, Res::ResType type);
 	virtual ~Res();
+
+private:
+	GameObject* GO = nullptr;
+	Res::ResType type;
 
 };
 

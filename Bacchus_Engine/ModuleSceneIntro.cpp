@@ -7,6 +7,7 @@
 #include "OpenGL.h"
 #include "Math.h"
 
+#include "mmgr/mmgr.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(start_enabled)
 {
