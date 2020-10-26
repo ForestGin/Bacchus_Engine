@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleCamera3D.h"
+#include "BacchusEditor.h"
 #include "ModuleInput.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(start_enabled)
@@ -24,6 +25,9 @@ bool ModuleCamera3D::Start()
 	LOG("Setting up the camera");
 	bool ret = true;
 
+	/*Move(vec3(1.0f, 1.0f, 0.0f));
+	LookAt(coordzero);*/
+
 	return ret;
 }
 
@@ -38,61 +42,52 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	// Implement a debug camera with keys and mouse
-	// Now we can make this movememnt frame rate independant!
+	speed = 10.0f * dt;
+	vec3 newPos(0, 0, 0);
 
-	vec3 newPos(0,0,0);
-	float speed = 10.0f * dt;
-	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = 25.0f * dt;
+	//SHIFT: Speed 2x
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		speed *= 2.0f;
 
-	if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if(App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+	//RIGHT CLICK: Look Around
+	if(!App->bacchuseditor->IsMouseCaptured() && App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	{
+		LookAround();
 
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+		//WASD: Free movement
 
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+
+	}
 	Position += newPos;
 	Reference += newPos;
 
-	// Mouse motion ----------------
-
-	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	//MOUSE WHEEL PRESS: Pan
+	if (App->input->GetMouseButton(2) == KEY_REPEAT)
 	{
-		int dx = -App->input->GetMouseXMotion();
-		int dy = -App->input->GetMouseYMotion();
+		Pan(speed);
+	}
 
-		float Sensitivity = 0.25f;
+	//MOUSE WHEEL UP/DOWN: Zoom
+	if (!App->bacchuseditor->IsMouseCaptured() && abs(App->input->GetMouseWheel()) > 0)
+	{
+		//Zoom(speed);
+	}
 
-		Position -= Reference;
+	////ALT + RIGHT CLICK: Orbit
+	if (!App->bacchuseditor->IsMouseCaptured() && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	{
+		Orbit();
+	}
 
-		if(dx != 0)
-		{
-			float DeltaX = (float)dx * Sensitivity;
-
-			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-		}
-
-		if(dy != 0)
-		{
-			float DeltaY = (float)dy * Sensitivity;
-
-			Y = rotate(Y, DeltaY, X);
-			Z = rotate(Z, DeltaY, X);
-
-			if(Y.y < 0.0f)
-			{
-				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-				Y = cross(Z, X);
-			}
-		}
-
-		Position = Reference + Z * length(Position);
+	//F: Focus on geometry
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		//TO DO
 	}
 
 	// Recalculate matrix -------------
@@ -132,7 +127,6 @@ void ModuleCamera3D::LookAt( const vec3 &Spot)
 	CalculateViewMatrix();
 }
 
-
 // -----------------------------------------------------------------
 void ModuleCamera3D::Move(const vec3 &Movement)
 {
@@ -140,6 +134,118 @@ void ModuleCamera3D::Move(const vec3 &Movement)
 	Reference += Movement;
 
 	CalculateViewMatrix();
+}
+
+// -----------------------------------------------------------------
+void ModuleCamera3D::LookAround()
+{
+	int dx = -App->input->GetMouseXMotion();
+	int dy = -App->input->GetMouseYMotion();
+
+	float Sensitivity = 0.25f;
+
+	Reference = Position;
+	Position -= Reference;
+
+	if (dx != 0)
+	{
+		float DeltaX = (float)dx * Sensitivity;
+
+		X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+		Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+		Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+	}
+
+	if (dy != 0)
+	{
+		float DeltaY = (float)dy * Sensitivity;
+
+		Y = rotate(Y, DeltaY, X);
+		Z = rotate(Z, DeltaY, X);
+
+		if (Y.y < 0.0f)
+		{
+			Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+			Y = cross(Z, X);
+		}
+	}
+
+	Position = Reference + Z * length(Position);
+	Reference = Position - Z * length(Position);
+}
+
+// -----------------------------------------------------------------
+void ModuleCamera3D::Pan(float speed)
+{
+	int dx = App->input->GetMouseXMotion();
+	int dy = App->input->GetMouseYMotion();
+	float factor = abs(Position.y) / 100.0f;
+	if (factor < 0.5f)
+	{
+		factor = 0.5f;
+	}
+
+	if (dx != 0)
+	{
+		Position -= speed * X * dx * factor;
+		Reference -= speed * X * dx * factor;
+	}
+
+	if (dy != 0)
+	{
+		Position += speed * Y * dy * factor;
+		Reference += speed * Y * dy * factor;
+	}
+}
+
+// -----------------------------------------------------------------
+void ModuleCamera3D::Zoom(float speed)
+{
+	float factor = abs(Position.y);
+	if (factor < 1.0f)
+	{
+		factor = 1.0f;
+	}
+
+	int mouse_wheel = App->input->GetMouseWheel();
+	vec3 Movement = -Z * mouse_wheel * speed * factor;
+	Position += Movement;
+}
+
+// -----------------------------------------------------------------
+void ModuleCamera3D::Orbit()
+{
+	int dx = -App->input->GetMouseXMotion();
+	int dy = -App->input->GetMouseYMotion();
+
+	float Sensitivity = 0.25f;
+
+	Position -= Reference;
+
+	if (dx != 0)
+	{
+		float DeltaX = (float)dx * Sensitivity;
+
+		X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+		Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+		Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+	}
+
+	if (dy != 0)
+	{
+		float DeltaY = (float)dy * Sensitivity;
+
+		Y = rotate(Y, DeltaY, X);
+		Z = rotate(Z, DeltaY, X);
+
+		if (Y.y < 0.0f)
+		{
+			Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+			Y = cross(Z, X);
+		}
+	}
+
+	Position = Reference + Z * length(Position);
 }
 
 // -----------------------------------------------------------------

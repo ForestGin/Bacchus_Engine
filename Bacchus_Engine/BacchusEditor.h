@@ -32,7 +32,7 @@ public:
 	void RequestBrowser(const char* url) const;
 
 	void SetDarkThemeColors();
-	void SetLightThemeColors();
+	//void SetLightThemeColors();
 
 	void LogFPS(float fps, float ms);
 
@@ -42,7 +42,8 @@ public:
 
 	void HandleInput(SDL_Event* event);
 
-	bool IsKeyboardCaptured();
+	bool IsKeyboardCaptured() const;
+	bool IsMouseCaptured() const;
 
 public:
 

@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
+#include "Math.h"
 
 class ModuleCamera3D : public Module
 {
@@ -13,9 +14,15 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3 &Spot);
-	void Move(const vec3 &Movement);
+	void Look(const vec3&Position, const vec3&Reference, bool RotateAroundReference = false);
+	void LookAt(const vec3&Spot);
+	void Move(const vec3&Movement);
+	void LookAround();
+	void Pan(float speed);
+	void Zoom(float speed);
+	void Orbit();
+	
+
 	float* GetViewMatrix();
 
 private:
@@ -23,8 +30,11 @@ private:
 	void CalculateViewMatrix();
 
 public:
-	
+	float speed = 0.0f;
+	vec3 coordzero = { 0,0,0 };
+
 	vec3 X, Y, Z, Position, Reference;
+
 
 private:
 

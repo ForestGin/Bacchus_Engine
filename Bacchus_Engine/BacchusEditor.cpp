@@ -95,6 +95,11 @@ update_status BacchusEditor::PreUpdate(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
+
+	//Mouse & Keyboard Checkers
+	ImGuiIO& io = ImGui::GetIO();
+	capture_keyboard = io.WantCaptureKeyboard;
+	capture_mouse = io.WantCaptureMouse;
 	
 	//Starting Docking Space
 	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable)
@@ -386,9 +391,14 @@ void BacchusEditor::HandleInput(SDL_Event* event)
 	ImGui_ImplSDL2_ProcessEvent(event);
 }
 
-bool BacchusEditor::IsKeyboardCaptured()
+bool BacchusEditor::IsKeyboardCaptured() const
 {
 	return capture_keyboard;
+}
+
+bool BacchusEditor::IsMouseCaptured() const
+{
+	return capture_mouse;
 }
 
 void BacchusEditor::LogFPS(float fps, float ms)
