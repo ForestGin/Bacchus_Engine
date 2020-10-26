@@ -19,7 +19,7 @@ public:
 	~FileSystem();
 
 	// Called before render is available
-	bool Init(/*json config*/) override;
+	bool Init(json config) override;
 
 	// Called before quitting
 	bool CleanUp() override;

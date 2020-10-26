@@ -97,6 +97,7 @@
     <ClInclude Include="BacchusHardware.h" />
     <ClInclude Include="Blockhead.h" />
     <ClInclude Include="BlockheadAbout.h" />
+    <ClInclude Include="BlockheadConsole.h" />
     <ClInclude Include="BlockheadSettings.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="BacchusEditor.h" />
@@ -196,11 +197,13 @@
     <ClCompile Include="BacchusHardware.cpp" />
     <ClCompile Include="Blockhead.cpp" />
     <ClCompile Include="BlockheadAbout.cpp" />
+    <ClCompile Include="BlockheadConsole.cpp" />
     <ClCompile Include="BlockheadSettings.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="BacchusEditor.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="glmath.cpp" />
+    <ClCompile Include="Globals.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_sdl.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />

@@ -19,7 +19,7 @@ public:
 	ModuleInput(Application* app, bool start_enabled = true);
 	~ModuleInput();
 
-	bool Init(/*json file*/);
+	bool Init(json file);
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 

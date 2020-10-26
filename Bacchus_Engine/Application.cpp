@@ -76,15 +76,16 @@ bool Application::Init()
 {
 	bool ret = true;
 
-	// --- Load App data from JSON files ---
+	//Load App data from JSON files
 	json config = JLoader.Load(configpath.data());
 
 	if (config.is_null())
 	{
 		//call defaultconfig
+		config = GetDefaultConfig();
 	}
 
-	// --- Reading App Name/ Org Name from json file ---
+	// Reading App Name/ Org Name from json file
 	std::string tmp = config["Application"]["Title"];
 	appName = tmp;
 
@@ -92,11 +93,11 @@ bool Application::Init()
 	orgName = tmp2;
 
 	// Call Init() in all modules
-	std::list<Module*>::iterator item= list_modules.begin();
+	std::list<Module*>::const_iterator item= list_modules.begin();
 
 	while(item != list_modules.end() && ret == true)
 	{
-		ret = (*item)->Init(/*config*/);
+		ret = (*item)->Init(config);
 		++item;
 	}
 
@@ -145,43 +146,43 @@ void Application::FinishUpdate()
 	if (capped_ms > 0 && (last_frame_ms < capped_ms))
 		SDL_Delay(capped_ms - last_frame_ms);
 
-	// --- Send data to GUI- PanelSettings Historiograms
-	//App->bacchuseditor->LogFPS((float)last_fps, (float)last_frame_ms);
+	//Send data to GUI- PanelSettings Historiograms
+	App->bacchuseditor->LogFPS((float)last_fps, (float)last_frame_ms);
 
 }
 
 void Application::SaveAllStatus()
 {
-	//json config = GetDefaultConfig();
+	json config = GetDefaultConfig();
 
-	//std::string tmp = appName;
-	//config["Application"]["Title"] = tmp;
-	//std::string tmp2 = orgName;
-	//config["Application"]["Organization"] = tmp2;
+	std::string tmp = appName;
+	config["Application"]["Title"] = tmp;
+	std::string tmp2 = orgName;
+	config["Application"]["Organization"] = tmp2;
 
-	//// --- Call Save of all modules ---
+	// --- Call Save of all modules ---
 
-	//std::list<Module*>::const_iterator item = list_modules.begin();
+	std::list<Module*>::const_iterator item = list_modules.begin();
 
-	//while (item != list_modules.end())
-	//{
-	//	(*item)->SaveStatus(config);
-	//	item++;
-	//}
+	while (item != list_modules.end())
+	{
+		(*item)->SaveStatus(config);
+		item++;
+	}
 
-	//JLoader.Save(configpath.data(), config);
+	JLoader.Save(configpath.data(), config);
 }
 
 void Application::LoadAllStatus(json& file)
 {
-	// --- Reading App name from json file ---
+	//Reading App name from json file
 	std::string tmp = file["Application"]["Title"];
 	appName = tmp;
 
 	std::string tmp2 = file["Application"]["Organization"];
 	orgName = tmp2;
 
-	// --- Call Load of all modules ---
+	//Call Load of all modules
 
 	json config = JLoader.Load(configpath.data());
 
@@ -286,39 +287,58 @@ const char* Application::GetOrganizationName() const
 	return orgName.data();
 }
 
+void Application::Log(const char* entry)
+{
+	//Append all logs to a string so we can print them on console 
+	log.append(entry);
 
-//json Application::GetDefaultConfig() const
-//{
-//	// --- Create Config with default values ---
-//	json config = {
-//		{"Application", {
-//
-//		}},
-//
-//		{"GUI", {
-//
-//		}},
-//
-//		{"Window", {
-//			{"width", 1024},
-//			{"height", 720},
-//			{"fullscreen", false},
-//			{"resizable", true},
-//			{"borderless", false},
-//			{"fullscreenDesktop", false}
-//		}},
-//
-//		{"Input", {
-//
-//		}},
-//
-//		{"Renderer3D", {
-//			{"VSync", true}
-//		}},
-//	};
-//
-//	return config;
-//}
+	std::string to_add = entry;
+	logs.push_back(to_add);
+}
+
+void Application::ClearLogsFromConsole()
+{
+	logs.erase(logs.begin(), logs.end());
+	logs.clear();
+}
+
+std::vector<std::string>& Application::GetLogs()
+{
+	return logs;
+}
+
+json Application::GetDefaultConfig() const
+{
+	// --- Create Config with default values ---
+	json config = {
+		{"Application", {
+
+		}},
+
+		{"GUI", {
+
+		}},
+
+		{"Window", {
+			{"width", 1024},
+			{"height", 720},
+			{"fullscreen", false},
+			{"resizable", true},
+			{"borderless", false},
+			{"fullscreenDesktop", false}
+		}},
+
+		{"Input", {
+
+		}},
+
+		{"Renderer3D", {
+			{"VSync", true}
+		}},
+	};
+
+	return config;
+}
 
 void Application::RequestBrowser(const char* url) const
 {

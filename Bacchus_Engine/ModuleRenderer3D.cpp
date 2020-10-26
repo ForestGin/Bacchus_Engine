@@ -18,7 +18,7 @@
 
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module(start_enabled)
 {
-	
+
 }
 
 // Destructor
@@ -26,7 +26,7 @@ ModuleRenderer3D::~ModuleRenderer3D()
 {}
 
 // Called before render is available
-bool ModuleRenderer3D::Init(/*json file*/)
+bool ModuleRenderer3D::Init(json file)
 {
 	LOG("Creating 3D Renderer context");
 
@@ -155,6 +155,16 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+update_status ModuleRenderer3D::Update(float dt)
+{
+	if (wireframe)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	return UPDATE_CONTINUE;
+}
+
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
@@ -187,6 +197,7 @@ bool ModuleRenderer3D::CleanUp()
 
 void ModuleRenderer3D::UpdateGLCapabilities()
 {
+	
 	if (!depth_test)
 		glDisable(GL_DEPTH_TEST);
 	else
@@ -198,9 +209,9 @@ void ModuleRenderer3D::UpdateGLCapabilities()
 		glEnable(GL_CULL_FACE);
 
 	if (!lighting)
-		glDisable(GL_LIGHTING);
-	else
 		glEnable(GL_LIGHTING);
+	else
+		glDisable(GL_LIGHTING);
 
 	if (!color_material)
 		glDisable(GL_COLOR_MATERIAL);

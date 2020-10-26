@@ -13,9 +13,9 @@ public:
 	ModuleRenderer3D(bool start_enabled = true);
 	~ModuleRenderer3D();
 
-	bool Init(/*json file*/);
+	bool Init(json file);
 	update_status PreUpdate(float dt);
-	//update_status Update(float dt);
+	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
@@ -39,8 +39,8 @@ public:
 	// Flags
 	bool vsync = true;
 	bool depth_test = true;
-	bool cull_face = true;
+	bool cull_face = false;
 	bool lighting = true;
-	bool color_material = true;
+	bool color_material = false;
 	bool wireframe = false;
 };

@@ -26,6 +26,21 @@ FileSystem::FileSystem(Application* app, bool start_enabled, const char* game_pa
 
 	if (0 && game_path != nullptr)
 		AddPath(game_path);
+}
+
+// Destructor
+FileSystem::~FileSystem()
+{
+	RELEASE(AssimpIO);
+	PHYSFS_deinit();
+}
+
+// Called before render is available
+bool FileSystem::Init(json config)
+{
+	LOG("Loading File System");
+	bool ret = true;
+
 
 	// Dump list of paths
 	LOG("FileSystem Operations base is [%s] plus:", GetBasePath());
@@ -48,28 +63,9 @@ FileSystem::FileSystem(Application* app, bool start_enabled, const char* game_pa
 
 	// Generate IO interfaces
 	CreateAssimpIO();
-}
-
-// Destructor
-FileSystem::~FileSystem()
-{
-	RELEASE(AssimpIO);
-	PHYSFS_deinit();
-}
-
-// Called before render is available
-bool FileSystem::Init(/*json config*/)
-{
-	LOG("Loading File System");
-	bool ret = true;
 
 	// Ask SDL for a write dir
 	char* write_path = SDL_GetPrefPath(App->GetOrganizationName(), App->GetAppName());
-
-	// Trun this on while in game mode
-	//if(PHYSFS_setWriteDir(write_path) == 0)
-		//LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
-
 
 	SDL_free(write_path);
 

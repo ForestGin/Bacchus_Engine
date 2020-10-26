@@ -20,7 +20,7 @@ public:
 	BacchusEditor(bool start_enabled = true);
 	~BacchusEditor();
 
-	bool Init(/*json file*/);
+	bool Init(json file);
 	bool Start();
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
@@ -36,9 +36,9 @@ public:
 
 	void LogFPS(float fps, float ms);
 
-	/*void SaveStatus(json& file) const override;
+	void SaveStatus(json& file) const override;
 
-	void LoadStatus(const json& file) override;*/
+	void LoadStatus(const json& file) override;
 
 	void HandleInput(SDL_Event* event);
 

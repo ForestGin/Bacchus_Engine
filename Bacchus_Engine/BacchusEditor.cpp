@@ -7,7 +7,7 @@
 #include "Blockhead.h"
 #include "BlockheadAbout.h"
 #include "BlockheadSettings.h"
-//#include "BlockheadConsole.h"
+#include "BlockheadConsole.h"
 //#include "BlockheadInspector.h"
 //#include "BlockheadHierarchy.h"
 //#include "BlockheadScene.h"
@@ -28,7 +28,7 @@ BacchusEditor::BacchusEditor(bool start_enabled) : Module(start_enabled)
 
 BacchusEditor::~BacchusEditor() {}
 
-bool BacchusEditor::Init(/*json file*/)
+bool BacchusEditor::Init(json file)
 {
 	blockheadAbout = new BlockheadAbout("About");
 	blockheads.push_back(blockheadAbout);
@@ -36,9 +36,9 @@ bool BacchusEditor::Init(/*json file*/)
 	blockheadSettings = new BlockheadSettings("Settings");
 	blockheads.push_back(blockheadSettings);
 
-	/*blockheadConsole = new BlockheadConsole("Console");
+	blockheadConsole = new BlockheadConsole("Console");
 	blockheads.push_back(blockheadConsole);
-
+	/*
 	blockheadInspector = new BlockheadInspector("Inspector");
 	blockheads.push_back(blockheadInspector);
 
@@ -51,7 +51,7 @@ bool BacchusEditor::Init(/*json file*/)
 	blockheadToolbar = new PanelToolbar("Toolbar");
 	blockheads.push_back(blockheadToolbar);*/
 
-	//LoadStatus(file);
+	LoadStatus(file);
 
 	return true;
 }
@@ -157,10 +157,10 @@ update_status BacchusEditor::Update(float dt)
 
 		if (ImGui::BeginMenu("Window"))
 		{
-			/*if (ImGui::MenuItem("Console"))
+			if (ImGui::MenuItem("Console"))
 			{
 				blockheadConsole->OnOff();
-			}*/
+			}
 
 			if (ImGui::MenuItem("Configuration"))
 			{
@@ -251,12 +251,16 @@ bool BacchusEditor::CleanUp()
 {
 	bool ret = true;
 
-	// Iterate panels and delete 
+	
 	for (uint i = 0; i < blockheads.size(); ++i)
 	{
 		delete blockheads[i];
 		blockheads[i] = nullptr;
 	}
+
+	blockheadSettings = nullptr;
+	blockheadAbout = nullptr;
+	blockheadConsole = nullptr;
 
 	LOG("Unloading Bacchus...");
 	ImGui_ImplOpenGL3_Shutdown();
@@ -358,17 +362,24 @@ void BacchusEditor::SetDarkThemeColors()
 	colors[ImGuiCol_DockingPreview] = ImVec4{ 1.f, 1.f, 1.f, 0.4f };
 }
 
-//void BacchusEditor::SaveStatus(json& file) const
-//{
-//
-//
-//
-//};
-//
-//void BacchusEditor::LoadStatus(const json& file)
-//{
-//	
-//};
+void BacchusEditor::SaveStatus(json& file) const
+{
+	for (uint i = 0; i < blockheads.size(); ++i)
+		file["GUI"][blockheads[i]->GetName()] = blockheads[i]->IsEnabled();
+
+
+};
+
+void BacchusEditor::LoadStatus(const json& file)
+{
+	for (uint i = 0; i < blockheads.size(); ++i)
+	{
+		if (file["GUI"].find(blockheads[i]->GetName()) != file["GUI"].end())
+			blockheads[i]->SetOnOff(file["GUI"][blockheads[i]->GetName()]);
+		else
+			LOG("|[error]: Could not find sub-node %s in GUI JSON Node, please check JSON EditorConfig", blockheads[i]->GetName());
+	}
+};
 
 void BacchusEditor::HandleInput(SDL_Event* event)
 {
@@ -378,4 +389,10 @@ void BacchusEditor::HandleInput(SDL_Event* event)
 bool BacchusEditor::IsKeyboardCaptured()
 {
 	return capture_keyboard;
+}
+
+void BacchusEditor::LogFPS(float fps, float ms)
+{
+	if (blockheadSettings != nullptr)
+		blockheadSettings->AddFPS(fps, ms);
 }

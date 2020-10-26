@@ -26,7 +26,7 @@ ModuleResources::~ModuleResources()
 {
 }
 
-bool ModuleResources::Init(/*json file*/)
+bool ModuleResources::Init(json file)
 {
 	// --- Stream LOG messages to MyAssimpCallback, that sends them to console ---
 	struct aiLogStream stream;

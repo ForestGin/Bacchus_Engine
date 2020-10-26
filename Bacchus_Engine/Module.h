@@ -16,7 +16,7 @@ public:
 	virtual ~Module()
 	{}
 
-	virtual bool Init(/*json file*/)
+	virtual bool Init(json file)
 	{
 		return true; 
 	}
@@ -46,9 +46,9 @@ public:
 		return true; 
 	}
 
-	virtual void SaveStatus(json file) const {}
+	virtual void SaveStatus(json &file) const {}
 
-	virtual void LoadStatus(const json file) {}
+	virtual void LoadStatus(const json &file) {}
 
 protected:
 

@@ -13,7 +13,7 @@ public:
 	ModuleTextures(bool start_enabled = true);
 	~ModuleTextures();
 
-	bool Init(/*json file*/);
+	bool Init(json file);
 	bool Start();
 	bool CleanUp();
 
