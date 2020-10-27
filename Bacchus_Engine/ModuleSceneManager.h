@@ -25,6 +25,11 @@ public:
 	ResourceMaterial* CreateEmptyMaterial();
 	uint GetNumGameObjects() const;
 	void Draw() const;
+	GameObject* CreateCube(float sizeX, float sizeY, float sizeZ, bool checkers = false);
+
+
+public:
+	ResourceMaterial* CheckersMaterial = nullptr;
 
 private:
 

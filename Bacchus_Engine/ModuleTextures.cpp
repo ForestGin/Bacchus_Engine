@@ -63,9 +63,7 @@ bool ModuleTextures::Start()
 
 bool ModuleTextures::CleanUp()
 {
-	//Deleting sample checkers texture
-	if (CheckerTexID > 0)
-		glDeleteTextures(1, (GLuint*)&CheckerTexID);
+	
 	return true;
 }
 

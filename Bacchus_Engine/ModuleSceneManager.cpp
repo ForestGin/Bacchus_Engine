@@ -6,6 +6,8 @@
 #include "ResourceRenderer.h"
 #include "ResourceMaterial.h"
 #include "ImporterMaterial.h"
+#include "ResourceMesh.h"
+#include "ModuleTextures.h"
 
 #include "mmgr/mmgr.h"
 
@@ -24,6 +26,12 @@ bool ModuleSceneManager::Init(json file)
 
 bool ModuleSceneManager::Start()
 {
+	CheckersMaterial = CreateEmptyMaterial();
+
+	CheckersMaterial->TextureID = App->tex->GetCheckerTextureID();
+
+	CreateCube(1, 1, 1, true);
+
 	return true;
 }
 
@@ -52,6 +60,7 @@ bool ModuleSceneManager::CleanUp()
 			delete Materials[i];
 	}
 
+	CheckersMaterial = nullptr;
 
 	return true;
 }
@@ -85,12 +94,85 @@ ResourceMaterial* ModuleSceneManager::CreateEmptyMaterial()
 	return Material;
 }
 
+GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ, bool checkers)
+{
+	float3 size = float3(sizeX, sizeY, sizeZ);
+	float sx = size.x * 0.5f;
+	float sy = size.y * 0.5f;
+	float sz = size.z * 0.5f;
+
+	GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
+
+	ResourceMesh* new_mesh = (ResourceMesh*)new_object->AddResource(Res::ResType::Mesh);
+
+	ResourceRenderer* Renderer = (ResourceRenderer*)new_object->AddResource(Res::ResType::Renderer);
+
+	uint verticesSize = 3 * 8;
+	new_mesh->VerticesSize = verticesSize;
+
+	new_mesh->Vertices = new float3[verticesSize]{  // 8 of vertex coords
+
+		{	sx, sy, sz },  {-sx, sy, sz },  {-sx,-sy, sz },  { sx,-sy, sz },  // v0,v1,v2,v3 (front)
+		{	sx, sy, sz },  { sx,-sy, sz },  { sx,-sy,-sz },  { sx, sy,-sz },  // v0,v3,v4,v5 (right)
+		{	sx, sy, sz },  { sx, sy,-sz },  {-sx, sy,-sz },  {-sx, sy, sz },  // v0,v5,v6,v1 (top)
+		{  -sx, sy, sz },  {-sx, sy,-sz },  {-sx,-sy,-sz },  {-sx,-sy, sz },  // v1,v6,v7,v2 (left)
+		{  -sx,-sy,-sz },  { sx,-sy,-sz },  { sx,-sy, sz },  {-sx,-sy, sz },  // v7,v4,v3,v2 (bottom)
+		{	sx,-sy,-sz },  {-sx,-sy,-sz },  {-sx, sy,-sz },  { sx, sy,-sz }   // v4,v7,v6,v5 (back)
+	};
+
+	glGenBuffers(1, (GLuint*)&new_mesh->VerticesID); // create buffer
+	glBindBuffer(GL_ARRAY_BUFFER, new_mesh->VerticesID); // start using created buffer
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * verticesSize, new_mesh->Vertices, GL_STATIC_DRAW); // send vertices to VRAM
+	glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
+
+	
+	new_mesh->IndicesSize = 3 * (2 * 6);
+	new_mesh->Indices = new uint[new_mesh->IndicesSize]{ 0, 1, 2,   2, 3, 0,    // v0-v1-v2, v2-v3-v0 (front)
+									 4, 5, 6,   6, 7, 4,    // v0-v3-v4, v4-v5-v0 (right)
+									 8, 9,10,  10,11, 8,    // v0-v5-v6, v6-v1-v0 (top)
+									12,13,14,  14,15,12,    // v1-v6-v7, v7-v2-v1 (left)
+									16,17,18,  18,19,16,    // v7-v4-v3, v3-v2-v7 (bottom)
+									20,21,22,  22,23,20     // v4-v7-v6, v6-v5-v4 (back)
+	};
+
+
+	glGenBuffers(1, (GLuint*)&new_mesh->IndicesID); // create buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->IndicesID); // start using created buffer
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * new_mesh->IndicesSize, new_mesh->Indices, GL_STATIC_DRAW); // send vertices to VRAM
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
+
+	
+
+	new_mesh->TexCoordsSize = verticesSize * 2;
+
+	new_mesh->TexCoords = new float[new_mesh->TexCoordsSize]{
+		1, 0, 0, 0, 0, 1, 1, 1,               // v0,v1,v2,v3 (front)
+			0, 0, 0, 1, 1, 1, 1, 0,               // v0,v3,v4,v5 (right)
+			1, 1, 1, 0, 0, 0, 0, 1,               // v0,v5,v6,v1 (top)
+			1, 0, 0, 0, 0, 1, 1, 1,               // v1,v6,v7,v2 (left)
+			0, 1, 1, 1, 1, 0, 0, 0,               // v7,v4,v3,v2 (bottom)
+			0, 1, 1, 1, 1, 0, 0, 0                // v4,v7,v6,v5 (back)
+	};
+
+	if (checkers)
+		new_object->SetMaterial(CheckersMaterial);
+
+	glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
+	glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * new_mesh->TexCoordsSize, new_mesh->TexCoords, GL_STATIC_DRAW); // send vertices to VRAM
+	glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
+
+	return new_object;
+}
 
 void ModuleSceneManager::Draw() const
 {
 	
 	for (uint i = 0; i < game_objects.size(); ++i)
 	{
+		glPushMatrix();
+		glMultMatrixf(game_objects[i]->GetLocalTransform().ptr());
+
 		ResourceRenderer* Renderer = (ResourceRenderer*)game_objects[i]->GetResource(Res::ResType::Renderer);
 
 		if (Renderer)
@@ -98,6 +180,7 @@ void ModuleSceneManager::Draw() const
 			Renderer->Draw();
 		}
 		
+		glPopMatrix();
 	}
 
 }

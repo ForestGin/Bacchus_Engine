@@ -3,6 +3,7 @@
 #include "ResourceMesh.h"
 #include "ResourceRenderer.h"
 #include "ResourceMaterial.h"
+#include "Math.h"
 
 #include "mmgr/mmgr.h"
 
@@ -95,17 +96,35 @@ Res* GameObject::AddResource(Res::ResType type)
 
 void GameObject::SetPosition(float x, float y, float z)
 {
-	Local_transform.Translate(x, y, z);
+	Local_transform.ptr()[12] = x;
+	Local_transform.ptr()[13] = y;
+	Local_transform.ptr()[14] = z;
 }
 
 void GameObject::SetRotationAxisAngle(const float3& rot_axis, float degrees_angle)
 {
-	Local_transform.RotateAxisAngle(rot_axis, degrees_angle);
+	degrees_angle = degrees_angle / 180.0f * (float)pi;
+
+	float3 v = rot_axis.Normalized();
+
+	float c = 1.0f - cosf(degrees_angle), s = sinf(degrees_angle);
+
+	Local_transform.ptr()[0] = 1.0f + c * (v.x * v.x - 1.0f);
+	Local_transform.ptr()[1] = c * v.x * v.y + v.z * s;
+	Local_transform.ptr()[2] = c * v.x * v.z - v.y * s;
+	Local_transform.ptr()[4] = c * v.x * v.y - v.z * s;
+	Local_transform.ptr()[5] = 1.0f + c * (v.y * v.y - 1.0f);
+	Local_transform.ptr()[6] = c * v.y * v.z + v.x * s;
+	Local_transform.ptr()[8] = c * v.x * v.z + v.y * s;
+	Local_transform.ptr()[9] = c * v.y * v.z - v.x * s;
+	Local_transform.ptr()[10] = 1.0f + c * (v.z * v.z - 1.0f);
 }
 
 void GameObject::Scale(float x, float y, float z)
 {
-	Local_transform.Scale(x, y, z);
+	Local_transform.ptr()[0] = x;
+	Local_transform.ptr()[5] = y;
+	Local_transform.ptr()[10] = z;
 }
 
 void GameObject::SetLocalTransform(float4x4 new_transform)
