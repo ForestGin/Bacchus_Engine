@@ -1,7 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
-#include "Primitive.h"
 #include "ModuleCamera3D.h"
 
 #include "OpenGL.h"
@@ -346,9 +345,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	//sphere.pos = spherepos;
 	//sphere.r = 3.0f;
 
-	PrimiPlane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
+	//PrimiPlane p(0, 1, 0, 0);
+	//p.axis = true;
+	//p.Render();
 
 
 	return UPDATE_CONTINUE;

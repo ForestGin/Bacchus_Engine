@@ -25,7 +25,14 @@ public:
 	ResourceMaterial* CreateEmptyMaterial();
 	uint GetNumGameObjects() const;
 	void Draw() const;
+
 	GameObject* CreateCube(float sizeX, float sizeY, float sizeZ, bool checkers = false);
+	GameObject* CreateSphere(float Radius, int slices, int slacks, bool checkers = false);
+	void CreateGrid() const;
+
+	uint GetSelectedGameObjects();
+	std::vector<GameObject*>& GetGameObjects();
+	void SetSelectedGameObject(uint index);
 
 
 public:
@@ -35,6 +42,7 @@ private:
 
 	std::vector<GameObject*> game_objects;
 	std::vector<ResourceMaterial*> Materials;
+	uint SelectedGameObject = 0;
 };
 
 #endif 

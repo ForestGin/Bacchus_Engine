@@ -31,6 +31,8 @@ void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 	//Draw Texture
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY); // enable gl capability
 	glEnableClientState(GL_VERTEX_ARRAY); // enable client-side capability
+	glEnable(GL_TEXTURE_2D); // enable gl capability
+	glActiveTexture(GL_TEXTURE0); // In case we had multitexturing, we should set which one is active 
 
 	//If the mesh has a material associated, get it
 	ResourceMaterial* mat = (ResourceMaterial*)mesh.GetContainerGameObject()->GetResource(Res::ResType::Material);
@@ -46,7 +48,7 @@ void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.VerticesID); // start using created buffer (vertices)
 	glVertexPointer(3, GL_FLOAT, 0, NULL); // Use selected buffer as vertices 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndicesID); // start using created buffer (indices)
-	glDrawElements(GL_TRIANGLES, mesh.IndicesSize, GL_UNSIGNED_INT, NULL); // render primitives from array data
+	glDrawElements(GL_TRIANGLES, mesh.IndicesSize, mesh.IndexDatatype, NULL); // render primitives from array data
 
 
 
@@ -56,6 +58,8 @@ void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer (indices)
 	glBindTexture(GL_TEXTURE_2D, 0); // Stop using buffer (texture)
 
+	glDisable(GL_TEXTURE_2D); // enable gl capability
+	glActiveTexture(GL_TEXTURE0); // In case we had multitexturing, we should reset active texture
 	glDisableClientState(GL_VERTEX_ARRAY); // disable client-side capability
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY); // disable client-side capability
 

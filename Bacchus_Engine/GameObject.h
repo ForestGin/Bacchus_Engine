@@ -22,6 +22,7 @@ public:
 	float3			GetPosition();
 	float4x4        GetLocalTransform();
 	Res*			GetResource(Res::ResType type);
+	std::string		GetName() const;
 
 	
 	Res* AddResource(Res::ResType type);

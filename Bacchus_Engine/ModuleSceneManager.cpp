@@ -30,7 +30,8 @@ bool ModuleSceneManager::Start()
 
 	CheckersMaterial->TextureID = App->tex->GetCheckerTextureID();
 
-	CreateCube(1, 1, 1, true);
+	GameObject* cube = CreateCube(1, 1, 1, true);
+	cube->SetPosition(3.0f, 1.0f, 0.0f);
 
 	return true;
 }
@@ -70,6 +71,21 @@ uint ModuleSceneManager::GetNumGameObjects() const
 	return game_objects.size();
 }
 
+uint ModuleSceneManager::GetSelectedGameObjects()
+{
+	return SelectedGameObject;
+}
+
+std::vector<GameObject*>& ModuleSceneManager::GetGameObjects()
+{
+	return game_objects;
+}
+
+void ModuleSceneManager::SetSelectedGameObject(uint index)
+{
+	SelectedGameObject = index;
+}
+
 GameObject* ModuleSceneManager::CreateEmptyGameObject()
 {
 	std::string Name = "GameObject ";
@@ -92,6 +108,27 @@ ResourceMaterial* ModuleSceneManager::CreateEmptyMaterial()
 	Materials.push_back(Material);
 
 	return Material;
+}
+
+void ModuleSceneManager::Draw() const
+{
+	CreateGrid();
+
+	for (uint i = 0; i < game_objects.size(); ++i)
+	{
+		glPushMatrix();
+		glMultMatrixf(game_objects[i]->GetLocalTransform().ptr());
+
+		ResourceRenderer* Renderer = (ResourceRenderer*)game_objects[i]->GetResource(Res::ResType::Renderer);
+
+		if (Renderer)
+		{
+			Renderer->Draw();
+		}
+
+		glPopMatrix();
+	}
+
 }
 
 GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ, bool checkers)
@@ -165,22 +202,34 @@ GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ
 	return new_object;
 }
 
-void ModuleSceneManager::Draw() const
+GameObject* CreateSphere(float Radius, int slices, int slacks, bool checkers = false)
 {
-	
-	for (uint i = 0; i < game_objects.size(); ++i)
+	return nullptr;
+}
+
+void ModuleSceneManager::CreateGrid() const
+{
+	glLineWidth(1.0f);
+
+	glBegin(GL_LINES);
+
+	float distance = 200.0f;
+
+	for (int max_linesgrid = -distance; max_linesgrid < distance; max_linesgrid++)
 	{
-		glPushMatrix();
-		glMultMatrixf(game_objects[i]->GetLocalTransform().ptr());
+		glVertex3f((float)max_linesgrid, 0.0f, -distance);
+		glVertex3f((float)max_linesgrid, 0.0f, distance);
+		glVertex3f(-distance, 0.0f, (float)max_linesgrid);
+		glVertex3f(distance, 0.0f, (float)max_linesgrid);
 
-		ResourceRenderer* Renderer = (ResourceRenderer*)game_objects[i]->GetResource(Res::ResType::Renderer);
-
-		if (Renderer)
-		{
-			Renderer->Draw();
-		}
-		
-		glPopMatrix();
 	}
 
+	glVertex3f((float)-distance, 0.0f, distance);
+	glVertex3f((float)distance, 0.0f, distance);
+	glVertex3f((float)distance, 0.0f, -distance);
+	glVertex3f((float)distance, 0.0f, distance);
+
+	glLineWidth(1.0f);
+
+	glEnd();
 }

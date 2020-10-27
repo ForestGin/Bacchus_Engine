@@ -8,8 +8,8 @@
 #include "BlockheadAbout.h"
 #include "BlockheadSettings.h"
 #include "BlockheadConsole.h"
+#include "BlockheadHierarchy.h"
 //#include "BlockheadInspector.h"
-//#include "BlockheadHierarchy.h"
 //#include "BlockheadScene.h"
 //#include "BlockheadToolbar.h"
 
@@ -40,6 +40,9 @@ bool BacchusEditor::Init(json file)
 
 	blockheadConsole = new BlockheadConsole("Console");
 	blockheads.push_back(blockheadConsole);
+
+	blockheadHierarchy = new BlockheadHierarchy("Hierarchy");
+	blockheads.push_back(blockheadHierarchy); 
 	/*
 	blockheadInspector = new BlockheadInspector("Inspector");
 	blockheads.push_back(blockheadInspector);
@@ -174,6 +177,11 @@ update_status BacchusEditor::Update(float dt)
 				blockheadSettings->OnOff();
 			}
 
+			if (ImGui::MenuItem("Hierarchy"))
+			{
+				blockheadHierarchy->OnOff();
+			}
+
 			/*if (ImGui::MenuItem("Inspector"))
 			{
 				blockheadInspector->OnOff();
@@ -268,6 +276,7 @@ bool BacchusEditor::CleanUp()
 	blockheadSettings = nullptr;
 	blockheadAbout = nullptr;
 	blockheadConsole = nullptr;
+	blockheadHierarchy = nullptr;
 
 	LOG("Unloading Bacchus...");
 	ImGui_ImplOpenGL3_Shutdown();

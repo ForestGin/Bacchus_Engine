@@ -59,6 +59,11 @@ Res* GameObject::GetResource(Res::ResType type)
 	return nullptr;
 }
 
+std::string GameObject::GetName() const
+{
+	return name;
+}
+
 Res* GameObject::AddResource(Res::ResType type)
 {
 	if (type == Res::ResType::Unknown)

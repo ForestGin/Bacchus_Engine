@@ -8,7 +8,6 @@
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
-    <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="imgui\imgui.cpp">
       <Filter>External Libs\ImGui</Filter>
     </ClCompile>
@@ -191,6 +190,9 @@
     <ClCompile Include="ImporterMaterial.cpp">
       <Filter>Importers</Filter>
     </ClCompile>
+    <ClCompile Include="BlockheadHierarchy.cpp">
+      <Filter>EditorBlockheads</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -201,7 +203,6 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleWindow.h" />
-    <ClInclude Include="Primitive.h" />
     <ClInclude Include="imgui\imconfig.h">
       <Filter>External Libs\ImGui</Filter>
     </ClInclude>
@@ -484,6 +485,9 @@
     </ClInclude>
     <ClInclude Include="ImporterMaterial.h">
       <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockheadHierarchy.h">
+      <Filter>EditorBlockheads</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
