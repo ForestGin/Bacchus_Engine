@@ -9,6 +9,11 @@ Res::Res(GameObject* ContainerGO, Res::ResType type)
 	this->type = type;
 }
 
+Res::Res(Res::ResType type)
+{
+	this->type = type;
+}
+
 Res::~Res()
 {
 }
@@ -16,4 +21,9 @@ Res::~Res()
 Res::ResType Res::GetType()
 {
 	return type;
+}
+
+GameObject* Res::GetContainerGameObject()
+{
+	return GO;
 }

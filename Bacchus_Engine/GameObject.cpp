@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "ResourceMesh.h"
 #include "ResourceRenderer.h"
+#include "ResourceMaterial.h"
 
 #include "mmgr/mmgr.h"
 
@@ -17,7 +18,9 @@ GameObject::~GameObject()
 	{
 		if (*it)
 		{
+			if ((*it)->GetType() != Res::ResType::Material)
 			delete(*it);
+
 			*it = nullptr;
 		}
 	}
@@ -97,4 +100,10 @@ void GameObject::Scale(float x, float y, float z)
 void GameObject::SetLocalTransform(float4x4 new_transform)
 {
 	Local_transform = new_transform;
+}
+
+void GameObject::SetMaterial(ResourceMaterial* material)
+{
+	if (material)
+		components.push_back(material);
 }

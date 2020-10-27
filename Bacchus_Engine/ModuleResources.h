@@ -2,18 +2,16 @@
 #define __MODULE_RESOURCES_H__
 
 #include "Module.h"
-#include "Math.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 #include <vector>
 
 #include <vector>
 
-class ResourceMesh;
-class aiScene;
-class GameObject;
 
-#define NORMAL_LENGTH 1
+class GameObject;
+class ResourceMaterial;
+
 
 class ModuleResources : public Module
 {
@@ -27,17 +25,13 @@ public:
 	void Draw() const;
 	bool CleanUp();
 	bool LoadFBX(const char* path);
-	uint GetNumMeshes() const;
-	void GetTextureIDFromSceneMaterial(const aiScene& scene, uint& texture_ID, std::string& directory);
-
-private:
-	void DrawMesh(const ResourceMesh* mesh) const;
-	void DrawNormals(const ResourceMesh* mesh) const;
+	uint GetNumGameObjects() const;
+	
 
 private:
 
 	std::vector<GameObject*> game_objects;
-
+	std::vector<ResourceMaterial*> Materials;
 };
 
 #endif

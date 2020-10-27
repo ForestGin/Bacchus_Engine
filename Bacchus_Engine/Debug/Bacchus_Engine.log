@@ -1,45 +1,13 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   GameObject.cpp
 F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  ModuleSceneManager.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  Res.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  ResourceMesh.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(109,40): warning C4244: '=': conversion from 'TReal' to 'unsigned char', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(109,40): warning C4244:         with
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(109,40): warning C4244:         [
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(109,40): warning C4244:             TReal=float
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(109,40): warning C4244:         ]
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(110,46): warning C4244: '=': conversion from 'TReal' to 'unsigned char', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(110,46): warning C4244:         with
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(110,46): warning C4244:         [
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(110,46): warning C4244:             TReal=float
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(110,46): warning C4244:         ]
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(111,46): warning C4244: '=': conversion from 'TReal' to 'unsigned char', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(111,46): warning C4244:         with
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(111,46): warning C4244:         [
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(111,46): warning C4244:             TReal=float
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(111,46): warning C4244:         ]
   ModuleResources.cpp
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(112,46): warning C4244: '=': conversion from 'TReal' to 'unsigned char', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(112,46): warning C4244:         with
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(112,46): warning C4244:         [
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(112,46): warning C4244:             TReal=float
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.cpp(112,46): warning C4244:         ]
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.h(10,15): warning C4099: 'aiScene': type name first seen using 'class' now seen using 'struct'
-F:\Bacchus_Engine\Bacchus_Engine\ModuleResources.h(13): message : see declaration of 'aiScene'
-F:\Bacchus_Engine\Bacchus_Engine\Assimp\include\cimport.h(54,15): warning C4099: 'aiScene': type name first seen using 'class' now seen using 'struct'
-F:\Bacchus_Engine\Bacchus_Engine\ResourceMesh.h(10): message : see declaration of 'aiScene'
-F:\Bacchus_Engine\Bacchus_Engine\Assimp\include\scene.h(278,1): warning C4099: 'aiScene': type name first seen using 'class' now seen using 'struct'
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ResourceMaterial.cpp
   ResourceRenderer.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   Generating Code...
-F:\Bacchus_Engine\Bacchus_Engine\Assimp\include\scene.h(277): message : see declaration of 'aiScene'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
   Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe

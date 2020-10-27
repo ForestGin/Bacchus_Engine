@@ -12,17 +12,20 @@ public:
 	{
 		Unknown = 0,
 		Mesh,
-		Renderer
+		Renderer,
+		Material
 	};
 
 public:
 
 	Res(GameObject* ContainerGO, Res::ResType type);
+	Res(Res::ResType type);
 	virtual ~Res();
 
 	Res::ResType GetType();
+	GameObject* GetContainerGameObject();
 
-private:
+protected:
 	GameObject* GO = nullptr;
 	Res::ResType type;
 

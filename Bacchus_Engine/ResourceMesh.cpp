@@ -18,7 +18,7 @@ ResourceMesh::~ResourceMesh()
 	glDeleteBuffers(1, (GLuint*)&VerticesID);
 	glDeleteBuffers(1, (GLuint*)&IndicesID);
 	glDeleteBuffers(1, (GLuint*)&TextureCoordsID);
-	glDeleteBuffers(1, (GLuint*)&TextureID);
+	
 
 	if (Vertices)
 	{
@@ -40,14 +40,10 @@ ResourceMesh::~ResourceMesh()
 		delete[] TexCoords;
 		TexCoords = nullptr;
 	}
-	if (Colours)
-	{
-		delete[] Colours;
-		Colours = nullptr;
-	}
+	
 }
 
-void ResourceMesh::ImportMesh(const aiMesh* mesh, uint MATTextureID)
+void ResourceMesh::ImportMesh(const aiMesh* mesh)
 {
 	//Vertices
 	this->VerticesSize = mesh->mNumVertices;
@@ -98,21 +94,7 @@ void ResourceMesh::ImportMesh(const aiMesh* mesh, uint MATTextureID)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * this->VerticesSize*2, this->TexCoords, GL_STATIC_DRAW); // send vertices to VRAM
 	glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
 
-	//Colours
-
-	if (mesh->HasVertexColors(0))
-	{
-		ColoursSize = mesh->mNumVertices;
-		Colours = new unsigned char[ColoursSize * 4];
-		for (uint i = 0; i < mesh->mNumVertices; ++i)
-		{
-			Colours[4 * i] = mesh->mColors[0][i].r;
-			Colours[(4 * i) + 1] = mesh->mColors[0][i].g;
-			Colours[(4 * i) + 2] = mesh->mColors[0][i].b;
-			Colours[(4 * i) + 3] = mesh->mColors[0][i].a;
-		}
-	}
-
+	
 	//Indices
 	this->IndicesSize = mesh->mNumFaces * 3;
 	this->Indices = new uint[this->IndicesSize];
@@ -133,18 +115,5 @@ void ResourceMesh::ImportMesh(const aiMesh* mesh, uint MATTextureID)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * this->IndicesSize, this->Indices, GL_STATIC_DRAW); // send vertices to VRAM
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
 
-	//Material
-
-	this->TextureID = MATTextureID;
-
-	//if (scene->HasMaterials())
-	//{
-	//	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-
-	//	if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
-	//	{
-	//		aiString Texture_path;
-	//		material->GetTexture(aiTextureType_DIFFUSE,0, &Texture_path);
-	//	}
-	//}
+	
 }

@@ -192,6 +192,7 @@
     <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Res.h" />
+    <ClInclude Include="ResourceMaterial.h" />
     <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="ResourceRenderer.h" />
@@ -263,6 +264,7 @@
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Res.cpp" />
+    <ClCompile Include="ResourceMaterial.cpp" />
     <ClCompile Include="ResourceMesh.cpp" />
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="ResourceRenderer.cpp" />
