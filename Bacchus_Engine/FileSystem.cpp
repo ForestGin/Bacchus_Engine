@@ -9,10 +9,11 @@
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
 
+#include "mmgr/mmgr.h"
 
 using namespace std;
 
-FileSystem::FileSystem(Application* app, bool start_enabled, const char* game_path) : Module(true)
+FileSystem::FileSystem(bool start_enabled, const char* game_path) : Module(true)
 {
 	name = "File System";
 
@@ -31,7 +32,11 @@ FileSystem::FileSystem(Application* app, bool start_enabled, const char* game_pa
 // Destructor
 FileSystem::~FileSystem()
 {
-	RELEASE(AssimpIO);
+	if (AssimpIO)
+	{
+		delete AssimpIO;
+		AssimpIO = nullptr;
+	}
 	PHYSFS_deinit();
 }
 
@@ -289,7 +294,11 @@ uint FileSystem::Load(const char* file, char** buffer) const
 			if (readed != size)
 			{
 				LOG("File System error while reading from file %s: %s\n", file, PHYSFS_getLastError());
-				RELEASE(buffer);
+				if (buffer)
+				{
+					delete buffer;
+					buffer = nullptr;
+				}
 			}
 			else
 				ret = readed;
@@ -326,7 +335,11 @@ SDL_RWops* FileSystem::Load(const char* file) const
 
 int close_sdl_rwops(SDL_RWops* rw)
 {
-	RELEASE_ARRAY(rw->hidden.mem.base);
+	if (rw->hidden.mem.base)
+	{
+		delete rw->hidden.mem.base;
+		rw->hidden.mem.base = nullptr;
+	}
 	SDL_FreeRW(rw);
 	return 0;
 }
@@ -522,7 +535,11 @@ void AssimpClose(aiFileIO* io, aiFile* file)
 
 void FileSystem::CreateAssimpIO()
 {
-	RELEASE(AssimpIO);
+	if (AssimpIO)
+	{
+		delete AssimpIO;
+		AssimpIO = nullptr;
+	}
 
 	AssimpIO = new aiFileIO;
 	AssimpIO->OpenProc = AssimpOpen;

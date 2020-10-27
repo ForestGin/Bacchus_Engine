@@ -5,12 +5,15 @@
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
 #include "BacchusEditor.h"
+#include "ModuleSceneManager.h"
 #include "BacchusHardware.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
 #include "FileSystem.h"
 #include "ModuleResources.h"
 #include "ModuleTextures.h"
+
+#include "mmgr/mmgr.h"
 
 Application::Application()
 {
@@ -25,16 +28,17 @@ Application::Application()
 	RandomNumber = new math::LCG();
 
 	//.-.-.-.-.-.-
-	window = new ModuleWindow(this);
-	input = new ModuleInput(this);
-	scene_intro = new ModuleSceneIntro(this);
-	renderer3D = new ModuleRenderer3D(this);
-	camera = new ModuleCamera3D(this);
-	bacchuseditor = new BacchusEditor(this);
+	window = new ModuleWindow(true);
+	input = new ModuleInput(true);
+	scene_intro = new ModuleSceneIntro(true);
+	renderer3D = new ModuleRenderer3D(true);
+	camera = new ModuleCamera3D(true);
+	bacchuseditor = new BacchusEditor(true);
 	hardware = new BacchusHardware(true);
-	fs = new FileSystem(this, true, ASSETS_FOLDER);
-	resources = new ModuleResources(this);
-	tex = new ModuleTextures(this);
+	fs = new FileSystem(true, ASSETS_FOLDER);
+	resources = new ModuleResources(true);
+	tex = new ModuleTextures(true);
+	scene_manager = new ModuleSceneManager(true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -50,6 +54,7 @@ Application::Application()
 	AddModule(tex);
 
 	//Scene
+	AddModule(scene_manager);
 	AddModule(scene_intro);
 
 	//Engine UI
@@ -69,7 +74,13 @@ Application::~Application()
 		delete(*item);
 		++item;
 	}
-	list_modules.clear();
+	
+
+	if (RandomNumber)
+	{
+		delete RandomNumber;
+		RandomNumber = nullptr;
+	}
 }
 
 bool Application::Init()
@@ -343,6 +354,11 @@ json Application::GetDefaultConfig() const
 void Application::RequestBrowser(const char* url) const
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+
+LCG& Application::GetRandom()
+{
+	return *RandomNumber;
 }
 
 

@@ -20,6 +20,8 @@
 
 #include "OpenGL.h"
 
+#include "mmgr/mmgr.h"
+
 
 BacchusEditor::BacchusEditor(bool start_enabled) : Module(start_enabled) 
 {

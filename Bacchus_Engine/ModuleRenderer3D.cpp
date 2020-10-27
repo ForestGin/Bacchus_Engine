@@ -5,16 +5,18 @@
 #include "ModuleCamera3D.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleResources.h"
-//#include "ModuleSceneManager.h"
+#include "ModuleSceneManager.h"
 
 #include "BacchusEditor.h"
 
 #include "OpenGL.h"
 #include "Imgui/imgui.h"
 
-#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
-#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+#pragma comment (lib, "glu32.lib")    
+#pragma comment (lib, "opengl32.lib") 
 #pragma comment (lib, "glew/libx86/glew32.lib")
+
+#include "mmgr/mmgr.h"
 
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module(start_enabled)
 {
@@ -168,20 +170,19 @@ update_status ModuleRenderer3D::Update(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	App->resources->Draw();
+	
+	App->scene_intro->Draw();
 
-	// --- Draw Level geometry --- // To be destroyed
-	//App->scene_intro->Draw();
+	
+	App->scene_manager->Draw();
 
-	// --- Draw Level Geometry ---
-	//App->scene_manager->Draw();
-
-	// --- Draw everything and swap buffers ---
+	
 	App->bacchuseditor->Draw();
 
 	// To prevent problems with viewports
 	SDL_GL_MakeCurrent(App->window->window, context);
 	SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 

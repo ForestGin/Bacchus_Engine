@@ -2,6 +2,7 @@
 #include "BlockheadConsole.h"
 #include "Application.h"
 
+#include "mmgr/mmgr.h"
 
 BlockheadConsole::BlockheadConsole(char* name) : Blockhead(name)
 {

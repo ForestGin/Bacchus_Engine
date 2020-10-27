@@ -2,6 +2,8 @@
 #include <fstream>
 #include <iomanip>
 
+#include "mmgr/mmgr.h"
+
 json JSONLoader::Load(const char* File) const
 {
 

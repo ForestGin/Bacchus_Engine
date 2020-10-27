@@ -12,7 +12,7 @@
 #pragma comment (lib, "DevIL/libx86/ILUT.lib")
 
 
-
+#include "mmgr/mmgr.h"
 
 #define CHECKERS_HEIGHT 64
 #define CHECKERS_WIDTH 64

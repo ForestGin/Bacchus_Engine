@@ -1,6 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
 
+#include "mmgr/mmgr.h"
+
 void _log(const char file[], int line, const char* format, ...)
 {
 	static char tmp_string[MAX_BUF_SIZE];
