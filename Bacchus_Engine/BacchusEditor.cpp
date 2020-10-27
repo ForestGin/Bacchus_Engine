@@ -3,6 +3,7 @@
 #include "BacchusEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleSceneManager.h"
 
 #include "Blockhead.h"
 #include "BlockheadAbout.h"
@@ -118,31 +119,6 @@ update_status BacchusEditor::PreUpdate(float dt)
 // Update
 update_status BacchusEditor::Update(float dt)
 {
-	//ImGuiWindowFlags docking_window_flags = 0;
-	//ImGuiID dockspaceID = 0;
-
-	//if (docking_window == true)
-	//{
-	//	docking_window_flags |= ImGuiWindowFlags_NoMove;
-	//	docking_window_flags |= ImGuiWindowFlags_NoBackground;
-	//	docking_window_flags |= ImGuiWindowFlags_NoTitleBar;
-	//	docking_window_flags |= ImGuiWindowFlags_NoDocking;
-	//	docking_window_flags |= ImGuiWindowFlags_NoInputs;
-
-	//	if (ImGui::Begin("Master Window", &docking_window, docking_window_flags))
-	//	{
-	//		
-	//	}
-
-	//	if (docking_window)
-	//	{
-	//		// Declare Central dockspace
-	//		dockspaceID = ImGui::GetID("HUB_DockSpace");
-	//		ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode/*|ImGuiDockNodeFlags_NoResize*/);
-	//	}
-	//	ImGui::End();
-	//}
-
 	if (ImGui::BeginMainMenuBar())
 	{
 
@@ -165,6 +141,36 @@ update_status BacchusEditor::Update(float dt)
 			ImGui::EndMenu();
 		}
 
+		if (ImGui::BeginMenu("GameObject"))
+		{
+			if (ImGui::BeginMenu("3D Object"))
+			{
+
+				if (ImGui::MenuItem("Cube"))
+				{
+					App->scene_manager->CreateCube(1, 1, 1);
+				}
+				if (ImGui::MenuItem("Sphere"))
+				{
+					//App->scene_manager->CreateSphere(1.0f, 25, 25);
+				}
+
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("4D Object"))
+			{
+
+				if (ImGui::MenuItem("Tesseract"))
+				{
+					
+				}
+
+				ImGui::EndMenu();
+			}
+			ImGui::EndMenu();
+		}
+
 		if (ImGui::BeginMenu("Window"))
 		{
 			if (ImGui::MenuItem("Console"))
@@ -181,26 +187,6 @@ update_status BacchusEditor::Update(float dt)
 			{
 				blockheadHierarchy->OnOff();
 			}
-
-			/*if (ImGui::MenuItem("Inspector"))
-			{
-				blockheadInspector->OnOff();
-			}*/
-
-			/*if (ImGui::MenuItem("Hierarchy"))
-			{
-				blockheadHierarchy->OnOff();
-			}*/
-
-			/*if (ImGui::MenuItem("Scene"))
-			{
-				blockheadScene->OnOff();
-			}*/
-
-			/*if (ImGui::MenuItem("Toolbar"))
-			{
-				blockheadToolbar->OnOff();
-			}*/
 
 			ImGui::EndMenu();
 		}
