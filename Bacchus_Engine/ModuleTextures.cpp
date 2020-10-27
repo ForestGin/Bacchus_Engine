@@ -14,8 +14,8 @@
 
 #include "mmgr/mmgr.h"
 
-#define CHECKERS_HEIGHT 64
-#define CHECKERS_WIDTH 64
+#define CHECKERS_HEIGHT 32
+#define CHECKERS_WIDTH 32
 
 ModuleTextures::ModuleTextures(bool start_enabled) : Module(start_enabled)
 {
@@ -93,20 +93,13 @@ uint ModuleTextures::GetCheckerTextureID() const
 	return CheckerTexID;
 }
 
-uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uint height, uint format, const void* pixels, bool CheckersTexture) const
+inline void ModuleTextures::SetTextureParameters(bool CheckersTexture) const
 {
-	uint TextureID = 0;
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	// Generate the texture ID 
-	glGenTextures(1, (GLuint*)&TextureID);
-	// Bind the texture so we can work with it
-	glBindTexture(GL_TEXTURE_2D, TextureID);
-	// Set texture clamping method 
+	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	// Set texture interpolation method 
+	
 	if (CheckersTexture)
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -114,11 +107,11 @@ uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uin
 	}
 	else
 	{
-		//Mipmap for the highest visual quality when resizing
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-		// Enabling anisotropic filtering for highest quality at oblique angles
+		
 		if (glewIsSupported("GL_EXT_texture_filter_anisotropic"))
 		{
 			GLfloat largest_supported_anisotropy;
@@ -126,8 +119,21 @@ uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uin
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, largest_supported_anisotropy);
 		}
 	}
+}
 
+uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uint height, uint format, const void* pixels, bool CheckersTexture) const
+{
+	uint TextureID = 0;
+
+	
+	// Generate the texture ID 
+	glGenTextures(1, (GLuint*)&TextureID);
+	// Bind the texture so we can work with it
+	glBindTexture(GL_TEXTURE_2D, TextureID);
+	
+	SetTextureParameters(CheckersTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
+
 
 	if (!CheckersTexture)
 	{
@@ -147,8 +153,6 @@ uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uin
 
 uint ModuleTextures::CreateTextureFromFile(const char* path) const
 {
-	// In this function I use devil to load an image using the path given, extract pixel data and then create texture using CreateTextureFromPixels ---
-
 	uint texName = 0;
 
 	if (path == nullptr)
@@ -157,27 +161,24 @@ uint ModuleTextures::CreateTextureFromFile(const char* path) const
 		return texName;
 	}
 
-	// Generate the image name
+
 	uint ImageName = 0;
 	ilGenImages(1, (ILuint*)&ImageName);
 
-	// Bind the image
 	ilBindImage(ImageName);
 
-	//Load the image 
+	
 	if (ilLoadImage(path))
 	{
-		// Flip the image if needed
+		
 		ILinfo imageInfo;
 		iluGetImageInfo(&imageInfo);
 
 		if (imageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
 			iluFlipImage();
 
-		//Convert the image into a suitable format to work with
 		if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 		{
-			//Create the texture
 			texName = CreateTextureFromPixels(ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
 		}
 		else
@@ -188,7 +189,6 @@ uint ModuleTextures::CreateTextureFromFile(const char* path) const
 
 	ilDeleteImages(1, (const ILuint*)&ImageName);
 
-	//Returning the Texture ID so a mesh can use it, note that this variable is filled by CreateTextureFromPixels
 
 	return texName;
 }

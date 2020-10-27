@@ -25,6 +25,10 @@ public:
 private:
 
 	uint CheckerTexID = 0;
+
+private:
+
+	inline void SetTextureParameters(bool CheckersTexture = false) const;
 };
 
 #endif 

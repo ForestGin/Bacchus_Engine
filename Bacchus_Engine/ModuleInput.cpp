@@ -3,7 +3,6 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleResources.h"
-#include "ModuleTextures.h"
 #include "BacchusEditor.h"
 
 #include "imgui/imgui.h"
@@ -127,12 +126,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_DROPFILE:
 			{
 				std::string DroppedFile_path = e.drop.file;
-
-				if (DroppedFile_path.find(".fbx") != std::string::npos || DroppedFile_path.find(".FBX") != std::string::npos)
-					App->resources->LoadFBX(e.drop.file);
-
-				else if (DroppedFile_path.find(".dds") != std::string::npos)
-					App->tex->CreateTextureFromFile(e.drop.file);
+				App->resources->LoadFromPath(e.drop.file);
 
 				SDL_free((char*)DroppedFile_path.data());
 

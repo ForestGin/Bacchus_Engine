@@ -30,7 +30,6 @@ void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 
 	//Draw Texture
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY); // enable gl capability
-	glEnable(GL_TEXTURE_2D); // enable gl capability
 
 	//If the mesh has a material associated, get it
 	ResourceMaterial* mat = (ResourceMaterial*)mesh.GetContainerGameObject()->GetResource(Res::ResType::Material);

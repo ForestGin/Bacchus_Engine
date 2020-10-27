@@ -17,7 +17,7 @@ public:
 	bool Init(json file);
 	bool Start();
 	bool CleanUp();
-	bool LoadFBX(const char* path);
+	bool LoadFromPath(const char* path);
 
 private:
 
