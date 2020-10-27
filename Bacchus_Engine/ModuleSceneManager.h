@@ -33,6 +33,8 @@ public:
 	uint GetSelectedGameObjects();
 	std::vector<GameObject*>& GetGameObjects();
 	void SetSelectedGameObject(uint index);
+	void SetTextureToSelectedGO(uint id);
+
 
 
 public:

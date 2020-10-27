@@ -12,6 +12,8 @@ public:
 	ResourceMaterial(Res::ResType type);
 	virtual ~ResourceMaterial();
 
+	void FreeTexture();
+
 public:
 	uint  TextureID = 0;
 

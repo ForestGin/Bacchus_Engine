@@ -54,12 +54,14 @@ bool ModuleSceneManager::CleanUp()
 		if (game_objects[i])
 			delete game_objects[i];
 	}
+	game_objects.clear();
 
 	for (uint i = 0; i < Materials.size(); ++i)
 	{
 		if (Materials[i])
 			delete Materials[i];
 	}
+	Materials.clear();
 
 	CheckersMaterial = nullptr;
 
@@ -84,6 +86,17 @@ std::vector<GameObject*>& ModuleSceneManager::GetGameObjects()
 void ModuleSceneManager::SetSelectedGameObject(uint index)
 {
 	SelectedGameObject = index;
+}
+
+void ModuleSceneManager::SetTextureToSelectedGO(uint id)
+{
+	ResourceMaterial* Material = (ResourceMaterial*)game_objects[SelectedGameObject]->GetResource(Res::ResType::Material);
+
+	if (Material)
+	{
+		Material->FreeTexture();
+		Material->TextureID = id;
+	}
 }
 
 GameObject* ModuleSceneManager::CreateEmptyGameObject()
@@ -118,6 +131,8 @@ void ModuleSceneManager::Draw() const
 	{
 		glPushMatrix();
 		glMultMatrixf(game_objects[i]->GetLocalTransform().ptr());
+
+		Materials;
 
 		ResourceRenderer* Renderer = (ResourceRenderer*)game_objects[i]->GetResource(Res::ResType::Renderer);
 
