@@ -73,9 +73,9 @@ update_status ModuleCamera3D::Update(float dt)
 	}
 
 	//MOUSE WHEEL UP/DOWN: Zoom
-	if (!App->bacchuseditor->IsMouseCaptured() && abs(App->input->GetMouseWheel()) > 0)
+	if (!App->bacchuseditor->IsMouseCaptured() && abs(App->input->GetMouseZ()) > 0)
 	{
-		//Zoom(speed);
+		Zoom(speed);
 	}
 
 	////ALT + RIGHT CLICK: Orbit
@@ -207,7 +207,8 @@ void ModuleCamera3D::Zoom(float speed)
 		factor = 1.0f;
 	}
 
-	int mouse_wheel = App->input->GetMouseWheel();
+	int mouse_wheel = 0;
+	mouse_wheel = App->input->GetMouseZ();
 	vec3 Movement = -Z * mouse_wheel * speed * factor;
 	Position += Movement;
 }

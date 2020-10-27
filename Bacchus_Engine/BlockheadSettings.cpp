@@ -177,7 +177,7 @@ void BlockheadSettings::InputNode() const
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%i,%i", mouse_x, mouse_y);
 
 	//Mouse Wheel acc
-	int wheel = App->input->GetMouseWheel();
+	int wheel = App->input->GetMouseZ();
 	ImGui::Text("Mouse Wheel:");
 	ImGui::SameLine();
 	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%i", wheel);

@@ -1,4 +1,13 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  BlockheadSettings.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(21,1): warning C4005: 'RELEASE': macro redefinition
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(27): message : see previous definition of 'RELEASE'
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(32,1): warning C4005: 'RELEASE_ARRAY': macro redefinition
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(34): message : see previous definition of 'RELEASE_ARRAY'
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(263,30): warning C4552: '!=': result of expression not used
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(270,31): warning C4552: '!=': result of expression not used
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(277,29): warning C4552: '!=': result of expression not used
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(284,35): warning C4552: '!=': result of expression not used
   ModuleCamera3D.cpp
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(21,1): warning C4005: 'RELEASE': macro redefinition
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(27): message : see previous definition of 'RELEASE'
@@ -9,5 +18,12 @@ C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(1
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(191,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(196,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(197,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(211,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(212,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  ModuleInput.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(21,1): warning C4005: 'RELEASE': macro redefinition
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(27): message : see previous definition of 'RELEASE'
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\p2Defs.h(32,1): warning C4005: 'RELEASE_ARRAY': macro redefinition
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Globals.h(34): message : see previous definition of 'RELEASE_ARRAY'
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Generating Code...
   Bacchus_Engine.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe

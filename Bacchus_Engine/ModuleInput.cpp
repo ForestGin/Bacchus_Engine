@@ -4,13 +4,14 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleResources.h"
 #include "ModuleTextures.h"
+#include "BacchusEditor.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_internal.h"
 
 #define MAX_KEYS 300
 
-ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(start_enabled)
+ModuleInput::ModuleInput(bool start_enabled) : Module(start_enabled)
 {
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
@@ -94,6 +95,8 @@ update_status ModuleInput::PreUpdate(float dt)
 	SDL_Event e;
 	while(SDL_PollEvent(&e))
 	{
+		App->bacchuseditor->HandleInput(&e);
+
 		switch(e.type)
 		{
 			case SDL_MOUSEWHEEL:
