@@ -331,6 +331,12 @@ bool ModuleSceneIntro::CleanUp()
 	return true;
 }
 
+bool ModuleSceneIntro::Draw()
+{
+
+	return true;
+}
+
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {

@@ -5,6 +5,8 @@
 #include <vector>
 
 class GameObject;
+class ResourceMaterial;
+struct aiScene;
 
 class ModuleSceneManager : public Module
 {
@@ -18,12 +20,16 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	bool CleanUp();
-
+	GameObject* CreateEmptyGameObject();
+	ResourceMaterial* CreateEmptyMaterial();
+	ResourceMaterial* CreateMaterialFromScene(const aiScene& scene, const char& file_path);
+	uint GetNumGameObjects() const;
 	void Draw() const;
 
 private:
 
 	std::vector<GameObject*> game_objects;
+	std::vector<ResourceMaterial*> Materials;
 };
 
 #endif 

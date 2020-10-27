@@ -20,6 +20,8 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	bool Draw();
+
 public:
 	uint cube_id;//array 
 
