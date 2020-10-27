@@ -11,13 +11,21 @@
 #include "ResourceRenderer.h"
 #include "ModuleSceneManager.h"
 #include "GameObject.h"
+#include "ImporterMesh.h"
+#include "ImporterMaterial.h"
+
+#include "mmgr/mmgr.h"
 
 ImporterScene::ImporterScene()
 {
+	IMesh = new ImporterMesh;
+	IMaterial = new ImporterMaterial;
 }
 
 ImporterScene::~ImporterScene()
 {
+	delete IMesh;
+	delete IMaterial;
 }
 
 bool ImporterScene::Import(const char& File_path, const ImportData& IData) const
@@ -29,12 +37,17 @@ bool ImporterScene::Import(const char& File_path, const ImportData& IData) const
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		ResourceMaterial* Material = App->scene_manager->CreateMaterialFromScene(*scene, File_path);
 
-		
+		ResourceMaterial* Material = App->scene_manager->CreateEmptyMaterial();
+
+		ImportMaterialData MData;
+		MData.scene = scene;
+		MData.new_material = Material;
+		IMaterial->Import(File_path, MData);
+
+
 		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
-			
 			GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
 
 			aiMesh* mesh = scene->mMeshes[i];
@@ -43,13 +56,20 @@ bool ImporterScene::Import(const char& File_path, const ImportData& IData) const
 			{
 				ResourceMesh* new_mesh = (ResourceMesh*)new_object->AddResource(Res::ResType::Mesh);
 
-				new_mesh->ImportMesh(mesh);
-
-				ResourceRenderer* Renderer = (ResourceRenderer*)new_object->AddResource(Res::ResType::Renderer);
-
-				if (Material)
+				if (new_mesh)
 				{
-					new_object->SetMaterial(Material);
+					ImportMeshData Mdata;
+					Mdata.mesh = mesh;
+					Mdata.new_mesh = new_mesh;
+					IMesh->Import(Mdata);
+
+					ResourceRenderer* Renderer = (ResourceRenderer*)new_object->AddResource(Res::ResType::Renderer);
+
+					if (Material)
+					{
+						new_object->SetMaterial(Material);
+					}
+
 				}
 
 			}
@@ -61,7 +81,6 @@ bool ImporterScene::Import(const char& File_path, const ImportData& IData) const
 	}
 	else
 		LOG("|[error]: Error loading FBX %s", File_path);
-
 
 	return true;
 }

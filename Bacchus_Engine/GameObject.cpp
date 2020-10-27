@@ -65,19 +65,30 @@ Res* GameObject::AddResource(Res::ResType type)
 
 	Res* new_component = nullptr;
 
-	switch (type)
+	if (GetResource(type) == nullptr)
 	{
-	case Res::ResType::Mesh:
-		new_component = new ResourceMesh(this);
-		break;
-	case Res::ResType::Renderer:
-		new_component = new ResourceRenderer(this);
-		break;
+
+		switch (type)
+		{
+		case Res::ResType::Mesh:
+			new_component = new ResourceMesh(this);
+			break;
+		case Res::ResType::Renderer:
+			new_component = new ResourceRenderer(this);
+			break;
+		}
+
+		if (new_component)
+			components.push_back(new_component);
 
 	}
+	else
+	{
+		// --- If we find a component of the same type, tell the user ---
 
-	if (new_component)
-		components.push_back(new_component);
+		LOG("|[error]: The current Game Object already has a component of the type given");
+
+	}
 
 	return new_component;
 }

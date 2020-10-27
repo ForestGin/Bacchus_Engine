@@ -151,14 +151,33 @@ uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uin
 	return TextureID;
 }
 
+inline void ModuleTextures::CreateTextureFromImage(uint& TextureID) const
+{
+	// --- Attention!! If the image is flipped, we flip it back --- 
+	ILinfo imageInfo;
+	iluGetImageInfo(&imageInfo);
+
+	if (imageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
+		iluFlipImage();
+
+	// --- Convert the image into a suitable format to work with ---
+	if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
+	{
+		// --- Create the texture ---
+		TextureID = CreateTextureFromPixels(ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
+	}
+	else
+		LOG("|[error]: Image conversion failed. ERROR: %s", iluErrorString(ilGetError()));
+}
+
 uint ModuleTextures::CreateTextureFromFile(const char* path) const
 {
-	uint texName = 0;
+	uint TextureID = 0;
 
 	if (path == nullptr)
 	{
 		LOG("|[error]: Error at loading texture from path. ERROR: Path %s was nullptr", path);
-		return texName;
+		return TextureID;
 	}
 
 
@@ -169,26 +188,12 @@ uint ModuleTextures::CreateTextureFromFile(const char* path) const
 
 	
 	if (ilLoadImage(path))
-	{
-		
-		ILinfo imageInfo;
-		iluGetImageInfo(&imageInfo);
-
-		if (imageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
-			iluFlipImage();
-
-		if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
-		{
-			texName = CreateTextureFromPixels(ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
-		}
-		else
-			LOG("|[error]: Image conversion failed. ERROR: %s", iluErrorString(ilGetError()));
-	}
+		CreateTextureFromImage(TextureID);
 	else
 		LOG("|[error]: DevIL could not load the image. ERROR: %s", iluErrorString(ilGetError()));
 
 	ilDeleteImages(1, (const ILuint*)&ImageName);
 
 
-	return texName;
+	return TextureID;
 }

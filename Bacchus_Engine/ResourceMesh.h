@@ -6,17 +6,12 @@
 
 
 
-struct aiMesh;
-
-
 class ResourceMesh : public Res
 {
 public:
 
 	ResourceMesh(GameObject* ContainerGO);
 	virtual ~ResourceMesh();
-
-	void ImportMesh(const aiMesh* mesh);
 
 public:
 

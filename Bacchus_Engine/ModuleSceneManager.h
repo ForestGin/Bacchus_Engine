@@ -7,6 +7,7 @@
 class GameObject;
 class ResourceMaterial;
 struct aiScene;
+struct ImportMaterialData;
 
 class ModuleSceneManager : public Module
 {
@@ -22,7 +23,6 @@ public:
 	bool CleanUp();
 	GameObject* CreateEmptyGameObject();
 	ResourceMaterial* CreateEmptyMaterial();
-	ResourceMaterial* CreateMaterialFromScene(const aiScene& scene, const char& file_path);
 	uint GetNumGameObjects() const;
 	void Draw() const;
 

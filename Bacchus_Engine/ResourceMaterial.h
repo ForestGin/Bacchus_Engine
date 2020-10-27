@@ -12,9 +12,6 @@ public:
 	ResourceMaterial(Res::ResType type);
 	virtual ~ResourceMaterial();
 
-	void CreateEmpty();
-	void CreateFromScene(const aiScene& scene, const char& file_path);
-
 public:
 	uint  TextureID = 0;
 

@@ -5,6 +5,7 @@
 #include "ModuleRenderer3D.h"
 #include "ResourceRenderer.h"
 #include "ResourceMaterial.h"
+#include "ImporterMaterial.h"
 
 #include "mmgr/mmgr.h"
 
@@ -84,17 +85,6 @@ ResourceMaterial* ModuleSceneManager::CreateEmptyMaterial()
 	return Material;
 }
 
-ResourceMaterial* ModuleSceneManager::CreateMaterialFromScene(const aiScene& scene, const char& file_path)
-{
-	
-	ResourceMaterial* Material = new ResourceMaterial(Res::ResType::Material);
-	Material->CreateFromScene(scene, file_path);
-
-	
-	Materials.push_back(Material);
-
-	return Material;
-}
 
 void ModuleSceneManager::Draw() const
 {

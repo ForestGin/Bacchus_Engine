@@ -179,8 +179,18 @@
     <ClCompile Include="ResourceMaterial.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Importer.cpp" />
-    <ClCompile Include="ImporterScene.cpp" />
+    <ClCompile Include="Importer.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="ImporterMesh.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="ImporterScene.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="ImporterMaterial.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -463,8 +473,18 @@
     <ClInclude Include="ResourceMaterial.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Importer.h" />
-    <ClInclude Include="ImporterScene.h" />
+    <ClInclude Include="Importer.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImporterMesh.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImporterScene.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImporterMaterial.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">
@@ -502,6 +522,9 @@
     </Filter>
     <Filter Include="Others">
       <UniqueIdentifier>{03b9e68d-ed39-4264-a1bc-dc2c534c0d6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Importers">
+      <UniqueIdentifier>{5a8308be-2c37-49b2-b2ec-bb40b2026f98}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

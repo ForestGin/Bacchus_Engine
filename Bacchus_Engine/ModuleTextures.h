@@ -29,6 +29,7 @@ private:
 private:
 
 	inline void SetTextureParameters(bool CheckersTexture = false) const;
+	inline void CreateTextureFromImage(uint& TextureID) const;
 };
 
 #endif 
