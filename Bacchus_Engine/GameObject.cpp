@@ -35,10 +35,31 @@ uint GameObject::GetUID() const
 float3 GameObject::GetPosition()
 {
 	float3 position;
-	Local_transform.TransformPos(position);
-	Local_transform.TranslatePart();
+	position.x = Local_transform.ptr()[12];
+	position.y = Local_transform.ptr()[13];
+	position.z = Local_transform.ptr()[14];
+
 
 	return position;
+}
+
+float3 GameObject::GetScale()
+{
+	float3 scale;
+
+	scale.x = Local_transform.ptr()[0];
+	scale.y = Local_transform.ptr()[5];
+	scale.z = Local_transform.ptr()[10];
+
+	return scale;
+}
+
+float3 GameObject::GetRotation()
+{
+	float3 rotation;
+
+
+	return rotation;
 }
 
 float4x4 GameObject::GetLocalTransform()

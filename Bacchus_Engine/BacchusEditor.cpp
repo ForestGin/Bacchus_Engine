@@ -9,9 +9,8 @@
 #include "BlockheadSettings.h"
 #include "BlockheadConsole.h"
 #include "BlockheadHierarchy.h"
-//#include "BlockheadInspector.h"
-//#include "BlockheadScene.h"
-//#include "BlockheadToolbar.h"
+#include "BlockheadInspector.h"
+
 
 #include "imgui/imgui.h"
 #include "imgui/examples/imgui_impl_sdl.h"
@@ -43,18 +42,9 @@ bool BacchusEditor::Init(json file)
 
 	blockheadHierarchy = new BlockheadHierarchy("Hierarchy");
 	blockheads.push_back(blockheadHierarchy); 
-	/*
+
 	blockheadInspector = new BlockheadInspector("Inspector");
 	blockheads.push_back(blockheadInspector);
-
-	blockheadHierarchy = new BlockheadHierarchy("Hierarchy");
-	blockheads.push_back(blockheadHierarchy);*/
-
-	/*blockheadScene = new PanelScene("Scene");
-	blockheads.push_back(blockheadScene);
-
-	blockheadToolbar = new PanelToolbar("Toolbar");
-	blockheads.push_back(blockheadToolbar);*/
 
 	LoadStatus(file);
 
@@ -118,31 +108,6 @@ update_status BacchusEditor::PreUpdate(float dt)
 // Update
 update_status BacchusEditor::Update(float dt)
 {
-	//ImGuiWindowFlags docking_window_flags = 0;
-	//ImGuiID dockspaceID = 0;
-
-	//if (docking_window == true)
-	//{
-	//	docking_window_flags |= ImGuiWindowFlags_NoMove;
-	//	docking_window_flags |= ImGuiWindowFlags_NoBackground;
-	//	docking_window_flags |= ImGuiWindowFlags_NoTitleBar;
-	//	docking_window_flags |= ImGuiWindowFlags_NoDocking;
-	//	docking_window_flags |= ImGuiWindowFlags_NoInputs;
-
-	//	if (ImGui::Begin("Master Window", &docking_window, docking_window_flags))
-	//	{
-	//		
-	//	}
-
-	//	if (docking_window)
-	//	{
-	//		// Declare Central dockspace
-	//		dockspaceID = ImGui::GetID("HUB_DockSpace");
-	//		ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode/*|ImGuiDockNodeFlags_NoResize*/);
-	//	}
-	//	ImGui::End();
-	//}
-
 	if (ImGui::BeginMainMenuBar())
 	{
 
@@ -182,25 +147,10 @@ update_status BacchusEditor::Update(float dt)
 				blockheadHierarchy->OnOff();
 			}
 
-			/*if (ImGui::MenuItem("Inspector"))
+			if (ImGui::MenuItem("Inspector"))
 			{
 				blockheadInspector->OnOff();
-			}*/
-
-			/*if (ImGui::MenuItem("Hierarchy"))
-			{
-				blockheadHierarchy->OnOff();
-			}*/
-
-			/*if (ImGui::MenuItem("Scene"))
-			{
-				blockheadScene->OnOff();
-			}*/
-
-			/*if (ImGui::MenuItem("Toolbar"))
-			{
-				blockheadToolbar->OnOff();
-			}*/
+			}
 
 			ImGui::EndMenu();
 		}
@@ -277,6 +227,7 @@ bool BacchusEditor::CleanUp()
 	blockheadAbout = nullptr;
 	blockheadConsole = nullptr;
 	blockheadHierarchy = nullptr;
+	blockheadInspector = nullptr;
 
 	LOG("Unloading Bacchus...");
 	ImGui_ImplOpenGL3_Shutdown();

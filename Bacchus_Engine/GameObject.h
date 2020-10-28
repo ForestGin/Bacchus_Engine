@@ -23,6 +23,8 @@ public:
 	float4x4        GetLocalTransform();
 	Res*			GetResource(Res::ResType type);
 	std::string		GetName() const;
+	float3			GetScale();
+	float3			GetRotation();
 
 	
 	Res* AddResource(Res::ResType type);

@@ -193,6 +193,9 @@
     <ClCompile Include="BlockheadHierarchy.cpp">
       <Filter>EditorBlockheads</Filter>
     </ClCompile>
+    <ClCompile Include="BlockheadInspector.cpp">
+      <Filter>EditorBlockheads</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -487,6 +490,9 @@
       <Filter>Importers</Filter>
     </ClInclude>
     <ClInclude Include="BlockheadHierarchy.h">
+      <Filter>EditorBlockheads</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockheadInspector.h">
       <Filter>EditorBlockheads</Filter>
     </ClInclude>
   </ItemGroup>
