@@ -5,6 +5,7 @@
 #include "BlockheadInspector.h"
 #include "ResourceMesh.h"
 #include "ResourceMaterial.h"
+#include "ResourceRenderer.h"
 
 #include "mmgr/mmgr.h"
 
@@ -39,7 +40,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("PX", &position.x, 0.005f);
+			ImGui::DragFloat("X", &position.x, 0.005f);
 
 			ImGui::SameLine();
 
@@ -47,7 +48,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("PY", &position.y, 0.005f);
+			ImGui::DragFloat("Y", &position.y, 0.005f);
 
 			ImGui::SameLine();
 
@@ -55,7 +56,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("PZ", &position.z, 0.005f);
+			ImGui::DragFloat("Z", &position.z, 0.005f);
 
 			ImGui::Text("Rotation  ");
 			ImGui::SameLine();
@@ -65,7 +66,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("RX", &rotation.x, 0.005f);
+			ImGui::DragFloat("X", &rotation.x, 0.005f);
 
 			ImGui::SameLine();
 
@@ -73,7 +74,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("RY", &rotation.y, 0.005f);
+			ImGui::DragFloat("Y", &rotation.y, 0.005f);
 
 			ImGui::SameLine();
 
@@ -81,7 +82,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("RZ", &rotation.z, 0.005f);
+			ImGui::DragFloat("Z", &rotation.z, 0.005f);
 
 			ImGui::Text("Scale     ");
 			ImGui::SameLine();
@@ -91,7 +92,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("SX", &scale.x, 0.005f);
+			ImGui::DragFloat("X", &scale.x, 0.005f);
 
 			ImGui::SameLine();
 
@@ -99,7 +100,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("SY", &scale.y, 0.005f);
+			ImGui::DragFloat("Y", &scale.y, 0.005f);
 
 			ImGui::SameLine();
 
@@ -107,7 +108,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("SZ", &scale.z, 0.005f);
+			ImGui::DragFloat("Z", &scale.z, 0.005f);
 
 			Selected->SetPosition(position.x, position.y, position.z);
 			Selected->Scale(scale.x, scale.y, scale.z);
@@ -138,11 +139,19 @@ bool BlockheadInspector::Draw()
 
 		if (Selected->GetResource(Res::ResType::Renderer))
 		{
+
+			ResourceRenderer* renderer = (ResourceRenderer*)Selected->GetResource(Res::ResType::Renderer);
+
 			if (Startup)
 				ImGui::SetNextItemOpen(true);
 
 			if (ImGui::TreeNode("Mesh Renderer"))
 			{
+				ImGui::Checkbox("Vertex Normals", &renderer->draw_vertexnormals);
+				ImGui::SameLine();
+				ImGui::Checkbox("Face Normals  ", &renderer->draw_facenormals);
+				ImGui::SameLine();
+				ImGui::Checkbox("Checkers", &renderer->checkers);
 
 				ImGui::TreePop();
 			}
@@ -158,6 +167,14 @@ bool BlockheadInspector::Draw()
 
 			if (ImGui::TreeNode("Material"))
 			{
+				std::string Path = "Path: ";
+				Path.append(material->Texture_path);
+
+				ImGui::Text(Path.data());
+
+				ImGui::Text(std::to_string(material->Texture_width).data());
+				ImGui::SameLine();
+				ImGui::Text(std::to_string(material->Texture_height).data());
 
 				ImGui::TreePop();
 			}

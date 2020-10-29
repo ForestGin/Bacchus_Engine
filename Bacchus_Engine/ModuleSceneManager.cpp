@@ -26,9 +26,14 @@ bool ModuleSceneManager::Init(json file)
 
 bool ModuleSceneManager::Start()
 {
-	CheckersMaterial = CreateEmptyMaterial();
+	DefaultMaterial = CreateEmptyMaterial();
+	DefaultMaterial->Texture_path = "Default";
 
+	CheckersMaterial = CreateEmptyMaterial();
 	CheckersMaterial->TextureID = App->tex->GetCheckerTextureID();
+	CheckersMaterial->Texture_path = "NONE";
+	CheckersMaterial->Texture_width = CHECKERS_WIDTH;
+	CheckersMaterial->Texture_height = CHECKERS_HEIGHT;
 
 	GameObject* cube = CreateCube(1, 1, 1, true);
 	cube->SetPosition(3.0f, 1.0f, 0.0f);
@@ -108,6 +113,8 @@ GameObject* ModuleSceneManager::CreateEmptyGameObject()
 
 	GameObject* new_object = new GameObject(Name.data());
 	game_objects.push_back(new_object);
+
+	new_object->SetMaterial(DefaultMaterial);
 
 	return new_object;
 }
@@ -205,8 +212,6 @@ GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ
 			0, 1, 1, 1, 1, 0, 0, 0                // v4,v7,v6,v5 (back)
 	};
 
-	if (checkers)
-		new_object->SetMaterial(CheckersMaterial);
 
 	glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
 	glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer

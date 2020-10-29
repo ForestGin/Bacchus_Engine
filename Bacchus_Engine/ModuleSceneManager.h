@@ -39,6 +39,7 @@ public:
 
 public:
 	ResourceMaterial* CheckersMaterial = nullptr;
+	ResourceMaterial* DefaultMaterial = nullptr;
 
 private:
 

@@ -22,6 +22,10 @@ private:
 	void DrawNormals(const ResourceMesh& mesh) const;
 	void DrawAxis() const;
 
+public:
+	bool draw_vertexnormals = false;
+	bool draw_facenormals = false;
+	bool checkers = false;
 };
 
 #endif 

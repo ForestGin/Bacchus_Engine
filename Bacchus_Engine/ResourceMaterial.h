@@ -2,6 +2,7 @@
 #define __RESOURCE_MATERIAL_H__
 
 #include "Res.h"
+#include <string>
 
 struct aiScene;
 
@@ -16,6 +17,9 @@ public:
 
 public:
 	uint  TextureID = 0;
+	std::string Texture_path;
+	uint Texture_width = 0;
+	uint Texture_height = 0;
 
 };
 

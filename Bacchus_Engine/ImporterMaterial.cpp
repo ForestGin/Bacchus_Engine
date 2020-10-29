@@ -41,7 +41,10 @@ bool ImporterMaterial::Import(const char& File_path, const ImportData& IData) co
 
 		
 			if (App->fs->Exists(directory.data()))
-				MData.new_material->TextureID = App->tex->CreateTextureFromFile(directory.data());
+			{
+				MData.new_material->TextureID = App->tex->CreateTextureFromFile(directory.data(), MData.new_material->Texture_width, MData.new_material->Texture_height);
+				MData.new_material->Texture_path = directory.data();
+			}
 
 		}
 	}

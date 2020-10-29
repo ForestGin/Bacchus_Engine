@@ -1,3 +1,5 @@
+#include "Application.h"
+#include "ModuleTextures.h"
 #include "ResourceRenderer.h"
 #include "ResourceMaterial.h"
 #include "ResourceMesh.h"
@@ -40,6 +42,9 @@ void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 
 	if (mat)
 	{
+		if (this->checkers)
+			glBindTexture(GL_TEXTURE_2D, App->tex->GetCheckerTextureID()); // start using texture
+		else
 		glBindTexture(GL_TEXTURE_2D, mat->TextureID); // start using texture
 		glBindBuffer(GL_ARRAY_BUFFER, mesh.TextureCoordsID); // start using created buffer (tex coords)
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL); // Specify type of data format
@@ -75,7 +80,7 @@ void ResourceRenderer::DrawNormals(const ResourceMesh& mesh) const
 
 	glColor4f(0.0f, 0.5f, 0.5f, 1.0f);
 
-	if (mesh.Normals)
+	if (mesh.Normals && draw_vertexnormals)
 	{
 		//Draw Vertex Normals
 		for (uint j = 0; j < mesh.IndicesSize; ++j)
@@ -87,22 +92,25 @@ void ResourceRenderer::DrawNormals(const ResourceMesh& mesh) const
 		
 		//Draw Face Normals 
 
-		Triangle face;
-
-		for (uint j = 0; j < mesh.IndicesSize / 3; ++j)
+		if (draw_facenormals)
 		{
-			face.a = mesh.Vertices[mesh.Indices[j * 3]];
-			face.b = mesh.Vertices[mesh.Indices[(j * 3) + 1]];
-			face.c = mesh.Vertices[mesh.Indices[(j * 3) + 2]];
+			Triangle face;
 
-			float3 face_center = face.Centroid();
-			
-			float3 face_normal = Cross(face.b - face.a, face.c - face.b);
+			for (uint j = 0; j < mesh.IndicesSize / 3; ++j)
+			{
+				face.a = mesh.Vertices[mesh.Indices[j * 3]];
+				face.b = mesh.Vertices[mesh.Indices[(j * 3) + 1]];
+				face.c = mesh.Vertices[mesh.Indices[(j * 3) + 2]];
 
-			face_normal.Normalize();
+				float3 face_center = face.Centroid();
 
-			glVertex3f(face_center.x, face_center.y, face_center.z);
-			glVertex3f(face_center.x + face_normal.x * NORMAL_LENGTH, face_center.y + face_normal.y * NORMAL_LENGTH, face_center.z + face_normal.z * NORMAL_LENGTH);
+				float3 face_normal = Cross(face.b - face.a, face.c - face.b);
+
+				face_normal.Normalize();
+
+				glVertex3f(face_center.x, face_center.y, face_center.z);
+				glVertex3f(face_center.x + face_normal.x * NORMAL_LENGTH, face_center.y + face_normal.y * NORMAL_LENGTH, face_center.z + face_normal.z * NORMAL_LENGTH);
+			}
 		}
 
 		glLineWidth(1.0f);

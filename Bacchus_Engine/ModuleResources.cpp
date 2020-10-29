@@ -2,6 +2,8 @@
 #include "ModuleResources.h"
 #include "ModuleTextures.h"
 #include "ModuleSceneManager.h"
+#include "GameObject.h"
+#include "ResourceMaterial.h"
 
 
 #include "Importer.h"
@@ -80,7 +82,12 @@ bool ModuleResources::LoadFromPath(const char* path)
 		// If it is an image file file ...
 		else if (DroppedFile_path.find(".dds") != std::string::npos || DroppedFile_path.find(".png") != std::string::npos)
 		{
-			App->scene_manager->SetTextureToSelectedGO(App->tex->CreateTextureFromFile(path));
+			ResourceMaterial* mat = (ResourceMaterial*)App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->GetResource(Res::ResType::Material);
+			if (mat)
+			{
+				App->scene_manager->SetTextureToSelectedGO(App->tex->CreateTextureFromFile(path, mat->Texture_width, mat->Texture_height));
+
+			}
 		}
 
 	}
