@@ -152,7 +152,7 @@ update_status BacchusEditor::Update(float dt)
 				}
 				if (ImGui::MenuItem("Sphere"))
 				{
-					//App->scene_manager->CreateSphere(1.0f, 25, 25);
+					App->scene_manager->CreateSphere(1, 36, 18, false, true);
 				}
 
 				ImGui::EndMenu();

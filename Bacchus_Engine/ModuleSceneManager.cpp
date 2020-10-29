@@ -128,7 +128,6 @@ void ModuleSceneManager::Draw() const
 
 		glPopMatrix();
 	}
-
 }
 
 GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ, bool checkers)
@@ -183,7 +182,7 @@ GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ
 	new_mesh->TexCoordsSize = verticesSize * 2;
 
 	new_mesh->TexCoords = new float[new_mesh->TexCoordsSize]{
-		1, 0, 0, 0, 0, 1, 1, 1,               // v0,v1,v2,v3 (front)
+		    1, 0, 0, 0, 0, 1, 1, 1,               // v0,v1,v2,v3 (front)
 			0, 0, 0, 1, 1, 1, 1, 0,               // v0,v3,v4,v5 (right)
 			1, 1, 1, 0, 0, 0, 0, 1,               // v0,v5,v6,v1 (top)
 			1, 0, 0, 0, 0, 1, 1, 1,               // v1,v6,v7,v2 (left)
@@ -191,8 +190,10 @@ GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ
 			0, 1, 1, 1, 1, 0, 0, 0                // v4,v7,v6,v5 (back)
 	};
 
-	if (checkers)
-		new_object->SetMaterial(CheckersMaterial);
+    if (checkers)
+    {
+        new_object->SetMaterial(CheckersMaterial);
+    }
 
 	glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
 	glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer
@@ -202,9 +203,393 @@ GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ
 	return new_object;
 }
 
-GameObject* CreateSphere(float Radius, int slices, int slacks, bool checkers = false)
+GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stacks, bool smooth, bool checkers)
 {
-	return nullptr;
+	if (sectors < 3)
+	{
+		sectors = 3;
+	}
+
+	if (stacks < 2)
+	{
+		stacks = 2;
+	}
+
+    std::vector<float> vertices;
+    std::vector<float> normals;
+    std::vector<float> texCoords;
+    std::vector<unsigned int> indices;
+
+    GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
+
+    ResourceMesh* new_mesh = (ResourceMesh*)new_object->AddResource(Res::ResType::Mesh);
+
+    ResourceRenderer* Renderer = (ResourceRenderer*)new_object->AddResource(Res::ResType::Renderer);
+
+	if (smooth)
+	{
+		//Sphere with smooth vertices
+	}
+    else
+    {
+        //Sphere with flat vertices
+        const float PI = acos(-1);
+
+        // tmp vertex definition (x,y,z,s,t)
+        struct Vertex
+        {
+            float x, y, z, s, t;
+        };
+        std::vector<Vertex> tmpVertices;
+
+        float sectorStep = 2 * PI / sectors;
+        float stackStep = PI / stacks;
+        float sectorAngle, stackAngle;
+
+        // compute all vertices first, each vertex contains (x,y,z,s,t) except normal
+        for (int i = 0; i <= stacks; ++i)
+        {
+            stackAngle = PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
+            float xy = radius * cosf(stackAngle);       // r * cos(u)
+            float z = radius * sinf(stackAngle);        // r * sin(u)
+
+            // add (sectorCount+1) vertices per stack
+            // the first and last vertices have same position and normal, but different tex coords
+            for (int j = 0; j <= sectors; ++j)
+            {
+                sectorAngle = j * sectorStep;           // starting from 0 to 2pi
+
+                Vertex vertex;
+                vertex.x = xy * cosf(sectorAngle);      // x = r * cos(u) * cos(v)
+                vertex.y = xy * sinf(sectorAngle);      // y = r * cos(u) * sin(v)
+                vertex.z = z;                           // z = r * sin(u)
+                vertex.s = (float)j / sectors;        // s
+                vertex.t = (float)i / stacks;         // t
+                tmpVertices.push_back(vertex);
+            }
+        }
+
+        Vertex v1, v2, v3, v4;                          // 4 vertex positions and tex coords
+        std::vector<float> n;                           // 1 face normal
+
+        int i, j, k, vi1, vi2;
+        int index = 0;                                  // index for vertex
+        for (i = 0; i < stacks; ++i)
+        {
+            vi1 = i * (sectors + 1);                // index of tmpVertices
+            vi2 = (i + 1) * (sectors + 1);
+
+            for (j = 0; j < sectors; ++j, ++vi1, ++vi2)
+            {
+                // get 4 vertices per sector
+                //  v1--v3
+                //  |    |
+                //  v2--v4
+                v1 = tmpVertices[vi1];
+                v2 = tmpVertices[vi2];
+                v3 = tmpVertices[vi1 + 1];
+                v4 = tmpVertices[vi2 + 1];
+
+                // if 1st stack and last stack, store only 1 triangle per sector
+                // otherwise, store 2 triangles (quad) per sector
+                if (i == 0) // a triangle for first stack ==========================
+                {
+                    // put a triangle
+                    vertices.push_back(v1.x );
+                    vertices.push_back(v1.y);
+                    vertices.push_back(v1.z);
+
+                    vertices.push_back(v2.x);
+                    vertices.push_back(v2.y);
+                    vertices.push_back(v2.z);
+
+                    vertices.push_back(v4.x);
+                    vertices.push_back(v4.y);
+                    vertices.push_back(v4.z);
+
+                    // put tex coords of triangle
+                    texCoords.push_back(v1.s);
+                    texCoords.push_back(v1.t);
+
+                    texCoords.push_back(v2.s);
+                    texCoords.push_back(v2.t);
+
+                    texCoords.push_back(v4.s);
+                    texCoords.push_back(v4.t);
+
+                    // put normal
+                    const float EPSILON = 0.000001f;
+
+                    std::vector<float> normal(3, 0.0f);     // default return value (0,0,0)
+                    float nx, ny, nz;
+
+                    // find 2 edge vectors: v1-v2, v1-v3
+                    float ex1 = v2.x - v1.x;
+                    float ey1 = v2.y - v1.y;
+                    float ez1 = v2.z - v1.z;
+                    float ex2 = v4.x - v1.x;
+                    float ey2 = v4.y - v1.y;
+                    float ez2 = v4.z - v1.z;
+
+                    // cross product: e1 x e2
+                    nx = ey1 * ez2 - ez1 * ey2;
+                    ny = ez1 * ex2 - ex1 * ez2;
+                    nz = ex1 * ey2 - ey1 * ex2;
+
+                    // normalize only if the length is > 0
+                    float length = sqrtf(nx * nx + ny * ny + nz * nz);
+                    if (length > EPSILON)
+                    {
+                        // normalize
+                        float lengthInv = 1.0f / length;
+                        normal[0] = nx * lengthInv;
+                        normal[1] = ny * lengthInv;
+                        normal[2] = nz * lengthInv;
+                    }
+
+                    n = normal; 
+                    for (k = 0; k < 3; ++k)  // same normals for 3 vertices
+                    {
+                        normals.push_back(n[0]);
+                        normals.push_back(n[1]);
+                        normals.push_back(n[2]);
+                    }
+
+                    // put indices of 1 triangle
+                    indices.push_back(index);
+                    indices.push_back(index + 1);
+                    indices.push_back(index + 2);
+
+                    index += 3;     // for next
+                }
+                else if (i == (stacks - 1)) // a triangle for last stack =========
+                {
+                    // put a triangle
+                    vertices.push_back(v1.x);
+                    vertices.push_back(v1.y);
+                    vertices.push_back(v1.z);
+
+                    vertices.push_back(v2.x);
+                    vertices.push_back(v2.y);
+                    vertices.push_back(v2.z);
+
+                    vertices.push_back(v3.x);
+                    vertices.push_back(v3.y);
+                    vertices.push_back(v3.z);
+
+                    // put tex coords of triangle
+                    texCoords.push_back(v1.s);
+                    texCoords.push_back(v1.t);
+
+                    texCoords.push_back(v2.s);
+                    texCoords.push_back(v2.t);
+
+                    texCoords.push_back(v3.s);
+                    texCoords.push_back(v3.t);
+
+                    // put normal
+                    const float EPSILON = 0.000001f;
+
+                    std::vector<float> normal(3, 0.0f);     // default return value (0,0,0)
+                    float nx, ny, nz;
+
+                    // find 2 edge vectors: v1-v2, v1-v3
+                    float ex1 = v2.x - v1.x;
+                    float ey1 = v2.y - v1.y;
+                    float ez1 = v2.z - v1.z;
+                    float ex2 = v3.x - v1.x;
+                    float ey2 = v3.y - v1.y;
+                    float ez2 = v3.z - v1.z;
+
+                    // cross product: e1 x e2
+                    nx = ey1 * ez2 - ez1 * ey2;
+                    ny = ez1 * ex2 - ex1 * ez2;
+                    nz = ex1 * ey2 - ey1 * ex2;
+
+                    // normalize only if the length is > 0
+                    float length = sqrtf(nx * nx + ny * ny + nz * nz);
+                    if (length > EPSILON)
+                    {
+                        // normalize
+                        float lengthInv = 1.0f / length;
+                        normal[0] = nx * lengthInv;
+                        normal[1] = ny * lengthInv;
+                        normal[2] = nz * lengthInv;
+                    }
+
+                    n = normal;
+                    for (k = 0; k < 3; ++k)  // same normals for 3 vertices
+                    {
+                        normals.push_back(n[0]);
+                        normals.push_back(n[1]);
+                        normals.push_back(n[2]);
+                    }
+
+                    // put indices of 1 triangle
+                    indices.push_back(index);
+                    indices.push_back(index + 1);
+                    indices.push_back(index + 2);
+
+                    index += 3;     // for next
+                }
+                else // 2 triangles for others ====================================
+                {
+                    // put quad vertices: v1-v2-v3-v4
+                    vertices.push_back(v1.x);
+                    vertices.push_back(v1.y);
+                    vertices.push_back(v1.z);
+
+                    vertices.push_back(v2.x);
+                    vertices.push_back(v2.y);
+                    vertices.push_back(v2.z);
+
+                    vertices.push_back(v3.x);
+                    vertices.push_back(v3.y);
+                    vertices.push_back(v3.z);
+
+                    vertices.push_back(v4.x);
+                    vertices.push_back(v4.y);
+                    vertices.push_back(v4.z);
+
+                    // put tex coords of quad
+                    texCoords.push_back(v1.s);
+                    texCoords.push_back(v1.t);
+
+                    texCoords.push_back(v2.s);
+                    texCoords.push_back(v2.t);
+
+                    texCoords.push_back(v3.s);
+                    texCoords.push_back(v3.t);
+
+                    texCoords.push_back(v4.s);
+                    texCoords.push_back(v4.t);
+
+                    // put normal
+                    const float EPSILON = 0.000001f;
+
+                    std::vector<float> normal(3, 0.0f);     // default return value (0,0,0)
+                    float nx, ny, nz;
+
+                    // find 2 edge vectors: v1-v2, v1-v3
+                    float ex1 = v2.x - v1.x;
+                    float ey1 = v2.y - v1.y;
+                    float ez1 = v2.z - v1.z;
+                    float ex2 = v3.x - v1.x;
+                    float ey2 = v3.y - v1.y;
+                    float ez2 = v3.z - v1.z;
+
+                    // cross product: e1 x e2
+                    nx = ey1 * ez2 - ez1 * ey2;
+                    ny = ez1 * ex2 - ex1 * ez2;
+                    nz = ex1 * ey2 - ey1 * ex2;
+
+                    // normalize only if the length is > 0
+                    float length = sqrtf(nx * nx + ny * ny + nz * nz);
+                    if (length > EPSILON)
+                    {
+                        // normalize
+                        float lengthInv = 1.0f / length;
+                        normal[0] = nx * lengthInv;
+                        normal[1] = ny * lengthInv;
+                        normal[2] = nz * lengthInv;
+                    }
+
+                    n = normal;
+                    for (k = 0; k < 4; ++k)  // same normals for 4 vertices
+                    {
+                        normals.push_back(n[0]);
+                        normals.push_back(n[1]);
+                        normals.push_back(n[2]);
+                    }
+
+                    // put indices of quad (2 triangles)
+                    indices.push_back(index);
+                    indices.push_back(index + 1);
+                    indices.push_back(index + 2);
+
+                    indices.push_back(index + 2);
+                    indices.push_back(index + 1);
+                    indices.push_back(index + 3);              
+       
+                    index += 4;     // for next
+                }
+            }
+        }
+
+        // generate interleaved vertex array as well
+        /*std::vector<float>().swap(interleavedVertices);
+
+        std::size_t i, j;
+        std::size_t count = vertices.size();
+        for (i = 0, j = 0; i < count; i += 3, j += 2)
+        {
+            interleavedVertices.push_back(vertices[i]);
+            interleavedVertices.push_back(vertices[i + 1]);
+            interleavedVertices.push_back(vertices[i + 2]);
+
+            interleavedVertices.push_back(normals[i]);
+            interleavedVertices.push_back(normals[i + 1]);
+            interleavedVertices.push_back(normals[i + 2]);
+
+            interleavedVertices.push_back(texCoords[j]);
+            interleavedVertices.push_back(texCoords[j + 1]);
+        }*/
+    }
+
+    //Converting "vertices" to new_mesh->Vertices"
+    uint verticesSize = vertices.size() / 3;
+    new_mesh->VerticesSize = verticesSize;
+    new_mesh->Vertices = new float3[verticesSize]{};
+
+    uint j = 0;
+    for (uint i = 0; i < verticesSize; i++)
+    {
+        new_mesh->Vertices[i] = { vertices[j], vertices[j + 1], vertices[j + 2] };
+
+        j = j + 3;
+    }
+
+    glGenBuffers(1, (GLuint*)&new_mesh->VerticesID); // create buffer
+    glBindBuffer(GL_ARRAY_BUFFER, new_mesh->VerticesID); // start using created buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float3)* verticesSize, new_mesh->Vertices, GL_STATIC_DRAW); // send vertices to VRAM
+    glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
+    
+    //Converting "indices" to "new_mesh->Vertices"
+    uint indicesSize = indices.size();
+    new_mesh->IndicesSize = indicesSize;
+    new_mesh->Indices = new uint[new_mesh->IndicesSize]{};
+
+    for (uint i = 0; i < indicesSize; i++)
+    {
+        new_mesh->Indices[i] = indices[i];
+    }
+
+    glGenBuffers(1, (GLuint*)&new_mesh->IndicesID); // create buffer
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->IndicesID); // start using created buffer
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* new_mesh->IndicesSize, new_mesh->Indices, GL_STATIC_DRAW); // send vertices to VRAM
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
+
+    //Converting "texCoords" to "new_mesh->Vertices"
+    uint texCoordsSize = texCoords.size();
+    new_mesh->TexCoordsSize = texCoordsSize;
+    new_mesh->TexCoords = new float[new_mesh->TexCoordsSize]{};
+    
+    for (uint i = 0; i < texCoordsSize; i++)
+    {
+        new_mesh->TexCoords[i] = texCoords[i];
+    }
+
+    if (checkers)
+    {
+        new_object->SetMaterial(CheckersMaterial);
+    }
+
+    glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
+    glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * new_mesh->TexCoordsSize, new_mesh->TexCoords, GL_STATIC_DRAW); // send vertices to VRAM
+    glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
+
+    return new_object;
 }
 
 void ModuleSceneManager::CreateGrid() const

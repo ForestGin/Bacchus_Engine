@@ -27,7 +27,7 @@ public:
 	void Draw() const;
 
 	GameObject* CreateCube(float sizeX, float sizeY, float sizeZ, bool checkers = false);
-	GameObject* CreateSphere(float Radius, int slices, int slacks, bool checkers = false);
+	GameObject* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false, bool checkers = false);
 	void CreateGrid() const;
 
 	uint GetSelectedGameObjects();
