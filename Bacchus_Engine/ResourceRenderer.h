@@ -20,6 +20,7 @@ public:
 private:
 	void DrawMesh(ResourceMesh& mesh) const;
 	void DrawNormals(const ResourceMesh& mesh) const;
+	void DrawAxis() const;
 
 };
 

@@ -3,7 +3,7 @@
 
 #include "Globals.h"
 #include "Res.h"
-#include <list>
+#include <vector>
 #include <string>
 #include "Math.h"
 
@@ -42,7 +42,7 @@ private:
 	uint UID = 0;
 	float4x4 Local_transform = math::float4x4::identity;
 	std::string name;
-	std::list<Res*> components;
+	std::vector<Res*> components;
 };
 
 #endif

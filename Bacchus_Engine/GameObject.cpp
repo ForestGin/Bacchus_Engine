@@ -15,7 +15,7 @@ GameObject::GameObject(const char* name)
 
 GameObject::~GameObject()
 {
-	for (std::list<Res*>::iterator it = components.begin(); it != components.end(); ++it)
+	for (std::vector<Res*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
 		if (*it)
 		{
@@ -56,7 +56,7 @@ float3 GameObject::GetScale()
 
 float3 GameObject::GetRotation()
 {
-	float3 rotation;
+	float3 rotation = float3::zero;
 
 
 	return rotation;
@@ -69,7 +69,7 @@ float4x4 GameObject::GetLocalTransform()
 
 Res* GameObject::GetResource(Res::ResType type)
 {
-	for (std::list<Res*>::iterator it = components.begin(); it != components.end(); ++it)
+	for (std::vector<Res*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
 		if ((*it)->GetType() == type)
 		{

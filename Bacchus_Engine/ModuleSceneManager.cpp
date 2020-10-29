@@ -193,7 +193,6 @@ GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * new_mesh->IndicesSize, new_mesh->Indices, GL_STATIC_DRAW); // send vertices to VRAM
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
 
-	
 
 	new_mesh->TexCoordsSize = verticesSize * 2;
 

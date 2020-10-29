@@ -11,6 +11,8 @@ public:
 	~BlockheadInspector();
 
 	bool Draw();
+
+	bool Startup = true;
 };
 
 #endif
