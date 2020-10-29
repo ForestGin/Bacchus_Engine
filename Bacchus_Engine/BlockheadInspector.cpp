@@ -40,7 +40,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("X", &position.x, 0.005f);
+			ImGui::DragFloat("PX", &position.x, 0.005f);
 
 			ImGui::SameLine();
 
@@ -48,7 +48,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("Y", &position.y, 0.005f);
+			ImGui::DragFloat("PY", &position.y, 0.005f);
 
 			ImGui::SameLine();
 
@@ -56,7 +56,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("Z", &position.z, 0.005f);
+			ImGui::DragFloat("PZ", &position.z, 0.005f);
 
 			ImGui::Text("Rotation  ");
 			ImGui::SameLine();
@@ -66,7 +66,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("X", &rotation.x, 0.005f);
+			ImGui::DragFloat("RX", &rotation.x, 0.005f);
 
 			ImGui::SameLine();
 
@@ -74,7 +74,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("Y", &rotation.y, 0.005f);
+			ImGui::DragFloat("RY", &rotation.y, 0.005f);
 
 			ImGui::SameLine();
 
@@ -82,7 +82,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("Z", &rotation.z, 0.005f);
+			ImGui::DragFloat("RZ", &rotation.z, 0.005f);
 
 			ImGui::Text("Scale     ");
 			ImGui::SameLine();
@@ -92,7 +92,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("X", &scale.x, 0.005f);
+			ImGui::DragFloat("SX", &scale.x, 0.005f);
 
 			ImGui::SameLine();
 
@@ -100,7 +100,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("Y", &scale.y, 0.005f);
+			ImGui::DragFloat("SY", &scale.y, 0.005f);
 
 			ImGui::SameLine();
 
@@ -108,7 +108,7 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
-			ImGui::DragFloat("Z", &scale.z, 0.005f);
+			ImGui::DragFloat("SZ", &scale.z, 0.005f);
 
 			Selected->SetPosition(position.x, position.y, position.z);
 			Selected->Scale(scale.x, scale.y, scale.z);
