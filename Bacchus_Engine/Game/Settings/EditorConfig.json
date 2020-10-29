@@ -7,7 +7,9 @@
   "GUI": {
         "About": false,
         "Console": true,
-        "Settings": true
+        "Settings": true,
+	"Hierarchy": true,
+	"Inspector": true
         
     },
     "Input": null,

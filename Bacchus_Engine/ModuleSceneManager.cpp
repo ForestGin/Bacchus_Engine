@@ -26,9 +26,14 @@ bool ModuleSceneManager::Init(json file)
 
 bool ModuleSceneManager::Start()
 {
-	CheckersMaterial = CreateEmptyMaterial();
+	DefaultMaterial = CreateEmptyMaterial();
+	DefaultMaterial->Texture_path = "Default";
 
+	CheckersMaterial = CreateEmptyMaterial();
 	CheckersMaterial->TextureID = App->tex->GetCheckerTextureID();
+	CheckersMaterial->Texture_path = "NONE";
+	CheckersMaterial->Texture_width = CHECKERS_WIDTH;
+	CheckersMaterial->Texture_height = CHECKERS_HEIGHT;
 
 	GameObject* cube = CreateCube(1, 1, 1, true);
 	cube->SetPosition(3.0f, 1.0f, 0.0f);
@@ -54,12 +59,14 @@ bool ModuleSceneManager::CleanUp()
 		if (game_objects[i])
 			delete game_objects[i];
 	}
+	game_objects.clear();
 
 	for (uint i = 0; i < Materials.size(); ++i)
 	{
 		if (Materials[i])
 			delete Materials[i];
 	}
+	Materials.clear();
 
 	CheckersMaterial = nullptr;
 
@@ -86,6 +93,17 @@ void ModuleSceneManager::SetSelectedGameObject(uint index)
 	SelectedGameObject = index;
 }
 
+void ModuleSceneManager::SetTextureToSelectedGO(uint id)
+{
+	ResourceMaterial* Material = (ResourceMaterial*)game_objects[SelectedGameObject]->GetResource(Res::ResType::Material);
+
+	if (Material)
+	{
+		Material->FreeTexture();
+		Material->TextureID = id;
+	}
+}
+
 GameObject* ModuleSceneManager::CreateEmptyGameObject()
 {
 	std::string Name = "GameObject ";
@@ -95,6 +113,8 @@ GameObject* ModuleSceneManager::CreateEmptyGameObject()
 
 	GameObject* new_object = new GameObject(Name.data());
 	game_objects.push_back(new_object);
+
+	new_object->SetMaterial(DefaultMaterial);
 
 	return new_object;
 }
@@ -118,6 +138,8 @@ void ModuleSceneManager::Draw() const
 	{
 		glPushMatrix();
 		glMultMatrixf(game_objects[i]->GetLocalTransform().ptr());
+
+		Materials;
 
 		ResourceRenderer* Renderer = (ResourceRenderer*)game_objects[i]->GetResource(Res::ResType::Renderer);
 
@@ -177,7 +199,6 @@ GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * new_mesh->IndicesSize, new_mesh->Indices, GL_STATIC_DRAW); // send vertices to VRAM
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
 
-	
 
 	new_mesh->TexCoordsSize = verticesSize * 2;
 
@@ -190,10 +211,10 @@ GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ
 			0, 1, 1, 1, 1, 0, 0, 0                // v4,v7,v6,v5 (back)
 	};
 
-    if (checkers)
+    /*if (checkers)
     {
         new_object->SetMaterial(CheckersMaterial);
-    }
+    }*/
 
 	glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
 	glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer
@@ -579,10 +600,10 @@ GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stac
         new_mesh->TexCoords[i] = texCoords[i];
     }
 
-    if (checkers)
+   /* if (checkers)
     {
         new_object->SetMaterial(CheckersMaterial);
-    }
+    }*/
 
     glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
     glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer
@@ -945,10 +966,10 @@ GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius
         new_mesh->TexCoords[i] = texCoords[i];
     }
 
-    if (checkers)
+    /*if (checkers)
     {
         new_object->SetMaterial(CheckersMaterial);
-    }
+    }*/
 
     glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
     glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer

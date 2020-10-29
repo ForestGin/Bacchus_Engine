@@ -1,3 +1,5 @@
+#include "Application.h"
+#include "ModuleTextures.h"
 #include "ResourceRenderer.h"
 #include "ResourceMaterial.h"
 #include "ResourceMesh.h"
@@ -21,7 +23,8 @@ void ResourceRenderer::Draw()
 	if (mesh)
 	{
 		DrawMesh(*mesh);
-		/*DrawNormals(*mesh);*/
+		DrawNormals(*mesh);
+		DrawAxis();
 	}
 }
 
@@ -39,6 +42,9 @@ void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 
 	if (mat)
 	{
+		if (this->checkers)
+			glBindTexture(GL_TEXTURE_2D, App->tex->GetCheckerTextureID()); // start using texture
+		else
 		glBindTexture(GL_TEXTURE_2D, mat->TextureID); // start using texture
 		glBindBuffer(GL_ARRAY_BUFFER, mesh.TextureCoordsID); // start using created buffer (tex coords)
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL); // Specify type of data format
@@ -69,39 +75,82 @@ void ResourceRenderer::DrawNormals(const ResourceMesh& mesh) const
 {
 	//Draw Mesh Normals
 
-	if (mesh.Normals)
+	glBegin(GL_LINES);
+	glLineWidth(1.0f);
+
+	glColor4f(0.0f, 0.5f, 0.5f, 1.0f);
+
+	if (mesh.Normals && draw_vertexnormals)
 	{
 		//Draw Vertex Normals
-
-		glBegin(GL_LINES);
-		glLineWidth(1.0f);
-
-		glColor4f(0.0f, 0.5f, 0.5f, 1.0f);
-
-		
-	//Draw Face Normals 
-
-		Triangle face;
-
-		for (uint j = 0; j < mesh.VerticesSize / 3; ++j)
+		for (uint j = 0; j < mesh.IndicesSize; ++j)
 		{
-			face.a = mesh.Vertices[(j * 3)];
-			face.b = mesh.Vertices[(j * 3) + 1];
-			face.c = mesh.Vertices[(j * 3) + 2];
-
-			float3 face_center = face.Centroid();
-			
-			float3 face_normal = Cross(face.a - face.b, face.c - face.b);
-
-			face_normal.Normalize();
-
-			glVertex3f(face_center.x, face_center.y, face_center.z);
-			glVertex3f(face_center.x + face_normal.x * NORMAL_LENGTH, face_center.y + face_normal.y * NORMAL_LENGTH, face_center.z + face_normal.z * NORMAL_LENGTH);
+			glVertex3f(mesh.Vertices[mesh.Indices[j]].x, mesh.Vertices[mesh.Indices[j]].y, mesh.Vertices[mesh.Indices[j]].z);
+			glVertex3f(mesh.Vertices[mesh.Indices[j]].x + mesh.Normals[mesh.Indices[j]].x * NORMAL_LENGTH, mesh.Vertices[mesh.Indices[j]].y + mesh.Normals[mesh.Indices[j]].y * NORMAL_LENGTH, mesh.Vertices[mesh.Indices[j]].z + mesh.Normals[mesh.Indices[j]].z * NORMAL_LENGTH);
 		}
 
+		
+		//Draw Face Normals 
+
+		if (draw_facenormals)
+		{
+			Triangle face;
+
+			for (uint j = 0; j < mesh.IndicesSize / 3; ++j)
+			{
+				face.a = mesh.Vertices[mesh.Indices[j * 3]];
+				face.b = mesh.Vertices[mesh.Indices[(j * 3) + 1]];
+				face.c = mesh.Vertices[mesh.Indices[(j * 3) + 2]];
+
+				float3 face_center = face.Centroid();
+
+				float3 face_normal = Cross(face.b - face.a, face.c - face.b);
+
+				face_normal.Normalize();
+
+				glVertex3f(face_center.x, face_center.y, face_center.z);
+				glVertex3f(face_center.x + face_normal.x * NORMAL_LENGTH, face_center.y + face_normal.y * NORMAL_LENGTH, face_center.z + face_normal.z * NORMAL_LENGTH);
+			}
+		}
+
+		glLineWidth(1.0f);
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		glEnd();
 
 	}
+
+}
+
+void ResourceRenderer::DrawAxis() const
+{
+	
+	glLineWidth(2.0f);
+
+	glBegin(GL_LINES);
+
+	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+
+	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, 0.1f, 0.0f); glVertex3f(1.1f, -0.1f, 0.0f);
+	glVertex3f(1.1f, 0.1f, 0.0f); glVertex3f(1.0f, -0.1f, 0.0f);
+
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+
+	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(-0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
+	glVertex3f(0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
+	glVertex3f(0.0f, 1.15f, 0.0f); glVertex3f(0.0f, 1.05f, 0.0f);
+
+	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+
+	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(-0.05f, 0.1f, 1.05f); glVertex3f(0.05f, 0.1f, 1.05f);
+	glVertex3f(0.05f, 0.1f, 1.05f); glVertex3f(-0.05f, -0.1f, 1.05f);
+	glVertex3f(-0.05f, -0.1f, 1.05f); glVertex3f(0.05f, -0.1f, 1.05f);
+
+	glEnd();
+
+	glLineWidth(1.0f);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 }

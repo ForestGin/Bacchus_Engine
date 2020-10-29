@@ -10,9 +10,8 @@
 #include "BlockheadSettings.h"
 #include "BlockheadConsole.h"
 #include "BlockheadHierarchy.h"
-//#include "BlockheadInspector.h"
-//#include "BlockheadScene.h"
-//#include "BlockheadToolbar.h"
+#include "BlockheadInspector.h"
+
 
 #include "imgui/imgui.h"
 #include "imgui/examples/imgui_impl_sdl.h"
@@ -44,18 +43,9 @@ bool BacchusEditor::Init(json file)
 
 	blockheadHierarchy = new BlockheadHierarchy("Hierarchy");
 	blockheads.push_back(blockheadHierarchy); 
-	/*
+
 	blockheadInspector = new BlockheadInspector("Inspector");
 	blockheads.push_back(blockheadInspector);
-
-	blockheadHierarchy = new BlockheadHierarchy("Hierarchy");
-	blockheads.push_back(blockheadHierarchy);*/
-
-	/*blockheadScene = new PanelScene("Scene");
-	blockheads.push_back(blockheadScene);
-
-	blockheadToolbar = new PanelToolbar("Toolbar");
-	blockheads.push_back(blockheadToolbar);*/
 
 	LoadStatus(file);
 
@@ -79,7 +69,7 @@ bool BacchusEditor::Start()
 	io.IniFilename = "imgui.ini";
 
 	//Font
-	io.FontDefault = io.Fonts->AddFontFromFileTTF("../Assets/Fonts/QuattrocentoSans/QuattrocentoSans-Bold.ttf", 15);
+	io.FontDefault = io.Fonts->AddFontFromFileTTF("../Extra/Fonts/QuattrocentoSans/QuattrocentoSans-Bold.ttf", 15);
 
 	// Setup Dear ImGui style
 	//ImGui::StyleColorsDark();
@@ -192,6 +182,11 @@ update_status BacchusEditor::Update(float dt)
 				blockheadHierarchy->OnOff();
 			}
 
+			if (ImGui::MenuItem("Inspector"))
+			{
+				blockheadInspector->OnOff();
+			}
+
 			ImGui::EndMenu();
 		}
 
@@ -267,6 +262,7 @@ bool BacchusEditor::CleanUp()
 	blockheadAbout = nullptr;
 	blockheadConsole = nullptr;
 	blockheadHierarchy = nullptr;
+	blockheadInspector = nullptr;
 
 	LOG("Unloading Bacchus...");
 	ImGui_ImplOpenGL3_Shutdown();

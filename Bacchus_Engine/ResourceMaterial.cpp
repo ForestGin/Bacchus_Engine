@@ -10,6 +10,11 @@ ResourceMaterial::ResourceMaterial(Res::ResType type) : Res(type)
 
 ResourceMaterial::~ResourceMaterial()
 {
-	glDeleteBuffers(1, (GLuint*)&TextureID);
+	glDeleteTextures(1, (GLuint*)&TextureID);
+}
+
+void ResourceMaterial::FreeTexture()
+{
+	glDeleteTextures(1, (GLuint*)&TextureID);
 }
 

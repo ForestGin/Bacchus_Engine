@@ -14,9 +14,6 @@
 
 #include "mmgr/mmgr.h"
 
-#define CHECKERS_HEIGHT 32
-#define CHECKERS_WIDTH 32
-
 ModuleTextures::ModuleTextures(bool start_enabled) : Module(start_enabled)
 {
 	name = "Textures";
@@ -149,26 +146,25 @@ uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uin
 	return TextureID;
 }
 
-inline void ModuleTextures::CreateTextureFromImage(uint& TextureID) const
+inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width, uint& height) const
 {
-	// --- Attention!! If the image is flipped, we flip it back --- 
 	ILinfo imageInfo;
 	iluGetImageInfo(&imageInfo);
+	width = imageInfo.Width;
+	height = imageInfo.Height;
 
 	if (imageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
 		iluFlipImage();
 
-	// --- Convert the image into a suitable format to work with ---
 	if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 	{
-		// --- Create the texture ---
 		TextureID = CreateTextureFromPixels(ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
 	}
 	else
 		LOG("|[error]: Image conversion failed. ERROR: %s", iluErrorString(ilGetError()));
 }
 
-uint ModuleTextures::CreateTextureFromFile(const char* path) const
+uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& height) const
 {
 	uint TextureID = 0;
 
@@ -186,7 +182,7 @@ uint ModuleTextures::CreateTextureFromFile(const char* path) const
 
 	
 	if (ilLoadImage(path))
-		CreateTextureFromImage(TextureID);
+		CreateTextureFromImage(TextureID, width, height);
 	else
 		LOG("|[error]: DevIL could not load the image. ERROR: %s", iluErrorString(ilGetError()));
 

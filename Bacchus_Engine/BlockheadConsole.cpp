@@ -63,6 +63,7 @@ bool BlockheadConsole::Draw()
 				ImGui::PopStyleColor();
 
 			}
+
 			ImGui::PopStyleVar();
 
 		}
