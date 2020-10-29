@@ -144,10 +144,19 @@ update_status BacchusEditor::Update(float dt)
 				{
 					App->scene_manager->CreateSphere(1, 36, 18, false, true);
 				}
-				if (ImGui::MenuItem("Cylinder"))
+				if (ImGui::MenuItem("Pyramid"))
 				{
 					App->scene_manager->CreateCylinder(1, 0, 1, 4, 1, false, true);
 				}
+				if (ImGui::MenuItem("Cylinder"))
+				{
+					App->scene_manager->CreateCylinder(1, 1, 1, 36, 4, false, true);
+				}
+				if (ImGui::MenuItem("Cone"))
+				{
+					App->scene_manager->CreateCylinder(1, 0, 1, 36, 4, false, true);
+				}
+
 
 				ImGui::EndMenu();
 			}
