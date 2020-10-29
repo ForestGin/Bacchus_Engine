@@ -28,12 +28,13 @@ public:
 
 	GameObject* CreateCube(float sizeX, float sizeY, float sizeZ, bool checkers = false);
 	GameObject* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false, bool checkers = false);
+	GameObject* CreateCylinder(float baseRadius = 1.0f, float topRadius = 1.0f, float height = 1.0f, int sectorCount = 36, int stackCount = 1, bool smooth = false, bool checkers = false);
+
 	void CreateGrid() const;
 
 	uint GetSelectedGameObjects();
 	std::vector<GameObject*>& GetGameObjects();
 	void SetSelectedGameObject(uint index);
-
 
 public:
 	ResourceMaterial* CheckersMaterial = nullptr;
