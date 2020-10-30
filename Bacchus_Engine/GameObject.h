@@ -28,6 +28,7 @@ public:
 
 	
 	Res* AddResource(Res::ResType type);
+	void RemoveResource(Res::ResType type);
 
 	
 	void			SetPosition(float x, float y, float z);

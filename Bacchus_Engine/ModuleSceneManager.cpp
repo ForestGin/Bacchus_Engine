@@ -139,8 +139,6 @@ void ModuleSceneManager::Draw() const
 		glPushMatrix();
 		glMultMatrixf(game_objects[i]->GetLocalTransform().ptr());
 
-		Materials;
-
 		ResourceRenderer* Renderer = (ResourceRenderer*)game_objects[i]->GetResource(Res::ResType::Renderer);
 
 		if (Renderer)

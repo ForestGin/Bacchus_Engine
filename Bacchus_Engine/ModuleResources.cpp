@@ -4,6 +4,7 @@
 #include "ModuleSceneManager.h"
 #include "GameObject.h"
 #include "ResourceMaterial.h"
+#include "FileSystem.h"
 
 
 #include "Importer.h"
@@ -67,22 +68,30 @@ bool ModuleResources::LoadFromPath(const char* path)
 	if (path)
 	{
 		std::string DroppedFile_path = path;
+		App->fs->NormalizePath(DroppedFile_path);
 
 		// If it is a 3D Model ...
 		if (DroppedFile_path.find(".fbx") != std::string::npos || DroppedFile_path.find(".FBX") != std::string::npos)
 		{
 			ImportData data;
-			ret = IScene->Import(*path, data);
-		}
-		// If it is a json file ...
-		else if (DroppedFile_path.find(".json") != std::string::npos || DroppedFile_path.find(".JSON") != std::string::npos)
-		{
-
+			ret = IScene->Import(*DroppedFile_path.data(), data);
 		}
 		// If it is an image file file ...
 		else if (DroppedFile_path.find(".dds") != std::string::npos || DroppedFile_path.find(".png") != std::string::npos)
 		{
 			ResourceMaterial* mat = (ResourceMaterial*)App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->GetResource(Res::ResType::Material);
+			
+			if (mat->Texture_path == "Default")
+			{
+				App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->RemoveResource(Res::ResType::Material);
+
+				mat = App->scene_manager->CreateEmptyMaterial();
+
+				App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->SetMaterial(mat);
+			}
+
+			mat->Texture_path = DroppedFile_path.data();
+
 			if (mat)
 			{
 				App->scene_manager->SetTextureToSelectedGO(App->tex->CreateTextureFromFile(path, mat->Texture_width, mat->Texture_height));

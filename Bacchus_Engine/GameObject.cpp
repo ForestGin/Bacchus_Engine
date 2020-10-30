@@ -120,6 +120,22 @@ Res* GameObject::AddResource(Res::ResType type)
 	return new_component;
 }
 
+void GameObject::RemoveResource(Res::ResType type)
+{
+	for (uint i = 0; i < components.size(); ++i)
+	{
+		if (components[i]->GetType() == type)
+		{
+			std::vector<Res*>::iterator it = components.begin();
+			it += i;
+
+			components.erase(it);
+
+			break;
+		}
+	}
+}
+
 void GameObject::SetPosition(float x, float y, float z)
 {
 	Local_transform.ptr()[12] = x;
