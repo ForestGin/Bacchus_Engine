@@ -25,7 +25,7 @@ bool BlockheadHierarchy::Draw()
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
 		ImGui::BeginChild("GO_List", ImVec2(325, 0), false);
-		for (int i = 0; i < App->scene_manager->GetNumGameObjects(); i++)
+		for (uint i = 0; i < App->scene_manager->GetNumGameObjects(); i++)
 		{
 			if (ImGui::Selectable(App->scene_manager->GetGameObjects().at(i)->GetName().data(), App->scene_manager->GetSelectedGameObjects() == i))
 				App->scene_manager->SetSelectedGameObject(i);

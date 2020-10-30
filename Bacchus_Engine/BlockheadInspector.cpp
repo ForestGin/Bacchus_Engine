@@ -26,6 +26,15 @@ bool BlockheadInspector::Draw()
 	{
 		GameObject* Selected = App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects());
 
+		ImGui::BeginChild("child", ImVec2(0, 35), true);
+
+		static char GOName[100] = "";
+		strcpy_s(GOName, 100, Selected->GetName().data());
+		if (ImGui::InputText("", GOName, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+			Selected->SetName(GOName);
+
+		ImGui::EndChild();
+
 		if (Startup)
 		ImGui::SetNextItemOpen(true);
 

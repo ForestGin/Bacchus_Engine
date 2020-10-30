@@ -1,6 +1,7 @@
 #include "ImporterMesh.h"
 #include "ResourceMesh.h"
 
+
 #include "Assimp/include/scene.h"
 
 #include "OpenGL.h"
@@ -36,6 +37,7 @@ bool ImporterMesh::Import(const ImportData& IData) const
 	glBindBuffer(GL_ARRAY_BUFFER, data.new_mesh->VerticesID); // start using created buffer
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * data.new_mesh->VerticesSize, data.new_mesh->Vertices, GL_STATIC_DRAW); // send vertices to VRAM
 	glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
+	
 
 	if (data.mesh->HasNormals())
 	{

@@ -3,6 +3,7 @@
 #include "BacchusEditor.h"
 #include "Imgui/imgui.h"
 #include "SDL/include/SDL.h"
+#include "DevIL/include/il.h"
 
 #include "OpenGL.h"
 
@@ -26,7 +27,7 @@ bool BlockheadAbout::Draw()
 		// --- Introduction ---
 		ImGui::Separator();
 		ImGui::Text("Bacchus Engine");
-		ImGui::Text("Version 0.01 ");
+		ImGui::Text("Version 0.1 ");
 		ImGui::Text("Initial steps into game engine development");
 		ImGui::Text("By Oscar Larios and Pol Bosch (ForestGin)");
 
@@ -58,7 +59,7 @@ bool BlockheadAbout::Draw()
 		ImGui::SameLine(); ImGui::TextWrapped("3.1.1");
 
 		if (ImGui::Button("DevIL")) { App->bacchuseditor->RequestBrowser("http://openil.sourceforge.net/"); }
-		ImGui::SameLine(); ImGui::TextWrapped("1.8.0");
+		ImGui::SameLine(); ImGui::TextWrapped("%i", IL_VERSION);
 
 		if (ImGui::Button("PhysFS")) { App->bacchuseditor->RequestBrowser("https://icculus.org/physfs/"); }
 		ImGui::SameLine(); ImGui::TextWrapped("3.0.2");

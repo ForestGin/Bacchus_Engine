@@ -35,6 +35,7 @@ public:
 	void			Scale(float x, float y, float z);
 	void			SetLocalTransform(float4x4 new_transform);
 	void			SetMaterial(ResourceMaterial* material);
+	void			SetName(const char* name);
 
 
 private:

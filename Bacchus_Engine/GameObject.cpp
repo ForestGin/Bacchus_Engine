@@ -163,3 +163,9 @@ void GameObject::SetMaterial(ResourceMaterial* material)
 	if (material)
 		components.push_back(material);
 }
+
+void GameObject::SetName(const char* name)
+{
+	if (name)
+		this->name = name;
+}

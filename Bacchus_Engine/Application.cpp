@@ -7,7 +7,6 @@
 #include "BacchusEditor.h"
 #include "ModuleSceneManager.h"
 #include "BacchusHardware.h"
-#include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
 #include "FileSystem.h"
 #include "ModuleResources.h"
@@ -30,7 +29,6 @@ Application::Application()
 	//.-.-.-.-.-.-
 	window = new ModuleWindow(true);
 	input = new ModuleInput(true);
-	scene_intro = new ModuleSceneIntro(true);
 	renderer3D = new ModuleRenderer3D(true);
 	camera = new ModuleCamera3D(true);
 	bacchuseditor = new BacchusEditor(true);
@@ -55,7 +53,6 @@ Application::Application()
 
 	//Scene
 	AddModule(scene_manager);
-	AddModule(scene_intro);
 
 	//Engine UI
 	AddModule(bacchuseditor);
