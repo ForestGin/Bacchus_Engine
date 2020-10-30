@@ -80,7 +80,7 @@ void ResourceRenderer::DrawNormals(const ResourceMesh& mesh) const
 
 	glColor4f(0.0f, 0.5f, 0.5f, 1.0f);
 
-	if (mesh.Normals && draw_vertexnormals)
+	if (draw_vertexnormals && mesh.Normals)
 	{
 		//Draw Vertex Normals
 		for (uint j = 0; j < mesh.IndicesSize; ++j)
@@ -89,6 +89,7 @@ void ResourceRenderer::DrawNormals(const ResourceMesh& mesh) const
 			glVertex3f(mesh.Vertices[mesh.Indices[j]].x + mesh.Normals[mesh.Indices[j]].x * NORMAL_LENGTH, mesh.Vertices[mesh.Indices[j]].y + mesh.Normals[mesh.Indices[j]].y * NORMAL_LENGTH, mesh.Vertices[mesh.Indices[j]].z + mesh.Normals[mesh.Indices[j]].z * NORMAL_LENGTH);
 		}
 
+	}
 		
 		//Draw Face Normals 
 
@@ -116,8 +117,6 @@ void ResourceRenderer::DrawNormals(const ResourceMesh& mesh) const
 		glLineWidth(1.0f);
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		glEnd();
-
-	}
 
 }
 

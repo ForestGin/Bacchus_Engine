@@ -39,8 +39,8 @@ public:
 	// Flags
 	bool vsync = true;
 	bool depth_test = true;
-	bool cull_face = false;
+	bool cull_face = true;
 	bool lighting = true;
-	bool color_material = false;
+	bool color_material = true;
 	bool wireframe = false;
 };

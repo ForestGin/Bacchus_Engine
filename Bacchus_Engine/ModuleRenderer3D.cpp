@@ -206,9 +206,9 @@ void ModuleRenderer3D::UpdateGLCapabilities()
 		glDisable(GL_LIGHTING);
 
 	if (!color_material)
-		glDisable(GL_COLOR_MATERIAL);
-	else
 		glEnable(GL_COLOR_MATERIAL);
+	else
+		glDisable(GL_COLOR_MATERIAL);
 
 }
 
