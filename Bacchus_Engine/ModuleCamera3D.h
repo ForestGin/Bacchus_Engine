@@ -4,6 +4,8 @@
 #include "glmath.h"
 #include "Math.h"
 
+class GameObject;
+
 class ModuleCamera3D : public Module
 {
 public:
@@ -24,6 +26,7 @@ public:
 	
 
 	float* GetViewMatrix();
+	void FrameObject(GameObject& GO);
 
 private:
 

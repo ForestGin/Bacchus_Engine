@@ -3,6 +3,9 @@
 #include "ModuleCamera3D.h"
 #include "BacchusEditor.h"
 #include "ModuleInput.h"
+#include "ModuleSceneManager.h"
+#include "GameObject.h"
+#include "ResourceMesh.h"
 
 #include "mmgr/mmgr.h"
 
@@ -87,7 +90,7 @@ update_status ModuleCamera3D::Update(float dt)
 	//F: Focus on geometry
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		//TO DO
+		FrameObject(*App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects()));
 	}
 
 	// Recalculate matrix -------------
@@ -260,4 +263,19 @@ void ModuleCamera3D::CalculateViewMatrix()
 {
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
+}
+
+void ModuleCamera3D::FrameObject(GameObject& GO)
+{
+	Reference.x = GO.GetPosition().x;
+	Reference.y = GO.GetPosition().y;
+	Reference.z = GO.GetPosition().z;
+
+	ResourceMesh* mesh = (ResourceMesh*)GO.GetResource(Res::ResType::Mesh);
+
+	Sphere s(GO.GetPosition(), 1);
+	s.Enclose(mesh->Vertices, mesh->VerticesSize);
+	Look(Position, Reference, true);
+	vec3 Movement = -Z * (2 * s.r - Length(float3(Reference.x, Reference.y, Reference.z)));
+	Position = Reference - Movement;
 }
