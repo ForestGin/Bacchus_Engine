@@ -54,6 +54,18 @@ bool BlockheadAbout::Draw()
 		if (ImGui::Button("JSON For Modern C++")) { App->bacchuseditor->RequestBrowser("https://github.com/nlohmann/json"); }
 		ImGui::SameLine(); ImGui::TextWrapped("3.7.0");
 
+		if (ImGui::Button("Assimp")) { App->bacchuseditor->RequestBrowser("https://www.assimp.org/"); }
+		ImGui::SameLine(); ImGui::TextWrapped("3.1.1");
+
+		if (ImGui::Button("DevIL")) { App->bacchuseditor->RequestBrowser("http://openil.sourceforge.net/"); }
+		ImGui::SameLine(); ImGui::TextWrapped("1.8.0");
+
+		if (ImGui::Button("PhysFS")) { App->bacchuseditor->RequestBrowser("https://icculus.org/physfs/"); }
+		ImGui::SameLine(); ImGui::TextWrapped("3.0.2");
+
+		if (ImGui::Button("mmgr")) { App->bacchuseditor->RequestBrowser("http://www.paulnettle.com/pub/FluidStudios/MemoryManagers/"); }
+		
+
 		// --- License ---
 
 		ImGui::TextWrapped("MIT License");
