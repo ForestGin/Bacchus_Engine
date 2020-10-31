@@ -1,7 +1,7 @@
 # Bacchus_Engine
 3D Engine built from scratch during our 3rd year of Game Development Bachelor's Degree.
 
-Version 0.09
+Version 0.1
 
 Made by ForestGin: Pol Bosch & Oscar Larios
 
@@ -13,13 +13,34 @@ Github links:
 
 ## How to use
 
+Just open the .exe file and enjoy the engine
+
 ### Camera Controls
+
+* Mouse Right button for look around
+* Mouse Right button + WASD to do free movement
+* Mouse Wheel button for pan
+* Mouse scrolling to zoom in/out
+* Alt + Mouse Left button to orbit
+* Hold shift for double speed
+* F to frame selected object
+
+### Game Objects
+
+To create a new primitive shape head to the GameObject window and select any of the vailable 3D primitives. In the case of an FBX file just drag and drop it inside the screen(same goes for textures, but keep in mind that the GO should be selected first)
+
+Each GO has an inspector panel in which you will see some useful information or play with the GO Transform, normals... etc
 
 ### Debug
 
-wireframe etc
+To see and use the debug features(wireframe mode, depth, lightning...) go to Window, open the Settings window and then enter the Renderer. 
 
 ## Extra Functionalities
+
+* Extra primitive shapes(Cone)
+* GO can modify position & scale
+* Imgui personalization of the engine
+* GO name can be changed
 
 ## Licence
 MIT License
