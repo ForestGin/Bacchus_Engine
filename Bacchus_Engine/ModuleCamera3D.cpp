@@ -88,7 +88,7 @@ update_status ModuleCamera3D::Update(float dt)
 	}
 
 	//F: Focus on geometry
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	if (!App->bacchuseditor->IsKeyboardCaptured() && App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
 		FrameObject(*App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects()));
 	}

@@ -37,7 +37,7 @@ To see and use the debug features(wireframe mode, depth, lightning...) go to Win
 
 ## Extra Functionalities
 
-* Extra primitive shapes(Cone)
+* Extra primitive shapes: Tetrahedron, Octahedron, Icosahedron, Cubesphere, Icosphere, Cone.
 * GO can modify position & scale
 * Imgui personalization of the engine
 * GO name can be changed

@@ -222,7 +222,7 @@ GameObject* ModuleSceneManager::CreateCube(float sizeX, float sizeY, float sizeZ
 	return new_object;
 }
 
-GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stacks, bool smooth, bool checkers)
+GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stacks, bool smooth)
 {
     GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
 
@@ -555,17 +555,17 @@ GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stac
         }*/
     }
 
-    //Converting "vertices" to new_mesh->Vertices"
+    //Vertices
     uint verticesSize = vertices.size() / 3;
     new_mesh->VerticesSize = verticesSize;
     new_mesh->Vertices = new float3[verticesSize]{};
 
-    uint j = 0;
     for (uint i = 0; i < verticesSize; i++)
     {
-        new_mesh->Vertices[i] = { vertices[j], vertices[j + 1], vertices[j + 2] };
+        new_mesh->Vertices[i].x = { vertices[3 * i] };
+        new_mesh->Vertices[i].y = { vertices[(3 * i) + 1] };
+        new_mesh->Vertices[i].z = { vertices[(3 * i) + 2] };
 
-        j = j + 3;
     }
 
     glGenBuffers(1, (GLuint*)&new_mesh->VerticesID); // create buffer
@@ -573,7 +573,7 @@ GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stac
     glBufferData(GL_ARRAY_BUFFER, sizeof(float3)* verticesSize, new_mesh->Vertices, GL_STATIC_DRAW); // send vertices to VRAM
     glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
     
-    //Converting "indices" to "new_mesh->Vertices"
+    //Indices
     uint indicesSize = indices.size();
     new_mesh->IndicesSize = indicesSize;
     new_mesh->Indices = new uint[new_mesh->IndicesSize]{};
@@ -588,7 +588,20 @@ GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stac
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)* new_mesh->IndicesSize, new_mesh->Indices, GL_STATIC_DRAW); // send vertices to VRAM
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
 
-    //Converting "texCoords" to "new_mesh->Vertices"
+    //Normals
+    uint normalsSize = normals.size() / 3;
+    new_mesh->NormalsSize = normalsSize;
+    new_mesh->Normals = new float3[new_mesh->NormalsSize];
+
+
+    for (uint i = 0; i < new_mesh->NormalsSize; ++i)
+    {
+        new_mesh->Normals[i].x = normals[3 * i];
+        new_mesh->Normals[i].y = normals[(3 * i) + 1];
+        new_mesh->Normals[i].z = normals[(3 * i) + 2];
+    }
+
+    //Texcoords
     uint texCoordsSize = texCoords.size();
     new_mesh->TexCoordsSize = texCoordsSize;
     new_mesh->TexCoords = new float[new_mesh->TexCoordsSize]{};
@@ -598,10 +611,430 @@ GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stac
         new_mesh->TexCoords[i] = texCoords[i];
     }
 
-   /* if (checkers)
+    glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
+    glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * new_mesh->TexCoordsSize, new_mesh->TexCoords, GL_STATIC_DRAW); // send vertices to VRAM
+    glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::CreateCubeSphere(float radius, int sub, bool smooth)
+{
+    GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
+
+    ResourceMesh* new_mesh = (ResourceMesh*)new_object->AddResource(Res::ResType::Mesh);
+
+    ResourceRenderer* Renderer = (ResourceRenderer*)new_object->AddResource(Res::ResType::Renderer);
+
+    std::vector<float> vertices;
+    std::vector<float> normals;
+    std::vector<float> texCoords;
+    std::vector<unsigned int> indices;
+
+    uint vertexCountPerRow;
+    uint vertexCountPerFace;
+
+    vertexCountPerRow = (unsigned int)pow(2, sub) + 1;
+    vertexCountPerFace = vertexCountPerRow * vertexCountPerRow;
+
+    if (smooth)
     {
-        new_object->SetMaterial(CheckersMaterial);
-    }*/
+
+    }
+    else
+    {
+        // generate unit-length verties in +X face
+        const float DEG2RAD = acos(-1) / 180.0f;
+
+        std::vector<float> uvertices;
+        float n1[3];        // normal of longitudinal plane rotating along Y-axis
+        float n2[3];        // normal of latitudinal plane rotating along Z-axis
+        float v[3];         // direction vector intersecting 2 planes, n1 x n2
+        float a1;           // longitudinal angle along y-axis
+        float a2;           // latitudinal angle
+        float scale;
+
+        // rotate latitudinal plane from 45 to -45 degrees along Z-axis
+        for (unsigned int i = 0; i < vertexCountPerRow; ++i)
+        {
+            // normal for latitudinal plane
+            a2 = DEG2RAD * (45.0f - 90.0f * i / (vertexCountPerRow - 1));
+            n2[0] = -sin(a2);
+            n2[1] = cos(a2);
+            n2[2] = 0;
+
+            // rotate longitudinal plane from -45 to 45 along Y-axis
+            for (unsigned int j = 0; j < vertexCountPerRow; ++j)
+            {
+                // normal for longitudinal plane
+                a1 = DEG2RAD * (-45.0f + 90.0f * j / (vertexCountPerRow - 1));
+                n1[0] = -sin(a1);
+                n1[1] = 0;
+                n1[2] = -cos(a1);
+
+                // find direction vector of intersected line, n1 x n2
+                v[0] = n1[1] * n2[2] - n1[2] * n2[1];
+                v[1] = n1[2] * n2[0] - n1[0] * n2[2];
+                v[2] = n1[0] * n2[1] - n1[1] * n2[0];
+
+                // normalize direction vector
+                scale = 1 / sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+                v[0] *= scale;
+                v[1] *= scale;
+                v[2] *= scale;
+
+                uvertices.push_back(v[0]);
+                uvertices.push_back(v[1]);
+                uvertices.push_back(v[2]);
+
+                // DEBUG
+                //std::cout << "vertex: (" << v[0] << ", " << v[1] << ", " << v[2] << "), "
+                //          << sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]) << std::endl;
+            }
+        }
+
+        std::vector<float> unitVertices = uvertices;
+
+        unsigned int k = 0, k1, k2, i1, i2; // indices
+        float v1[3], v2[3], v3[3], v4[3];   // tmp vertices
+        float t1[2], t2[2], t3[2], t4[2];   // texture coords
+        float n[3];                         // normal vector
+
+        // +X face
+        for (unsigned int i = 0; i < vertexCountPerRow - 1; ++i)
+        {
+            k1 = i * vertexCountPerRow;              // index at curr row
+            k2 = k1 + vertexCountPerRow;             // index at next row
+
+            // vertical tex coords
+            t1[1] = t3[1] = (float)i / (vertexCountPerRow - 1);
+            t2[1] = t4[1] = (float)(i + 1) / (vertexCountPerRow - 1);
+
+            for (unsigned int j = 0; j < vertexCountPerRow - 1; ++j, ++k1, ++k2)
+            {
+                i1 = k1 * 3;
+                i2 = k2 * 3;
+
+                // 4 vertices of a quad
+                // v1--v3
+                // | / |
+                // v2--v4
+                v1[0] = unitVertices[i1];
+                v1[1] = unitVertices[i1 + 1];
+                v1[2] = unitVertices[i1 + 2];
+                v2[0] = unitVertices[i2];
+                v2[1] = unitVertices[i2 + 1];
+                v2[2] = unitVertices[i2 + 2];
+                v3[0] = unitVertices[i1 + 3];
+                v3[1] = unitVertices[i1 + 4];
+                v3[2] = unitVertices[i1 + 5];
+                v4[0] = unitVertices[i2 + 3];
+                v4[1] = unitVertices[i2 + 4];
+                v4[2] = unitVertices[i2 + 5];
+
+                // compute face nornal
+                const float EPSILON = 0.000001f;
+
+                // default return value (0, 0, 0)
+                n[0] = n[1] = n[2] = 0;
+
+                // find 2 edge vectors: v1-v2, v1-v3
+                float ex1 = v2[0] - v1[0];
+                float ey1 = v2[1] - v1[1];
+                float ez1 = v2[2] - v1[2];
+                float ex2 = v3[0] - v1[0];
+                float ey2 = v3[1] - v1[1];
+                float ez2 = v3[2] - v1[2];
+
+                // cross product: e1 x e2
+                float nx, ny, nz;
+                nx = ey1 * ez2 - ez1 * ey2;
+                ny = ez1 * ex2 - ex1 * ez2;
+                nz = ex1 * ey2 - ey1 * ex2;
+
+                // normalize only if the length is > 0
+                float length = sqrtf(nx * nx + ny * ny + nz * nz);
+                if (length > EPSILON)
+                {
+                    // normalize
+                    float lengthInv = 1.0f / length;
+                    n[0] = nx * lengthInv;
+                    n[1] = ny * lengthInv;
+                    n[2] = nz * lengthInv;
+                }
+
+                // resize vertices by sphere radius
+                v1[0] *= radius;
+                v1[1] *= radius;
+                v1[2] *= radius;
+
+                v2[0] *= radius;
+                v2[1] *= radius;
+                v2[2] *= radius;
+
+                v3[0] *= radius;
+                v3[1] *= radius;
+                v3[2] *= radius;
+
+                v4[0] *= radius;
+                v4[1] *= radius;
+                v4[2] *= radius;
+
+                // compute horizontal tex coords
+                t1[0] = t2[0] = (float)j / (vertexCountPerRow - 1);
+                t3[0] = t4[0] = (float)(j + 1) / (vertexCountPerRow - 1);
+
+                // add 4 vertex attributes
+                vertices.insert(vertices.end(), v1, v1 + 3);    // v1
+                vertices.insert(vertices.end(), v2, v2 + 3);    // v2
+                vertices.insert(vertices.end(), v3, v3 + 3);    // v3
+                vertices.insert(vertices.end(), v4, v4 + 3);    // v4
+
+                normals.insert(normals.end(), n, n + 3);  // n1
+                normals.insert(normals.end(), n, n + 3);  // n2
+                normals.insert(normals.end(), n, n + 3);  // n3
+                normals.insert(normals.end(), n, n + 3);  // n4
+
+                texCoords.insert(texCoords.end(), t1, t1 + 2);  // t1
+                texCoords.insert(texCoords.end(), t2, t2 + 2);  // t2
+                texCoords.insert(texCoords.end(), t3, t3 + 2);  // t3
+                texCoords.insert(texCoords.end(), t4, t4 + 2);  // t4
+
+                // add indices of 2 triangles
+                indices.push_back(k);
+                indices.push_back(k + 1);
+                indices.push_back(k + 2);
+
+                indices.push_back(k + 2);
+                indices.push_back(k + 1);
+                indices.push_back(k + 3);
+
+                // add line indices; top and left
+                //lineIndices.push_back(k);       // left
+                //lineIndices.push_back(k + 1);
+                //lineIndices.push_back(k);       // top
+                //lineIndices.push_back(k + 2);
+
+                k += 4;     // next
+            }
+        }
+
+        // array size and index for building next face
+        unsigned int startIndex;                    // starting index for next face
+        int vertexSize = (int)vertices.size();      // vertex array size of +X face
+        int indexSize = (int)indices.size();        // index array size of +X face
+        //int lineIndexSize = (int)lineIndices.size(); // line index size of +X face
+
+        // build -X face by negating x and z values
+        startIndex = vertices.size() / 3;
+        for (int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
+        {
+            vertices.push_back(-vertices[i]);
+            vertices.push_back(vertices[i + 1]);
+            vertices.push_back(-vertices[i + 2]);
+
+            texCoords.push_back(texCoords[j]);
+            texCoords.push_back(texCoords[j + 1]);
+
+            normals.push_back(-normals[i]);
+            normals.push_back(normals[i + 1]);
+            normals.push_back(-normals[i + 2]);
+        }
+        for (int i = 0; i < indexSize; ++i)
+        {
+            indices.push_back(startIndex + indices[i]);
+        }
+        //for (int i = 0; i < lineIndexSize; i += 4)
+        //{
+        //    // left and bottom lines
+        //    lineIndices.push_back(startIndex + i);      // left
+        //    lineIndices.push_back(startIndex + i + 1);
+        //    lineIndices.push_back(startIndex + i + 1);  // bottom
+        //    lineIndices.push_back(startIndex + i + 3);
+        //}
+
+        // build +Y face by swapping x=>y, y=>-z, z=>-x
+        startIndex = vertices.size() / 3;
+        for (int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
+        {
+            vertices.push_back(-vertices[i + 2]);
+            vertices.push_back(vertices[i]);
+            vertices.push_back(-vertices[i + 1]);
+
+            texCoords.push_back(texCoords[j]);
+            texCoords.push_back(texCoords[j + 1]);
+
+            normals.push_back(-normals[i + 2]);
+            normals.push_back(normals[i]);
+            normals.push_back(-normals[i + 1]);
+        }
+        for (int i = 0; i < indexSize; ++i)
+        {
+            indices.push_back(startIndex + indices[i]);
+        }
+        //for (int i = 0; i < lineIndexSize; ++i)
+        //{
+        //    // top and left lines (same as +X)
+        //    lineIndices.push_back(startIndex + lineIndices[i]);
+        //}
+
+        // build -Y face by swapping x=>-y, y=>z, z=>-x
+        startIndex = vertices.size() / 3;
+        for (int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
+        {
+            vertices.push_back(-vertices[i + 2]);
+            vertices.push_back(-vertices[i]);
+            vertices.push_back(vertices[i + 1]);
+
+            texCoords.push_back(texCoords[j]);
+            texCoords.push_back(texCoords[j + 1]);
+
+            normals.push_back(-normals[i + 2]);
+            normals.push_back(-normals[i]);
+            normals.push_back(normals[i + 1]);
+        }
+        for (int i = 0; i < indexSize; ++i)
+        {
+            indices.push_back(startIndex + indices[i]);
+        }
+        //for (int i = 0; i < lineIndexSize; i += 4)
+        //{
+        //    // top and right lines
+        //    lineIndices.push_back(startIndex + i);      // top
+        //    lineIndices.push_back(startIndex + i + 2);
+        //    lineIndices.push_back(startIndex + 2 + i);  // right
+        //    lineIndices.push_back(startIndex + 3 + i);
+        //}
+
+        // build +Z face by swapping x=>z, z=>-x
+        startIndex = vertices.size() / 3;
+        for (int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
+        {
+            vertices.push_back(-vertices[i + 2]);
+            vertices.push_back(vertices[i + 1]);
+            vertices.push_back(vertices[i]);
+
+            texCoords.push_back(texCoords[j]);
+            texCoords.push_back(texCoords[j + 1]);
+
+            normals.push_back(-normals[i + 2]);
+            normals.push_back(normals[i + 1]);
+            normals.push_back(normals[i]);
+        }
+        for (int i = 0; i < indexSize; ++i)
+        {
+            indices.push_back(startIndex + indices[i]);
+        }
+        //for (int i = 0; i < lineIndexSize; ++i)
+        //{
+        //    // top and left lines (same as +X)
+        //    lineIndices.push_back(startIndex + lineIndices[i]);
+        //}
+
+        // build -Z face by swapping x=>-z, z=>x
+        startIndex = vertices.size() / 3;
+        for (int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
+        {
+            vertices.push_back(vertices[i + 2]);
+            vertices.push_back(vertices[i + 1]);
+            vertices.push_back(-vertices[i]);
+
+            texCoords.push_back(texCoords[j]);
+            texCoords.push_back(texCoords[j + 1]);
+
+            normals.push_back(normals[i + 2]);
+            normals.push_back(normals[i + 1]);
+            normals.push_back(-normals[i]);
+        }
+        for (int i = 0; i < indexSize; ++i)
+        {
+            indices.push_back(startIndex + indices[i]);
+        }
+        //for (int i = 0; i < lineIndexSize; i += 4)
+        //{
+        //    // left and bottom lines
+        //    lineIndices.push_back(startIndex + i);      // left
+        //    lineIndices.push_back(startIndex + i + 1);
+        //    lineIndices.push_back(startIndex + i + 1);  // bottom
+        //    lineIndices.push_back(startIndex + i + 3);
+        //}
+
+        // generate interleaved vertex array as well
+        /*std::vector<float>().swap(interleavedVertices);
+
+        std::size_t i, j;
+        std::size_t count = vertices.size();
+        for (i = 0, j = 0; i < count; i += 3, j += 2)
+        {
+            interleavedVertices.push_back(vertices[i]);
+            interleavedVertices.push_back(vertices[i + 1]);
+            interleavedVertices.push_back(vertices[i + 2]);
+
+            interleavedVertices.push_back(normals[i]);
+            interleavedVertices.push_back(normals[i + 1]);
+            interleavedVertices.push_back(normals[i + 2]);
+
+            interleavedVertices.push_back(texCoords[j]);
+            interleavedVertices.push_back(texCoords[j + 1]);
+        }*/
+    }
+
+    //Vertices
+    uint verticesSize = vertices.size() / 3;
+    new_mesh->VerticesSize = verticesSize;
+    new_mesh->Vertices = new float3[verticesSize]{};
+
+    for (uint i = 0; i < verticesSize; i++)
+    {
+        new_mesh->Vertices[i].x = { vertices[3 * i] };
+        new_mesh->Vertices[i].y = { vertices[(3 * i) + 1] };
+        new_mesh->Vertices[i].z = { vertices[(3 * i) + 2] };
+
+    }
+
+    glGenBuffers(1, (GLuint*)&new_mesh->VerticesID); // create buffer
+    glBindBuffer(GL_ARRAY_BUFFER, new_mesh->VerticesID); // start using created buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * verticesSize, new_mesh->Vertices, GL_STATIC_DRAW); // send vertices to VRAM
+    glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
+
+    //Indices
+    uint indicesSize = indices.size();
+    new_mesh->IndicesSize = indicesSize;
+    new_mesh->Indices = new uint[new_mesh->IndicesSize]{};
+
+    for (uint i = 0; i < indicesSize; i++)
+    {
+        new_mesh->Indices[i] = indices[i];
+    }
+
+    glGenBuffers(1, (GLuint*)&new_mesh->IndicesID); // create buffer
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->IndicesID); // start using created buffer
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * new_mesh->IndicesSize, new_mesh->Indices, GL_STATIC_DRAW); // send vertices to VRAM
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
+
+    //Normals
+    uint normalsSize = normals.size() / 3;
+    new_mesh->NormalsSize = normalsSize;
+    new_mesh->Normals = new float3[new_mesh->NormalsSize];
+
+
+    for (uint i = 0; i < new_mesh->NormalsSize; ++i)
+    {
+        new_mesh->Normals[i].x = normals[3 * i];
+        new_mesh->Normals[i].y = normals[(3 * i) + 1];
+        new_mesh->Normals[i].z = normals[(3 * i) + 2];
+    }
+
+    //Texcoords
+    uint texCoordsSize = texCoords.size();
+    new_mesh->TexCoordsSize = texCoordsSize;
+    new_mesh->TexCoords = new float[new_mesh->TexCoordsSize]{};
+
+    for (uint i = 0; i < texCoordsSize; i++)
+    {
+        new_mesh->TexCoords[i] = texCoords[i];
+    }
 
     glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
     glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer
@@ -611,7 +1044,7 @@ GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stac
     return new_object;
 }
 
-GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius, float height, int sectors, int stacks, bool smooth, bool checkers)
+GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius, float height, int sectors, int stacks, bool smooth)
 {
     GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
 
@@ -921,7 +1354,7 @@ GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius
         //    interleavedVertices.insert(interleavedVertices.end(), &texCoords[j], &texCoords[j] + 2);
     }
 
-    //Converting "vertices" to new_mesh->Vertices"
+    //Vertices
     uint verticesSize = vertices.size() / 3;
     new_mesh->VerticesSize = verticesSize;
     new_mesh->Vertices = new float3[verticesSize]{};
@@ -939,7 +1372,7 @@ GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius
     glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * verticesSize, new_mesh->Vertices, GL_STATIC_DRAW); // send vertices to VRAM
     glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
 
-    //Converting "indices" to "new_mesh->Vertices"
+    //Indices
     uint indicesSize = indices.size();
     new_mesh->IndicesSize = indicesSize;
     new_mesh->Indices = new uint[new_mesh->IndicesSize]{};
@@ -954,7 +1387,20 @@ GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * new_mesh->IndicesSize, new_mesh->Indices, GL_STATIC_DRAW); // send vertices to VRAM
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
 
-    //Converting "texCoords" to "new_mesh->Vertices"
+    //Normals
+    uint normalsSize = normals.size() / 3;
+    new_mesh->NormalsSize = normalsSize;
+    new_mesh->Normals = new float3[new_mesh->NormalsSize];
+
+
+    for (uint i = 0; i < new_mesh->NormalsSize; ++i)
+    {
+        new_mesh->Normals[i].x = normals[3 * i];
+        new_mesh->Normals[i].y = normals[(3 * i) + 1];
+        new_mesh->Normals[i].z = normals[(3 * i) + 2];
+    }
+
+    //TexCoords
     uint texCoordsSize = texCoords.size();
     new_mesh->TexCoordsSize = texCoordsSize;
     new_mesh->TexCoords = new float[new_mesh->TexCoordsSize]{};
@@ -963,11 +1409,6 @@ GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius
     {
         new_mesh->TexCoords[i] = texCoords[i];
     }
-
-    /*if (checkers)
-    {
-        new_object->SetMaterial(CheckersMaterial);
-    }*/
 
     glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
     glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer

@@ -45,23 +45,16 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 
 			float3 position = Selected->GetPosition();
-			ImGui::Text("X");
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
 			ImGui::DragFloat("PX", &position.x, 0.005f);
 
 			ImGui::SameLine();
-
-			ImGui::Text("Y");
-			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
 			ImGui::DragFloat("PY", &position.y, 0.005f);
 
-			ImGui::SameLine();
-
-			ImGui::Text("Z");
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
@@ -71,23 +64,16 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 
 			float3 rotation = Selected->GetRotation();
-			ImGui::Text("X");
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
 			ImGui::DragFloat("RX", &rotation.x, 0.005f);
 
 			ImGui::SameLine();
-
-			ImGui::Text("Y");
-			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
 			ImGui::DragFloat("RY", &rotation.y, 0.005f);
 
-			ImGui::SameLine();
-
-			ImGui::Text("Z");
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
@@ -97,23 +83,16 @@ bool BlockheadInspector::Draw()
 			ImGui::SameLine();
 
 			float3 scale = Selected->GetScale();
-			ImGui::Text("X");
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
 			ImGui::DragFloat("SX", &scale.x, 0.005f);
 
 			ImGui::SameLine();
-
-			ImGui::Text("Y");
-			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
 			ImGui::DragFloat("SY", &scale.y, 0.005f);
 
-			ImGui::SameLine();
-
-			ImGui::Text("Z");
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 

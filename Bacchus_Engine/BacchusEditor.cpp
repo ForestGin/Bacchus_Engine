@@ -135,33 +135,62 @@ update_status BacchusEditor::Update(float dt)
 		{
 			if (ImGui::BeginMenu("3D Object"))
 			{
+				if (ImGui::MenuItem("Tetrahedron"))
+				{
+					App->scene_manager->CreateCylinder(1, 0, 1, 3, 1, false);
+				}
 
 				if (ImGui::MenuItem("Cube"))
 				{
-					App->scene_manager->CreateCube(1, 1, 1);
+					App->scene_manager->CreateCubeSphere(1, 0, false);
 				}
-				if (ImGui::MenuItem("Sphere"))
+
+				if (ImGui::MenuItem("Octahedron"))
 				{
-					App->scene_manager->CreateSphere(1, 36, 18, false, true);
+					App->scene_manager->CreateSphere(1, 4, 2, false);
 				}
+
+				if (ImGui::MenuItem("Icosahedron"))
+				{
+					App->scene_manager->CreateSphere(1, 4, 2, false);
+				}
+
+				if (ImGui::BeginMenu("Spheres"))
+				{
+					if (ImGui::MenuItem("Sphere"))
+					{
+						App->scene_manager->CreateSphere(1, 36, 18, false);
+					}
+
+					if (ImGui::MenuItem("Cubesphere"))
+					{
+						App->scene_manager->CreateCubeSphere(1, 3, false);
+					}
+
+					if (ImGui::MenuItem("Icosphere"))
+					{
+						App->scene_manager->CreateCubeSphere(1, 3, false);
+					}
+					ImGui::EndMenu();
+				}
+
 				if (ImGui::MenuItem("Pyramid"))
 				{
-					App->scene_manager->CreateCylinder(1, 0, 1, 4, 1, false, true);
+					App->scene_manager->CreateCylinder(1, 0, 1, 4, 1, false);
 				}
 				if (ImGui::MenuItem("Cylinder"))
 				{
-					App->scene_manager->CreateCylinder(1, 1, 1, 36, 4, false, true);
+					App->scene_manager->CreateCylinder(1, 1, 1, 36, 4, false);
 				}
 				if (ImGui::MenuItem("Cone"))
 				{
-					App->scene_manager->CreateCylinder(1, 0, 1, 36, 4, false, true);
+					App->scene_manager->CreateCylinder(1, 0, 1, 36, 4, false);
 				}
-
 
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::BeginMenu("4D Object"))
+			/*if (ImGui::BeginMenu("4D Object"))
 			{
 
 				if (ImGui::MenuItem("Tesseract"))
@@ -170,7 +199,7 @@ update_status BacchusEditor::Update(float dt)
 				}
 
 				ImGui::EndMenu();
-			}
+			}*/
 			ImGui::EndMenu();
 		}
 

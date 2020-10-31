@@ -27,8 +27,9 @@ public:
 	void Draw() const;
 
 	GameObject* CreateCube(float sizeX, float sizeY, float sizeZ, bool checkers = false);
-	GameObject* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false, bool checkers = false);
-	GameObject* CreateCylinder(float baseRadius = 1.0f, float topRadius = 1.0f, float height = 1.0f, int sectorCount = 36, int stackCount = 1, bool smooth = false, bool checkers = false);
+	GameObject* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false);
+	GameObject* CreateCubeSphere(float Radius = 1.0f, int sub = 3, bool smooth = false);
+	GameObject* CreateCylinder(float baseRadius = 1.0f, float topRadius = 1.0f, float height = 1.0f, int sectorCount = 36, int stackCount = 1, bool smooth = false);
 
 	void CreateGrid() const;
 
@@ -36,6 +37,8 @@ public:
 	std::vector<GameObject*>& GetGameObjects();
 	void SetSelectedGameObject(uint index);
 	void SetTextureToSelectedGO(uint id);
+
+private:
 
 
 public:
