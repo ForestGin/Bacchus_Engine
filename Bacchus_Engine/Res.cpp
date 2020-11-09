@@ -18,12 +18,12 @@ Res::~Res()
 {
 }
 
-Res::ResType Res::GetType()
+Res::ResType Res::GetType() const
 {
 	return type;
 }
 
-GameObject* Res::GetContainerGameObject()
+GameObject* Res::GetContainerGameObject() const
 {
 	return GO;
 }

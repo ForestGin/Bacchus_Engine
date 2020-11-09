@@ -6,6 +6,7 @@
 #include "ResourceMesh.h"
 #include "ResourceMaterial.h"
 #include "ResourceRenderer.h"
+#include "ResourceTransform.h"
 
 #include "mmgr/mmgr.h"
 
@@ -40,11 +41,12 @@ bool BlockheadInspector::Draw()
 
 		if (ImGui::TreeNode("Transform"))
 		{
+			ResourceTransform* transform = Selected->GetResource<ResourceTransform>(Res::ResType::Transform);
 
 			ImGui::Text("Position  ");
 			ImGui::SameLine();
 
-			float3 position = Selected->GetPosition();
+			float3 position = transform->GetPosition();
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
@@ -63,7 +65,7 @@ bool BlockheadInspector::Draw()
 			ImGui::Text("Rotation  ");
 			ImGui::SameLine();
 
-			float3 rotation = Selected->GetRotation();
+			float3 rotation = transform->GetRotation();
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
@@ -82,7 +84,7 @@ bool BlockheadInspector::Draw()
 			ImGui::Text("Scale     ");
 			ImGui::SameLine();
 
-			float3 scale = Selected->GetScale();
+			float3 scale = transform->GetScale();
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
@@ -98,8 +100,8 @@ bool BlockheadInspector::Draw()
 
 			ImGui::DragFloat("SZ", &scale.z, 0.005f);
 
-			Selected->SetPosition(position.x, position.y, position.z);
-			Selected->Scale(scale.x, scale.y, scale.z);
+			transform->SetPosition(position.x, position.y, position.z);
+			transform->Scale(scale.x, scale.y, scale.z);
 
 
 			ImGui::TreePop();
@@ -107,9 +109,9 @@ bool BlockheadInspector::Draw()
 
 		ImGui::Separator();
 
-		if (Selected->GetResource(Res::ResType::Mesh))
+		if (Selected->GetResource<ResourceMesh>(Res::ResType::Mesh))
 		{
-			ResourceMesh* mesh = (ResourceMesh*)Selected->GetResource(Res::ResType::Mesh);
+			ResourceMesh* mesh = Selected->GetResource<ResourceMesh>(Res::ResType::Mesh);
 
 			if (Startup)
 				ImGui::SetNextItemOpen(true);
@@ -125,10 +127,10 @@ bool BlockheadInspector::Draw()
 		}
 		ImGui::Separator();
 
-		if (Selected->GetResource(Res::ResType::Renderer))
+		if (Selected->GetResource<ResourceRenderer>(Res::ResType::Renderer))
 		{
 
-			ResourceRenderer* renderer = (ResourceRenderer*)Selected->GetResource(Res::ResType::Renderer);
+			ResourceRenderer* renderer = Selected->GetResource<ResourceRenderer>(Res::ResType::Renderer);
 
 			if (Startup)
 				ImGui::SetNextItemOpen(true);
@@ -146,9 +148,9 @@ bool BlockheadInspector::Draw()
 		}
 		ImGui::Separator();
 
-		if (Selected->GetResource(Res::ResType::Material))
+		if (Selected->GetResource<ResourceMaterial>(Res::ResType::Material))
 		{
-			ResourceMaterial* material = (ResourceMaterial*)Selected->GetResource(Res::ResType::Material);
+			ResourceMaterial* material = Selected->GetResource<ResourceMaterial>(Res::ResType::Material);
 
 			if (Startup)
 				ImGui::SetNextItemOpen(true);

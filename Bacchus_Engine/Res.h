@@ -10,10 +10,11 @@ class Res
 public:
 	enum class ResType
 	{
-		Unknown = 0,
+		Transform,
 		Mesh,
 		Renderer,
-		Material
+		Material,
+		Unknown
 	};
 
 public:
@@ -22,12 +23,12 @@ public:
 	Res(Res::ResType type);
 	virtual ~Res();
 
-	Res::ResType GetType();
-	GameObject* GetContainerGameObject();
+	ResType GetType() const;
+	GameObject* GetContainerGameObject() const;
 
 protected:
 	GameObject* GO = nullptr;
-	Res::ResType type;
+	ResType type = ResType::Unknown;
 
 };
 

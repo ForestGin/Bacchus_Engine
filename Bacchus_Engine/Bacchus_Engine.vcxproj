@@ -200,6 +200,7 @@
     <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="ResourceRenderer.h" />
+    <ClInclude Include="ResourceTransform.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -276,6 +277,7 @@
     <ClCompile Include="ResourceMesh.cpp" />
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="ResourceRenderer.cpp" />
+    <ClCompile Include="ResourceTransform.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>

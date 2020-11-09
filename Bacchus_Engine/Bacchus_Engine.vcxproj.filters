@@ -195,6 +195,9 @@
     <ClCompile Include="BlockheadInspector.cpp">
       <Filter>EditorBlockheads</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceTransform.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -492,6 +495,9 @@
     </ClInclude>
     <ClInclude Include="BlockheadInspector.h">
       <Filter>EditorBlockheads</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceTransform.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
