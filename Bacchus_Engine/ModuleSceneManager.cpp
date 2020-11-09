@@ -9,6 +9,7 @@
 #include "ResourceMesh.h"
 #include "ModuleTextures.h"
 #include "ResourceTransform.h"
+#include "Math.h"
 
 #include "mmgr/mmgr.h"
 
@@ -81,7 +82,7 @@ void ModuleSceneManager::Draw() const
         ResourceTransform* transform = game_objects[i]->GetResource<ResourceTransform>(Res::ResType::Transform);
 
 		glPushMatrix();
-        glMultMatrixf(transform->GetLocalTransform().ptr());
+        glMultMatrixf(transform->GetLocalTransform().Transposed().ptr());
 
 		ResourceRenderer* Renderer = game_objects[i]->GetResource<ResourceRenderer>(Res::ResType::Renderer);
 

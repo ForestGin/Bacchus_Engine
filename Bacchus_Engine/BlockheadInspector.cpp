@@ -102,6 +102,7 @@ bool BlockheadInspector::Draw()
 
 			transform->SetPosition(position.x, position.y, position.z);
 			transform->Scale(scale.x, scale.y, scale.z);
+			transform->SetRotation(rotation);
 
 
 			ImGui::TreePop();

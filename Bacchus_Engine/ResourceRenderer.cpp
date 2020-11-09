@@ -16,7 +16,7 @@ ResourceRenderer::~ResourceRenderer()
 {
 }
 
-void ResourceRenderer::Draw()
+void ResourceRenderer::Draw() const
 {
 	ResourceMesh* mesh = this->GO->GetResource<ResourceMesh>(Res::ResType::Mesh);
 
@@ -28,7 +28,7 @@ void ResourceRenderer::Draw()
 	}
 }
 
-void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
+inline void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 {
 
 	//Draw Texture
@@ -54,7 +54,7 @@ void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.VerticesID); // start using created buffer (vertices)
 	glVertexPointer(3, GL_FLOAT, 0, NULL); // Use selected buffer as vertices 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndicesID); // start using created buffer (indices)
-	glDrawElements(GL_TRIANGLES, mesh.IndicesSize, mesh.IndexDatatype, NULL); // render primitives from array data
+	glDrawElements(GL_TRIANGLES, mesh.IndicesSize, GL_UNSIGNED_INT, NULL); // render primitives from array data
 
 
 
@@ -71,7 +71,7 @@ void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 
 }
 
-void ResourceRenderer::DrawNormals(const ResourceMesh& mesh) const
+inline void ResourceRenderer::DrawNormals(const ResourceMesh& mesh) const
 {
 	//Draw Mesh Normals
 
@@ -120,7 +120,7 @@ void ResourceRenderer::DrawNormals(const ResourceMesh& mesh) const
 
 }
 
-void ResourceRenderer::DrawAxis() const
+inline void ResourceRenderer::DrawAxis() const
 {
 	
 	glLineWidth(2.0f);

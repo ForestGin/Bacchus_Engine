@@ -278,7 +278,10 @@ void ModuleCamera3D::FrameObject(GameObject& GO)
 
 	Sphere s(transform->GetPosition(), 1);
 	s.Enclose(mesh->Vertices, mesh->VerticesSize);
-	Look(Position, Reference, true);
-	vec3 Movement = -Z * (2 * s.r - Length(float3(Reference.x, Reference.y, Reference.z)));
+	s.r = s.Diameter() - Length(float3(Reference.x, Reference.y, Reference.z));
+	s.pos = transform->GetPosition();
+
+	Look(Position, vec3(s.Centroid().x, s.Centroid().y, s.Centroid().z), true);
+	vec3 Movement = -Z * (2 * s.r);
 	Position = Reference - Movement;
 }
