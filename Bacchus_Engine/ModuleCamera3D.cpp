@@ -6,6 +6,7 @@
 #include "ModuleSceneManager.h"
 #include "GameObject.h"
 #include "ResourceMesh.h"
+#include "ResourceTransform.h"
 
 #include "mmgr/mmgr.h"
 
@@ -267,13 +268,15 @@ void ModuleCamera3D::CalculateViewMatrix()
 
 void ModuleCamera3D::FrameObject(GameObject& GO)
 {
-	Reference.x = GO.GetPosition().x;
-	Reference.y = GO.GetPosition().y;
-	Reference.z = GO.GetPosition().z;
+	ResourceTransform* transform = GO.GetResource<ResourceTransform>(Res::ResType::Transform);
 
-	ResourceMesh* mesh = (ResourceMesh*)GO.GetResource(Res::ResType::Mesh);
+	Reference.x = transform->GetPosition().x;
+	Reference.y = transform->GetPosition().y;
+	Reference.z = transform->GetPosition().z;
 
-	Sphere s(GO.GetPosition(), 1);
+	ResourceMesh* mesh = GO.GetResource<ResourceMesh>(Res::ResType::Mesh);
+
+	Sphere s(transform->GetPosition(), 1);
 	s.Enclose(mesh->Vertices, mesh->VerticesSize);
 	Look(Position, Reference, true);
 	vec3 Movement = -Z * (2 * s.r - Length(float3(Reference.x, Reference.y, Reference.z)));

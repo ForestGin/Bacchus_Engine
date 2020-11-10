@@ -18,7 +18,7 @@ ResourceRenderer::~ResourceRenderer()
 
 void ResourceRenderer::Draw()
 {
-	ResourceMesh* mesh = (ResourceMesh*)this->GO->GetResource(Res::ResType::Mesh);
+	ResourceMesh* mesh = this->GO->GetResource<ResourceMesh>(Res::ResType::Mesh);
 
 	if (mesh)
 	{
@@ -38,7 +38,7 @@ void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 	glActiveTexture(GL_TEXTURE0); // In case we had multitexturing, we should set which one is active 
 
 	//If the mesh has a material associated, get it
-	ResourceMaterial* mat = (ResourceMaterial*)mesh.GetContainerGameObject()->GetResource(Res::ResType::Material);
+	ResourceMaterial* mat = mesh.GetContainerGameObject()->GetResource<ResourceMaterial>(Res::ResType::Material);
 
 	if (mat)
 	{

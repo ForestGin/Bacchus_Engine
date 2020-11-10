@@ -19,22 +19,29 @@ public:
 
 	
 	uint			GetUID() const;
-	float3			GetPosition();
-	float4x4        GetLocalTransform();
-	Res*			GetResource(Res::ResType type);
 	std::string		GetName() const;
-	float3			GetScale();
-	float3			GetRotation();
-
 	
+
+	template<typename TRes>
+	TRes* GetResource(Res::ResType type)
+	{
+
+		for (uint i = 0; i < components.size(); ++i)
+		{
+			if (components[i]->GetType() == type)
+			{
+				return ((TRes*)(components[i]));
+			}
+		}
+
+		return nullptr;
+	}
+
+	/*Res* GetResource(Res::ResType type);*/
 	Res* AddResource(Res::ResType type);
 	void RemoveResource(Res::ResType type);
+	bool HasResource(Res::ResType type) const;
 
-	
-	void			SetPosition(float x, float y, float z);
-	void			SetRotationAxisAngle(const float3& rot_axis, float degrees_angle);
-	void			Scale(float x, float y, float z);
-	void			SetLocalTransform(float4x4 new_transform);
 	void			SetMaterial(ResourceMaterial* material);
 	void			SetName(const char* name);
 
@@ -42,7 +49,6 @@ public:
 private:
 	
 	uint UID = 0;
-	float4x4 Local_transform = math::float4x4::identity;
 	std::string name;
 	std::vector<Res*> components;
 };

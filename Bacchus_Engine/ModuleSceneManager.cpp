@@ -8,6 +8,7 @@
 #include "ImporterMaterial.h"
 #include "ResourceMesh.h"
 #include "ModuleTextures.h"
+#include "ResourceTransform.h"
 
 #include "vSphere.h"
 #include "vCubesphere.h"
@@ -75,73 +76,19 @@ bool ModuleSceneManager::CleanUp()
 	return true;
 }
 
-uint ModuleSceneManager::GetNumGameObjects() const
-{
-	return game_objects.size();
-}
-
-uint ModuleSceneManager::GetSelectedGameObjects()
-{
-	return SelectedGameObject;
-}
-
-std::vector<GameObject*>& ModuleSceneManager::GetGameObjects()
-{
-	return game_objects;
-}
-
-void ModuleSceneManager::SetSelectedGameObject(uint index)
-{
-	SelectedGameObject = index;
-}
-
-void ModuleSceneManager::SetTextureToSelectedGO(uint id)
-{
-	ResourceMaterial* Material = (ResourceMaterial*)game_objects[SelectedGameObject]->GetResource(Res::ResType::Material);
-
-	if (Material)
-	{
-		Material->FreeTexture();
-		Material->TextureID = id;
-	}
-}
-
-GameObject* ModuleSceneManager::CreateEmptyGameObject()
-{
-	std::string Name = "GameObject ";
-	Name.append("(");
-	Name.append(std::to_string(game_objects.size()));
-	Name.append(")");
-
-	GameObject* new_object = new GameObject(Name.data());
-	game_objects.push_back(new_object);
-
-	new_object->SetMaterial(DefaultMaterial);
-
-	return new_object;
-}
-
-ResourceMaterial* ModuleSceneManager::CreateEmptyMaterial()
-{
-
-	ResourceMaterial* Material = new ResourceMaterial(Res::ResType::Material);
-
-	
-	Materials.push_back(Material);
-
-	return Material;
-}
-
 void ModuleSceneManager::Draw() const
 {
 	CreateGrid();
 
 	for (uint i = 0; i < game_objects.size(); ++i)
 	{
-		glPushMatrix();
-		glMultMatrixf(game_objects[i]->GetLocalTransform().ptr());
 
-		ResourceRenderer* Renderer = (ResourceRenderer*)game_objects[i]->GetResource(Res::ResType::Renderer);
+        ResourceTransform* transform = game_objects[i]->GetResource<ResourceTransform>(Res::ResType::Transform);
+
+		glPushMatrix();
+        glMultMatrixf(transform->GetLocalTransform().ptr());
+
+		ResourceRenderer* Renderer = game_objects[i]->GetResource<ResourceRenderer>(Res::ResType::Renderer);
 
 		if (Renderer)
 		{
@@ -150,6 +97,64 @@ void ModuleSceneManager::Draw() const
 
 		glPopMatrix();
 	}
+}
+
+uint ModuleSceneManager::GetNumGameObjects() const
+{
+    return game_objects.size();
+}
+
+uint ModuleSceneManager::GetSelectedGameObjects()
+{
+    return SelectedGameObject;
+}
+
+std::vector<GameObject*>& ModuleSceneManager::GetGameObjects()
+{
+    return game_objects;
+}
+
+void ModuleSceneManager::SetSelectedGameObject(uint index)
+{
+    SelectedGameObject = index;
+}
+
+void ModuleSceneManager::SetTextureToSelectedGO(uint id)
+{
+    ResourceMaterial* Material = game_objects[SelectedGameObject]->GetResource<ResourceMaterial>(Res::ResType::Material);
+
+    if (Material)
+    {
+        Material->FreeTexture();
+        Material->TextureID = id;
+    }
+}
+
+GameObject* ModuleSceneManager::CreateEmptyGameObject()
+{
+    std::string Name = "GameObject ";
+    Name.append("(");
+    Name.append(std::to_string(game_objects.size()));
+    Name.append(")");
+
+    GameObject* new_object = new GameObject(Name.data());
+    game_objects.push_back(new_object);
+    new_object->AddResource(Res::ResType::Transform);
+
+    new_object->SetMaterial(DefaultMaterial);
+
+    return new_object;
+}
+
+ResourceMaterial* ModuleSceneManager::CreateEmptyMaterial()
+{
+
+    ResourceMaterial* Material = new ResourceMaterial(Res::ResType::Material);
+
+
+    Materials.push_back(Material);
+
+    return Material;
 }
 
 GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stacks, bool smooth)

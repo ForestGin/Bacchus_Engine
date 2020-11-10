@@ -79,7 +79,7 @@ bool ModuleResources::LoadFromPath(const char* path)
 		// If it is an image file file ...
 		else if (DroppedFile_path.find(".dds") != std::string::npos || DroppedFile_path.find(".png") != std::string::npos)
 		{
-			ResourceMaterial* mat = (ResourceMaterial*)App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->GetResource(Res::ResType::Material);
+			ResourceMaterial* mat = App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->GetResource<ResourceMaterial>(Res::ResType::Material);
 			
 			if (mat->Texture_path == "Default")
 			{
