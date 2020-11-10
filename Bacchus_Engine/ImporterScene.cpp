@@ -13,6 +13,7 @@
 #include "GameObject.h"
 #include "ImporterMesh.h"
 #include "ImporterMaterial.h"
+#include "ModuleCamera3D.h"
 
 #include "mmgr/mmgr.h"
 
@@ -72,6 +73,7 @@ bool ImporterScene::Import(const char& File_path, const ImportData& IData) const
 
 				}
 
+				App->camera->FrameObject(new_object);
 			}
 
 		}

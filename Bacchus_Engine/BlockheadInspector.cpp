@@ -25,7 +25,13 @@ bool BlockheadInspector::Draw()
 
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
-		GameObject* Selected = App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects());
+		GameObject* Selected = App->scene_manager->GetSelectedGameObjects();
+
+		if (Selected == nullptr)
+		{
+			ImGui::End();
+			return false;
+		}
 
 		ImGui::BeginChild("child", ImVec2(0, 35), true);
 

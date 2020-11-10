@@ -91,7 +91,7 @@ update_status ModuleCamera3D::Update(float dt)
 	//F: Focus on geometry
 	if (!App->bacchuseditor->IsKeyboardCaptured() && App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		FrameObject(*App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects()));
+		FrameObject(App->scene_manager->GetSelectedGameObjects());
 	}
 
 	// Recalculate matrix -------------
@@ -266,22 +266,35 @@ void ModuleCamera3D::CalculateViewMatrix()
 	ViewMatrixInverse = inverse(ViewMatrix);
 }
 
-void ModuleCamera3D::FrameObject(GameObject& GO)
+void ModuleCamera3D::FrameObject(GameObject* GO)
 {
-	ResourceTransform* transform = GO.GetResource<ResourceTransform>(Res::ResType::Transform);
+	
+	if (GO)
+	{
+		ResourceTransform* transform = GO->GetResource<ResourceTransform>(Res::ResType::Transform);
 
-	Reference.x = transform->GetPosition().x;
-	Reference.y = transform->GetPosition().y;
-	Reference.z = transform->GetPosition().z;
+		if (transform)
+		{
+			Reference.x = transform->GetPosition().x;
+			Reference.y = transform->GetPosition().y;
+			Reference.z = transform->GetPosition().z;
 
-	ResourceMesh* mesh = GO.GetResource<ResourceMesh>(Res::ResType::Mesh);
+			ResourceMesh* mesh = GO->GetResource<ResourceMesh>(Res::ResType::Mesh);
 
-	Sphere s(transform->GetPosition(), 1);
-	s.Enclose(mesh->Vertices, mesh->VerticesSize);
-	s.r = s.Diameter() - Length(float3(Reference.x, Reference.y, Reference.z));
-	s.pos = transform->GetPosition();
+			if (mesh)
+			{
 
-	Look(Position, vec3(s.Centroid().x, s.Centroid().y, s.Centroid().z), true);
-	vec3 Movement = -Z * (2 * s.r);
-	Position = Reference - Movement;
+				Sphere s(transform->GetPosition(), 1);
+				s.Enclose(mesh->Vertices, mesh->VerticesSize);
+
+				s.r = s.Diameter() - Length(float3(Reference.x, Reference.y, Reference.z));
+				s.pos = transform->GetPosition();
+
+				Look(Position, vec3(s.Centroid().x, s.Centroid().y, s.Centroid().z), true);
+				vec3 Movement = -Z * (2 * s.r);
+				Position = Reference - Movement;
+
+			}
+		}
+	}
 }

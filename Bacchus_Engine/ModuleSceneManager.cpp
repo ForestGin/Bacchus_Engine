@@ -23,6 +23,8 @@ ModuleSceneManager::~ModuleSceneManager()
 
 bool ModuleSceneManager::Init(json file)
 {
+    root = CreateRootGameObject();
+
 	return true;
 }
 
@@ -52,12 +54,8 @@ update_status ModuleSceneManager::Update(float dt)
 
 bool ModuleSceneManager::CleanUp()
 {
+    root->RecursiveDelete(root);
 
-	for (uint i = 0; i < game_objects.size(); ++i)
-	{
-		if (game_objects[i])
-			delete game_objects[i];
-	}
 	game_objects.clear();
 
 	for (uint i = 0; i < Materials.size(); ++i)
@@ -95,12 +93,18 @@ void ModuleSceneManager::Draw() const
 	}
 }
 
+GameObject* ModuleSceneManager::GetRootGO() const
+{
+    return root;
+}
+
+
 uint ModuleSceneManager::GetNumGameObjects() const
 {
     return game_objects.size();
 }
 
-uint ModuleSceneManager::GetSelectedGameObjects()
+GameObject* ModuleSceneManager::GetSelectedGameObjects()
 {
     return SelectedGameObject;
 }
@@ -110,14 +114,14 @@ std::vector<GameObject*>& ModuleSceneManager::GetGameObjects()
     return game_objects;
 }
 
-void ModuleSceneManager::SetSelectedGameObject(uint index)
+void ModuleSceneManager::SetSelectedGameObject(GameObject* go)
 {
-    SelectedGameObject = index;
+    SelectedGameObject = go;
 }
 
 void ModuleSceneManager::SetTextureToSelectedGO(uint id)
 {
-    ResourceMaterial* Material = game_objects[SelectedGameObject]->GetResource<ResourceMaterial>(Res::ResType::Material);
+    ResourceMaterial* Material = SelectedGameObject->GetResource<ResourceMaterial>(Res::ResType::Material);
 
     if (Material)
     {
@@ -134,10 +138,22 @@ GameObject* ModuleSceneManager::CreateEmptyGameObject()
     Name.append(")");
 
     GameObject* new_object = new GameObject(Name.data());
+    root->AddChildGO(new_object);
     game_objects.push_back(new_object);
     new_object->AddResource(Res::ResType::Transform);
 
     new_object->SetMaterial(DefaultMaterial);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::CreateRootGameObject()
+{
+    // --- Create New Game Object Name ---
+    std::string Name = "root";
+
+    // --- Create empty Game object to be filled out ---
+    GameObject* new_object = new GameObject(Name.data());
 
     return new_object;
 }

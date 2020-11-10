@@ -45,7 +45,15 @@ public:
 	void			SetMaterial(ResourceMaterial* material);
 	void			SetName(const char* name);
 
+	void AddChildGO(GameObject* GO);
+	bool FindChildGO(GameObject* GO);
+	void RecursiveDelete(GameObject* GO);
+	void RemoveChildGO(GameObject* GO);
 
+
+public:
+	GameObject* parent = nullptr;
+	std::vector<GameObject*> childs;
 private:
 	
 	uint UID = 0;

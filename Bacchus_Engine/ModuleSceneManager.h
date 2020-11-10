@@ -25,6 +25,8 @@ public:
 	ResourceMaterial* CreateEmptyMaterial();
 	uint GetNumGameObjects() const;
 	void Draw() const;
+	GameObject* GetRootGO() const;
+
 
 	GameObject* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false);
 	GameObject* CreateCubeSphere(float Radius = 1.0f, int sub = 3, bool smooth = false);
@@ -33,13 +35,13 @@ public:
 
 	void CreateGrid() const;
 
-	uint GetSelectedGameObjects();
+	GameObject* GetSelectedGameObjects();
 	std::vector<GameObject*>& GetGameObjects();
-	void SetSelectedGameObject(uint index);
+	void SetSelectedGameObject(GameObject* go);
 	void SetTextureToSelectedGO(uint id);
 
 private:
-
+	GameObject* CreateRootGameObject();
 
 public:
 	ResourceMaterial* CheckersMaterial = nullptr;
@@ -49,7 +51,8 @@ private:
 
 	std::vector<GameObject*> game_objects;
 	std::vector<ResourceMaterial*> Materials;
-	uint SelectedGameObject = 0;
+	GameObject* SelectedGameObject = nullptr;
+	GameObject* root = nullptr;
 };
 
 #endif 
