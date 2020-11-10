@@ -45,7 +45,7 @@ public:
     // for vertex data
     unsigned int getVertexCount() const     { return (unsigned int)vertices.size() / 3; }
     unsigned int getNormalCount() const     { return (unsigned int)normals.size() / 3; }
-    unsigned int getTexCoordCount() const   { return (unsigned int)texCoords.size() / 2; }
+    unsigned int getTexCoordCount() const   { return (unsigned int)texCoords.size() /*/ 2*/; }
     unsigned int getIndexCount() const      { return (unsigned int)indices.size(); }
     unsigned int getLineIndexCount() const  { return (unsigned int)lineIndices.size(); }
     unsigned int getTriangleCount() const   { return getIndexCount() / 3; }
