@@ -23,8 +23,8 @@ class vCylinder
 {
 public:
     // ctor/dtor
-    vCylinder(float baseRadius=1.0f, float topRadius=1.0f, float height=1.0f,
-             int sectorCount=36, int stackCount=1, bool smooth=true);
+    vCylinder(float baseRadius = 1.0f, float topRadius = 1.0f, float height = 1.0f,
+        int sectorCount = 36, int stackCount = 1, bool smooth = false);
     ~vCylinder() {}
 
     // getters/setters
@@ -43,8 +43,8 @@ public:
     void setSmooth(bool smooth);
 
     // for vertex data
-    unsigned int getVertexCount() const     { return (unsigned int)vertices.size() / 3; }
-    unsigned int getNormalCount() const     { return (unsigned int)normals.size() / 3; }
+    unsigned int getVertexCount() const     { return (unsigned int)vertices.size() /*/ 3*/; }
+    unsigned int getNormalCount() const     { return (unsigned int)normals.size() /*/ 3*/; }
     unsigned int getTexCoordCount() const   { return (unsigned int)texCoords.size() /*/ 2*/; }
     unsigned int getIndexCount() const      { return (unsigned int)indices.size(); }
     unsigned int getLineIndexCount() const  { return (unsigned int)lineIndices.size(); }

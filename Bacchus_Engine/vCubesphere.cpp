@@ -259,16 +259,16 @@ void vCubesphere::buildVerticesFlat()
     float n[3];                         // normal vector
 
     // +X face
-    for(unsigned int i = 0; i < vertexCountPerRow - 1; ++i)
+    for (unsigned int i = 0; i < vertexCountPerRow - 1; ++i)
     {
         k1 = i * vertexCountPerRow;              // index at curr row
         k2 = k1 + vertexCountPerRow;             // index at next row
 
         // vertical tex coords
         t1[1] = t3[1] = (float)i / (vertexCountPerRow - 1);
-        t2[1] = t4[1] = (float)(i+1) / (vertexCountPerRow - 1);
+        t2[1] = t4[1] = (float)(i + 1) / (vertexCountPerRow - 1);
 
-        for(unsigned int j = 0; j < vertexCountPerRow - 1; ++j, ++k1, ++k2)
+        for (unsigned int j = 0; j < vertexCountPerRow - 1; ++j, ++k1, ++k2)
         {
             i1 = k1 * 3;
             i2 = k2 * 3;
@@ -278,17 +278,17 @@ void vCubesphere::buildVerticesFlat()
             // | / |
             // v2--v4
             v1[0] = unitVertices[i1];
-            v1[1] = unitVertices[i1+1];
-            v1[2] = unitVertices[i1+2];
+            v1[1] = unitVertices[i1 + 1];
+            v1[2] = unitVertices[i1 + 2];
             v2[0] = unitVertices[i2];
-            v2[1] = unitVertices[i2+1];
-            v2[2] = unitVertices[i2+2];
-            v3[0] = unitVertices[i1+3];
-            v3[1] = unitVertices[i1+4];
-            v3[2] = unitVertices[i1+5];
-            v4[0] = unitVertices[i2+3];
-            v4[1] = unitVertices[i2+4];
-            v4[2] = unitVertices[i2+5];
+            v2[1] = unitVertices[i2 + 1];
+            v2[2] = unitVertices[i2 + 2];
+            v3[0] = unitVertices[i1 + 3];
+            v3[1] = unitVertices[i1 + 4];
+            v3[2] = unitVertices[i1 + 5];
+            v4[0] = unitVertices[i2 + 3];
+            v4[1] = unitVertices[i2 + 4];
+            v4[2] = unitVertices[i2 + 5];
 
             // compute face nornal
             vCubesphere::computeFaceNormal(v1, v2, v3, n);
@@ -301,7 +301,7 @@ void vCubesphere::buildVerticesFlat()
 
             // compute horizontal tex coords
             t1[0] = t2[0] = (float)j / (vertexCountPerRow - 1);
-            t3[0] = t4[0] = (float)(j+1) / (vertexCountPerRow - 1);
+            t3[0] = t4[0] = (float)(j + 1) / (vertexCountPerRow - 1);
 
             // add 4 vertex attributes
             addVertices(v1, v2, v3, v4);
@@ -309,14 +309,14 @@ void vCubesphere::buildVerticesFlat()
             addTexCoords(t1, t2, t3, t4);
 
             // add indices of 2 triangles
-            addIndices(k, k+1, k+2);
-            addIndices(k+2, k+1, k+3);
+            addIndices(k, k + 1, k + 2);
+            addIndices(k + 2, k + 1, k + 3);
 
             // add line indices; top and left
             lineIndices.push_back(k);       // left
-            lineIndices.push_back(k+1);
+            lineIndices.push_back(k + 1);
             lineIndices.push_back(k);       // top
-            lineIndices.push_back(k+2);
+            lineIndices.push_back(k + 2);
 
             k += 4;     // next
         }
@@ -330,17 +330,17 @@ void vCubesphere::buildVerticesFlat()
 
     // build -X face by negating x and z values
     startIndex = vertices.size() / 3;
-    for(int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
+    for (int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
     {
-        addVertex(-vertices[i], vertices[i+1], -vertices[i+2]);
-        addTexCoord(texCoords[j], texCoords[j+1]);
-        addNormal(-normals[i], normals[i+1], -normals[i+2]);
+        addVertex(-vertices[i], vertices[i + 1], -vertices[i + 2]);
+        addTexCoord(texCoords[j], texCoords[j + 1]);
+        addNormal(-normals[i], normals[i + 1], -normals[i + 2]);
     }
-    for(int i = 0; i < indexSize; ++i)
+    for (int i = 0; i < indexSize; ++i)
     {
         indices.push_back(startIndex + indices[i]);
     }
-    for(int i = 0; i < lineIndexSize; i += 4)
+    for (int i = 0; i < lineIndexSize; i += 4)
     {
         // left and bottom lines
         lineIndices.push_back(startIndex + i);      // left
@@ -351,17 +351,17 @@ void vCubesphere::buildVerticesFlat()
 
     // build +Y face by swapping x=>y, y=>-z, z=>-x
     startIndex = vertices.size() / 3;
-    for(int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
+    for (int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
     {
-        addVertex(-vertices[i+2], vertices[i], -vertices[i+1]);
-        addTexCoord(texCoords[j], texCoords[j+1]);
-        addNormal(-normals[i+2], normals[i], -normals[i+1]);
+        addVertex(-vertices[i + 2], vertices[i], -vertices[i + 1]);
+        addTexCoord(texCoords[j], texCoords[j + 1]);
+        addNormal(-normals[i + 2], normals[i], -normals[i + 1]);
     }
-    for(int i = 0; i < indexSize; ++i)
+    for (int i = 0; i < indexSize; ++i)
     {
         indices.push_back(startIndex + indices[i]);
     }
-    for(int i = 0; i < lineIndexSize; ++i)
+    for (int i = 0; i < lineIndexSize; ++i)
     {
         // top and left lines (same as +X)
         lineIndices.push_back(startIndex + lineIndices[i]);
@@ -369,17 +369,17 @@ void vCubesphere::buildVerticesFlat()
 
     // build -Y face by swapping x=>-y, y=>z, z=>-x
     startIndex = vertices.size() / 3;
-    for(int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
+    for (int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
     {
-        addVertex(-vertices[i+2], -vertices[i], vertices[i+1]);
-        addTexCoord(texCoords[j], texCoords[j+1]);
-        addNormal(-normals[i+2], -normals[i], normals[i+1]);
+        addVertex(-vertices[i + 2], -vertices[i], vertices[i + 1]);
+        addTexCoord(texCoords[j], texCoords[j + 1]);
+        addNormal(-normals[i + 2], -normals[i], normals[i + 1]);
     }
-    for(int i = 0; i < indexSize; ++i)
+    for (int i = 0; i < indexSize; ++i)
     {
         indices.push_back(startIndex + indices[i]);
     }
-    for(int i = 0; i < lineIndexSize; i += 4)
+    for (int i = 0; i < lineIndexSize; i += 4)
     {
         // top and right lines
         lineIndices.push_back(startIndex + i);      // top
@@ -390,17 +390,17 @@ void vCubesphere::buildVerticesFlat()
 
     // build +Z face by swapping x=>z, z=>-x
     startIndex = vertices.size() / 3;
-    for(int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
+    for (int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
     {
-        addVertex(-vertices[i+2], vertices[i+1], vertices[i]);
-        addTexCoord(texCoords[j], texCoords[j+1]);
-        addNormal(-normals[i+2], normals[i+1], normals[i]);
+        addVertex(-vertices[i + 2], vertices[i + 1], vertices[i]);
+        addTexCoord(texCoords[j], texCoords[j + 1]);
+        addNormal(-normals[i + 2], normals[i + 1], normals[i]);
     }
-    for(int i = 0; i < indexSize; ++i)
+    for (int i = 0; i < indexSize; ++i)
     {
         indices.push_back(startIndex + indices[i]);
     }
-    for(int i = 0; i < lineIndexSize; ++i)
+    for (int i = 0; i < lineIndexSize; ++i)
     {
         // top and left lines (same as +X)
         lineIndices.push_back(startIndex + lineIndices[i]);
@@ -408,17 +408,17 @@ void vCubesphere::buildVerticesFlat()
 
     // build -Z face by swapping x=>-z, z=>x
     startIndex = vertices.size() / 3;
-    for(int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
+    for (int i = 0, j = 0; i < vertexSize; i += 3, j += 2)
     {
-        addVertex(vertices[i+2], vertices[i+1], -vertices[i]);
-        addTexCoord(texCoords[j], texCoords[j+1]);
-        addNormal(normals[i+2], normals[i+1], -normals[i]);
+        addVertex(vertices[i + 2], vertices[i + 1], -vertices[i]);
+        addTexCoord(texCoords[j], texCoords[j + 1]);
+        addNormal(normals[i + 2], normals[i + 1], -normals[i]);
     }
-    for(int i = 0; i < indexSize; ++i)
+    for (int i = 0; i < indexSize; ++i)
     {
         indices.push_back(startIndex + indices[i]);
     }
-    for(int i = 0; i < lineIndexSize; i += 4)
+    for (int i = 0; i < lineIndexSize; i += 4)
     {
         // left and bottom lines
         lineIndices.push_back(startIndex + i);      // left

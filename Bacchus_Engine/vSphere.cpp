@@ -332,7 +332,7 @@ void vSphere::buildVerticesFlat()
     float sectorAngle, stackAngle;
 
     // compute all vertices first, each vertex contains (x,y,z,s,t) except normal
-    for(int i = 0; i <= stackCount; ++i)
+    for (int i = 0; i <= stackCount; ++i)
     {
         stackAngle = PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
         float xy = radius * cosf(stackAngle);       // r * cos(u)
@@ -340,7 +340,7 @@ void vSphere::buildVerticesFlat()
 
         // add (sectorCount+1) vertices per stack
         // the first and last vertices have same position and normal, but different tex coords
-        for(int j = 0; j <= sectorCount; ++j)
+        for (int j = 0; j <= sectorCount; ++j)
         {
             sectorAngle = j * sectorStep;           // starting from 0 to 2pi
 
@@ -348,8 +348,8 @@ void vSphere::buildVerticesFlat()
             vertex.x = xy * cosf(sectorAngle);      // x = r * cos(u) * cos(v)
             vertex.y = xy * sinf(sectorAngle);      // y = r * cos(u) * sin(v)
             vertex.z = z;                           // z = r * sin(u)
-            vertex.s = (float)j/sectorCount;        // s
-            vertex.t = (float)i/stackCount;         // t
+            vertex.s = (float)j / sectorCount;        // s
+            vertex.t = (float)i / stackCount;         // t
             tmpVertices.push_back(vertex);
         }
     }
@@ -362,12 +362,12 @@ void vSphere::buildVerticesFlat()
 
     int i, j, k, vi1, vi2;
     int index = 0;                                  // index for vertex
-    for(i = 0; i < stackCount; ++i)
+    for (i = 0; i < stackCount; ++i)
     {
         vi1 = i * (sectorCount + 1);                // index of tmpVertices
         vi2 = (i + 1) * (sectorCount + 1);
 
-        for(j = 0; j < sectorCount; ++j, ++vi1, ++vi2)
+        for (j = 0; j < sectorCount; ++j, ++vi1, ++vi2)
         {
             // get 4 vertices per sector
             //  v1--v3
@@ -380,7 +380,7 @@ void vSphere::buildVerticesFlat()
 
             // if 1st stack and last stack, store only 1 triangle per sector
             // otherwise, store 2 triangles (quad) per sector
-            if(i == 0) // a triangle for first stack ==========================
+            if (i == 0) // a triangle for first stack ==========================
             {
                 // put a triangle
                 addVertex(v1.x, v1.y, v1.z);
@@ -393,22 +393,22 @@ void vSphere::buildVerticesFlat()
                 addTexCoord(v4.s, v4.t);
 
                 // put normal
-                n = computeFaceNormal(v1.x,v1.y,v1.z, v2.x,v2.y,v2.z, v4.x,v4.y,v4.z);
-                for(k = 0; k < 3; ++k)  // same normals for 3 vertices
+                n = computeFaceNormal(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, v4.x, v4.y, v4.z);
+                for (k = 0; k < 3; ++k)  // same normals for 3 vertices
                 {
                     addNormal(n[0], n[1], n[2]);
                 }
 
                 // put indices of 1 triangle
-                addIndices(index, index+1, index+2);
+                addIndices(index, index + 1, index + 2);
 
                 // indices for line (first stack requires only vertical line)
                 lineIndices.push_back(index);
-                lineIndices.push_back(index+1);
+                lineIndices.push_back(index + 1);
 
                 index += 3;     // for next
             }
-            else if(i == (stackCount-1)) // a triangle for last stack =========
+            else if (i == (stackCount - 1)) // a triangle for last stack =========
             {
                 // put a triangle
                 addVertex(v1.x, v1.y, v1.z);
@@ -421,20 +421,20 @@ void vSphere::buildVerticesFlat()
                 addTexCoord(v3.s, v3.t);
 
                 // put normal
-                n = computeFaceNormal(v1.x,v1.y,v1.z, v2.x,v2.y,v2.z, v3.x,v3.y,v3.z);
-                for(k = 0; k < 3; ++k)  // same normals for 3 vertices
+                n = computeFaceNormal(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, v3.x, v3.y, v3.z);
+                for (k = 0; k < 3; ++k)  // same normals for 3 vertices
                 {
                     addNormal(n[0], n[1], n[2]);
                 }
 
                 // put indices of 1 triangle
-                addIndices(index, index+1, index+2);
+                addIndices(index, index + 1, index + 2);
 
                 // indices for lines (last stack requires both vert/hori lines)
                 lineIndices.push_back(index);
-                lineIndices.push_back(index+1);
+                lineIndices.push_back(index + 1);
                 lineIndices.push_back(index);
-                lineIndices.push_back(index+2);
+                lineIndices.push_back(index + 2);
 
                 index += 3;     // for next
             }
@@ -453,21 +453,21 @@ void vSphere::buildVerticesFlat()
                 addTexCoord(v4.s, v4.t);
 
                 // put normal
-                n = computeFaceNormal(v1.x,v1.y,v1.z, v2.x,v2.y,v2.z, v3.x,v3.y,v3.z);
-                for(k = 0; k < 4; ++k)  // same normals for 4 vertices
+                n = computeFaceNormal(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, v3.x, v3.y, v3.z);
+                for (k = 0; k < 4; ++k)  // same normals for 4 vertices
                 {
                     addNormal(n[0], n[1], n[2]);
                 }
 
                 // put indices of quad (2 triangles)
-                addIndices(index, index+1, index+2);
-                addIndices(index+2, index+1, index+3);
+                addIndices(index, index + 1, index + 2);
+                addIndices(index + 2, index + 1, index + 3);
 
                 // indices for lines
                 lineIndices.push_back(index);
-                lineIndices.push_back(index+1);
+                lineIndices.push_back(index + 1);
                 lineIndices.push_back(index);
-                lineIndices.push_back(index+2);
+                lineIndices.push_back(index + 2);
 
                 index += 4;     // for next
             }

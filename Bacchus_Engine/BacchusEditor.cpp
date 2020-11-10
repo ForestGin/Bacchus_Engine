@@ -169,7 +169,7 @@ update_status BacchusEditor::Update(float dt)
 
 					if (ImGui::MenuItem("Icosphere"))
 					{
-						App->scene_manager->CreateIcoSphere(1, 1, false);
+						App->scene_manager->CreateIcoSphere(1, 3, false);
 					}
 					ImGui::EndMenu();
 				}

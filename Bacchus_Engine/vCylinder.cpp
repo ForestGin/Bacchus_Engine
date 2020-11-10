@@ -424,16 +424,16 @@ void vCylinder::buildVerticesFlat()
     // put tmp vertices of cylinder side to array by scaling unit circle
     //NOTE: start and end vertex positions are same, but texcoords are different
     //      so, add additional vertex at the end point
-    for(i = 0; i <= stackCount; ++i)
+    for (i = 0; i <= stackCount; ++i)
     {
         z = -(height * 0.5f) + (float)i / stackCount * height;      // vertex position z
         radius = baseRadius + (float)i / stackCount * (topRadius - baseRadius);     // lerp
         t = 1.0f - (float)i / stackCount;   // top-to-bottom
 
-        for(j = 0, k = 0; j <= sectorCount; ++j, k += 3)
+        for (j = 0, k = 0; j <= sectorCount; ++j, k += 3)
         {
             x = unitCircleVertices[k];
-            y = unitCircleVertices[k+1];
+            y = unitCircleVertices[k + 1];
             s = (float)j / sectorCount;
 
             Vertex vertex;
@@ -457,12 +457,12 @@ void vCylinder::buildVerticesFlat()
     // v2-v4 <== stack at i+1
     // | \ |
     // v1-v3 <== stack at i
-    for(i = 0; i < stackCount; ++i)
+    for (i = 0; i < stackCount; ++i)
     {
         vi1 = i * (sectorCount + 1);            // index of tmpVertices
         vi2 = (i + 1) * (sectorCount + 1);
 
-        for(j = 0; j < sectorCount; ++j, ++vi1, ++vi2)
+        for (j = 0; j < sectorCount; ++j, ++vi1, ++vi2)
         {
             v1 = tmpVertices[vi1];
             v2 = tmpVertices[vi2];
@@ -470,7 +470,7 @@ void vCylinder::buildVerticesFlat()
             v4 = tmpVertices[vi2 + 1];
 
             // compute a face normal of v1-v3-v2
-            n = computeFaceNormal(v1.x,v1.y,v1.z, v3.x,v3.y,v3.z, v2.x,v2.y,v2.z);
+            n = computeFaceNormal(v1.x, v1.y, v1.z, v3.x, v3.y, v3.z, v2.x, v2.y, v2.z);
 
             // put quad vertices: v1-v2-v3-v4
             addVertex(v1.x, v1.y, v1.z);
@@ -485,25 +485,25 @@ void vCylinder::buildVerticesFlat()
             addTexCoord(v4.s, v4.t);
 
             // put normal
-            for(k = 0; k < 4; ++k)  // same normals for all 4 vertices
+            for (k = 0; k < 4; ++k)  // same normals for all 4 vertices
             {
                 addNormal(n[0], n[1], n[2]);
             }
 
             // put indices of a quad
-            addIndices(index,   index+2, index+1);    // v1-v3-v2
-            addIndices(index+1, index+2, index+3);    // v2-v3-v4
+            addIndices(index, index + 2, index + 1);    // v1-v3-v2
+            addIndices(index + 1, index + 2, index + 3);    // v2-v3-v4
 
             // vertical line per quad: v1-v2
             lineIndices.push_back(index);
-            lineIndices.push_back(index+1);
+            lineIndices.push_back(index + 1);
             // horizontal line per quad: v2-v4
-            lineIndices.push_back(index+1);
-            lineIndices.push_back(index+3);
-            if(i == 0)
+            lineIndices.push_back(index + 1);
+            lineIndices.push_back(index + 3);
+            if (i == 0)
             {
                 lineIndices.push_back(index);
-                lineIndices.push_back(index+2);
+                lineIndices.push_back(index + 2);
             }
 
             index += 4;     // for next
@@ -519,19 +519,19 @@ void vCylinder::buildVerticesFlat()
     addVertex(0, 0, z);
     addNormal(0, 0, -1);
     addTexCoord(0.5f, 0.5f);
-    for(i = 0, j = 0; i < sectorCount; ++i, j += 3)
+    for (i = 0, j = 0; i < sectorCount; ++i, j += 3)
     {
         x = unitCircleVertices[j];
-        y = unitCircleVertices[j+1];
+        y = unitCircleVertices[j + 1];
         addVertex(x * baseRadius, y * baseRadius, z);
         addNormal(0, 0, -1);
         addTexCoord(-x * 0.5f + 0.5f, -y * 0.5f + 0.5f); // flip horizontal
     }
 
     // put indices for base
-    for(i = 0, k = baseVertexIndex + 1; i < sectorCount; ++i, ++k)
+    for (i = 0, k = baseVertexIndex + 1; i < sectorCount; ++i, ++k)
     {
-        if(i < sectorCount - 1)
+        if (i < sectorCount - 1)
             addIndices(baseVertexIndex, k + 1, k);
         else
             addIndices(baseVertexIndex, baseVertexIndex + 1, k);
@@ -546,18 +546,18 @@ void vCylinder::buildVerticesFlat()
     addVertex(0, 0, z);
     addNormal(0, 0, 1);
     addTexCoord(0.5f, 0.5f);
-    for(i = 0, j = 0; i < sectorCount; ++i, j += 3)
+    for (i = 0, j = 0; i < sectorCount; ++i, j += 3)
     {
         x = unitCircleVertices[j];
-        y = unitCircleVertices[j+1];
+        y = unitCircleVertices[j + 1];
         addVertex(x * topRadius, y * topRadius, z);
         addNormal(0, 0, 1);
         addTexCoord(x * 0.5f + 0.5f, -y * 0.5f + 0.5f);
     }
 
-    for(i = 0, k = topVertexIndex + 1; i < sectorCount; ++i, ++k)
+    for (i = 0, k = topVertexIndex + 1; i < sectorCount; ++i, ++k)
     {
-        if(i < sectorCount - 1)
+        if (i < sectorCount - 1)
             addIndices(topVertexIndex, k, k + 1);
         else
             addIndices(topVertexIndex, k, topVertexIndex + 1);
