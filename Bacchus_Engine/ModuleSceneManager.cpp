@@ -9,6 +9,11 @@
 #include "ResourceMesh.h"
 #include "ModuleTextures.h"
 
+#include "vSphere.h"
+#include "vCubesphere.h"
+#include "vIcosphere.h"
+#include "vCylinder.h"
+
 #include "mmgr/mmgr.h"
 
 ModuleSceneManager::ModuleSceneManager(bool start_enabled)
@@ -967,454 +972,6 @@ GameObject* ModuleSceneManager::CreateCubeSphere(float radius, int sub, bool smo
     return new_object;
 }
 
-GameObject* ModuleSceneManager::CreateIcoSphere(float radius, int subdivision, bool smooth)
-{
-    GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
-
-    ResourceMesh* new_mesh = (ResourceMesh*)new_object->AddResource(Res::ResType::Mesh);
-
-    ResourceRenderer* Renderer = (ResourceRenderer*)new_object->AddResource(Res::ResType::Renderer);
-
-    std::vector<float> vertices;
-    std::vector<float> normals;
-    std::vector<float> texCoords;
-    std::vector<unsigned int> indices;
-
-    if (smooth)
-    {
-
-    }
-    else
-    {
-        const float S_STEP = 186 / 2048.0f;     // horizontal texture step
-        const float T_STEP = 322 / 1024.0f;     // vertical texture step
-
-        // compute 12 vertices of icosahedron
-        const float PI = acos(-1);
-        const float H_ANGLE = PI / 180 * 72;    // 72 degree = 360 / 5
-        const float V_ANGLE = atanf(1.0f / 2);  // elevation = 26.565 degree
-
-        std::vector<float> tmpVertices(12 * 3);    // 12 vertices
-        int i1, i2;                             // indices
-        float z, xy;                            // coords
-        float hAngle1 = -PI / 2 - H_ANGLE / 2;  // start from -126 deg at 2nd row
-        float hAngle2 = -PI / 2;                // start from -90 deg at 3rd row
-
-        // the first top vertex (0, 0, r)
-        tmpVertices[0] = 0;
-        tmpVertices[1] = 0;
-        tmpVertices[2] = radius;
-
-        // 10 vertices at 2nd and 3rd rows
-        for (int i = 1; i <= 5; ++i)
-        {
-            i1 = i * 3;         // for 2nd row
-            i2 = (i + 5) * 3;   // for 3rd row
-
-            z = radius * sinf(V_ANGLE);             // elevaton
-            xy = radius * cosf(V_ANGLE);
-
-            tmpVertices[i1] = xy * cosf(hAngle1);      // x
-            tmpVertices[i2] = xy * cosf(hAngle2);
-            tmpVertices[i1 + 1] = xy * sinf(hAngle1);  // x
-            tmpVertices[i2 + 1] = xy * sinf(hAngle2);
-            tmpVertices[i1 + 2] = z;                   // z
-            tmpVertices[i2 + 2] = -z;
-
-            // next horizontal angles
-            hAngle1 += H_ANGLE;
-            hAngle2 += H_ANGLE;
-        }
-
-        // the last bottom vertex (0, 0, -r)
-        i1 = 11 * 3;
-        tmpVertices[i1] = 0;
-        tmpVertices[i1 + 1] = 0;
-        tmpVertices[i1 + 2] = -radius;
-
-        const float* v0, * v1, * v2, * v3, * v4, * v11;          // vertex positions
-        float n[3];                                         // face normal
-        float t0[2], t1[2], t2[2], t3[2], t4[2], t11[2];    // texCoords
-        unsigned int index = 0;
-
-        // compute and add 20 tiangles of icosahedron first
-        v0 = &tmpVertices[0];       // 1st vertex
-        v11 = &tmpVertices[11 * 3]; // 12th vertex
-        for (int i = 1; i <= 5; ++i)
-        {
-            // 4 vertices in the 2nd row
-            v1 = &tmpVertices[i * 3];
-            if (i < 5)
-                v2 = &tmpVertices[(i + 1) * 3];
-            else
-                v2 = &tmpVertices[3];
-
-            v3 = &tmpVertices[(i + 5) * 3];
-            if ((i + 5) < 10)
-                v4 = &tmpVertices[(i + 6) * 3];
-            else
-                v4 = &tmpVertices[6 * 3];
-
-            // texture coords
-            t0[0] = (2 * i - 1) * S_STEP;   t0[1] = 0;
-            t1[0] = (2 * i - 2) * S_STEP;   t1[1] = T_STEP;
-            t2[0] = (2 * i - 0) * S_STEP;   t2[1] = T_STEP;
-            t3[0] = (2 * i - 1) * S_STEP;   t3[1] = T_STEP * 2;
-            t4[0] = (2 * i + 1) * S_STEP;   t4[1] = T_STEP * 2;
-            t11[0] = 2 * i * S_STEP;         t11[1] = T_STEP * 3;
-
-            const float EPSILON = 0.000001f;
-            // add a triangle in 1st row
-
-            // default return value (0, 0, 0)
-            n[0] = n[1] = n[2] = 0;
-
-            // find 2 edge vectors: v1-v2, v1-v3
-            float ex1 = v1[0] - v0[0];
-            float ey1 = v1[1] - v0[1];
-            float ez1 = v1[2] - v0[2];
-            float ex2 = v2[0] - v0[0];
-            float ey2 = v2[1] - v0[1];
-            float ez2 = v2[2] - v0[2];
-
-            // cross product: e1 x e2
-            float nx, ny, nz;
-            nx = ey1 * ez2 - ez1 * ey2;
-            ny = ez1 * ex2 - ex1 * ez2;
-            nz = ex1 * ey2 - ey1 * ex2;
-
-            // normalize only if the length is > 0
-            float length = sqrtf(nx * nx + ny * ny + nz * nz);
-            if (length > EPSILON)
-            {
-                // normalize
-                float lengthInv = 1.0f / length;
-                n[0] = nx * lengthInv;
-                n[1] = ny * lengthInv;
-                n[2] = nz * lengthInv;
-            }
-
-            vertices.push_back(v0[0]);  // x
-            vertices.push_back(v0[1]);  // y
-            vertices.push_back(v0[2]);  // z
-
-            vertices.push_back(v1[0]);
-            vertices.push_back(v1[1]);
-            vertices.push_back(v1[2]);
-
-            vertices.push_back(v2[0]);
-            vertices.push_back(v2[1]);
-            vertices.push_back(v2[2]);
-
-            normals.push_back(n[0]);  // nx
-            normals.push_back(n[1]);  // ny
-            normals.push_back(n[2]);  // nz
-
-            normals.push_back(n[0]);
-            normals.push_back(n[1]);
-            normals.push_back(n[2]);
-
-            normals.push_back(n[0]);
-            normals.push_back(n[1]);
-            normals.push_back(n[2]);
-
-            texCoords.push_back(t0[0]); // s
-            texCoords.push_back(t0[1]); // t
-
-            texCoords.push_back(t1[0]);
-            texCoords.push_back(t1[1]);
-
-            texCoords.push_back(t2[0]);
-            texCoords.push_back(t2[1]);
-
-            indices.push_back(index);
-            indices.push_back(index + 1);
-            indices.push_back(index + 2);
-
-            // add 2 triangles in 2nd row
-            // default return value (0, 0, 0)
-            n[0] = n[1] = n[2] = 0;
-
-            // find 2 edge vectors: v1-v2, v1-v3
-            ex1 = v3[0] - v1[0];
-            ey1 = v3[1] - v1[1];
-            ez1 = v3[2] - v1[2];
-            ex2 = v2[0] - v1[0];
-            ey2 = v2[1] - v1[1];
-            ez2 = v2[2] - v1[2];
-
-            // cross product: e1 x e2
-            nx = ey1 * ez2 - ez1 * ey2;
-            ny = ez1 * ex2 - ex1 * ez2;
-            nz = ex1 * ey2 - ey1 * ex2;
-
-            // normalize only if the length is > 0
-            length = sqrtf(nx * nx + ny * ny + nz * nz);
-            if (length > EPSILON)
-            {
-                // normalize
-                float lengthInv = 1.0f / length;
-                n[0] = nx * lengthInv;
-                n[1] = ny * lengthInv;
-                n[2] = nz * lengthInv;
-            }
-
-            vertices.push_back(v1[0]);  // x
-            vertices.push_back(v1[1]);  // y
-            vertices.push_back(v1[2]);  // z
-
-            vertices.push_back(v3[0]);
-            vertices.push_back(v3[1]);
-            vertices.push_back(v3[2]);
-
-            vertices.push_back(v2[0]);
-            vertices.push_back(v2[1]);
-            vertices.push_back(v2[2]);
-
-            normals.push_back(n[0]);  // nx
-            normals.push_back(n[1]);  // ny
-            normals.push_back(n[2]);  // nz
-
-            normals.push_back(n[0]);
-            normals.push_back(n[1]);
-            normals.push_back(n[2]);
-
-            normals.push_back(n[0]);
-            normals.push_back(n[1]);
-            normals.push_back(n[2]);
-
-            texCoords.push_back(t1[0]); // s
-            texCoords.push_back(t1[1]); // t
-
-            texCoords.push_back(t3[0]);
-            texCoords.push_back(t3[1]);
-
-            texCoords.push_back(t2[0]);
-            texCoords.push_back(t2[1]);
-
-            indices.push_back(index + 3);
-            indices.push_back(index + 4);
-            indices.push_back(index + 5);
-
-            // default return value (0, 0, 0)
-            n[0] = n[1] = n[2] = 0;
-
-            // find 2 edge vectors: v1-v2, v1-v3
-            ex1 = v3[0] - v2[0];
-            ey1 = v3[1] - v2[1];
-            ez1 = v3[2] - v2[2];
-            ex2 = v4[0] - v2[0];
-            ey2 = v4[1] - v2[1];
-            ez2 = v4[2] - v2[2];
-
-            // cross product: e1 x e2
-            nx = ey1 * ez2 - ez1 * ey2;
-            ny = ez1 * ex2 - ex1 * ez2;
-            nz = ex1 * ey2 - ey1 * ex2;
-
-            // normalize only if the length is > 0
-            length = sqrtf(nx * nx + ny * ny + nz * nz);
-            if (length > EPSILON)
-            {
-                // normalize
-                float lengthInv = 1.0f / length;
-                n[0] = nx * lengthInv;
-                n[1] = ny * lengthInv;
-                n[2] = nz * lengthInv;
-            }
-
-            vertices.push_back(v2[0]);  // x
-            vertices.push_back(v2[1]);  // y
-            vertices.push_back(v2[2]);  // z
-
-            vertices.push_back(v3[0]);
-            vertices.push_back(v3[1]);
-            vertices.push_back(v3[2]);
-
-            vertices.push_back(v4[0]);
-            vertices.push_back(v4[1]);
-            vertices.push_back(v4[2]);
-
-            normals.push_back(n[0]);  // nx
-            normals.push_back(n[1]);  // ny
-            normals.push_back(n[2]);  // nz
-
-            normals.push_back(n[0]);
-            normals.push_back(n[1]);
-            normals.push_back(n[2]);
-
-            normals.push_back(n[0]);
-            normals.push_back(n[1]);
-            normals.push_back(n[2]);
-
-            texCoords.push_back(t2[0]); // s
-            texCoords.push_back(t2[1]); // t
-
-            texCoords.push_back(t3[0]);
-            texCoords.push_back(t3[1]);
-
-            texCoords.push_back(t4[0]);
-            texCoords.push_back(t4[1]);
-
-            indices.push_back(index + 6);
-            indices.push_back(index + 7);
-            indices.push_back(index + 8);
-
-            // add a triangle in 3rd row
-            // default return value (0, 0, 0)
-            n[0] = n[1] = n[2] = 0;
-
-            // find 2 edge vectors: v1-v2, v1-v3
-            ex1 = v11[0] - v3[0];
-            ey1 = v11[1] - v3[1];
-            ez1 = v11[2] - v3[2];
-            ex2 = v4[0] - v3[0];
-            ey2 = v4[1] - v3[1];
-            ez2 = v4[2] - v3[2];
-
-            // cross product: e1 x e2
-            nx = ey1 * ez2 - ez1 * ey2;
-            ny = ez1 * ex2 - ex1 * ez2;
-            nz = ex1 * ey2 - ey1 * ex2;
-
-            // normalize only if the length is > 0
-            length = sqrtf(nx * nx + ny * ny + nz * nz);
-            if (length > EPSILON)
-            {
-                // normalize
-                float lengthInv = 1.0f / length;
-                n[0] = nx * lengthInv;
-                n[1] = ny * lengthInv;
-                n[2] = nz * lengthInv;
-            }
-
-            vertices.push_back(v3[0]);  // x
-            vertices.push_back(v3[1]);  // y
-            vertices.push_back(v3[2]);  // z
-
-            vertices.push_back(v11[0]);
-            vertices.push_back(v11[1]);
-            vertices.push_back(v11[12]);
-
-            vertices.push_back(v4[0]);
-            vertices.push_back(v4[1]);
-            vertices.push_back(v4[2]);
-
-            normals.push_back(n[0]);  // nx
-            normals.push_back(n[1]);  // ny
-            normals.push_back(n[2]);  // nz
-
-            normals.push_back(n[0]);
-            normals.push_back(n[1]);
-            normals.push_back(n[2]);
-
-            normals.push_back(n[0]);
-            normals.push_back(n[1]);
-            normals.push_back(n[2]);
-
-            texCoords.push_back(t3[0]); // s
-            texCoords.push_back(t3[1]); // t
-
-            texCoords.push_back(t11[0]);
-            texCoords.push_back(t11[1]);
-
-            texCoords.push_back(t4[0]);
-            texCoords.push_back(t4[1]);
-
-            indices.push_back(index + 9);
-            indices.push_back(index + 10);
-            indices.push_back(index + 11);
-
-            //// add 6 edge lines per iteration
-            ////  i
-            ////  /   /   /   /   /       : (i, i+1)                              //
-            //// /__ /__ /__ /__ /__                                              //
-            //// \  /\  /\  /\  /\  /     : (i+3, i+4), (i+3, i+5), (i+4, i+5)    //
-            ////  \/__\/__\/__\/__\/__                                            //
-            ////   \   \   \   \   \      : (i+9,i+10), (i+9, i+11)               //
-            ////    \   \   \   \   \                                             //
-            //lineIndices.push_back(index);       // (i, i+1)
-            //lineIndices.push_back(index + 1);       // (i, i+1)
-            //lineIndices.push_back(index + 3);     // (i+3, i+4)
-            //lineIndices.push_back(index + 4);
-            //lineIndices.push_back(index + 3);     // (i+3, i+5)
-            //lineIndices.push_back(index + 5);
-            //lineIndices.push_back(index + 4);     // (i+4, i+5)
-            //lineIndices.push_back(index + 5);
-            //lineIndices.push_back(index + 9);     // (i+9, i+10)
-            //lineIndices.push_back(index + 10);
-            //lineIndices.push_back(index + 9);     // (i+9, i+11)
-            //lineIndices.push_back(index + 11);
-
-            // next index
-            index += 12;
-        }  
-    }
-    
-    //Vertices
-    uint verticesSize = vertices.size() / 3;
-    new_mesh->VerticesSize = verticesSize;
-    new_mesh->Vertices = new float3[verticesSize]{};
-
-    for (uint i = 0; i < verticesSize; i++)
-    {
-        new_mesh->Vertices[i].x = { vertices[3 * i] };
-        new_mesh->Vertices[i].y = { vertices[(3 * i) + 1] };
-        new_mesh->Vertices[i].z = { vertices[(3 * i) + 2] };
-
-    }
-
-    glGenBuffers(1, (GLuint*)&new_mesh->VerticesID); // create buffer
-    glBindBuffer(GL_ARRAY_BUFFER, new_mesh->VerticesID); // start using created buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * verticesSize, new_mesh->Vertices, GL_STATIC_DRAW); // send vertices to VRAM
-    glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
-
-    //Indices
-    uint indicesSize = indices.size();
-    new_mesh->IndicesSize = indicesSize;
-    new_mesh->Indices = new uint[new_mesh->IndicesSize]{};
-
-    for (uint i = 0; i < indicesSize; i++)
-    {
-        new_mesh->Indices[i] = indices[i];
-    }
-
-    glGenBuffers(1, (GLuint*)&new_mesh->IndicesID); // create buffer
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->IndicesID); // start using created buffer
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * new_mesh->IndicesSize, new_mesh->Indices, GL_STATIC_DRAW); // send vertices to VRAM
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
-
-    //Normals
-    uint normalsSize = normals.size() / 3;
-    new_mesh->NormalsSize = normalsSize;
-    new_mesh->Normals = new float3[new_mesh->NormalsSize];
-
-
-    for (uint i = 0; i < new_mesh->NormalsSize; ++i)
-    {
-        new_mesh->Normals[i].x = normals[3 * i];
-        new_mesh->Normals[i].y = normals[(3 * i) + 1];
-        new_mesh->Normals[i].z = normals[(3 * i) + 2];
-    }
-
-    //Texcoords
-    uint texCoordsSize = texCoords.size();
-    new_mesh->TexCoordsSize = texCoordsSize;
-    new_mesh->TexCoords = new float[new_mesh->TexCoordsSize]{};
-
-    for (uint i = 0; i < texCoordsSize; i++)
-    {
-        new_mesh->TexCoords[i] = texCoords[i];
-    }
-
-    glGenBuffers(1, (GLuint*)&new_mesh->TextureCoordsID); // create buffer
-    glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * new_mesh->TexCoordsSize, new_mesh->TexCoords, GL_STATIC_DRAW); // send vertices to VRAM
-    glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
-
-    return new_object;
-}
-
 GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius, float height, int sectors, int stacks, bool smooth)
 {
     GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
@@ -1785,6 +1342,86 @@ GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius
     glBindBuffer(GL_ARRAY_BUFFER, new_mesh->TextureCoordsID); // start using created buffer
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * new_mesh->TexCoordsSize, new_mesh->TexCoords, GL_STATIC_DRAW); // send vertices to VRAM
     glBindBuffer(GL_ARRAY_BUFFER, 0); // Stop using buffer
+
+    return new_object;
+}
+
+void ModuleSceneManager::LoadPrimitiveArrays(GameObject& new_object, uint vertices_size, const float* vertices, uint indices_size, const uint* indices, uint normals_size, const float* normals, uint texCoords_size, const float* texCoords) const
+{
+    ResourceMesh* new_mesh = (ResourceMesh*)new_object.AddResource(Res::ResType::Mesh);
+
+    ResourceRenderer* Renderer = (ResourceRenderer*)new_object.AddResource(Res::ResType::Renderer);
+
+    //Vertices
+    new_mesh->VerticesSize = vertices_size;
+    new_mesh->Vertices = new float3[new_mesh->VerticesSize]{};
+
+    for (uint i = 0; i < new_mesh->VerticesSize; ++i)
+    {
+        new_mesh->Vertices[i].x = vertices[3 * i];
+        new_mesh->Vertices[i].y = vertices[(3 * i) + 1];
+        new_mesh->Vertices[i].z = vertices[(3 * i) + 2];
+    }
+
+    new_mesh->VerticesID = App->renderer3D->CreateBufferFromData(GL_ARRAY_BUFFER, sizeof(float3) * new_mesh->VerticesSize, new_mesh->Vertices);
+
+    //Indices
+    new_mesh->IndicesSize = indices_size;
+    new_mesh->Indices = new uint[new_mesh->IndicesSize]{};
+
+    for (uint i = 0; i < new_mesh->IndicesSize; ++i)
+    {
+        new_mesh->Indices[i] = indices[i];
+    }
+
+    new_mesh->IndicesID = App->renderer3D->CreateBufferFromData(GL_ARRAY_BUFFER, sizeof(uint) * new_mesh->IndicesSize, new_mesh->Indices);
+
+    //Normals
+    new_mesh->NormalsSize = normals_size;
+    new_mesh->Normals = new float3[new_mesh->NormalsSize];
+
+    for (uint i = 0; i < new_mesh->NormalsSize; ++i)
+    {
+        new_mesh->Normals[i].x = normals[3 * i];
+        new_mesh->Normals[i].y = normals[(3 * i) + 1];
+        new_mesh->Normals[i].z = normals[(3 * i) + 2];
+    }
+
+    //TexCoords
+    new_mesh->TexCoordsSize = texCoords_size;
+    new_mesh->TexCoords = new float[new_mesh->TexCoordsSize]{};
+
+    for (uint i = 0; i < new_mesh->TexCoordsSize; ++i)
+    {
+        new_mesh->TexCoords[i] = texCoords[i];
+    }
+
+    new_mesh->TextureCoordsID = App->renderer3D->CreateBufferFromData(GL_ARRAY_BUFFER, sizeof(float) * new_mesh->TexCoordsSize, new_mesh->TexCoords);
+}
+
+GameObject* ModuleSceneManager::CreateIcoSphere(float radius, int subdivision, bool smooth)
+{
+    GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
+
+    vIcosphere icosphere;
+
+    icosphere.setRadius(radius);
+    icosphere.setSubdivision(subdivision);
+    icosphere.setSmooth(smooth);
+
+    uint vertices_size = icosphere.getVertexCount();
+    const float* vertices = icosphere.getVertices();
+
+    uint indices_size = icosphere.getVertexCount();
+    const uint* indices = icosphere.getIndices();
+
+    uint normals_size = icosphere.getNormalCount();
+    const float* normals = icosphere.getNormals();
+    
+    uint texCoords_size = icosphere.getTexCoordCount();
+    const float* texCoords = icosphere.getTexCoords();
+
+    LoadPrimitiveArrays(*new_object, vertices_size, vertices, indices_size, indices, normals_size, normals, texCoords_size, texCoords);
 
     return new_object;
 }

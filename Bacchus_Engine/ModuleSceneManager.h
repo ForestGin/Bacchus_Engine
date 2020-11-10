@@ -39,7 +39,11 @@ public:
 	void SetTextureToSelectedGO(uint id);
 
 private:
-
+	void LoadPrimitiveArrays(GameObject& new_object,
+		uint vertices_size, const float* vertices,
+		uint indices_size, const uint* indices,
+		uint normals_size, const float* normals,
+		uint texCoords_size, const float* texCoords) const;
 
 public:
 	ResourceMaterial* CheckersMaterial = nullptr;

@@ -195,6 +195,18 @@
     <ClCompile Include="BlockheadInspector.cpp">
       <Filter>EditorBlockheads</Filter>
     </ClCompile>
+    <ClCompile Include="vCubesphere.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="vCylinder.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="vIcosphere.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="vSphere.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -493,6 +505,18 @@
     <ClInclude Include="BlockheadInspector.h">
       <Filter>EditorBlockheads</Filter>
     </ClInclude>
+    <ClInclude Include="vCubesphere.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="vCylinder.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="vIcosphere.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="vSphere.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">
@@ -533,6 +557,9 @@
     </Filter>
     <Filter Include="Importers">
       <UniqueIdentifier>{5a8308be-2c37-49b2-b2ec-bb40b2026f98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Primitives">
+      <UniqueIdentifier>{1902f8dd-b2c6-419c-9b4c-942c76dc16c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

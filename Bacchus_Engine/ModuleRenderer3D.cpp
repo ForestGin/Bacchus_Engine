@@ -225,6 +225,18 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
+uint ModuleRenderer3D::CreateBufferFromData(uint Targetbuffer, uint size, void* data) const
+{
+	uint ID = 0;
+
+	glGenBuffers(1, (GLuint*)&ID); // create buffer
+	glBindBuffer(Targetbuffer, ID); // start using created buffer
+	glBufferData(Targetbuffer, size, data, GL_STATIC_DRAW); // send data to VRAM
+	glBindBuffer(Targetbuffer, 0); // Stop using buffer
+
+	return ID;
+}
+
 bool ModuleRenderer3D::SetVSync(bool vsync)
 {
 	bool ret = true;

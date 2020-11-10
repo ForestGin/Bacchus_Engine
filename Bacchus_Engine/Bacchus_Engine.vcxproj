@@ -201,6 +201,10 @@
     <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="ResourceRenderer.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="vCubesphere.h" />
+    <ClInclude Include="vCylinder.h" />
+    <ClInclude Include="vIcosphere.h" />
+    <ClInclude Include="vSphere.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -277,6 +281,10 @@
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="ResourceRenderer.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="vCubesphere.cpp" />
+    <ClCompile Include="vCylinder.cpp" />
+    <ClCompile Include="vIcosphere.cpp" />
+    <ClCompile Include="vSphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl" />

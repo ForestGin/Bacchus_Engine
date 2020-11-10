@@ -150,10 +150,10 @@ update_status BacchusEditor::Update(float dt)
 					App->scene_manager->CreateSphere(1, 4, 2, false);
 				}
 
-				/*if (ImGui::MenuItem("Icosahedron"))
+				if (ImGui::MenuItem("Icosahedron"))
 				{
 					App->scene_manager->CreateIcoSphere(1, 0, false);
-				}*/
+				}
 
 				if (ImGui::BeginMenu("Spheres"))
 				{
@@ -167,10 +167,10 @@ update_status BacchusEditor::Update(float dt)
 						App->scene_manager->CreateCubeSphere(1, 3, false);
 					}
 
-					/*if (ImGui::MenuItem("Icosphere"))
+					if (ImGui::MenuItem("Icosphere"))
 					{
-						App->scene_manager->CreateCubeSphere(1, 3, false);
-					}*/
+						App->scene_manager->CreateIcoSphere(1, 1, false);
+					}
 					ImGui::EndMenu();
 				}
 

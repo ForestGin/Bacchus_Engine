@@ -23,6 +23,8 @@ public:
 
 	void OnResize(int width, int height);
 
+	uint CreateBufferFromData(uint Targetbuffer, uint size, void* data) const;
+
 	// Sets 
 	bool SetVSync(bool vsync);
 
