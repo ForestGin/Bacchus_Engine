@@ -1840,3 +1840,11 @@ void ModuleSceneManager::CreateGrid() const
 
 	glEnd();
 }
+
+void ModuleSceneManager::DestroyGameObject(GameObject* go)
+{
+    go->parent->RemoveChildGO(go);
+    go->RecursiveDelete(go);
+
+    this->go_count--;
+}

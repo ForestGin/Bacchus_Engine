@@ -77,7 +77,7 @@ void GameObject::RemoveChildGO(GameObject* GO)
 		
 		for (std::vector<GameObject*>::iterator go = childs.begin(); go != childs.end(); ++go)
 		{
-			if (*go == GO)
+			if ((*go)->GetUID() == GO->GetUID())
 			{
 				childs.erase(go);
 				break;
@@ -94,8 +94,14 @@ void GameObject::AddChildGO(GameObject* GO)
 		if (GO->parent)
 			GO->parent->RemoveChildGO(GO);
 
+		GO->parent = this;
 		childs.push_back(GO);
-		GO->SetParent(this);
+
+		ResourceTransform* transform = GO->GetResource<ResourceTransform>(Res::ResType::Transform);
+
+		transform->SetGlobalTransform(this->GetResource<ResourceTransform>(Res::ResType::Transform)->GetGlobalTransform());
+		
+		
 	}
 }
 
@@ -182,7 +188,7 @@ bool GameObject::HasResource(Res::ResType type) const
 	return false;
 }
 
-uint GameObject::GetUID() const
+uint& GameObject::GetUID()
 {
 	return UID;
 }
@@ -202,12 +208,4 @@ void GameObject::SetMaterial(ResourceMaterial* material)
 {
 	if (material)
 		components.push_back(material);
-}
-
-void GameObject::SetParent(GameObject* go)
-{
-	go->AddChildGO(this);
-	parent = go;
-	ResourceTransform* transform = this->GetResource<ResourceTransform>(Res::ResType::Transform);
-	transform->SetGlobalTransform(parent->GetResource<ResourceTransform>(Res::ResType::Transform)->GetGlobalTransform());
 }

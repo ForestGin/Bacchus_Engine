@@ -18,8 +18,8 @@ public:
 	virtual ~GameObject();
 	void Update(float dt);
 	
-	uint			GetUID() const;
-	std::string		GetName() const;
+	uint& GetUID();
+	std::string	GetName() const;
 	
 
 	template<typename TRes>
@@ -42,9 +42,8 @@ public:
 	void RemoveResource(Res::ResType type);
 	bool HasResource(Res::ResType type) const;
 
-	void			SetMaterial(ResourceMaterial* material);
-	void			SetName(const char* name);
-	void			SetParent(GameObject* go);
+	void SetMaterial(ResourceMaterial* material);
+	void SetName(const char* name);
 
 	void AddChildGO(GameObject* GO);
 	bool FindChildGO(GameObject* GO);

@@ -66,9 +66,9 @@ void ResourceTransform::Scale(float x, float y, float z)
 
 void ResourceTransform::SetGlobalTransform(float4x4 new_transform)
 {
-	Local_transform = GO->parent->GetResource<ResourceTransform>(Res::ResType::Transform)->GetGlobalTransform().Inverted() * new_transform;
+	Local_transform = Local_transform = new_transform.Inverted() * Global_transform;
 	Global_transform = new_transform;
-	update_transform = true;
+	OnUpdateTransform(Global_transform);
 }
 
 void ResourceTransform::UpdateLocalTransform()

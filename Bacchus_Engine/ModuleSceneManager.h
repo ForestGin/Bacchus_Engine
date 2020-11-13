@@ -37,6 +37,7 @@ public:
 	GameObject* GetSelectedGameObjects() const;
 	void SetSelectedGameObject(GameObject* go);
 	void SetTextureToSelectedGO(uint id);
+	void DestroyGameObject(GameObject* go);
 
 private:
 	GameObject* CreateRootGameObject();

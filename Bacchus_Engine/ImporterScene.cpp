@@ -74,7 +74,7 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 	{
 		nodeGo = App->scene_manager->CreateEmptyGameObject();
 		nodeGo->SetName(node->mName.C_Str());
-		nodeGo->SetParent(parent);
+		parent->AddChildGO(nodeGo);
 	}
 	else
 		nodeGo = parent;
@@ -88,7 +88,7 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 	{
 		GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
 		new_object->SetName(node->mName.C_Str());
-		new_object->SetParent(nodeGo);
+		nodeGo->AddChildGO(new_object);
 
 		uint mesh_index = node->mMeshes[j];
 		aiMesh* mesh = scene->mMeshes[mesh_index];
