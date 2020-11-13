@@ -72,7 +72,7 @@ private:
 	float brightness = 1.0;
 
 	// Flags
-	bool resizable = false;
+	bool resizable = true;
 	bool fullscreen = false;
 	bool borderless = false;
 	bool fullscreen_desktop = false;

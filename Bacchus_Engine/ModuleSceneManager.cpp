@@ -49,14 +49,14 @@ update_status ModuleSceneManager::PreUpdate(float dt)
 
 update_status ModuleSceneManager::Update(float dt)
 {
+    root->Update(dt);
+
 	return UPDATE_CONTINUE;
 }
 
 bool ModuleSceneManager::CleanUp()
 {
     root->RecursiveDelete(root);
-
-	game_objects.clear();
 
 	for (uint i = 0; i < Materials.size(); ++i)
 	{
@@ -70,27 +70,40 @@ bool ModuleSceneManager::CleanUp()
 	return true;
 }
 
-void ModuleSceneManager::Draw() const
+void ModuleSceneManager::Draw()
 {
 	CreateGrid();
 
-	for (uint i = 0; i < game_objects.size(); ++i)
-	{
+    DrawRecursive(root);
 
-        ResourceTransform* transform = game_objects[i]->GetResource<ResourceTransform>(Res::ResType::Transform);
+}
 
-		glPushMatrix();
-        glMultMatrixf(transform->GetLocalTransform().Transposed().ptr());
+void ModuleSceneManager::DrawRecursive(GameObject* go)
+{
+    if (go->childs.size() > 0)
+    {
+        for (std::vector<GameObject*>::iterator it = go->childs.begin(); it != go->childs.end(); ++it)
+        {
+            DrawRecursive(*it);
+        }
+    }
 
-		ResourceRenderer* Renderer = game_objects[i]->GetResource<ResourceRenderer>(Res::ResType::Renderer);
+    if (go->GetName() != root->GetName())
+    {
+        ResourceTransform* transform = go->GetResource<ResourceTransform>(Res::ResType::Transform);
 
-		if (Renderer)
-		{
-			Renderer->Draw();
-		}
+        glPushMatrix();
+        glMultMatrixf(transform->GetGlobalTransform().Transposed().ptr());
 
-		glPopMatrix();
-	}
+        ResourceRenderer* Renderer = go->GetResource<ResourceRenderer>(Res::ResType::Renderer);
+
+        if (Renderer)
+        {
+            Renderer->Draw();
+        }
+
+        glPopMatrix();
+    }
 }
 
 GameObject* ModuleSceneManager::GetRootGO() const
@@ -98,20 +111,9 @@ GameObject* ModuleSceneManager::GetRootGO() const
     return root;
 }
 
-
-uint ModuleSceneManager::GetNumGameObjects() const
-{
-    return game_objects.size();
-}
-
-GameObject* ModuleSceneManager::GetSelectedGameObjects()
+GameObject* ModuleSceneManager::GetSelectedGameObjects() const
 {
     return SelectedGameObject;
-}
-
-std::vector<GameObject*>& ModuleSceneManager::GetGameObjects()
-{
-    return game_objects;
 }
 
 void ModuleSceneManager::SetSelectedGameObject(GameObject* go)
@@ -134,13 +136,15 @@ GameObject* ModuleSceneManager::CreateEmptyGameObject()
 {
     std::string Name = "GameObject ";
     Name.append("(");
-    Name.append(std::to_string(game_objects.size()));
+    Name.append(std::to_string(go_count));
     Name.append(")");
 
+    go_count++;
+
     GameObject* new_object = new GameObject(Name.data());
-    root->AddChildGO(new_object);
-    game_objects.push_back(new_object);
     new_object->AddResource(Res::ResType::Transform);
+    root->AddChildGO(new_object);
+    
 
     new_object->SetMaterial(DefaultMaterial);
 
@@ -149,11 +153,10 @@ GameObject* ModuleSceneManager::CreateEmptyGameObject()
 
 GameObject* ModuleSceneManager::CreateRootGameObject()
 {
-    // --- Create New Game Object Name ---
+    
     std::string Name = "root";
-
-    // --- Create empty Game object to be filled out ---
     GameObject* new_object = new GameObject(Name.data());
+    new_object->AddResource(Res::ResType::Transform);
 
     return new_object;
 }

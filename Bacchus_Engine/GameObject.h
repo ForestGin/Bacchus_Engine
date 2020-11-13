@@ -16,7 +16,7 @@ public:
 
 	GameObject(const char* name);
 	virtual ~GameObject();
-
+	void Update(float dt);
 	
 	uint			GetUID() const;
 	std::string		GetName() const;
@@ -44,11 +44,13 @@ public:
 
 	void			SetMaterial(ResourceMaterial* material);
 	void			SetName(const char* name);
+	void			SetParent(GameObject* go);
 
 	void AddChildGO(GameObject* GO);
 	bool FindChildGO(GameObject* GO);
 	void RecursiveDelete(GameObject* GO);
 	void RemoveChildGO(GameObject* GO);
+	void OnUpdateTransform(GameObject* GO);
 
 
 public:

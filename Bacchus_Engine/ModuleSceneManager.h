@@ -23,8 +23,7 @@ public:
 	bool CleanUp();
 	GameObject* CreateEmptyGameObject();
 	ResourceMaterial* CreateEmptyMaterial();
-	uint GetNumGameObjects() const;
-	void Draw() const;
+	void Draw();
 	GameObject* GetRootGO() const;
 
 
@@ -35,13 +34,13 @@ public:
 
 	void CreateGrid() const;
 
-	GameObject* GetSelectedGameObjects();
-	std::vector<GameObject*>& GetGameObjects();
+	GameObject* GetSelectedGameObjects() const;
 	void SetSelectedGameObject(GameObject* go);
 	void SetTextureToSelectedGO(uint id);
 
 private:
 	GameObject* CreateRootGameObject();
+	void DrawRecursive(GameObject* go);
 
 public:
 	ResourceMaterial* CheckersMaterial = nullptr;
@@ -49,7 +48,7 @@ public:
 
 private:
 
-	std::vector<GameObject*> game_objects;
+	uint go_count = 0;
 	std::vector<ResourceMaterial*> Materials;
 	GameObject* SelectedGameObject = nullptr;
 	GameObject* root = nullptr;

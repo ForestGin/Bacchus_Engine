@@ -54,6 +54,9 @@ void BlockheadHierarchy::DrawRecursive(GameObject* Go)
 
 	else
 	{
+		if (Go->childs.size() == 0)
+			node_flags |= ImGuiTreeNodeFlags_Leaf;
+
 		bool open = ImGui::TreeNodeEx(Go->GetName().data(), node_flags);
 
 		if (ImGui::IsItemClicked())

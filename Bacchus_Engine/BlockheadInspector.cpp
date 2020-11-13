@@ -106,9 +106,12 @@ bool BlockheadInspector::Draw()
 
 			ImGui::DragFloat("SZ", &scale.z, 0.005f);
 
-			transform->SetPosition(position.x, position.y, position.z);
-			transform->Scale(scale.x, scale.y, scale.z);
-			transform->SetRotation(rotation);
+			if (!transform->GetPosition().Equals(position))
+				transform->SetPosition(position.x, position.y, position.z);
+			if (!transform->GetScale().Equals(scale))
+				transform->Scale(scale.x, scale.y, scale.z);
+			if (!transform->GetRotation().Equals(rotation))
+				transform->SetRotation(rotation);
 
 
 			ImGui::TreePop();

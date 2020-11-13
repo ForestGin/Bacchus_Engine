@@ -74,7 +74,7 @@ bool ModuleResources::LoadFromPath(const char* path)
 		if (DroppedFile_path.find(".fbx") != std::string::npos || DroppedFile_path.find(".FBX") != std::string::npos)
 		{
 			ImportData data;
-			ret = IScene->Import(*DroppedFile_path.data(), data);
+			ret = IScene->Import(DroppedFile_path.data(), data);
 		}
 		// If it is an image file file ...
 		else if (DroppedFile_path.find(".dds") != std::string::npos || DroppedFile_path.find(".png") != std::string::npos)

@@ -17,11 +17,11 @@ ImporterMaterial::~ImporterMaterial()
 {
 }
 
-bool ImporterMaterial::Import(const char& File_path, const ImportData& IData) const
+bool ImporterMaterial::Import(const char* File_path, const ImportData& IData) const
 {
 	ImportMaterialData MData = (ImportMaterialData&)IData;
 
-	std::string directory = &File_path;
+	std::string directory = File_path;
 	App->fs->GetDirectoryFromPath(directory);
 
 	if (MData.scene->HasMaterials())

@@ -29,6 +29,18 @@ GameObject::~GameObject()
 	}
 }
 
+void GameObject::Update(float dt)
+{
+	if (GetResource<ResourceTransform>(Res::ResType::Transform)->update_transform)
+		OnUpdateTransform(this);
+
+	for (std::vector<GameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
+	{
+		(*it)->Update(dt);
+	}
+
+}
+
 void GameObject::RecursiveDelete(GameObject* GO)
 {
 	if (GO->childs.size() > 0)
@@ -43,12 +55,26 @@ void GameObject::RecursiveDelete(GameObject* GO)
 	delete GO;
 }
 
+void GameObject::OnUpdateTransform(GameObject* GO)
+{
+	ResourceTransform* transform = GO->GetResource<ResourceTransform>(Res::ResType::Transform);
+	transform->OnUpdateTransform(GO->parent->GetResource<ResourceTransform>(Res::ResType::Transform)->GetGlobalTransform());
+
+	// --- Update all children ---
+	if (GO->childs.size() > 0)
+	{
+		for (std::vector<GameObject*>::iterator it = GO->childs.begin(); it != GO->childs.end(); ++it)
+		{
+			OnUpdateTransform(*it);
+		}
+	}
+}
+
 void GameObject::RemoveChildGO(GameObject* GO)
 {
 	if (childs.size() > 0)
 	{
-		std::vector<GameObject*>::iterator go = childs.begin();
-
+		
 		for (std::vector<GameObject*>::iterator go = childs.begin(); go != childs.end(); ++go)
 		{
 			if (*go == GO)
@@ -69,7 +95,7 @@ void GameObject::AddChildGO(GameObject* GO)
 			GO->parent->RemoveChildGO(GO);
 
 		childs.push_back(GO);
-		GO->parent = this;
+		GO->SetParent(this);
 	}
 }
 
@@ -176,4 +202,12 @@ void GameObject::SetMaterial(ResourceMaterial* material)
 {
 	if (material)
 		components.push_back(material);
+}
+
+void GameObject::SetParent(GameObject* go)
+{
+	go->AddChildGO(this);
+	parent = go;
+	ResourceTransform* transform = this->GetResource<ResourceTransform>(Res::ResType::Transform);
+	transform->SetGlobalTransform(parent->GetResource<ResourceTransform>(Res::ResType::Transform)->GetGlobalTransform());
 }
