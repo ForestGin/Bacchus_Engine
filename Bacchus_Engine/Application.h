@@ -46,6 +46,7 @@ public:
 	json GetDefaultConfig() const;
 	std::vector<std::string>& GetLogs();
 	LCG& GetRandom();
+	JSONLoader* GetJLoader();
 
 	// Sets
 	void SetMaxFramerate(uint maxFramerate);

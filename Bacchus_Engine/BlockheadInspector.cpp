@@ -184,6 +184,8 @@ bool BlockheadInspector::Draw()
 
 				ImGui::Text(Path.data());
 
+				ImGui::Image((void*)(uint)&material->TextureID, ImVec2(150, 150), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+
 				ImGui::Text(std::to_string(material->Texture_width).data());
 				ImGui::SameLine();
 				ImGui::Text(std::to_string(material->Texture_height).data());

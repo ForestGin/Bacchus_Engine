@@ -2,6 +2,7 @@
 #define __IMPORTER_SCENE_H__
 
 #include "Importer.h"
+#include <vector>
 
 class ImporterMesh;
 class ImporterMaterial;
@@ -24,9 +25,11 @@ public:
 	virtual ~ImporterScene();
 
 	bool Import(const char* File_path, const ImportData& IData) const override;
+	bool Load(const char* exported_file) const override;
+	void SaveSceneToFile(std::vector<GameObject*>& scene_gos, std::string& scene_name) const;
 
 private:
-	void LoadNodes(const aiNode* node, GameObject* parent, const aiScene* scene, ResourceMaterial* Material) const;
+	void LoadNodes(const aiNode* node, GameObject* parent, const aiScene* scene, ResourceMaterial* Material, std::vector<GameObject*>& scene_gos) const;
 	ImporterMesh* IMesh = nullptr;
 	ImporterMaterial* IMaterial = nullptr;
 };

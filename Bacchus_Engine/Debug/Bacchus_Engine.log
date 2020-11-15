@@ -1,4 +1,16 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  GameObject.cpp
+  ImporterScene.cpp
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.h(29,65): error C2039: 'string': is not a member of 'std'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(24): message : see declaration of 'std'
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.h(29,71): error C2061: syntax error: identifier 'string'
 F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(75,42): error C2660: 'ImporterScene::SaveSceneToFile': function does not take 2 arguments
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.h(29,7): message : see declaration of 'ImporterScene::SaveSceneToFile'
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(92,1): error C2511: 'void ImporterScene::SaveSceneToFile(std::vector<GameObject *,std::allocator<GameObject *>> &,std::string &) const': overloaded member function not found in 'ImporterScene'
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.h(20): message : see declaration of 'ImporterScene'
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(95,20): warning C4018: '<': signed/unsigned mismatch
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(128,20): warning C4018: '<': signed/unsigned mismatch
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(133,20): warning C4018: '<': signed/unsigned mismatch
+  ResourceRenderer.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Generating Code...
