@@ -12,6 +12,8 @@ GameObject::GameObject(const char* name)
 {
 	UID = App->GetRandom().Int();
 	this->name = name;
+
+	Enable();
 }
 
 GameObject::~GameObject()
@@ -188,6 +190,16 @@ bool GameObject::HasResource(Res::ResType type) const
 	return false;
 }
 
+void GameObject::Enable()
+{
+	active = true;
+}
+
+void GameObject::Disable()
+{
+	active = false;
+}
+
 uint& GameObject::GetUID()
 {
 	return UID;
@@ -196,6 +208,16 @@ uint& GameObject::GetUID()
 std::string GameObject::GetName() const
 {
 	return name;
+}
+
+bool& GameObject::GetActive()
+{
+	return active;
+}
+
+bool GameObject::IsEnabled() const
+{
+	return active;
 }
 
 void GameObject::SetName(const char* name)

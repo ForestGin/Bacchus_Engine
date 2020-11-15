@@ -20,7 +20,7 @@ void ResourceRenderer::Draw() const
 {
 	ResourceMesh* mesh = this->GO->GetResource<ResourceMesh>(Res::ResType::Mesh);
 
-	if (mesh)
+	if (mesh && mesh->IsEnabled())
 	{
 		DrawMesh(*mesh);
 		DrawNormals(*mesh);
@@ -40,7 +40,7 @@ inline void ResourceRenderer::DrawMesh(ResourceMesh& mesh) const
 	//If the mesh has a material associated, get it
 	ResourceMaterial* mat = mesh.GetContainerGameObject()->GetResource<ResourceMaterial>(Res::ResType::Material);
 
-	if (mat)
+	if (mat && mat->IsEnabled())
 	{
 		if (this->checkers)
 			glBindTexture(GL_TEXTURE_2D, App->tex->GetCheckerTextureID()); // start using texture

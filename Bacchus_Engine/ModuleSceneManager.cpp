@@ -97,7 +97,7 @@ void ModuleSceneManager::DrawRecursive(GameObject* go)
 
         ResourceRenderer* Renderer = go->GetResource<ResourceRenderer>(Res::ResType::Renderer);
 
-        if (Renderer)
+        if (Renderer && Renderer->IsEnabled())
         {
             Renderer->Draw();
         }

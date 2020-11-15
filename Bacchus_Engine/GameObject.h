@@ -16,11 +16,15 @@ public:
 
 	GameObject(const char* name);
 	virtual ~GameObject();
+	void Enable();
+	void Disable();
 	void Update(float dt);
 	
 	uint& GetUID();
 	std::string	GetName() const;
 	
+	bool& GetActive();
+	bool IsEnabled() const;
 
 	template<typename TRes>
 	TRes* GetResource(Res::ResType type)
@@ -60,6 +64,7 @@ private:
 	uint UID = 0;
 	std::string name;
 	std::vector<Res*> components;
+	bool active = false;
 };
 
 #endif

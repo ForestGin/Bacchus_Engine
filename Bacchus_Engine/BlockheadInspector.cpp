@@ -35,6 +35,9 @@ bool BlockheadInspector::Draw()
 
 		ImGui::BeginChild("child", ImVec2(0, 35), true);
 
+		ImGui::Checkbox("##GOActive", &Selected->GetActive());
+		ImGui::SameLine();
+
 		static char GOName[100] = "";
 		strcpy_s(GOName, 100, Selected->GetName().data());
 		if (ImGui::InputText("", GOName, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
@@ -123,6 +126,9 @@ bool BlockheadInspector::Draw()
 		{
 			ResourceMesh* mesh = Selected->GetResource<ResourceMesh>(Res::ResType::Mesh);
 
+			ImGui::Checkbox("##MeshActive", &mesh->GetActive());
+			ImGui::SameLine();
+
 			if (Startup)
 				ImGui::SetNextItemOpen(true);
 
@@ -141,6 +147,9 @@ bool BlockheadInspector::Draw()
 		{
 
 			ResourceRenderer* renderer = Selected->GetResource<ResourceRenderer>(Res::ResType::Renderer);
+
+			ImGui::Checkbox("##RenActive", &renderer->GetActive());
+			ImGui::SameLine();
 
 			if (Startup)
 				ImGui::SetNextItemOpen(true);
@@ -161,6 +170,9 @@ bool BlockheadInspector::Draw()
 		if (Selected->GetResource<ResourceMaterial>(Res::ResType::Material))
 		{
 			ResourceMaterial* material = Selected->GetResource<ResourceMaterial>(Res::ResType::Material);
+
+			ImGui::Checkbox("##MatActive", &material->GetActive());
+			ImGui::SameLine();
 
 			if (Startup)
 				ImGui::SetNextItemOpen(true);
