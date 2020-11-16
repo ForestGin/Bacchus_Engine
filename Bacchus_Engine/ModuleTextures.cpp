@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "OpenGL.h"
 #include "ModuleResources.h"
+#include "FileSystem.h"
 
 #include "DevIL/include/il.h"
 #include "DevIL/include/ilu.h"
@@ -147,7 +148,7 @@ uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uin
 	return TextureID;
 }
 
-inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width, uint& height) const
+inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width, uint& height, const char* path) const
 {
 	ILinfo imageInfo;
 	iluGetImageInfo(&imageInfo);
@@ -181,9 +182,10 @@ uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& 
 
 	ilBindImage(ImageName);
 
+	std::string name = LIBRARY_FOLDER;
 	
 	if (ilLoadImage(path))
-		CreateTextureFromImage(TextureID, width, height);
+		CreateTextureFromImage(TextureID, width, height, name.data());
 	else
 		LOG("|[error]: DevIL could not load the image. ERROR: %s", iluErrorString(ilGetError()));
 

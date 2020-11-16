@@ -41,12 +41,15 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 	rootnodename = rootnodename.substr(count + 1, rootnodename.size());
 
 	uint countdot = rootnodename.find_last_of(".");
+	std::string extension = rootnodename.substr(countdot, rootnodename.length());
 	rootnodename = rootnodename.substr(0, countdot);
 
 	// Duplicate File into Assets folder, save relative path 
-	std::string relative_path;
+	std::string relative_path = ASSETS_FOLDER;
+	relative_path.append(rootnodename);
+	relative_path.append(extension);
 
-	App->fs->DuplicateFile(File_path, ASSETS_FOLDER, relative_path);
+	App->fs->CopyFromOutsideFS(File_path, relative_path.data());
 
 	char* buffer;
 	uint size = App->fs->Load(relative_path.data(), &buffer);
@@ -99,21 +102,42 @@ bool ImporterScene::Load(const char* exported_file) const
 
 void ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, std::string& scene_name) const
 {
-	json file;
+	json model;
+
 
 	for (int i = 0; i < scene_gos.size(); ++i)
 	{
-		file[scene_gos[i]->GetName()];
-		file[scene_gos[i]->GetName()]["UID"] = std::to_string(scene_gos[i]->GetUID());
-		file[scene_gos[i]->GetName()]["Parent"] = std::to_string(scene_gos[i]->parent->GetUID());
-		file[scene_gos[i]->GetName()]["Components"];
+
+		std::string mesh_path = LIBRARY_FOLDER;
+		mesh_path.append(scene_gos[i]->GetName());
+		mesh_path.append(".mesh");
+
+		model[scene_gos[i]->GetName()];
+		model[scene_gos[i]->GetName()]["UID"] = std::to_string(scene_gos[i]->GetUID());
+		model[scene_gos[i]->GetName()]["Parent"] = std::to_string(scene_gos[i]->parent->GetUID());
+		model[scene_gos[i]->GetName()]["Components"];
 		for (int j = 0; j < scene_gos[i]->GetResources().size(); ++j)
 		{
-			file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetResources()[j]->GetType())];
+			model[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetResources()[j]->GetType())];
+
+			switch (scene_gos[i]->GetResources()[j]->GetType())
+			{
+
+			case Res::ResType::Transform:
+
+				break;
+			case Res::ResType::Mesh:
+				IMesh->Save(scene_gos[i]->GetResource<ResourceMesh>(Res::ResType::Mesh), mesh_path.data());
+				break;
+			case Res::ResType::Renderer:
+
+				break;
+
+			}
 		}
 	}
 	std::string data;
-	data = App->GetJLoader()->Serialize(file);
+	data = App->GetJLoader()->Serialize(model);
 
 	std::string path = LIBRARY_FOLDER;
 	path.append(scene_name);

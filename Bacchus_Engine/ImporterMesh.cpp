@@ -1,5 +1,8 @@
 #include "ImporterMesh.h"
 #include "ResourceMesh.h"
+#include "Application.h"
+#include "FileSystem.h"
+#include "ModuleRenderer3D.h"
 
 
 #include "Assimp/include/scene.h"
@@ -62,7 +65,7 @@ bool ImporterMesh::Import(const ImportData& IData) const
 			data.new_mesh->TexCoords[j * 2] = data.mesh->mTextureCoords[0][j].x;
 			data.new_mesh->TexCoords[(j * 2) + 1] = data.mesh->mTextureCoords[0][j].y;
 		}
-		/*LOG("Mesh texture coords at channel 0 loaded");*/
+		
 	}
 
 	glGenBuffers(1, (GLuint*)&data.new_mesh->TextureCoordsID); // create buffer
@@ -78,7 +81,11 @@ bool ImporterMesh::Import(const ImportData& IData) const
 	{
 		const aiFace& face = data.mesh->mFaces[j];
 
-		assert(face.mNumIndices == 3); // Only triangles
+		if (face.mNumIndices > 3)
+		{
+			LOG("|[error]: Importer Mesh found a quad in %s, ignoring it. ", data.mesh->mName);
+			continue;
+		}
 
 		data.new_mesh->Indices[j * 3] = face.mIndices[0];
 		data.new_mesh->Indices[j * 3 + 1] = face.mIndices[1];
@@ -91,4 +98,28 @@ bool ImporterMesh::Import(const ImportData& IData) const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Stop using buffer
 
 	return true;
+}
+
+void ImporterMesh::Save(ResourceMesh* mesh, const char* path) const
+{
+	// amount of indices / vertices / colors / normals / texture_coords / AABB
+	uint ranges[2] = { mesh->IndicesSize, mesh->VerticesSize };
+
+	uint size = sizeof(ranges) + sizeof(uint) * mesh->IndicesSize + sizeof(float) * mesh->VerticesSize * 3;
+
+	char* data = new char[size]; // Allocate
+	char* cursor = data;
+
+	uint bytes = sizeof(ranges); // First store ranges
+	memcpy(cursor, ranges, bytes);
+
+	cursor += bytes; // Store indices
+	bytes = sizeof(uint) * mesh->IndicesSize;
+	memcpy(cursor, mesh->Indices, bytes);	
+
+	cursor += bytes; // Store vertices
+	bytes = sizeof(float3) * mesh->VerticesSize;
+	memcpy(cursor, mesh->Vertices, bytes);
+
+	App->fs->Save(path, data, size);
 }
