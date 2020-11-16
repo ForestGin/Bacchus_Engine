@@ -6,9 +6,9 @@
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
-#include "ResourceMaterial.h"
-#include "ResourceMesh.h"
-#include "ResourceRenderer.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
+#include "ComponentRenderer.h"
 #include "ModuleSceneManager.h"
 #include "GameObject.h"
 #include "ImporterMesh.h"
@@ -67,7 +67,7 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 	{
 
 		//Create new Component Material to store scene's, meshes will use this for now since we do not want to create a material for every mesh if not needed
-		ResourceMaterial* Material = App->scene_manager->CreateEmptyMaterial();
+		ComponentMaterial* Material = App->scene_manager->CreateEmptyMaterial();
 
 		//Import Material Data (fill Material)
 		ImportMaterialData MData;
@@ -116,20 +116,20 @@ void ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, std::st
 		model[scene_gos[i]->GetName()]["UID"] = std::to_string(scene_gos[i]->GetUID());
 		model[scene_gos[i]->GetName()]["Parent"] = std::to_string(scene_gos[i]->parent->GetUID());
 		model[scene_gos[i]->GetName()]["Components"];
-		for (int j = 0; j < scene_gos[i]->GetResources().size(); ++j)
+		for (int j = 0; j < scene_gos[i]->GetComponents().size(); ++j)
 		{
-			model[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetResources()[j]->GetType())];
+			model[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())];
 
-			switch (scene_gos[i]->GetResources()[j]->GetType())
+			switch (scene_gos[i]->GetComponents()[j]->GetType())
 			{
 
-			case Res::ResType::Transform:
+			case Component::ComponentType::Transform:
 
 				break;
-			case Res::ResType::Mesh:
-				IMesh->Save(scene_gos[i]->GetResource<ResourceMesh>(Res::ResType::Mesh), mesh_path.data());
+			case Component::ComponentType::Mesh:
+				IMesh->Save(scene_gos[i]->GetComponent<ComponentMesh>(Component::ComponentType::Mesh), mesh_path.data());
 				break;
-			case Res::ResType::Renderer:
+			case Component::ComponentType::Renderer:
 
 				break;
 
@@ -149,7 +149,7 @@ void ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, std::st
 	App->fs->Save(path.data(), buffer, size);
 }
 
-void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiScene* scene, ResourceMaterial* Material, std::vector<GameObject*>& scene_gos) const
+void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiScene* scene, ComponentMaterial* Material, std::vector<GameObject*>& scene_gos) const
 {
 	GameObject* nodeGo = nullptr;
 
@@ -183,7 +183,7 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 		if (mesh)
 		{
 			// Create new Component Mesh to store current scene mesh data
-			ResourceMesh* new_mesh = (ResourceMesh*)new_object->AddResource(Res::ResType::Mesh);
+			ComponentMesh* new_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
 
 			if (new_mesh)
 			{
@@ -194,7 +194,7 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 				IMesh->Import(Mdata);
 
 				//Create new Component Renderer to draw mesh
-				ResourceRenderer* Renderer = (ResourceRenderer*)new_object->AddResource(Res::ResType::Renderer);
+				ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
 
 				if (Material)
 				{

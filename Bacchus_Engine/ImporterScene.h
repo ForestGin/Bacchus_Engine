@@ -9,7 +9,7 @@ class ImporterMesh;
 class ImporterMaterial;
 struct aiNode;
 struct aiScene;
-class ResourceMaterial;
+class ComponentMaterial;
 class GameObject;
 
 
@@ -30,7 +30,7 @@ public:
 	void SaveSceneToFile(std::vector<GameObject*>& scene_gos, std::string& scene_name) const;
 
 private:
-	void LoadNodes(const aiNode* node, GameObject* parent, const aiScene* scene, ResourceMaterial* Material, std::vector<GameObject*>& scene_gos) const;
+	void LoadNodes(const aiNode* node, GameObject* parent, const aiScene* scene, ComponentMaterial* Material, std::vector<GameObject*>& scene_gos) const;
 	ImporterMesh* IMesh = nullptr;
 	ImporterMaterial* IMaterial = nullptr;
 };

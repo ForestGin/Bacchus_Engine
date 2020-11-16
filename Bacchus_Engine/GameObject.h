@@ -2,12 +2,12 @@
 #define __GAME_OBJECT_H__
 
 #include "Globals.h"
-#include "Res.h"
+#include "Component.h"
 #include <vector>
 #include <string>
 #include "Math.h"
 
-class ResourceMaterial;
+class ComponentMaterial;
 
 class GameObject
 {
@@ -26,15 +26,15 @@ public:
 	bool& GetActive();
 	bool IsEnabled() const;
 
-	template<typename TRes>
-	TRes* GetResource(Res::ResType type)
+	template<typename TComponent>
+	TComponent* GetComponent(Component::ComponentType type)
 	{
 
 		for (uint i = 0; i < components.size(); ++i)
 		{
 			if (components[i]->GetType() == type)
 			{
-				return ((TRes*)(components[i]));
+				return ((TComponent*)(components[i]));
 			}
 		}
 
@@ -42,12 +42,12 @@ public:
 	}
 
 	
-	Res* AddResource(Res::ResType type);
-	void RemoveResource(Res::ResType type);
-	bool HasResource(Res::ResType type) const;
-	std::vector<Res*>& GetResources();
+	Component* AddComponent(Component::ComponentType type);
+	void RemoveComponent(Component::ComponentType type);
+	bool HasComponent(Component::ComponentType type) const;
+	std::vector<Component*>& GetComponents();
 
-	void SetMaterial(ResourceMaterial* material);
+	void SetMaterial(ComponentMaterial* material);
 	void SetName(const char* name);
 
 	void AddChildGO(GameObject* GO);
@@ -64,7 +64,7 @@ private:
 	
 	uint UID = 0;
 	std::string name;
-	std::vector<Res*> components;
+	std::vector<Component*> components;
 	bool active = false;
 };
 

@@ -3,7 +3,7 @@
 #include "ModuleTextures.h"
 #include "ModuleSceneManager.h"
 #include "GameObject.h"
-#include "ResourceMaterial.h"
+#include "ComponentMaterial.h"
 #include "FileSystem.h"
 
 
@@ -79,11 +79,11 @@ bool ModuleResources::LoadFromPath(const char* path)
 		// If it is an image file file ...
 		else if (DroppedFile_path.find(".dds") != std::string::npos || DroppedFile_path.find(".png") != std::string::npos)
 		{
-			ResourceMaterial* mat = App->scene_manager->GetSelectedGameObjects()->GetResource<ResourceMaterial>(Res::ResType::Material);
+			ComponentMaterial* mat = App->scene_manager->GetSelectedGameObjects()->GetComponent<ComponentMaterial>(Component::ComponentType::Material);
 			
 			if (mat->Texture_path == "Default")
 			{
-				/*App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->RemoveResource(Res::ResType::Material);*/
+				/*App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->RemoveComponent(Component::ComponentType::Material);*/
 
 				mat = App->scene_manager->CreateEmptyMaterial();
 

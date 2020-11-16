@@ -1,5 +1,5 @@
 #include "ImporterMesh.h"
-#include "ResourceMesh.h"
+#include "ComponentMesh.h"
 #include "Application.h"
 #include "FileSystem.h"
 #include "ModuleRenderer3D.h"
@@ -100,7 +100,7 @@ bool ImporterMesh::Import(const ImportData& IData) const
 	return true;
 }
 
-void ImporterMesh::Save(ResourceMesh* mesh, const char* path) const
+void ImporterMesh::Save(ComponentMesh* mesh, const char* path) const
 {
 	// amount of indices / vertices / colors / normals / texture_coords / AABB
 	uint ranges[2] = { mesh->IndicesSize, mesh->VerticesSize };

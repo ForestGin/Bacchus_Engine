@@ -1,9 +1,9 @@
 #include "Application.h"
 #include "GameObject.h"
-#include "ResourceMesh.h"
-#include "ResourceRenderer.h"
-#include "ResourceMaterial.h"
-#include "ResourceTransform.h"
+#include "ComponentMesh.h"
+#include "ComponentRenderer.h"
+#include "ComponentMaterial.h"
+#include "ComponentTransform.h"
 #include "Math.h"
 
 #include "mmgr/mmgr.h"
@@ -19,11 +19,11 @@ GameObject::GameObject(const char* name)
 GameObject::~GameObject()
 {
 
-	for (std::vector<Res*>::iterator it = components.begin(); it != components.end(); ++it)
+	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
 		if (*it)
 		{
-			if((*it)->GetType() != Res::ResType::Material)
+			if((*it)->GetType() != Component::ComponentType::Material)
 				delete(*it);
 
 			*it = nullptr;
@@ -33,7 +33,7 @@ GameObject::~GameObject()
 
 void GameObject::Update(float dt)
 {
-	if (GetResource<ResourceTransform>(Res::ResType::Transform)->update_transform)
+	if (GetComponent<ComponentTransform>(Component::ComponentType::Transform)->update_transform)
 		OnUpdateTransform(this);
 
 	for (std::vector<GameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
@@ -59,8 +59,8 @@ void GameObject::RecursiveDelete(GameObject* GO)
 
 void GameObject::OnUpdateTransform(GameObject* GO)
 {
-	ResourceTransform* transform = GO->GetResource<ResourceTransform>(Res::ResType::Transform);
-	transform->OnUpdateTransform(GO->parent->GetResource<ResourceTransform>(Res::ResType::Transform)->GetGlobalTransform());
+	ComponentTransform* transform = GO->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+	transform->OnUpdateTransform(GO->parent->GetComponent<ComponentTransform>(Component::ComponentType::Transform)->GetGlobalTransform());
 
 	// --- Update all children ---
 	if (GO->childs.size() > 0)
@@ -99,9 +99,9 @@ void GameObject::AddChildGO(GameObject* GO)
 		GO->parent = this;
 		childs.push_back(GO);
 
-		ResourceTransform* transform = GO->GetResource<ResourceTransform>(Res::ResType::Transform);
+		ComponentTransform* transform = GO->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
 
-		transform->SetGlobalTransform(this->GetResource<ResourceTransform>(Res::ResType::Transform)->GetGlobalTransform());
+		transform->SetGlobalTransform(this->GetComponent<ComponentTransform>(Component::ComponentType::Transform)->GetGlobalTransform());
 		
 		
 	}
@@ -125,25 +125,25 @@ bool GameObject::FindChildGO(GameObject* GO)
 	return ret;
 }
 
-Res* GameObject::AddResource(Res::ResType type)
+Component* GameObject::AddComponent(Component::ComponentType type)
 {
-	static_assert(static_cast<int>(Res::ResType::Unknown) == 4, "Component Creation Switch needs to be updated");
+	static_assert(static_cast<int>(Component::ComponentType::Unknown) == 4, "Component Creation Switch needs to be updated");
 
-	Res* new_component = nullptr;
+	Component* new_component = nullptr;
 
-	if (HasResource(type) == false)
+	if (HasComponent(type) == false)
 	{
 
 		switch (type)
 		{
-		case Res::ResType::Transform:
-			new_component = new ResourceTransform(this);
+		case Component::ComponentType::Transform:
+			new_component = new ComponentTransform(this);
 			break;
-		case Res::ResType::Mesh:
-			new_component = new ResourceMesh(this);
+		case Component::ComponentType::Mesh:
+			new_component = new ComponentMesh(this);
 			break;
-		case Res::ResType::Renderer:
-			new_component = new ResourceRenderer(this);
+		case Component::ComponentType::Renderer:
+			new_component = new ComponentRenderer(this);
 			break;
 		}
 
@@ -161,13 +161,13 @@ Res* GameObject::AddResource(Res::ResType type)
 	return new_component;
 }
 
-void GameObject::RemoveResource(Res::ResType type)
+void GameObject::RemoveComponent(Component::ComponentType type)
 {
 	for (uint i = 0; i < components.size(); ++i)
 	{
 		if (components[i]->GetType() == type)
 		{
-			std::vector<Res*>::iterator it = components.begin();
+			std::vector<Component*>::iterator it = components.begin();
 			it += i;
 
 			components.erase(it);
@@ -177,7 +177,7 @@ void GameObject::RemoveResource(Res::ResType type)
 	}
 }
 
-bool GameObject::HasResource(Res::ResType type) const
+bool GameObject::HasComponent(Component::ComponentType type) const
 {
 	// --- Search for given type of component ---
 
@@ -190,7 +190,7 @@ bool GameObject::HasResource(Res::ResType type) const
 	return false;
 }
 
-std::vector<Res*>& GameObject::GetResources()
+std::vector<Component*>& GameObject::GetComponents()
 {
 	return components;
 }
@@ -231,7 +231,7 @@ void GameObject::SetName(const char* name)
 		this->name = name;
 }
 
-void GameObject::SetMaterial(ResourceMaterial* material)
+void GameObject::SetMaterial(ComponentMaterial* material)
 {
 	if (material)
 		components.push_back(material);

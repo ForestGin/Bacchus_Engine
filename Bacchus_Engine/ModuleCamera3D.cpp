@@ -5,8 +5,8 @@
 #include "ModuleInput.h"
 #include "ModuleSceneManager.h"
 #include "GameObject.h"
-#include "ResourceMesh.h"
-#include "ResourceTransform.h"
+#include "ComponentMesh.h"
+#include "ComponentTransform.h"
 
 #include "mmgr/mmgr.h"
 
@@ -271,7 +271,7 @@ void ModuleCamera3D::FrameObject(GameObject* GO)
 	
 	if (GO)
 	{
-		ResourceTransform* transform = GO->GetResource<ResourceTransform>(Res::ResType::Transform);
+		ComponentTransform* transform = GO->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
 
 		if (transform)
 		{
@@ -279,7 +279,7 @@ void ModuleCamera3D::FrameObject(GameObject* GO)
 			Reference.y = transform->GetPosition().y;
 			Reference.z = transform->GetPosition().z;
 
-			ResourceMesh* mesh = GO->GetResource<ResourceMesh>(Res::ResType::Mesh);
+			ComponentMesh* mesh = GO->GetComponent<ComponentMesh>(Component::ComponentType::Mesh);
 
 			if (mesh)
 			{

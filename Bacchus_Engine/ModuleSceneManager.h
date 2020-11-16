@@ -5,7 +5,7 @@
 #include <vector>
 
 class GameObject;
-class ResourceMaterial;
+class ComponentMaterial;
 struct aiScene;
 struct ImportMaterialData;
 
@@ -22,7 +22,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 	GameObject* CreateEmptyGameObject();
-	ResourceMaterial* CreateEmptyMaterial();
+	ComponentMaterial* CreateEmptyMaterial();
 	void Draw();
 	GameObject* GetRootGO() const;
 
@@ -50,13 +50,13 @@ private:
 	void DrawRecursive(GameObject* go);
 
 public:
-	ResourceMaterial* CheckersMaterial = nullptr;
-	ResourceMaterial* DefaultMaterial = nullptr;
+	ComponentMaterial* CheckersMaterial = nullptr;
+	ComponentMaterial* DefaultMaterial = nullptr;
 
 private:
 
 	uint go_count = 0;
-	std::vector<ResourceMaterial*> Materials;
+	std::vector<ComponentMaterial*> Materials;
 	GameObject* SelectedGameObject = nullptr;
 	GameObject* root = nullptr;
 };

@@ -3,12 +3,12 @@
 #include "Application.h"
 #include "GameObject.h"
 #include "ModuleRenderer3D.h"
-#include "ResourceRenderer.h"
-#include "ResourceMaterial.h"
+#include "ComponentRenderer.h"
+#include "ComponentMesh.h"
 #include "ImporterMaterial.h"
-#include "ResourceMesh.h"
+#include "ComponentMaterial.h"
 #include "ModuleTextures.h"
-#include "ResourceTransform.h"
+#include "ComponentTransform.h"
 #include "Math.h"
 
 #include "vSphere.h"
@@ -95,12 +95,12 @@ void ModuleSceneManager::DrawRecursive(GameObject* go)
 
     if (go->GetName() != root->GetName())
     {
-        ResourceTransform* transform = go->GetResource<ResourceTransform>(Res::ResType::Transform);
+        ComponentTransform* transform = go->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
 
         glPushMatrix();
         glMultMatrixf(transform->GetGlobalTransform().Transposed().ptr());
 
-        ResourceRenderer* Renderer = go->GetResource<ResourceRenderer>(Res::ResType::Renderer);
+        ComponentRenderer* Renderer = go->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer);
 
         if (Renderer && Renderer->IsEnabled())
         {
@@ -128,7 +128,7 @@ void ModuleSceneManager::SetSelectedGameObject(GameObject* go)
 
 void ModuleSceneManager::SetTextureToSelectedGO(uint id)
 {
-    ResourceMaterial* Material = SelectedGameObject->GetResource<ResourceMaterial>(Res::ResType::Material);
+    ComponentMaterial* Material = SelectedGameObject->GetComponent<ComponentMaterial>(Component::ComponentType::Material);
 
     if (Material)
     {
@@ -147,7 +147,7 @@ GameObject* ModuleSceneManager::CreateEmptyGameObject()
     go_count++;
 
     GameObject* new_object = new GameObject(Name.data());
-    new_object->AddResource(Res::ResType::Transform);
+    new_object->AddComponent(Component::ComponentType::Transform);
     root->AddChildGO(new_object);
     
 
@@ -161,15 +161,15 @@ GameObject* ModuleSceneManager::CreateRootGameObject()
     
     std::string Name = "root";
     GameObject* new_object = new GameObject(Name.data());
-    new_object->AddResource(Res::ResType::Transform);
+    new_object->AddComponent(Component::ComponentType::Transform);
 
     return new_object;
 }
 
-ResourceMaterial* ModuleSceneManager::CreateEmptyMaterial()
+ComponentMaterial* ModuleSceneManager::CreateEmptyMaterial()
 {
 
-    ResourceMaterial* Material = new ResourceMaterial(Res::ResType::Material);
+    ComponentMaterial* Material = new ComponentMaterial(Component::ComponentType::Material);
 
 
     Materials.push_back(Material);
@@ -179,9 +179,9 @@ ResourceMaterial* ModuleSceneManager::CreateEmptyMaterial()
 
 void ModuleSceneManager::LoadPrimitiveArrays(GameObject& new_object, uint vertices_size, const float* vertices, uint indices_size, const uint* indices, uint normals_size, const float* normals, uint texCoords_size, const float* texCoords) const
 {
-    ResourceMesh* new_mesh = (ResourceMesh*)new_object.AddResource(Res::ResType::Mesh);
+    ComponentMesh* new_mesh = (ComponentMesh*)new_object.AddComponent(Component::ComponentType::Mesh);
 
-    ResourceRenderer* Renderer = (ResourceRenderer*)new_object.AddResource(Res::ResType::Renderer);
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object.AddComponent(Component::ComponentType::Renderer);
 
     //Vertices
     new_mesh->VerticesSize = vertices_size / 3;

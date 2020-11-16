@@ -3,7 +3,7 @@
 #include "FileSystem.h"
 #include "ModuleTextures.h"
 
-#include "ResourceMaterial.h"
+#include "ComponentMaterial.h"
 
 #include "Assimp/include/scene.h"
 

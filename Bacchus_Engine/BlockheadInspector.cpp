@@ -3,10 +3,10 @@
 #include "GameObject.h"
 #include "imgui/imgui.h"
 #include "BlockheadInspector.h"
-#include "ResourceMesh.h"
-#include "ResourceMaterial.h"
-#include "ResourceRenderer.h"
-#include "ResourceTransform.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
+#include "ComponentRenderer.h"
+#include "ComponentTransform.h"
 
 #include "mmgr/mmgr.h"
 
@@ -50,7 +50,7 @@ bool BlockheadInspector::Draw()
 
 		if (ImGui::TreeNode("Transform"))
 		{
-			ResourceTransform* transform = Selected->GetResource<ResourceTransform>(Res::ResType::Transform);
+			ComponentTransform* transform = Selected->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
 
 			ImGui::Text("Position  ");
 			ImGui::SameLine();
@@ -122,9 +122,9 @@ bool BlockheadInspector::Draw()
 
 		ImGui::Separator();
 
-		if (Selected->GetResource<ResourceMesh>(Res::ResType::Mesh))
+		if (Selected->GetComponent<ComponentMesh>(Component::ComponentType::Mesh))
 		{
-			ResourceMesh* mesh = Selected->GetResource<ResourceMesh>(Res::ResType::Mesh);
+			ComponentMesh* mesh = Selected->GetComponent<ComponentMesh>(Component::ComponentType::Mesh);
 
 			ImGui::Checkbox("##MeshActive", &mesh->GetActive());
 			ImGui::SameLine();
@@ -143,10 +143,10 @@ bool BlockheadInspector::Draw()
 		}
 		ImGui::Separator();
 
-		if (Selected->GetResource<ResourceRenderer>(Res::ResType::Renderer))
+		if (Selected->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer))
 		{
 
-			ResourceRenderer* renderer = Selected->GetResource<ResourceRenderer>(Res::ResType::Renderer);
+			ComponentRenderer* renderer = Selected->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer);
 
 			ImGui::Checkbox("##RenActive", &renderer->GetActive());
 			ImGui::SameLine();
@@ -167,9 +167,9 @@ bool BlockheadInspector::Draw()
 		}
 		ImGui::Separator();
 
-		if (Selected->GetResource<ResourceMaterial>(Res::ResType::Material))
+		if (Selected->GetComponent<ComponentMaterial>(Component::ComponentType::Material))
 		{
-			ResourceMaterial* material = Selected->GetResource<ResourceMaterial>(Res::ResType::Material);
+			ComponentMaterial* material = Selected->GetComponent<ComponentMaterial>(Component::ComponentType::Material);
 
 			ImGui::Checkbox("##MatActive", &material->GetActive());
 			ImGui::SameLine();

@@ -4,12 +4,12 @@
 #include "Importer.h"
 
 struct aiScene;
-class ResourceMaterial;
+class ComponentMaterial;
 
 struct ImportMaterialData : public ImportData
 {
 	const aiScene* scene = nullptr;
-	ResourceMaterial* new_material = nullptr;
+	ComponentMaterial* new_material = nullptr;
 };
 
 class ImporterMaterial : public Importer
