@@ -23,8 +23,9 @@ public:
 	bool CleanUp();
 	GameObject* CreateEmptyGameObject();
 	ResourceMaterial* CreateEmptyMaterial();
-	uint GetNumGameObjects() const;
-	void Draw() const;
+	void Draw();
+	GameObject* GetRootGO() const;
+
 
 	GameObject* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false);
 	GameObject* CreateCubeSphere(float Radius = 1.0f, int sub = 3, bool smooth = false);
@@ -33,10 +34,10 @@ public:
 
 	void CreateGrid() const;
 
-	uint GetSelectedGameObjects();
-	std::vector<GameObject*>& GetGameObjects();
-	void SetSelectedGameObject(uint index);
+	GameObject* GetSelectedGameObjects() const;
+	void SetSelectedGameObject(GameObject* go);
 	void SetTextureToSelectedGO(uint id);
+	void DestroyGameObject(GameObject* go);
 
 private:
 	void LoadPrimitiveArrays(GameObject& new_object,
@@ -44,6 +45,9 @@ private:
 		uint indices_size, const uint* indices,
 		uint normals_size, const float* normals,
 		uint texCoords_size, const float* texCoords) const;
+		
+	GameObject* CreateRootGameObject();
+	void DrawRecursive(GameObject* go);
 
 public:
 	ResourceMaterial* CheckersMaterial = nullptr;
@@ -51,9 +55,10 @@ public:
 
 private:
 
-	std::vector<GameObject*> game_objects;
+	uint go_count = 0;
 	std::vector<ResourceMaterial*> Materials;
-	uint SelectedGameObject = 0;
+	GameObject* SelectedGameObject = nullptr;
+	GameObject* root = nullptr;
 };
 
 #endif 

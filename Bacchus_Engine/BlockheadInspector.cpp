@@ -25,9 +25,18 @@ bool BlockheadInspector::Draw()
 
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
-		GameObject* Selected = App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects());
+		GameObject* Selected = App->scene_manager->GetSelectedGameObjects();
+
+		if (Selected == nullptr)
+		{
+			ImGui::End();
+			return false;
+		}
 
 		ImGui::BeginChild("child", ImVec2(0, 35), true);
+
+		ImGui::Checkbox("##GOActive", &Selected->GetActive());
+		ImGui::SameLine();
 
 		static char GOName[100] = "";
 		strcpy_s(GOName, 100, Selected->GetName().data());
@@ -100,8 +109,12 @@ bool BlockheadInspector::Draw()
 
 			ImGui::DragFloat("SZ", &scale.z, 0.005f);
 
-			transform->SetPosition(position.x, position.y, position.z);
-			transform->Scale(scale.x, scale.y, scale.z);
+			if (!transform->GetPosition().Equals(position))
+				transform->SetPosition(position.x, position.y, position.z);
+			if (!transform->GetScale().Equals(scale))
+				transform->Scale(scale.x, scale.y, scale.z);
+			if (!transform->GetRotation().Equals(rotation))
+				transform->SetRotation(rotation);
 
 
 			ImGui::TreePop();
@@ -112,6 +125,9 @@ bool BlockheadInspector::Draw()
 		if (Selected->GetResource<ResourceMesh>(Res::ResType::Mesh))
 		{
 			ResourceMesh* mesh = Selected->GetResource<ResourceMesh>(Res::ResType::Mesh);
+
+			ImGui::Checkbox("##MeshActive", &mesh->GetActive());
+			ImGui::SameLine();
 
 			if (Startup)
 				ImGui::SetNextItemOpen(true);
@@ -131,6 +147,9 @@ bool BlockheadInspector::Draw()
 		{
 
 			ResourceRenderer* renderer = Selected->GetResource<ResourceRenderer>(Res::ResType::Renderer);
+
+			ImGui::Checkbox("##RenActive", &renderer->GetActive());
+			ImGui::SameLine();
 
 			if (Startup)
 				ImGui::SetNextItemOpen(true);
@@ -152,6 +171,9 @@ bool BlockheadInspector::Draw()
 		{
 			ResourceMaterial* material = Selected->GetResource<ResourceMaterial>(Res::ResType::Material);
 
+			ImGui::Checkbox("##MatActive", &material->GetActive());
+			ImGui::SameLine();
+
 			if (Startup)
 				ImGui::SetNextItemOpen(true);
 
@@ -161,6 +183,8 @@ bool BlockheadInspector::Draw()
 				Path.append(material->Texture_path);
 
 				ImGui::Text(Path.data());
+
+				ImGui::Image((void*)(uint)&material->TextureID, ImVec2(150, 150), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 				ImGui::Text(std::to_string(material->Texture_width).data());
 				ImGui::SameLine();

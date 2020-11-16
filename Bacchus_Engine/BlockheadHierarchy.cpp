@@ -1,8 +1,8 @@
 #include "BlockheadHierarchy.h"
 #include "Imgui/imgui.h"
-
 #include "Application.h"
 #include "ModuleSceneManager.h"
+#include "ModuleInput.h"
 
 #include "GameObject.h"
 
@@ -24,18 +24,96 @@ bool BlockheadHierarchy::Draw()
 
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
-		ImGui::BeginChild("GO_List", ImVec2(325, 0), false);
-		for (uint i = 0; i < App->scene_manager->GetNumGameObjects(); i++)
-		{
-			if (ImGui::Selectable(App->scene_manager->GetGameObjects().at(i)->GetName().data(), App->scene_manager->GetSelectedGameObjects() == i))
-				App->scene_manager->SetSelectedGameObject(i);
-		}
-		ImGui::EndChild();
-		ImGui::SameLine();
+		DrawRecursive(App->scene_manager->GetRootGO());
 	}
-
 	ImGui::End();
 
+	if (end_drag)
+	{
+		if (!dragged->FindChildGO(target))
+				target->AddChildGO(dragged);
+
+		end_drag = false;
+		dragged = nullptr;
+		target = nullptr;
+	}
+
+	if (to_destroy)
+	{
+		App->scene_manager->DestroyGameObject(to_destroy);
+		to_destroy = nullptr;
+		App->scene_manager->SetSelectedGameObject(nullptr);
+	}
 
 	return true;
+}
+
+void BlockheadHierarchy::DrawRecursive(GameObject* Go)
+{
+	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow;
+
+	ImGuiTreeNodeFlags node_flags = base_flags;
+
+	if (Go == App->scene_manager->GetSelectedGameObjects())
+		node_flags |= ImGuiTreeNodeFlags_Selected;
+
+	if (Go->GetName().data() == App->scene_manager->GetRootGO()->GetName())
+	{
+		if (Go->childs.size() > 0)
+		{
+			for (std::vector<GameObject*>::iterator it = Go->childs.begin(); it != Go->childs.end(); ++it)
+			{
+				DrawRecursive(*it);
+			}
+		}
+	}
+
+	else
+	{
+		if (Go->childs.size() == 0)
+			node_flags |= ImGuiTreeNodeFlags_Leaf;
+
+		bool open = ImGui::TreeNodeEx((void*)Go->GetUID(), node_flags, Go->GetName().data());
+
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+		{
+			ImGui::SetDragDropPayload("GO", Go, sizeof(GameObject));   
+			dragged = Go;
+			ImGui::EndDragDropSource();
+		}
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GO"))
+			{
+				target = Go;
+				end_drag = true;
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
+		if (ImGui::IsWindowFocused() && Go == App->scene_manager->GetSelectedGameObjects() && App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+		{
+			LOG("Destroying: %s ...", Go->GetName().data());
+			to_destroy = Go;
+		}
+
+		if (ImGui::IsItemClicked())
+			App->scene_manager->SetSelectedGameObject(Go);
+
+		if (open)
+		{
+			if (Go->childs.size() > 0)
+			{
+				for (std::vector<GameObject*>::iterator it = Go->childs.begin(); it != Go->childs.end(); ++it)
+				{
+					DrawRecursive(*it);
+				}
+			}
+
+			ImGui::TreePop();
+		}
+
+	}
 }

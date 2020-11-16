@@ -3,6 +3,8 @@
 
 #include "Blockhead.h"
 
+class GameObject;
+
 class BlockheadHierarchy : public Blockhead
 {
 public:
@@ -11,6 +13,17 @@ public:
 	~BlockheadHierarchy();
 
 	bool Draw();
+
+private:
+
+	void DrawRecursive(GameObject* Go);
+
+private:
+
+	GameObject* to_destroy = nullptr;
+	bool end_drag = false;
+	GameObject* target = nullptr;
+	GameObject* dragged = nullptr;
 };
 
 #endif

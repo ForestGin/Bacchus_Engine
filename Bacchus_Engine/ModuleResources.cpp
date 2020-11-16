@@ -40,7 +40,7 @@ bool ModuleResources::Init(json file)
 
 bool ModuleResources::Start()
 {
-	LoadFromPath("Assets/BH/BakerHouse.fbx");
+	LoadFromPath("Assets/BakerHouse.fbx");
 	
 	return true;
 }
@@ -74,20 +74,20 @@ bool ModuleResources::LoadFromPath(const char* path)
 		if (DroppedFile_path.find(".fbx") != std::string::npos || DroppedFile_path.find(".FBX") != std::string::npos)
 		{
 			ImportData data;
-			ret = IScene->Import(*DroppedFile_path.data(), data);
+			ret = IScene->Import(DroppedFile_path.data(), data);
 		}
 		// If it is an image file file ...
 		else if (DroppedFile_path.find(".dds") != std::string::npos || DroppedFile_path.find(".png") != std::string::npos)
 		{
-			ResourceMaterial* mat = App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->GetResource<ResourceMaterial>(Res::ResType::Material);
+			ResourceMaterial* mat = App->scene_manager->GetSelectedGameObjects()->GetResource<ResourceMaterial>(Res::ResType::Material);
 			
 			if (mat->Texture_path == "Default")
 			{
-				App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->RemoveResource(Res::ResType::Material);
+				/*App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->RemoveResource(Res::ResType::Material);*/
 
 				mat = App->scene_manager->CreateEmptyMaterial();
 
-				App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->SetMaterial(mat);
+				App->scene_manager->GetSelectedGameObjects()->SetMaterial(mat);
 			}
 
 			mat->Texture_path = DroppedFile_path.data();

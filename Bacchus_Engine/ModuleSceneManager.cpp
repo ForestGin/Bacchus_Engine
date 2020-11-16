@@ -9,6 +9,7 @@
 #include "ResourceMesh.h"
 #include "ModuleTextures.h"
 #include "ResourceTransform.h"
+#include "Math.h"
 
 #include "vSphere.h"
 #include "vCubesphere.h"
@@ -27,6 +28,8 @@ ModuleSceneManager::~ModuleSceneManager()
 
 bool ModuleSceneManager::Init(json file)
 {
+    root = CreateRootGameObject();
+
 	return true;
 }
 
@@ -51,18 +54,14 @@ update_status ModuleSceneManager::PreUpdate(float dt)
 
 update_status ModuleSceneManager::Update(float dt)
 {
+    root->Update(dt);
+
 	return UPDATE_CONTINUE;
 }
 
 bool ModuleSceneManager::CleanUp()
 {
-
-	for (uint i = 0; i < game_objects.size(); ++i)
-	{
-		if (game_objects[i])
-			delete game_objects[i];
-	}
-	game_objects.clear();
+    root->RecursiveDelete(root);
 
 	for (uint i = 0; i < Materials.size(); ++i)
 	{
@@ -76,52 +75,60 @@ bool ModuleSceneManager::CleanUp()
 	return true;
 }
 
-void ModuleSceneManager::Draw() const
+void ModuleSceneManager::Draw()
 {
 	CreateGrid();
 
-	for (uint i = 0; i < game_objects.size(); ++i)
-	{
+    DrawRecursive(root);
 
-        ResourceTransform* transform = game_objects[i]->GetResource<ResourceTransform>(Res::ResType::Transform);
-
-		glPushMatrix();
-        glMultMatrixf(transform->GetLocalTransform().ptr());
-
-		ResourceRenderer* Renderer = game_objects[i]->GetResource<ResourceRenderer>(Res::ResType::Renderer);
-
-		if (Renderer)
-		{
-			Renderer->Draw();
-		}
-
-		glPopMatrix();
-	}
 }
 
-uint ModuleSceneManager::GetNumGameObjects() const
+void ModuleSceneManager::DrawRecursive(GameObject* go)
 {
-    return game_objects.size();
+    if (go->childs.size() > 0)
+    {
+        for (std::vector<GameObject*>::iterator it = go->childs.begin(); it != go->childs.end(); ++it)
+        {
+            DrawRecursive(*it);
+        }
+    }
+
+    if (go->GetName() != root->GetName())
+    {
+        ResourceTransform* transform = go->GetResource<ResourceTransform>(Res::ResType::Transform);
+
+        glPushMatrix();
+        glMultMatrixf(transform->GetGlobalTransform().Transposed().ptr());
+
+        ResourceRenderer* Renderer = go->GetResource<ResourceRenderer>(Res::ResType::Renderer);
+
+        if (Renderer && Renderer->IsEnabled())
+        {
+            Renderer->Draw();
+        }
+
+        glPopMatrix();
+    }
 }
 
-uint ModuleSceneManager::GetSelectedGameObjects()
+GameObject* ModuleSceneManager::GetRootGO() const
+{
+    return root;
+}
+
+GameObject* ModuleSceneManager::GetSelectedGameObjects() const
 {
     return SelectedGameObject;
 }
 
-std::vector<GameObject*>& ModuleSceneManager::GetGameObjects()
+void ModuleSceneManager::SetSelectedGameObject(GameObject* go)
 {
-    return game_objects;
-}
-
-void ModuleSceneManager::SetSelectedGameObject(uint index)
-{
-    SelectedGameObject = index;
+    SelectedGameObject = go;
 }
 
 void ModuleSceneManager::SetTextureToSelectedGO(uint id)
 {
-    ResourceMaterial* Material = game_objects[SelectedGameObject]->GetResource<ResourceMaterial>(Res::ResType::Material);
+    ResourceMaterial* Material = SelectedGameObject->GetResource<ResourceMaterial>(Res::ResType::Material);
 
     if (Material)
     {
@@ -134,14 +141,27 @@ GameObject* ModuleSceneManager::CreateEmptyGameObject()
 {
     std::string Name = "GameObject ";
     Name.append("(");
-    Name.append(std::to_string(game_objects.size()));
+    Name.append(std::to_string(go_count));
     Name.append(")");
 
+    go_count++;
+
     GameObject* new_object = new GameObject(Name.data());
-    game_objects.push_back(new_object);
     new_object->AddResource(Res::ResType::Transform);
+    root->AddChildGO(new_object);
+    
 
     new_object->SetMaterial(DefaultMaterial);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::CreateRootGameObject()
+{
+    
+    std::string Name = "root";
+    GameObject* new_object = new GameObject(Name.data());
+    new_object->AddResource(Res::ResType::Transform);
 
     return new_object;
 }
@@ -349,4 +369,12 @@ void ModuleSceneManager::CreateGrid() const
 	glLineWidth(1.0f);
 
 	glEnd();
+}
+
+void ModuleSceneManager::DestroyGameObject(GameObject* go)
+{
+    go->parent->RemoveChildGO(go);
+    go->RecursiveDelete(go);
+
+    this->go_count--;
 }

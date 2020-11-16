@@ -15,12 +15,12 @@ public:
 	ResourceRenderer(GameObject* ContainerGO);
 	virtual ~ResourceRenderer();
 
-	void Draw();
+	void Draw() const;
 
 private:
-	void DrawMesh(ResourceMesh& mesh) const;
-	void DrawNormals(const ResourceMesh& mesh) const;
-	void DrawAxis() const;
+	inline void DrawMesh(ResourceMesh& mesh) const;
+	inline void DrawNormals(const ResourceMesh& mesh) const;
+	inline void DrawAxis() const;
 
 public:
 	bool draw_vertexnormals = false;

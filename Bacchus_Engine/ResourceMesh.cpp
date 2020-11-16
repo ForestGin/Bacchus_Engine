@@ -8,7 +8,7 @@
 
 ResourceMesh::ResourceMesh(GameObject* ContainerGO) : Res(ContainerGO, Res::ResType::Mesh)
 {
-	IndexDatatype = GL_UNSIGNED_INT;
+
 }
 
 ResourceMesh::~ResourceMesh()

@@ -1,3 +1,4 @@
+#include <fstream>
 #include "Globals.h"
 #include "Application.h"
 #include "FileSystem.h"
@@ -57,7 +58,7 @@ bool FileSystem::Init(json config)
 
 	// Make sure standard paths exist
 	const char* dirs[] = {
-		SETTINGS_FOLDER, ASSETS_FOLDER,
+		SETTINGS_FOLDER, ASSETS_FOLDER, LIBRARY_FOLDER
 	};
 
 	for (uint i = 0; i < sizeof(dirs) / sizeof(const char*); ++i)
@@ -330,7 +331,6 @@ SDL_RWops* FileSystem::Load(const char* file) const
 	else
 		return nullptr;
 }
-
 
 
 int close_sdl_rwops(SDL_RWops* rw)

@@ -26,7 +26,7 @@ public:
 	
 
 	float* GetViewMatrix();
-	void FrameObject(GameObject& GO);
+	void FrameObject(GameObject* GO);
 
 private:
 

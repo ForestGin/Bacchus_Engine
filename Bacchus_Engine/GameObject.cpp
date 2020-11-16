@@ -12,34 +12,118 @@ GameObject::GameObject(const char* name)
 {
 	UID = App->GetRandom().Int();
 	this->name = name;
+
+	Enable();
 }
 
 GameObject::~GameObject()
 {
+
 	for (std::vector<Res*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
 		if (*it)
 		{
-			if ((*it)->GetType() != Res::ResType::Material)
-			delete(*it);
+			if((*it)->GetType() != Res::ResType::Material)
+				delete(*it);
 
 			*it = nullptr;
 		}
 	}
 }
 
-//Res* GameObject::GetResource(Res::ResType type)
-//{
-//	for (std::vector<Res*>::iterator it = components.begin(); it != components.end(); ++it)
-//	{
-//		if ((*it)->GetType() == type)
-//		{
-//			return *it;
-//		}
-//	}
-//
-//	return nullptr;
-//}
+void GameObject::Update(float dt)
+{
+	if (GetResource<ResourceTransform>(Res::ResType::Transform)->update_transform)
+		OnUpdateTransform(this);
+
+	for (std::vector<GameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
+	{
+		(*it)->Update(dt);
+	}
+
+}
+
+void GameObject::RecursiveDelete(GameObject* GO)
+{
+	if (GO->childs.size() > 0)
+	{
+		for (std::vector<GameObject*>::iterator it = GO->childs.begin(); it != GO->childs.end(); ++it)
+		{
+			RecursiveDelete(*it);
+		}
+		GO->childs.clear();
+	}
+
+	delete GO;
+}
+
+void GameObject::OnUpdateTransform(GameObject* GO)
+{
+	ResourceTransform* transform = GO->GetResource<ResourceTransform>(Res::ResType::Transform);
+	transform->OnUpdateTransform(GO->parent->GetResource<ResourceTransform>(Res::ResType::Transform)->GetGlobalTransform());
+
+	// --- Update all children ---
+	if (GO->childs.size() > 0)
+	{
+		for (std::vector<GameObject*>::iterator it = GO->childs.begin(); it != GO->childs.end(); ++it)
+		{
+			OnUpdateTransform(*it);
+		}
+	}
+}
+
+void GameObject::RemoveChildGO(GameObject* GO)
+{
+	if (childs.size() > 0)
+	{
+		
+		for (std::vector<GameObject*>::iterator go = childs.begin(); go != childs.end(); ++go)
+		{
+			if ((*go)->GetUID() == GO->GetUID())
+			{
+				childs.erase(go);
+				break;
+			}
+		}
+	}
+}
+
+void GameObject::AddChildGO(GameObject* GO)
+{
+	if (!FindChildGO(GO))
+	{
+
+		if (GO->parent)
+			GO->parent->RemoveChildGO(GO);
+
+		GO->parent = this;
+		childs.push_back(GO);
+
+		ResourceTransform* transform = GO->GetResource<ResourceTransform>(Res::ResType::Transform);
+
+		transform->SetGlobalTransform(this->GetResource<ResourceTransform>(Res::ResType::Transform)->GetGlobalTransform());
+		
+		
+	}
+}
+
+bool GameObject::FindChildGO(GameObject* GO)
+{
+	bool ret = false;
+
+	if (childs.size() > 0)
+	{
+		std::vector<GameObject*>::iterator go = childs.begin();
+
+		for (std::vector<GameObject*>::iterator go = childs.begin(); go != childs.end(); ++go)
+		{
+			if (*go == GO)
+				ret = true;
+		}
+	}
+
+	return ret;
+}
 
 Res* GameObject::AddResource(Res::ResType type)
 {
@@ -106,7 +190,22 @@ bool GameObject::HasResource(Res::ResType type) const
 	return false;
 }
 
-uint GameObject::GetUID() const
+std::vector<Res*>& GameObject::GetResources()
+{
+	return components;
+}
+
+void GameObject::Enable()
+{
+	active = true;
+}
+
+void GameObject::Disable()
+{
+	active = false;
+}
+
+uint& GameObject::GetUID()
 {
 	return UID;
 }
@@ -114,6 +213,16 @@ uint GameObject::GetUID() const
 std::string GameObject::GetName() const
 {
 	return name;
+}
+
+bool& GameObject::GetActive()
+{
+	return active;
+}
+
+bool GameObject::IsEnabled() const
+{
+	return active;
 }
 
 void GameObject::SetName(const char* name)
