@@ -1,16 +1,43 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  ImporterScene.cpp
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.h(29,65): error C2039: 'string': is not a member of 'std'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(24): message : see declaration of 'std'
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.h(29,71): error C2061: syntax error: identifier 'string'
+  BlockheadHierarchy.cpp
 F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(75,42): error C2660: 'ImporterScene::SaveSceneToFile': function does not take 2 arguments
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.h(29,7): message : see declaration of 'ImporterScene::SaveSceneToFile'
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(92,1): error C2511: 'void ImporterScene::SaveSceneToFile(std::vector<GameObject *,std::allocator<GameObject *>> &,std::string &) const': overloaded member function not found in 'ImporterScene'
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.h(20): message : see declaration of 'ImporterScene'
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(95,20): warning C4018: '<': signed/unsigned mismatch
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(128,20): warning C4018: '<': signed/unsigned mismatch
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(133,20): warning C4018: '<': signed/unsigned mismatch
+  BlockheadInspector.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  GameObject.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ImporterScene.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(104,20): warning C4018: '<': signed/unsigned mismatch
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(110,21): warning C4018: '<': signed/unsigned mismatch
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(142,20): warning C4018: '<': signed/unsigned mismatch
+F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(147,20): warning C4018: '<': signed/unsigned mismatch
+  ModuleCamera3D.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(194,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(195,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(200,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(201,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(216,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  ModuleResources.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ModuleSceneManager.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(205,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(205,24): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(598,40): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(598,29): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(1018,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(1018,24): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(1470,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(1470,20): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(1825,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Res.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ResourceMesh.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   ResourceRenderer.cpp
 F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ResourceTransform.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   Generating Code...
+  Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe

@@ -40,7 +40,7 @@ bool ModuleResources::Init(json file)
 
 bool ModuleResources::Start()
 {
-	LoadFromPath("Assets/BH/BakerHouse.fbx");
+	LoadFromPath("Assets/BakerHouse.fbx");
 	
 	return true;
 }

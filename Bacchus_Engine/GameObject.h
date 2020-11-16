@@ -41,10 +41,11 @@ public:
 		return nullptr;
 	}
 
-	/*Res* GetResource(Res::ResType type);*/
+	
 	Res* AddResource(Res::ResType type);
 	void RemoveResource(Res::ResType type);
 	bool HasResource(Res::ResType type) const;
+	std::vector<Res*>& GetResources();
 
 	void SetMaterial(ResourceMaterial* material);
 	void SetName(const char* name);

@@ -3,6 +3,7 @@
 
 #include "Importer.h"
 #include <vector>
+#include <string>
 
 class ImporterMesh;
 class ImporterMaterial;

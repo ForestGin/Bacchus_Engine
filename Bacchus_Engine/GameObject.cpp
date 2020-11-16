@@ -190,6 +190,11 @@ bool GameObject::HasResource(Res::ResType type) const
 	return false;
 }
 
+std::vector<Res*>& GameObject::GetResources()
+{
+	return components;
+}
+
 void GameObject::Enable()
 {
 	active = true;
