@@ -124,22 +124,19 @@
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="Blockhead.cpp">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClCompile>
     <ClCompile Include="BlockheadAbout.cpp">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClCompile>
     <ClCompile Include="BlockheadSettings.cpp">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClCompile>
-    <ClCompile Include="BacchusHardware.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
-    <ClCompile Include="BacchusEditor.cpp" />
     <ClCompile Include="BlockheadConsole.cpp">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClCompile>
     <ClCompile Include="Globals.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>mmgr</Filter>
     </ClCompile>
@@ -178,10 +175,10 @@
       <Filter>Importers</Filter>
     </ClCompile>
     <ClCompile Include="BlockheadHierarchy.cpp">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClCompile>
     <ClCompile Include="BlockheadInspector.cpp">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClCompile>
     <ClCompile Include="vCubesphere.cpp">
       <Filter>Primitives</Filter>
@@ -196,19 +193,31 @@
       <Filter>Primitives</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>Components</Filter>
+      <Filter>GOs\Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentMaterial.cpp">
-      <Filter>Components</Filter>
+      <Filter>GOs\Components</Filter>
     </ClCompile>
     <ClCompile Include="CopmonentMesh.cpp">
-      <Filter>Components</Filter>
+      <Filter>GOs\Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentRenderer.cpp">
-      <Filter>Components</Filter>
+      <Filter>GOs\Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentTransform.cpp">
-      <Filter>Components</Filter>
+      <Filter>GOs\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GOs</Filter>
+    </ClCompile>
+    <ClCompile Include="BacchusEditor.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="BacchusHardware.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -426,21 +435,18 @@
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="Blockhead.h">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClInclude>
     <ClInclude Include="BlockheadAbout.h">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClInclude>
     <ClInclude Include="BlockheadSettings.h">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClInclude>
-    <ClInclude Include="BacchusHardware.h" />
     <ClInclude Include="ModuleTextures.h" />
-    <ClInclude Include="BacchusEditor.h" />
     <ClInclude Include="BlockheadConsole.h">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="mmgr\mmgr.h">
       <Filter>mmgr</Filter>
     </ClInclude>
@@ -491,10 +497,10 @@
       <Filter>Importers</Filter>
     </ClInclude>
     <ClInclude Include="BlockheadHierarchy.h">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClInclude>
     <ClInclude Include="BlockheadInspector.h">
-      <Filter>EditorBlockheads</Filter>
+      <Filter>Editor\Blockheads</Filter>
     </ClInclude>
     <ClInclude Include="vCubesphere.h">
       <Filter>Primitives</Filter>
@@ -509,19 +515,31 @@
       <Filter>Primitives</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Components</Filter>
+      <Filter>GOs\Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentMaterial.h">
-      <Filter>Components</Filter>
+      <Filter>GOs\Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentMesh.h">
-      <Filter>Components</Filter>
+      <Filter>GOs\Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentRenderer.h">
-      <Filter>Components</Filter>
+      <Filter>GOs\Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentTransform.h">
-      <Filter>Components</Filter>
+      <Filter>GOs\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GOs</Filter>
+    </ClInclude>
+    <ClInclude Include="BacchusEditor.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="BacchusHardware.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -549,9 +567,6 @@
     <Filter Include="External Libs\MathGeoLib\Time">
       <UniqueIdentifier>{4e1ce4b7-8d0f-41a6-ac51-1820280a1fd9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EditorBlockheads">
-      <UniqueIdentifier>{64e7dd28-b920-4950-b274-804d5b951506}</UniqueIdentifier>
-    </Filter>
     <Filter Include="mmgr">
       <UniqueIdentifier>{39a87082-935f-4fdd-bad8-15e9198e6f87}</UniqueIdentifier>
     </Filter>
@@ -564,8 +579,23 @@
     <Filter Include="Primitives">
       <UniqueIdentifier>{1902f8dd-b2c6-419c-9b4c-942c76dc16c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components">
+    <Filter Include="Modules">
+      <UniqueIdentifier>{1f1d0387-4a94-4f19-9694-628ccff369cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GOs">
+      <UniqueIdentifier>{1cb1584a-d4b5-4a63-9d6b-3bf3c5e26ddb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{b5a47882-0220-4258-90a1-c3e558e1c900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GOs\Components">
       <UniqueIdentifier>{ac30fd2d-7426-4aad-a901-09a9c9f3426e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{3b5fe65a-e20b-4e24-87ce-86b036019e94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Blockheads">
+      <UniqueIdentifier>{64e7dd28-b920-4950-b274-804d5b951506}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

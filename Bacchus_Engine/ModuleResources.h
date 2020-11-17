@@ -2,10 +2,11 @@
 #define __MODULE_RESOURCES_H__
 
 #include "Module.h"
+#include "Resource.h"
 
 
 class ImporterScene;
-
+class Resource;
 
 class ModuleResources : public Module
 {
@@ -20,7 +21,7 @@ public:
 	bool LoadFromPath(const char* path);
 
 private:
-
+	std::map<uint, Resource*>  resources;
 	ImporterScene* IScene = nullptr;
 	
 };

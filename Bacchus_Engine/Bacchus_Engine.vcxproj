@@ -201,6 +201,7 @@
     <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="ComponentRenderer.h" />
     <ClInclude Include="ComponentTransform.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="vCubesphere.h" />
     <ClInclude Include="vCylinder.h" />
@@ -282,6 +283,7 @@
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="ComponentRenderer.cpp" />
     <ClCompile Include="ComponentTransform.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="vCubesphere.cpp" />
     <ClCompile Include="vCylinder.cpp" />

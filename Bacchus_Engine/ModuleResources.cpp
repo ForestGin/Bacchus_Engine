@@ -1,11 +1,12 @@
 #include "Application.h"
 #include "ModuleResources.h"
+#include "Resource.h"
+
 #include "ModuleTextures.h"
 #include "ModuleSceneManager.h"
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "FileSystem.h"
-
 
 #include "Importer.h"
 #include "ImporterScene.h"
