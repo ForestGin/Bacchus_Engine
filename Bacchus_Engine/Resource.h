@@ -6,6 +6,8 @@
 
 class Resource
 {
+	friend class ModuleResources; //it can access private and protected
+
 public:
 	enum class ResourceType
 	{

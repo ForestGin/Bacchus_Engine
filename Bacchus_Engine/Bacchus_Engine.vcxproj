@@ -202,6 +202,10 @@
     <ClInclude Include="ComponentRenderer.h" />
     <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceFolder.h" />
+    <ClInclude Include="ResourceMaterial.h" />
+    <ClInclude Include="ResourceMesh.h" />
+    <ClInclude Include="ResourceTexture.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="vCubesphere.h" />
     <ClInclude Include="vCylinder.h" />
@@ -284,6 +288,10 @@
     <ClCompile Include="ComponentRenderer.cpp" />
     <ClCompile Include="ComponentTransform.cpp" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceFolder.cpp" />
+    <ClCompile Include="ResourceMaterial.cpp" />
+    <ClCompile Include="ResourceMesh.cpp" />
+    <ClCompile Include="ResourceTexture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="vCubesphere.cpp" />
     <ClCompile Include="vCylinder.cpp" />
