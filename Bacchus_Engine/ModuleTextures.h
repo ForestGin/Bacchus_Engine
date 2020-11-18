@@ -19,7 +19,7 @@ public:
 	bool CleanUp();
 
 	uint LoadCheckImage() const;
-	uint CreateTextureFromFile(const char* path, uint& width, uint& height) const;
+	uint CreateTextureFromFile(const char* path, uint& width, uint& height, bool load_existing = false) const;
 	uint CreateTextureFromPixels(int internalFormat, uint width, uint height, uint format, const void* pixels, bool CheckersTexture = false) const;
 	uint GetCheckerTextureID() const;
 
@@ -30,7 +30,7 @@ private:
 private:
 
 	inline void SetTextureParameters(bool CheckersTexture = false) const;
-	inline void CreateTextureFromImage(uint& TextureID, uint& width, uint& height, const char* path) const;
+	inline void CreateTextureFromImage(uint& TextureID, uint& width, uint& height, const char* path, bool load_existing = false) const;
 };
 
 #endif 

@@ -51,3 +51,15 @@ bool ImporterMaterial::Import(const char* File_path, const ImportData& IData) co
 
 	return true;
 }
+
+void ImporterMaterial::Load(const char* filename, ComponentMaterial& mat)
+{
+	std::string path = TEXTURES_FOLDER;
+	path.append(filename);
+	path.append(".dds");
+	path = path.substr(1, path.size());
+
+	mat.TextureID = App->tex->CreateTextureFromFile(path.data(), mat.Texture_width, mat.Texture_height, true);
+	mat.Texture_path = path;
+
+}

@@ -41,8 +41,9 @@ bool ModuleResources::Init(json file)
 
 bool ModuleResources::Start()
 {
-	LoadFromPath("Assets/BakerHouse.fbx");
-	
+	/*LoadFromPath("Assets/BakerHouse.fbx");*/
+	IScene->Load("Library/Models/BakerHouse.model");
+
 	return true;
 }
 
@@ -71,39 +72,50 @@ bool ModuleResources::LoadFromPath(const char* path)
 		std::string DroppedFile_path = path;
 		App->fs->NormalizePath(DroppedFile_path);
 
-		// If it is a 3D Model ...
+		// If it is a 3D Model
 		if (DroppedFile_path.find(".fbx") != std::string::npos || DroppedFile_path.find(".FBX") != std::string::npos)
 		{
 			ImportData data;
 			ret = IScene->Import(DroppedFile_path.data(), data);
 		}
-		// If it is an image file file ...
+		// If it is an image file 
 		else if (DroppedFile_path.find(".dds") != std::string::npos || DroppedFile_path.find(".png") != std::string::npos)
 		{
-			ComponentMaterial* mat = App->scene_manager->GetSelectedGameObjects()->GetComponent<ComponentMaterial>(Component::ComponentType::Material);
-			
-			if (mat->Texture_path == "Default")
+			// Get Selected Game Object's Material
+			GameObject* Selected = App->scene_manager->GetSelectedGameObjects();
+			ComponentMaterial* mat = nullptr;
+
+			if (Selected)
 			{
-				/*App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->RemoveComponent(Component::ComponentType::Material);*/
+				mat = Selected->GetComponent<ComponentMaterial>(Component::ComponentType::Material);
 
-				mat = App->scene_manager->CreateEmptyMaterial();
+				if (mat)
+				{
+					if (mat->Texture_path == "Default")
+					{
+						mat = App->scene_manager->CreateEmptyMaterial();
 
-				App->scene_manager->GetSelectedGameObjects()->SetMaterial(mat);
+						App->scene_manager->GetSelectedGameObjects()->SetMaterial(mat);
+					}
+
+					mat->Texture_path = DroppedFile_path.data();
+
+					// --- If there is a material, assign diffuse texture ---
+					if (mat)
+					{
+						App->scene_manager->SetTextureToSelectedGO(App->tex->CreateTextureFromFile(path, mat->Texture_width, mat->Texture_height));
+
+					}
+				}
+				else
+					ret = false;
 			}
-
-			mat->Texture_path = DroppedFile_path.data();
-
-			if (mat)
-			{
-				App->scene_manager->SetTextureToSelectedGO(App->tex->CreateTextureFromFile(path, mat->Texture_width, mat->Texture_height));
-
-			}
+			else
+				ret = false;
 		}
-
 	}
 	else
 		ret = false;
-
 
 	return ret;
 }

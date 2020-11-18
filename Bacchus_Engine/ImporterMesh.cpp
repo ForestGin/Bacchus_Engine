@@ -53,10 +53,12 @@ bool ImporterMesh::Import(const ImportData& IData) const
 
 	}
 
+	data.new_mesh->TexCoordsSize = data.mesh->mNumVertices * 2;
+
 	//TexCoords
 	if (data.mesh->HasTextureCoords(0))
 	{
-		data.new_mesh->TexCoords = new float[data.mesh->mNumVertices * 2];
+		data.new_mesh->TexCoords = new float[data.new_mesh->TexCoordsSize];
 
 		for (uint j = 0; j < data.mesh->mNumVertices; ++j)
 		{
@@ -89,17 +91,17 @@ bool ImporterMesh::Import(const ImportData& IData) const
 
 	data.new_mesh->IndicesID = App->renderer3D->CreateBufferFromData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * data.new_mesh->IndicesSize, data.new_mesh->Indices);
 	
-	data.new_mesh->CreateAABB();
+	/*data.new_mesh->CreateAABB();*/
 
 	return true;
 }
 
 void ImporterMesh::Save(ComponentMesh* mesh, const char* path) const
 {
-	// amount of indices / vertices / colors / normals / texture_coords / AABB
-	uint ranges[2] = { mesh->IndicesSize, mesh->VerticesSize };
+	// amount of indices / vertices / normals / texture_coords / AABB
+	uint ranges[4] = { mesh->IndicesSize, mesh->VerticesSize, mesh->NormalsSize, mesh->TexCoordsSize };
 
-	uint size = sizeof(ranges) + sizeof(uint) * mesh->IndicesSize + sizeof(float) * mesh->VerticesSize * 3;
+	uint size = sizeof(ranges) + sizeof(uint) * mesh->IndicesSize + sizeof(float3) * mesh->VerticesSize + sizeof(float3)*mesh->NormalsSize + sizeof(float)* mesh->TexCoordsSize;
 
 	char* data = new char[size]; // Allocate
 	char* cursor = data;
@@ -115,5 +117,73 @@ void ImporterMesh::Save(ComponentMesh* mesh, const char* path) const
 	bytes = sizeof(float3) * mesh->VerticesSize;
 	memcpy(cursor, mesh->Vertices, bytes);
 
+	
+	cursor += bytes;//SAVE NORMAL
+	bytes = sizeof(float3) * mesh->NormalsSize;
+	memcpy(cursor, mesh->Normals, bytes);
+
+	
+	cursor += bytes;//SAVE TEXCOORD
+	bytes = sizeof(uint) * mesh->TexCoordsSize;
+	memcpy(cursor, mesh->TexCoords, bytes);
+
 	App->fs->Save(path, data, size);
+}
+
+void ImporterMesh::Load(const char* filename, ComponentMesh& mesh) const
+{
+	std::string path = MESHES_FOLDER;
+	path.append(filename);
+	path.append(".mesh");
+
+	//Load mesh data
+	char* buffer;
+	App->fs->Load(path.data(), &buffer);
+	char* cursor = buffer;
+
+	// amount of indices / vertices / normals / texture_coords
+	uint ranges[4];
+	uint bytes = sizeof(ranges);
+	memcpy(ranges, cursor, bytes);
+
+	mesh.IndicesSize = ranges[0];
+	mesh.VerticesSize = ranges[1];
+	mesh.NormalsSize = ranges[2];
+	mesh.TexCoordsSize = ranges[3];
+
+	//Load indices
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh.IndicesSize;
+	mesh.Indices = new uint[mesh.IndicesSize];
+	memcpy(mesh.Indices, cursor, bytes);
+
+	mesh.IndicesID = App->renderer3D->CreateBufferFromData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh.IndicesSize, mesh.Indices);
+
+	//Load Vertices
+	cursor += bytes;
+	bytes = sizeof(float3) * mesh.VerticesSize;
+	mesh.Vertices = new float3[mesh.VerticesSize];
+	memcpy(mesh.Vertices, cursor, bytes);
+
+	mesh.VerticesID = App->renderer3D->CreateBufferFromData(GL_ARRAY_BUFFER, sizeof(float3) * mesh.VerticesSize, mesh.Vertices);
+
+	//Load Normals
+	cursor += bytes;
+	bytes = sizeof(float3) * mesh.NormalsSize;
+	mesh.Normals = new float3[mesh.NormalsSize];
+	memcpy(mesh.Normals, cursor, bytes);
+
+	//Load Texture Coords
+	cursor += bytes;
+	bytes = sizeof(float) * mesh.TexCoordsSize;
+	mesh.TexCoords = new float[mesh.TexCoordsSize];
+	memcpy(mesh.TexCoords, cursor, bytes);
+
+	mesh.TextureCoordsID = App->renderer3D->CreateBufferFromData(GL_ARRAY_BUFFER, sizeof(float) * mesh.TexCoordsSize, mesh.TexCoords);
+
+	if (buffer)
+	{
+		delete[] buffer;
+		buffer = nullptr;
+	}
 }

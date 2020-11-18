@@ -121,6 +121,7 @@ GameObject* ModuleSceneManager::GetSelectedGameObjects() const
     return SelectedGameObject;
 }
 
+
 void ModuleSceneManager::SetSelectedGameObject(GameObject* go)
 {
     SelectedGameObject = go;

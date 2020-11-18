@@ -1,0 +1,29 @@
+{
+    "BakerHouse": {
+        "Components": {
+            "0": null
+        },
+        "Parent": "280416434",
+        "UID": "98716637"
+    },
+    "Baker_house": {
+        "Components": {
+            "0": null,
+            "1": null,
+            "2": null,
+            "3": null
+        },
+        "Parent": "98716637",
+        "UID": "619698096"
+    },
+    "Chimney": {
+        "Components": {
+            "0": null,
+            "1": null,
+            "2": null,
+            "3": null
+        },
+        "Parent": "98716637",
+        "UID": "803314177"
+    }
+}
