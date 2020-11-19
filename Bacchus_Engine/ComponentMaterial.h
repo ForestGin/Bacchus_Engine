@@ -21,6 +21,7 @@ public:
 	uint Texture_width = 0;
 	uint Texture_height = 0;
 
+	uint LibUID = 0;
 };
 
 #endif 

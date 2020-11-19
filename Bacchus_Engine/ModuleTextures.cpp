@@ -161,27 +161,33 @@ inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width,
 	if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 	{
 		TextureID = CreateTextureFromPixels(ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
-
-		ILuint size;
-		ILubyte* data;
-		ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
-		size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
-
-		if (size > 0) 
+		
+		if (!load_existing)
 		{
-			data = new ILubyte[size]; // allocate data buffer
+			// --- Save to Lib ---
+			ILuint size;
+			ILubyte* data;
+			ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+			size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
 
-			if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
-				App->fs->Save(path, data, size);
+			if (size > 0) 
+			{
+				data = new ILubyte[size]; // allocate data buffer
 
-			delete[] data;
+				if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
+					App->fs->Save(path, data, size);
+
+
+
+				delete[] data;
+			}
 		}
 	}
 	else
 		LOG("|[error]: Image conversion failed. ERROR: %s", iluErrorString(ilGetError()));
 }
 
-uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& height, bool load_existing) const
+uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& height, uint& LibUID, bool load_existing) const
 {
 	uint TextureID = 0;
 
@@ -197,17 +203,12 @@ uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& 
 
 	ilBindImage(ImageName);
 
+	std::string name = TEXTURES_FOLDER;
+
 	if (!load_existing)
 	{
-		std::string file_path = path;
-		std::string name = TEXTURES_FOLDER;
-		uint count = file_path.find_last_of("/");
-		file_path = file_path.substr(count + 1, file_path.size());
-
-		uint countdot = file_path.find_last_of(".");
-		file_path = file_path.substr(0, countdot);
-
-		name.append(file_path);
+		LibUID = App->GetRandom().Int();
+		name.append(std::to_string(LibUID));
 		name.append(".dds");
 	}
 	

@@ -128,17 +128,21 @@ void ImporterMesh::Save(ComponentMesh* mesh, const char* path) const
 	memcpy(cursor, mesh->TexCoords, bytes);
 
 	App->fs->Save(path, data, size);
+
+	if (data)
+	{
+		delete[] data;
+		data = nullptr;
+		cursor = nullptr;
+	}
 }
 
 void ImporterMesh::Load(const char* filename, ComponentMesh& mesh) const
 {
-	std::string path = MESHES_FOLDER;
-	path.append(filename);
-	path.append(".mesh");
-
+	
 	//Load mesh data
 	char* buffer;
-	App->fs->Load(path.data(), &buffer);
+	App->fs->Load(filename, &buffer);
 	char* cursor = buffer;
 
 	// amount of indices / vertices / normals / texture_coords
@@ -185,5 +189,6 @@ void ImporterMesh::Load(const char* filename, ComponentMesh& mesh) const
 	{
 		delete[] buffer;
 		buffer = nullptr;
+		cursor = nullptr;
 	}
 }
