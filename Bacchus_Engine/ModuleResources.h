@@ -19,6 +19,7 @@ public:
 	bool Start();
 	bool CleanUp();
 	bool LoadFromPath(const char* path);
+	ImporterScene* GetImporterScene() const;
 
 private:
 	std::map<uint, Resource*>  resources;

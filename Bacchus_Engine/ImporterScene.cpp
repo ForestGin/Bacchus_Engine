@@ -92,19 +92,19 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 
 bool ImporterScene::Load(const char* exported_file) const
 {
-	json model = App->GetJLoader()->Load(exported_file);
+	json file = App->GetJLoader()->Load(exported_file);
 
 	std::vector<GameObject*> objects;
 	
 
-	for (json::iterator it = model.begin(); it != model.end(); ++it)
+	for (json::iterator it = file.begin(); it != file.end(); ++it)
 	{
 		GameObject* new_go = App->scene_manager->CreateEmptyGameObject();
 		new_go->SetName(it.key().data());
-		std::string uid = model[it.key()]["UID"];
+		std::string uid = file[it.key()]["UID"];
 		new_go->GetUID() = std::stoi(uid);
 
-		json components = model[it.key()]["Components"];
+		json components = file[it.key()]["Components"];
 
 		for (json::iterator it2 = components.begin(); it2 != components.end(); ++it2)
 		{
@@ -116,6 +116,9 @@ bool ImporterScene::Load(const char* exported_file) const
 			ComponentMaterial* mat = nullptr;
 			std::string component_path = components[val];
 
+			std::string diffuse_uid;
+			uint count;
+
 			switch (type)
 			{
 			case Component::ComponentType::Renderer:
@@ -125,16 +128,37 @@ bool ImporterScene::Load(const char* exported_file) const
 			case Component::ComponentType::Material:
 
 				component_path = component_path.substr(1, component_path.size());
-				mat = App->scene_manager->CreateEmptyMaterial();
-				IMaterial->Load(component_path.data(), *mat);
 
-				new_go->SetMaterial(mat);
+				if (App->fs->Exists(component_path.data()))
+				{
+
+					mat = App->scene_manager->CreateEmptyMaterial();
+					IMaterial->Load(component_path.data(), *mat);
+
+					diffuse_uid = component_path;
+					App->fs->SplitFilePath(component_path.data(), nullptr, &diffuse_uid);
+					count = diffuse_uid.find_last_of(".");
+					diffuse_uid = diffuse_uid.substr(0, count);
+					mat->LibUID = std::stoi(diffuse_uid);
+
+					new_go->SetMaterial(mat);
+				}
+				else
+					LOG("|[error]: Could not find %s", component_path.data());
+
+			
 
 				break;
 
 			case Component::ComponentType::Mesh:
-				mesh = (ComponentMesh*)new_go->AddComponent(type);
-				IMesh->Load(component_path.data(), *mesh);
+				if (App->fs->Exists(component_path.data()))
+				{
+					mesh = (ComponentMesh*)new_go->AddComponent(type);
+					IMesh->Load(component_path.data(), *mesh);
+				}
+				else
+					LOG("|[error]: Could not find %s", component_path.data());
+
 				break;
 
 
@@ -147,7 +171,7 @@ bool ImporterScene::Load(const char* exported_file) const
 
 	for (uint i = 0; i < objects.size(); ++i)
 	{
-		std::string parent_uid = model[objects[i]->GetName()]["Parent"];
+		std::string parent_uid = file[objects[i]->GetName()]["Parent"];
 		uint p_uid = std::stoi(parent_uid);
 
 		for (uint j = 0; j < objects.size(); ++j)
@@ -165,14 +189,15 @@ bool ImporterScene::Load(const char* exported_file) const
 
 std::string ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, std::string& scene_name, ExportFileTypes exportedfile_type) const
 {
-	json model;
+	json file;
 
 	for (int i = 0; i < scene_gos.size(); ++i)
 	{
-		model[scene_gos[i]->GetName()];
-		model[scene_gos[i]->GetName()]["UID"] = std::to_string(scene_gos[i]->GetUID());
-		model[scene_gos[i]->GetName()]["Parent"] = std::to_string(scene_gos[i]->parent->GetUID());
-		model[scene_gos[i]->GetName()]["Components"];
+		file[scene_gos[i]->GetName()];
+		file[scene_gos[i]->GetName()]["UID"] = std::to_string(scene_gos[i]->GetUID());
+		file[scene_gos[i]->GetName()]["Parent"] = std::to_string(scene_gos[i]->parent->GetUID());
+		file[scene_gos[i]->GetName()]["Components"];
+
 		for (int j = 0; j < scene_gos[i]->GetComponents().size(); ++j)
 		{
 			std::string component_path;
@@ -181,30 +206,34 @@ std::string ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, 
 			{
 
 			case Component::ComponentType::Transform:
-
+				file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())] = component_path;
 				break;
 			case Component::ComponentType::Mesh:
 				component_path = MESHES_FOLDER;
 				component_path.append(std::to_string(App->GetRandom().Int()));
 				component_path.append(".mesh");
 				IMesh->Save(scene_gos[i]->GetComponent<ComponentMesh>(Component::ComponentType::Mesh), component_path.data());
+				file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())] = component_path;
 				break;
 			case Component::ComponentType::Renderer:
-
+				file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())] = component_path;
 				break;
 			case Component::ComponentType::Material:
 				component_path = TEXTURES_FOLDER;
 				component_path.append(std::to_string(scene_gos[i]->GetComponent<ComponentMaterial>(Component::ComponentType::Material)->LibUID));
 				component_path.append(".dds");
+
+				if (scene_gos[i]->GetComponent<ComponentMaterial>(Component::ComponentType::Material)->LibUID != 0)
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())] = component_path;
+
 				break;
 
 			}
 
-			model[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())] = component_path;
 		}
 	}
 	std::string data;
-	data = App->GetJLoader()->Serialize(model);
+	data = App->GetJLoader()->Serialize(file);
 
 	std::string path;
 

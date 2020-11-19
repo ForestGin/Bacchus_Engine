@@ -9,6 +9,9 @@
 #include "ComponentMaterial.h"
 #include "ModuleTextures.h"
 #include "ComponentTransform.h"
+#include "ModuleResources.h"
+#include "ImporterScene.h"
+#include "FileSystem.h"
 #include "Math.h"
 
 #include "vSphere.h"
@@ -117,11 +120,57 @@ GameObject* ModuleSceneManager::GetRootGO() const
     return root;
 }
 
+void ModuleSceneManager::SaveStatus(json& file) const
+{
+}
+
+void ModuleSceneManager::LoadStatus(const json& file)
+{
+}
+
+void ModuleSceneManager::SaveScene()
+{
+    
+    std::vector<GameObject*> scene_gos;
+    GatherGameObjects(scene_gos, root);
+
+    if (scene_gos.size() > 0)
+    {
+        std::string Scene_name = "SampleScene";
+        App->resources->GetImporterScene()->SaveSceneToFile(scene_gos, Scene_name, SCENE);
+    }
+}
+
+void ModuleSceneManager::LoadScene()
+{
+    std::string Scene_name = SCENES_FOLDER;
+    Scene_name.append("SampleScene.scene");
+    Scene_name = Scene_name.substr(1, Scene_name.size());
+
+    if (App->fs->Exists(Scene_name.data()))
+
+    App->resources->GetImporterScene()->Load(Scene_name.data());
+}
+
 GameObject* ModuleSceneManager::GetSelectedGameObjects() const
 {
     return SelectedGameObject;
 }
 
+void ModuleSceneManager::GatherGameObjects(std::vector<GameObject*>& scene_gos, GameObject* go)
+{
+    
+    if (go->GetName() != root->GetName())
+        scene_gos.push_back(go);
+
+    if (go->childs.size() > 0)
+    {
+        for (std::vector<GameObject*>::iterator it = go->childs.begin(); it != go->childs.end(); ++it)
+        {
+            GatherGameObjects(scene_gos, *it);
+        }
+    }
+}
 
 void ModuleSceneManager::SetSelectedGameObject(GameObject* go)
 {

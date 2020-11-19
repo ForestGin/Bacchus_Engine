@@ -26,6 +26,11 @@ public:
 	void Draw();
 	GameObject* GetRootGO() const;
 
+	void SaveStatus(json& file) const override;
+	void LoadStatus(const json& file) override;
+	void SaveScene();
+	void LoadScene();
+
 
 	GameObject* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false);
 	GameObject* CreateCubeSphere(float Radius = 1.0f, int sub = 3, bool smooth = false);
@@ -41,11 +46,12 @@ public:
 
 private:
 	void LoadPrimitiveArrays(GameObject& new_object,
-		uint vertices_size, const float* vertices,
-		uint indices_size, const uint* indices,
-		uint normals_size, const float* normals,
-		uint texCoords_size, const float* texCoords) const;
+	uint vertices_size, const float* vertices,
+	uint indices_size, const uint* indices,
+	uint normals_size, const float* normals,
+	uint texCoords_size, const float* texCoords) const;
 		
+	void GatherGameObjects(std::vector<GameObject*>& scene_gos, GameObject* go);
 	GameObject* CreateRootGameObject();
 	void DrawRecursive(GameObject* go);
 

@@ -118,6 +118,17 @@ update_status BacchusEditor::Update(float dt)
 			{
 				return UPDATE_STOP;
 			}
+
+			if (ImGui::MenuItem("Save Scene"))
+			{
+				App->scene_manager->SaveScene();
+			}
+
+			if (ImGui::MenuItem("Load Scene"))
+			{
+				App->scene_manager->LoadScene();
+			}
+
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit"))
