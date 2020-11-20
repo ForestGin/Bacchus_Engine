@@ -147,8 +147,7 @@ void ModuleSceneManager::LoadScene()
     Scene_name.append("SampleScene.scene");
     Scene_name = Scene_name.substr(1, Scene_name.size());
 
-    if (App->fs->Exists(Scene_name.data()))
-
+    if(App->fs->Exists(Scene_name.data()))
     App->resources->GetImporterScene()->Load(Scene_name.data());
 }
 
