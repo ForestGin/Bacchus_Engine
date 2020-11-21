@@ -50,15 +50,20 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 	relative_path.append(rootnodename);
 	relative_path.append(extension);
 
+
+	// --- Copy File to Assets Folder ---
 	App->fs->CopyFromOutsideFS(File_path, relative_path.data());
 
+	// --- Load file from assets folder ---
 	char* buffer;
 	uint size = App->fs->Load(relative_path.data(), &buffer);
 
 	// --- Import scene from path ---
 	const aiScene* scene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 
+	// --- Release data ---
 	delete[] buffer;
+
 
 	GameObject* rootnode = App->scene_manager->CreateEmptyGameObject();
 
@@ -67,14 +72,17 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
+		// --- Save Game objects to vector so we can save to lib later ---
 		std::vector<GameObject*> scene_gos;
 		scene_gos.push_back(rootnode);
 
 		// --- Use scene->mNumMeshes to iterate on scene->mMeshes array ---
 		LoadNodes(scene->mRootNode, rootnode, scene, scene_gos, File_path);
 
+		// --- Save to Own format files in Library ---
 		std::string exported_file = SaveSceneToFile(scene_gos, rootnodename, MODEL);
 		exported_file = exported_file.substr(1, exported_file.size());
+
 		// --- Delete Everything once Library files have been created ---
 		rootnode->RecursiveDelete(rootnode);
 
@@ -268,32 +276,37 @@ std::string ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, 
 
 void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiScene* scene, std::vector<GameObject*>& scene_gos, const char* File_path) const
 {
+	// --- Load Game Objects from Assimp scene ---
+
 	GameObject* nodeGo = nullptr;
 
 	if (node != scene->mRootNode && node->mNumMeshes > 1)
 	{
+		// --- Create GO per each node that contains a mesh ---
 		nodeGo = App->scene_manager->CreateEmptyGameObject();
 		nodeGo->SetName(node->mName.C_Str());
 		parent->AddChildGO(nodeGo);
 		scene_gos.push_back(nodeGo);
 	}
-	else
+	else // If rootnode, set nodeGo as root
 		nodeGo = parent;
 
+	// --- Iterate children and repeat process ---
 	for (int i = 0; i < node->mNumChildren; ++i)
 	{
 		LoadNodes(node->mChildren[i], nodeGo, scene, scene_gos, File_path);
 	}
 
+	// --- Iterate and load meshes ---
 	for (int j = 0; j < node->mNumMeshes; ++j)
 	{
-		// --- Create Game Object ---
+		// --- Create Game Object per mesh ---
 		GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
 		new_object->SetName(node->mName.C_Str());
 		nodeGo->AddChildGO(new_object);
 		scene_gos.push_back(new_object);
 
-		// --- Get Scene mesh number i ---
+		// --- Get Scene mesh associated to node's mesh at index ---
 		uint mesh_index = node->mMeshes[j];
 		aiMesh* mesh = scene->mMeshes[mesh_index];
 
@@ -303,6 +316,7 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 			// --- Create new Component Mesh to store current scene mesh data ---
 			ComponentMesh* new_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
 
+			// --- Create Default components ---
 			if (new_mesh)
 			{
 				// --- Import mesh data (fill new_mesh)---
@@ -314,9 +328,11 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 				// --- Create new Component Renderer to draw mesh ---
 				ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
 
+				// --- Create new Component Material to store scene's, meshes will use this for now since we do not want to create a material for every mesh if not needed ---
 				ComponentMaterial* Material = App->scene_manager->CreateEmptyMaterial();
 
 				// --- Import Material Data (fill Material) --- 
+
 				ImportMaterialData MData;
 				MData.scene = scene;
 				MData.new_material = Material;
@@ -324,7 +340,6 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 
 				// --- Set Object's Material ---
 				new_object->SetMaterial(Material);
-
 			}
 
 			// --- When the mesh is loaded, frame it with the camera ---

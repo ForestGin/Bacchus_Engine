@@ -72,21 +72,30 @@ bool ModuleResources::LoadFromPath(const char* path)
 
 	bool ret = true;
 
+	// MYTODO: Could JSONLoader be a new importer?
+
 	if (path)
 	{
 		std::string DroppedFile_path = path;
 		App->fs->NormalizePath(DroppedFile_path);
 
-		// If it is a 3D Model
+		// If it is a 3D Model ...
 		if (DroppedFile_path.find(".fbx") != std::string::npos || DroppedFile_path.find(".FBX") != std::string::npos)
 		{
 			ImportData data;
 			ret = IScene->Import(DroppedFile_path.data(), data);
 		}
-		// If it is an image file 
+		// If it is a json file ...
+		else if (DroppedFile_path.find(".json") != std::string::npos || DroppedFile_path.find(".JSON") != std::string::npos)
+		{
+
+		}
+		// If it is an image file file ...
 		else if (DroppedFile_path.find(".dds") != std::string::npos || DroppedFile_path.find(".png") != std::string::npos)
 		{
-			// Get Selected Game Object's Material
+			// MYTODO: We are not checking if the texture was already loaded, duplicating data
+
+			// --- Get Selected Game Object's Material ---
 			GameObject* Selected = App->scene_manager->GetSelectedGameObjects();
 			ComponentMaterial* mat = nullptr;
 
