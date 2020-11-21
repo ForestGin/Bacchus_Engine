@@ -11,19 +11,15 @@
 #include "FileSystem.h"
 #include "ModuleResources.h"
 #include "ModuleTextures.h"
+#include "ModuleTimeManager.h"
 
 #include "mmgr/mmgr.h"
 
 Application::Application()
 {
-	frames = 0;
-	last_frame_ms = -1;
-	last_fps = -1;
-	capped_ms = 1000 / 60; // Get Display RR!!
-	fps_counter = 0;
 	appName = "";
-	configpath = "Settings/EditorConfig.json";
 	log = "Application Logs:";
+	configpath = "Settings/EditorConfig.json";
 	RandomNumber = new math::LCG();
 
 	//.-.-.-.-.-.-
@@ -33,6 +29,7 @@ Application::Application()
 	camera = new ModuleCamera3D(true);
 	bacchuseditor = new BacchusEditor(true);
 	hardware = new BacchusHardware(true);
+	time = new ModuleTimeManager(true);
 	fs = new FileSystem(true, ASSETS_FOLDER);
 	resources = new ModuleResources(true);
 	tex = new ModuleTextures(true);
@@ -43,6 +40,7 @@ Application::Application()
 	// They will CleanUp() in reverse order
 
 	// Main Modules
+	AddModule(time);
 	AddModule(hardware);
 	AddModule(window);
 	AddModule(camera);
@@ -119,9 +117,7 @@ bool Application::Init()
 		++item;
 	}
 	
-	ms_timer.Start();
-
-	SetMaxFramerate(App->window->GetDisplayRefreshRate());
+	time->SetMaxFramerate(App->window->GetDisplayRefreshRate());
 
 	return ret;
 }
@@ -130,32 +126,13 @@ bool Application::Init()
 void Application::PrepareUpdate()
 {
 
-	dt = (float)ms_timer.Read() / 1000.0f;
-	ms_timer.Start();
+	time->PrepareUpdate();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
-	// Recap on framecount and fps
-	++frames;
-	++fps_counter;
-
-	if (fps_timer.Read() >= 1000)
-	{
-		last_fps = fps_counter;
-		fps_counter = 0;
-		fps_timer.Start();
-	}
-
-	last_frame_ms = ms_timer.Read();
-
-	// cap fps
-	if (capped_ms > 0 && (last_frame_ms < capped_ms))
-		SDL_Delay(capped_ms - last_frame_ms);
-
-	//Send data to GUI- PanelSettings Historiograms
-	App->bacchuseditor->LogFPS((float)last_fps, (float)last_frame_ms);
+	time->FinishUpdate();
 
 }
 
@@ -213,7 +190,7 @@ update_status Application::Update()
 	
 	while(item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		ret = (*item)->PreUpdate(dt);
+		ret = (*item)->PreUpdate(time->GetDt());
 		++item;
 	}
 
@@ -221,7 +198,7 @@ update_status Application::Update()
 
 	while(item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		ret = (*item)->Update(dt);
+		ret = (*item)->Update(time->GetDt());
 		++item;
 	}
 
@@ -229,7 +206,7 @@ update_status Application::Update()
 
 	while(item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		ret = (*item)->PostUpdate(dt);
+		ret = (*item)->PostUpdate(time->GetDt());
 		++item;
 	}
 
@@ -255,23 +232,6 @@ void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
 }
-
-void Application::SetMaxFramerate(uint maxFramerate)
-{
-	if (maxFramerate > 0)
-		capped_ms = 1000 / maxFramerate;
-	else
-		capped_ms = 0;
-}
-
-uint Application::GetMaxFramerate() const
-{
-	if (capped_ms > 0)
-		return (uint)((1.0f / (float)capped_ms) * 1000.0f);
-	else
-		return 0;
-}
-
 
 
 void Application::SetAppName(const char* name)
@@ -363,3 +323,7 @@ JSONLoader* Application::GetJLoader()
 	return &JLoader;
 }
 
+AppState& Application::GetAppState()
+{
+	return EngineState;
+}

@@ -10,6 +10,21 @@
 #include "MathGeoLib/include/Algorithm/Random/LCG.h"
 #include "JSONLoader.h"
 
+enum AppState
+{
+	PLAY = 0,
+	TO_PLAY,
+
+	EDITOR,
+	TO_EDITOR,
+
+	PAUSE,
+	TO_PAUSE,
+
+	STEP,
+	TO_STEP,
+};
+
 class Module;
 class ModuleWindow;
 class ModuleInput;
@@ -22,6 +37,7 @@ class FileSystem;
 class ModuleResources;
 class ModuleTextures;
 class ModuleSceneManager;
+class ModuleTimeManager;
 
 class Application
 {
@@ -37,19 +53,19 @@ public:
 	ModuleResources* resources = nullptr;
 	ModuleTextures* tex = nullptr;
 	ModuleSceneManager* scene_manager = nullptr;
+	ModuleTimeManager* time = nullptr;
 
 public:
 	// Getts
-	uint GetMaxFramerate() const;
 	const char* GetAppName() const;
 	const char* GetOrganizationName() const;
 	json GetDefaultConfig() const;
 	std::vector<std::string>& GetLogs();
 	LCG& GetRandom();
 	JSONLoader* GetJLoader();
+	AppState& GetAppState();
 
 	// Sets
-	void SetMaxFramerate(uint maxFramerate);
 	void SetAppName(const char* name);
 	void SetOrganizationName(const char* name);
 
@@ -60,16 +76,6 @@ private:
 
 	std::list<Module*> list_modules;
 
-	Timer				ms_timer;
-	Timer				fps_timer;
-	float				dt = 0;
-
-	Uint32				frames;
-	int					fps_counter;
-	int					last_fps;
-	uint				capped_ms;
-	uint					last_frame_ms;
-
 	JSONLoader			JLoader;
 	std::string			appName;
 	std::string			orgName;
@@ -78,6 +84,8 @@ private:
 	std::vector<std::string> logs;
 
 	LCG* RandomNumber = nullptr;
+
+	AppState EngineState = AppState::EDITOR;
 
 public:
 
