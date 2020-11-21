@@ -147,8 +147,30 @@ void ModuleSceneManager::LoadScene()
     Scene_name.append("SampleScene.scene");
     Scene_name = Scene_name.substr(1, Scene_name.size());
 
+    RecursiveFreeScene(root);
+
     if(App->fs->Exists(Scene_name.data()))
     App->resources->GetImporterScene()->Load(Scene_name.data());
+}
+
+void ModuleSceneManager::RecursiveFreeScene(GameObject* go)
+{
+    //Delete all objects except root (if go is root)
+
+    if (go->childs.size() > 0)
+    {
+        for (std::vector<GameObject*>::iterator it = go->childs.begin(); it != go->childs.end(); ++it)
+        {
+            RecursiveFreeScene(*it);
+        }
+
+        go->childs.clear();
+    }
+
+    if (go->GetName() != root->GetName())
+    {        
+        delete go;
+    }
 }
 
 GameObject* ModuleSceneManager::GetSelectedGameObjects() const

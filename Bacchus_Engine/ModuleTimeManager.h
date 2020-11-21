@@ -17,19 +17,26 @@ public:
 	void FinishUpdate();
 
 	//Getters
-	float GetDt() const;
+	float GetGameDt() const;
+	float GetRealTimeDt()const;
 	uint GetMaxFramerate() const;
+	float GetTimeScale() const;
 
 	//Setters
 	void SetMaxFramerate(uint maxFramerate);
+	void SetTimeScale(float scale);
 
 
 private:
 
-	Timer				ms_timer;
+	Timer				Realtime_clock;
+	Timer				Gametime_clock;
+	float				Time_scale = 1.0f;
+
 	Timer				fps_timer;
-	float				dt = 0;
-	Uint32				frames;
+	float				game_dt = 0.0f;
+	float				realtime_dt = 0.0f;
+	Uint32				frame_count;
 	int					fps_counter;
 	int					last_fps;
 	uint				capped_ms;

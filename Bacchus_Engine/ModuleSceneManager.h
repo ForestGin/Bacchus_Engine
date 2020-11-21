@@ -30,6 +30,7 @@ public:
 	void LoadStatus(const json& file) override;
 	void SaveScene();
 	void LoadScene();
+	void RecursiveFreeScene(GameObject* go);
 
 
 	GameObject* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false);

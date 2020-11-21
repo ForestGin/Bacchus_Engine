@@ -3,27 +3,27 @@
         "Components": {
             "0": ""
         },
-        "Parent": "1461974572",
-        "UID": "1996744000"
+        "Parent": "1896377586",
+        "UID": "409297346"
     },
     "Baker_house": {
         "Components": {
             "0": "",
-            "1": "/Library/Meshes/1775202573.mesh",
+            "1": "/Library/Meshes/53067198.mesh",
             "2": "",
-            "3": "/Library/Textures/1343211732.dds"
+            "3": "/Library/Textures/1382872446.dds"
         },
-        "Parent": "1996744000",
-        "UID": "2143801499"
+        "Parent": "409297346",
+        "UID": "983030109"
     },
     "Chimney": {
         "Components": {
             "0": "",
-            "1": "/Library/Meshes/1421101310.mesh",
+            "1": "/Library/Meshes/975700662.mesh",
             "2": "",
-            "3": "/Library/Textures/2126539606.dds"
+            "3": "/Library/Textures/1944381181.dds"
         },
-        "Parent": "1996744000",
-        "UID": "107619102"
+        "Parent": "409297346",
+        "UID": "730013823"
     }
 }
