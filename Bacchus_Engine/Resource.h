@@ -31,7 +31,9 @@ public:
 
 	const char* GetOriginalFile() const;
 	const char* GetResourceFile() const;
-	
+
+	void SetName(const char* name);
+	void SetOriginalFilename(const char* filename);
 
 	virtual void LoadOnMemory() {};
 	virtual void FreeMemory() {};

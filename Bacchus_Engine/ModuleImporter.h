@@ -4,6 +4,7 @@
 #include "Module.h"
 
 
+
 class ImporterScene;
 
 class ModuleImporter : public Module
@@ -18,9 +19,6 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 	bool LoadFromPath(const char* path);
-
-	Resource* GetResource(uint UID);
-	Resource::ResourceType GetResourceTypeFromPath(const char* path);
 
 private:
 

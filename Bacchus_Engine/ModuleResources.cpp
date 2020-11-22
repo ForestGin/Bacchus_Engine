@@ -97,7 +97,7 @@ void ModuleResources::LoadResource(Resource* resource)
 
 uint ModuleResources::DeleteResource(uint UID)
 {
-	Resource::ResourceType type = LoadedResources[UID].type;
+	Resource::ResourceType type = loaded_resources[UID].type;
 	uint instances = 0;
 
 	// --- If resource exists in Library destroy it ---

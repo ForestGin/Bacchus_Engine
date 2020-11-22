@@ -33,3 +33,14 @@ const char* Resource::GetResourceFile() const
 {
 	return res_file.data();
 }
+
+void Resource::SetName(const char* name)
+{
+	this->name = name;
+}
+
+void Resource::SetOriginalFilename(const char* filename)
+{
+	std::string new_name = filename;
+	this->og_file = new_name;
+}
