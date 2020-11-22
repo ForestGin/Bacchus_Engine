@@ -58,7 +58,7 @@ bool FileSystem::Init(json config)
 
 	// Make sure standard paths exist
 	const char* dirs[] = {
-		SETTINGS_FOLDER, ASSETS_FOLDER, LIBRARY_FOLDER
+		SETTINGS_FOLDER, ASSETS_FOLDER, LIBRARY_FOLDER, MODELS_FOLDER, MESHES_FOLDER, TEXTURES_FOLDER, SCENES_FOLDER
 	};
 
 	for (uint i = 0; i < sizeof(dirs) / sizeof(const char*); ++i)
@@ -295,11 +295,11 @@ uint FileSystem::Load(const char* file, char** buffer) const
 			if (readed != size)
 			{
 				LOG("File System error while reading from file %s: %s\n", file, PHYSFS_getLastError());
-				if (buffer)
+				/*if (buffer)
 				{
 					delete buffer;
 					buffer = nullptr;
-				}
+				}*/
 			}
 			else
 				ret = readed;

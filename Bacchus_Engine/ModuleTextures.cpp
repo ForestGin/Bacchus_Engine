@@ -15,6 +15,7 @@
 
 #include "mmgr/mmgr.h"
 
+
 ModuleTextures::ModuleTextures(bool start_enabled) : Module(start_enabled)
 {
 	name = "Textures";
@@ -35,9 +36,8 @@ bool ModuleTextures::Init(json file)
 		ret = false;
 	}
 
-	
-	// Initializing DevIL
 	LOG("Initializing DevIL Version: %i", IL_VERSION);
+	// --- Initializing DevIL
 
 	// Initialize IL
 	ilInit();
@@ -54,7 +54,7 @@ bool ModuleTextures::Init(json file)
 
 bool ModuleTextures::Start()
 {
-	// Loading Checkers Texture
+	// --- Load Checkers Texture ---
 	CheckerTexID = LoadCheckImage();
 
 	return true;
@@ -62,13 +62,14 @@ bool ModuleTextures::Start()
 
 bool ModuleTextures::CleanUp()
 {
-	
+
 	return true;
 }
 
 uint ModuleTextures::LoadCheckImage() const
 {
-	// Creating pixel data for checkers texture
+	// --- Creating pixel data for checkers texture ---
+
 	GLubyte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
 
 	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
@@ -81,7 +82,7 @@ uint ModuleTextures::LoadCheckImage() const
 		}
 	}
 
-	// Create the texture
+	// --- Create the texture ---
 	return CreateTextureFromPixels(GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, GL_RGBA, checkImage, true);
 }
 
@@ -92,11 +93,11 @@ uint ModuleTextures::GetCheckerTextureID() const
 
 inline void ModuleTextures::SetTextureParameters(bool CheckersTexture) const
 {
-	
+	// --- Set texture clamping method ---
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	
+	// --- Set texture interpolation method ---
 	if (CheckersTexture)
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -104,11 +105,11 @@ inline void ModuleTextures::SetTextureParameters(bool CheckersTexture) const
 	}
 	else
 	{
-
+		// --- Mipmap for the highest visual quality when resizing ---
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-		
+		// --- Enabling anisotropic filtering for highest quality at oblique angles---
 		if (glewIsSupported("GL_EXT_texture_filter_anisotropic"))
 		{
 			GLfloat largest_supported_anisotropy;
@@ -122,52 +123,76 @@ uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uin
 {
 	uint TextureID = 0;
 
-	
-	// Generate the texture ID 
+	// --- Generate the texture ID ---
 	glGenTextures(1, (GLuint*)&TextureID);
-	// Bind the texture so we can work with it
+	// --- Bind the texture so we can work with it---
 	glBindTexture(GL_TEXTURE_2D, TextureID);
-	
-	SetTextureParameters(CheckersTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
 
+	SetTextureParameters(CheckersTexture);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
 
 	if (!CheckersTexture)
 	{
-		// Generate Mipmap and enable 2D Textures
-		glEnable(GL_TEXTURE_2D);
+		// --- Generate Mipmap of the recently created texture (Note that we are using it in texture size reduction only)---
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
-	//Unbind texture
+	// --- Unbind texture ---
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	LOG("Loaded Texture: ID: %i , Width: %i , Height: %i ", TextureID, width, height);
 
-	//Returning id so a mesh can use it
+	// --- Returning id so a mesh can use it (and destroy buffer when done) ---
+
 	return TextureID;
 }
 
-inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width, uint& height, const char* path) const
+inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width, uint& height, const char* path, bool load_existing) const
 {
+	// --- Attention!! If the image is flipped, we flip it back --- 
 	ILinfo imageInfo;
 	iluGetImageInfo(&imageInfo);
+
 	width = imageInfo.Width;
 	height = imageInfo.Height;
 
-	if (imageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
+	if (imageInfo.Origin == IL_ORIGIN_UPPER_LEFT && !load_existing)
 		iluFlipImage();
 
+	// --- Convert the image into a suitable format to work with ---
 	if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 	{
+		// --- Create the texture ---
 		TextureID = CreateTextureFromPixels(ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
+
+		if (!load_existing)
+		{
+			// --- Save to Lib ---
+			ILuint size;
+			ILubyte* data;
+			ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+			size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
+
+			if (size > 0) {
+				data = new ILubyte[size]; // allocate data buffer
+
+				if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
+					App->fs->Save(path, data, size);
+
+				delete[] data;
+			}
+
+		}
 	}
 	else
 		LOG("|[error]: Image conversion failed. ERROR: %s", iluErrorString(ilGetError()));
 }
 
-uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& height) const
+uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& height, uint& LibUID, bool load_existing) const
 {
+	// --- In this function we use devil to load an image using the path given, extract pixel data and then create texture using CreateTextureFromImage ---
+
 	uint TextureID = 0;
 
 	if (path == nullptr)
@@ -176,21 +201,34 @@ uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& 
 		return TextureID;
 	}
 
-
+	// --- Generate the image name (ID for buffer) ---
 	uint ImageName = 0;
 	ilGenImages(1, (ILuint*)&ImageName);
 
+	// --- Bind the image ---
 	ilBindImage(ImageName);
 
-	std::string name = LIBRARY_FOLDER;
-	
+	std::string name = TEXTURES_FOLDER;
+
+	// --- Extract the filename from the path ---
+	if (!load_existing)
+	{
+		// --- Only if the file is being imported (no copy in library) ---
+		LibUID = App->GetRandom().Int();
+		name.append(std::to_string(LibUID));
+		name.append(".dds");
+	}
+
+	// --- Load the image into binded buffer and create texture from its pixel data ---
 	if (ilLoadImage(path))
-		CreateTextureFromImage(TextureID, width, height, name.data());
+		CreateTextureFromImage(TextureID, width, height, name.data(), load_existing);
 	else
 		LOG("|[error]: DevIL could not load the image. ERROR: %s", iluErrorString(ilGetError()));
 
+	// --- Release Image data (we have already extracted the necessary information) ---
 	ilDeleteImages(1, (const ILuint*)&ImageName);
 
+	// --- Returning the Texture ID so a mesh can use it, note that this variable is filled by CreateTextureFromPixels ---
 
 	return TextureID;
 }

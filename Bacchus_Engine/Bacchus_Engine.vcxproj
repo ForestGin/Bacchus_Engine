@@ -101,6 +101,7 @@
     <ClInclude Include="BlockheadHierarchy.h" />
     <ClInclude Include="BlockheadInspector.h" />
     <ClInclude Include="BlockheadSettings.h" />
+    <ClInclude Include="BlockheadToolbar.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="BacchusEditor.h" />
     <ClInclude Include="FileSystem.h" />
@@ -116,6 +117,7 @@
     <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="ModuleSceneManager.h" />
     <ClInclude Include="ModuleTextures.h" />
+    <ClInclude Include="ModuleTimeManager.h" />
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="imgui\examples\imgui_impl_opengl3.h" />
     <ClInclude Include="imgui\examples\imgui_impl_sdl.h" />
@@ -222,6 +224,7 @@
     <ClCompile Include="BlockheadHierarchy.cpp" />
     <ClCompile Include="BlockheadInspector.cpp" />
     <ClCompile Include="BlockheadSettings.cpp" />
+    <ClCompile Include="BlockheadToolbar.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="BacchusEditor.cpp" />
     <ClCompile Include="FileSystem.cpp" />
@@ -281,6 +284,7 @@
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="ModuleSceneManager.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
+    <ClCompile Include="ModuleTimeManager.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="Component.cpp" />

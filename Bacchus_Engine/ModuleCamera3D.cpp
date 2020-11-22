@@ -46,56 +46,60 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	speed = 10.0f * dt;
-	vec3 newPos(0, 0, 0);
-
-	//SHIFT: Speed 2x
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed *= 2.0f;
-
-	//RIGHT CLICK: Look Around
-	if(!App->bacchuseditor->IsMouseCaptured() && App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (App->GetAppState() == AppState::EDITOR)
 	{
-		LookAround();
+		speed = 10.0f * dt;
+		vec3 newPos(0, 0, 0);
 
-		//WASD: Free movement
+		//SHIFT: Speed 2x
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+			speed *= 2.0f;
 
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+		//RIGHT CLICK: Look Around
+		if (!App->bacchuseditor->IsMouseCaptured() && App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+		{
+			LookAround();
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+			//WASD: Free movement
+
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+
+		}
+		Position += newPos;
+		Reference += newPos;
+
+		//MOUSE WHEEL PRESS: Pan
+		if (App->input->GetMouseButton(2) == KEY_REPEAT)
+		{
+			Pan(speed);
+		}
+
+		//MOUSE WHEEL UP/DOWN: Zoom
+		if (!App->bacchuseditor->IsMouseCaptured() && abs(App->input->GetMouseZ()) > 0)
+		{
+			Zoom(speed);
+		}
+
+		////ALT + RIGHT CLICK: Orbit
+		if (!App->bacchuseditor->IsMouseCaptured() && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		{
+			Orbit();
+		}
+
+		//F: Focus on geometry
+		if (!App->bacchuseditor->IsKeyboardCaptured() && App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+		{
+			FrameObject(App->scene_manager->GetSelectedGameObjects());
+		}
+
+		// Recalculate matrix -------------
+		CalculateViewMatrix();
 
 	}
-	Position += newPos;
-	Reference += newPos;
-
-	//MOUSE WHEEL PRESS: Pan
-	if (App->input->GetMouseButton(2) == KEY_REPEAT)
-	{
-		Pan(speed);
-	}
-
-	//MOUSE WHEEL UP/DOWN: Zoom
-	if (!App->bacchuseditor->IsMouseCaptured() && abs(App->input->GetMouseZ()) > 0)
-	{
-		Zoom(speed);
-	}
-
-	////ALT + RIGHT CLICK: Orbit
-	if (!App->bacchuseditor->IsMouseCaptured() && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
-	{
-		Orbit();
-	}
-
-	//F: Focus on geometry
-	if (!App->bacchuseditor->IsKeyboardCaptured() && App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-	{
-		FrameObject(App->scene_manager->GetSelectedGameObjects());
-	}
-
-	// Recalculate matrix -------------
-	CalculateViewMatrix();
 
 	return UPDATE_CONTINUE;
 }

@@ -9,7 +9,8 @@
         "Console": true,
         "Settings": true,
 	"Hierarchy": true,
-	"Inspector": true
+	"Inspector": true,
+	"Toolbar": true
         
     },
     "Input": null,

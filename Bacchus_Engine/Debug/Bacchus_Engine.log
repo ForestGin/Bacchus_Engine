@@ -1,30 +1,12 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   Application.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  ImporterMesh.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  ImporterScene.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(108,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(119,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(166,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(171,20): warning C4018: '<': signed/unsigned mismatch
-  ModuleInput.cpp
-  ModuleRenderer3D.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  ModuleResources.cpp
-  ModuleSceneManager.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(355,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  ModuleTextures.cpp
-  ModuleImporter.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  ComponentRenderer.cpp
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  Resource.cpp
-  ResourceFolder.cpp
-  ResourceMaterial.cpp
-  ResourceMesh.cpp
-  ResourceTexture.cpp
+F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  BlockheadSettings.cpp
+F:\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(286,30): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(293,31): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(300,29): warning C4552: '!=': result of expression not used
+F:\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(307,35): warning C4552: '!=': result of expression not used
+  BlockheadToolbar.cpp
+  ModuleTimeManager.cpp
   Generating Code...
-  Bacchus_Engine.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
+  Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe

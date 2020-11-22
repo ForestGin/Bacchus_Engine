@@ -52,7 +52,7 @@ public:
 
 	void AddChildGO(GameObject* GO);
 	bool FindChildGO(GameObject* GO);
-	void RecursiveDelete(GameObject* GO);
+	void RecursiveDelete(GameObject* GO, bool target = true);
 	void RemoveChildGO(GameObject* GO);
 	void OnUpdateTransform(GameObject* GO);
 

@@ -11,6 +11,7 @@
 #include "BlockheadConsole.h"
 #include "BlockheadHierarchy.h"
 #include "BlockheadInspector.h"
+#include "BlockheadToolbar.h"
 
 
 #include "imgui/imgui.h"
@@ -46,6 +47,9 @@ bool BacchusEditor::Init(json file)
 
 	blockheadInspector = new BlockheadInspector("Inspector");
 	blockheads.push_back(blockheadInspector);
+
+	blockheadToolbar = new BlockheadToolbar("Toolbar");
+	blockheads.push_back(blockheadToolbar);
 
 	LoadStatus(file);
 
@@ -118,6 +122,17 @@ update_status BacchusEditor::Update(float dt)
 			{
 				return UPDATE_STOP;
 			}
+
+			if (ImGui::MenuItem("Save Scene"))
+			{
+				App->scene_manager->SaveScene();
+			}
+
+			if (ImGui::MenuItem("Load Scene"))
+			{
+				App->scene_manager->LoadScene();
+			}
+
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit"))
@@ -225,6 +240,11 @@ update_status BacchusEditor::Update(float dt)
 				blockheadInspector->OnOff();
 			}
 
+			if (ImGui::MenuItem("Toolbar"))
+			{
+				blockheadToolbar->OnOff();
+			}
+
 			ImGui::EndMenu();
 		}
 
@@ -301,6 +321,7 @@ bool BacchusEditor::CleanUp()
 	blockheadConsole = nullptr;
 	blockheadHierarchy = nullptr;
 	blockheadInspector = nullptr;
+	blockheadToolbar = nullptr;
 
 	LOG("Unloading Bacchus...");
 	ImGui_ImplOpenGL3_Shutdown();

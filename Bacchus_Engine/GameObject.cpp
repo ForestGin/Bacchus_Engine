@@ -29,6 +29,7 @@ GameObject::~GameObject()
 			*it = nullptr;
 		}
 	}
+	components.clear();
 }
 
 void GameObject::Update(float dt)
@@ -43,16 +44,19 @@ void GameObject::Update(float dt)
 
 }
 
-void GameObject::RecursiveDelete(GameObject* GO)
+void GameObject::RecursiveDelete(GameObject* GO, bool target)
 {
 	if (GO->childs.size() > 0)
 	{
 		for (std::vector<GameObject*>::iterator it = GO->childs.begin(); it != GO->childs.end(); ++it)
 		{
-			RecursiveDelete(*it);
+			RecursiveDelete(*it, false);
 		}
 		GO->childs.clear();
 	}
+
+	if (target && GO->parent)
+		GO->parent->RemoveChildGO(GO);
 
 	delete GO;
 }
@@ -234,5 +238,8 @@ void GameObject::SetName(const char* name)
 void GameObject::SetMaterial(ComponentMaterial* material)
 {
 	if (material)
+	{
+		RemoveComponent(Component::ComponentType::Material);
 		components.push_back(material);
+	}
 }

@@ -30,7 +30,7 @@ bool BlockheadHierarchy::Draw()
 
 	if (end_drag)
 	{
-		if (!dragged->FindChildGO(target))
+		if (!dragged->FindChildGO(target) && target != dragged)
 				target->AddChildGO(dragged);
 
 		end_drag = false;

@@ -21,33 +21,41 @@ bool ImporterMaterial::Import(const char* File_path, const ImportData& IData) co
 {
 	ImportMaterialData MData = (ImportMaterialData&)IData;
 
+	// --- Get Directory from filename ---
 	std::string directory = File_path;
 	App->fs->GetDirectoryFromPath(directory);
 
 	if (MData.scene->HasMaterials())
 	{
-		
+		// --- Get scene's first material ---
 		aiMaterial* material = MData.scene->mMaterials[0];
 
 		if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
 		{
 			aiString Texture_path;
 
-			
+			// --- Specify type of texture to retrieve (in this case DIFFUSE/ALBEDO)---
 			material->GetTexture(aiTextureType_DIFFUSE, 0, &Texture_path);
 
-			
+			// --- Build whole path to texture file ---
 			directory.append(Texture_path.C_Str());
 
-		
-			if (App->fs->Exists(directory.data()))
-			{
-				MData.new_material->TextureID = App->tex->CreateTextureFromFile(directory.data(), MData.new_material->Texture_width, MData.new_material->Texture_height);
-				MData.new_material->Texture_path = directory.data();
-			}
+			// --- If we find the texture file, load it ---
+			//if (App->fs->Exists(directory.data()))
+			//{
+			MData.new_material->TextureID = App->tex->CreateTextureFromFile(directory.data(), MData.new_material->Texture_width, MData.new_material->Texture_height, MData.new_material->LibUID);
+			MData.new_material->Texture_path = directory.data();
+			//}
 
 		}
 	}
 
 	return true;
+}
+
+void ImporterMaterial::Load(const char* filename, ComponentMaterial& mat)
+{
+	mat.TextureID = App->tex->CreateTextureFromFile(filename, mat.Texture_width, mat.Texture_height, mat.LibUID, true);
+	mat.Texture_path = filename;
+
 }

@@ -6,6 +6,7 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 #include "BacchusHardware.h"
+#include "ModuleTimeManager.h"
 
 #include "mmgr/mmgr.h"
 
@@ -78,9 +79,9 @@ void BlockheadSettings::ApplicationNode() const
 
 	ImGui::Separator();
 	// Cap frames
-	int maxFramerate = App->GetMaxFramerate();
+	int maxFramerate = App->time->GetMaxFramerate();
 	if (ImGui::SliderInt("Max FPS", &maxFramerate, 0, App->window->GetDisplayRefreshRate()))
-		App->SetMaxFramerate(maxFramerate);
+		App->time->SetMaxFramerate(maxFramerate);
 
 	ImGui::SameLine();
 	// VSync
@@ -94,7 +95,7 @@ void BlockheadSettings::ApplicationNode() const
 
 	ImGui::Text("Limit Framerate:");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%i", App->GetMaxFramerate());
+	ImGui::TextColored(ImVec4(255, 255, 0, 255), "%i", App->time->GetMaxFramerate());
 
 	// Framerate && Ms 
 	char title[25];
