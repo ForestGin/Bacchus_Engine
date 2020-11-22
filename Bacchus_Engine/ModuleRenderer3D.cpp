@@ -3,7 +3,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
-#include "ModuleResources.h"
+#include "ModuleImporter.h"
 #include "ModuleSceneManager.h"
 
 #include "BacchusEditor.h"

@@ -19,7 +19,7 @@ class ModuleCamera3D;
 class BacchusEditor;
 class BacchusHardware;
 class FileSystem;
-class ModuleResources;
+class ModuleImporter;
 class ModuleTextures;
 class ModuleSceneManager;
 
@@ -34,7 +34,7 @@ public:
 	BacchusHardware* hardware = nullptr;
 	ModuleCamera3D* camera = nullptr;
 	FileSystem* fs = nullptr;
-	ModuleResources* resources = nullptr;
+	ModuleImporter* importer = nullptr;
 	ModuleTextures* tex = nullptr;
 	ModuleSceneManager* scene_manager = nullptr;
 

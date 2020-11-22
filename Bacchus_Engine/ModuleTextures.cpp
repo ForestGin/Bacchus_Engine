@@ -1,7 +1,7 @@
 #include "ModuleTextures.h"
 #include "Application.h"
 #include "OpenGL.h"
-#include "ModuleResources.h"
+#include "ModuleImporter.h"
 #include "FileSystem.h"
 
 #include "DevIL/include/il.h"

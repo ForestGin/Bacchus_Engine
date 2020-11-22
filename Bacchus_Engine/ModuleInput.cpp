@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
-#include "ModuleResources.h"
+#include "ModuleImporter.h"
 #include "BacchusEditor.h"
 
 #include "imgui/imgui.h"

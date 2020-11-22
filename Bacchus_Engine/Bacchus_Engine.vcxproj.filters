@@ -190,9 +190,6 @@
     <ClCompile Include="ComponentMaterial.cpp">
       <Filter>GOs\Components</Filter>
     </ClCompile>
-    <ClCompile Include="CopmonentMesh.cpp">
-      <Filter>GOs\Components</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentRenderer.cpp">
       <Filter>GOs\Components</Filter>
     </ClCompile>
@@ -232,9 +229,6 @@
     <ClCompile Include="ModuleRenderer3D.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleResources.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleSceneManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -246,6 +240,15 @@
     </ClCompile>
     <ClCompile Include="FileSystem.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleImporter.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleResources.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
+      <Filter>GOs\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -587,9 +590,6 @@
     <ClInclude Include="ModuleRenderer3D.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleResources.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleSceneManager.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -597,6 +597,12 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="FileSystem.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleImporter.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResources.h">
       <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>

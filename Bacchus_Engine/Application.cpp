@@ -9,7 +9,7 @@
 #include "BacchusHardware.h"
 #include "ModuleRenderer3D.h"
 #include "FileSystem.h"
-#include "ModuleResources.h"
+#include "ModuleImporter.h"
 #include "ModuleTextures.h"
 
 #include "mmgr/mmgr.h"
@@ -34,7 +34,7 @@ Application::Application()
 	bacchuseditor = new BacchusEditor(true);
 	hardware = new BacchusHardware(true);
 	fs = new FileSystem(true, ASSETS_FOLDER);
-	resources = new ModuleResources(true);
+	importer = new ModuleImporter(true);
 	tex = new ModuleTextures(true);
 	scene_manager = new ModuleSceneManager(true);
 
@@ -48,7 +48,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(fs);
-	AddModule(resources);
+	AddModule(importer);
 	AddModule(tex);
 
 	//Scene
