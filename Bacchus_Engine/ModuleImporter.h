@@ -7,6 +7,7 @@
 
 class ImporterScene;
 
+
 class ModuleImporter : public Module
 {
 public:
@@ -16,9 +17,11 @@ public:
 
 	bool Init(json file);
 	bool Start();
-	update_status Update(float dt);
 	bool CleanUp();
+
 	bool LoadFromPath(const char* path);
+
+	ImporterScene* GetImporterScene() const;
 
 private:
 

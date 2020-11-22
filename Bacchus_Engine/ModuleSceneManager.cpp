@@ -9,7 +9,7 @@
 #include "ComponentMaterial.h"
 #include "ModuleTextures.h"
 #include "ComponentTransform.h"
-#include "ModuleResources.h"
+#include "ModuleImporter.h"
 #include "ImporterScene.h"
 #include "FileSystem.h"
 #include "Math.h"
@@ -137,7 +137,7 @@ void ModuleSceneManager::SaveScene()
     if (scene_gos.size() > 0)
     {
         std::string Scene_name = "SampleScene";
-        App->resources->GetImporterScene()->SaveSceneToFile(scene_gos, Scene_name, SCENE);
+        App->importer->GetImporterScene()->SaveSceneToFile(scene_gos, Scene_name, SCENE);
     }
 }
 
@@ -150,7 +150,7 @@ void ModuleSceneManager::LoadScene()
     RecursiveFreeScene(root);
 
     if(App->fs->Exists(Scene_name.data()))
-    App->resources->GetImporterScene()->Load(Scene_name.data());
+    App->importer->GetImporterScene()->Load(Scene_name.data());
 }
 
 void ModuleSceneManager::RecursiveFreeScene(GameObject* go)

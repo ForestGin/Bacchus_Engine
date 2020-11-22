@@ -16,8 +16,6 @@ bool ModuleResources::Init(json file)
 }
 bool ModuleResources::Start()
 {
-	/*LoadFromPath("Assets/BakerHouse.fbx");*/
-	
 	return true;
 }
 update_status ModuleResources::Update(float dt)
@@ -45,20 +43,6 @@ Resource* ModuleResources::GetResource(uint UID)
 	if (it != resources.end())
 		ret = it->second;
 	else
-ImporterScene* ModuleResources::GetImporterScene() const
-{
-	return IScene;
-}
-
-
-bool ModuleResources::LoadFromPath(const char* path)
-{
-
-	bool ret = true;
-
-	// MYTODO: Could JSONLoader be a new importer?
-
-	if (path)
 	{
 		// --- If resource is not in memory, search in library ---
 		std::map<uint, ResourceMeta>::iterator it = loaded_resources.find(UID);

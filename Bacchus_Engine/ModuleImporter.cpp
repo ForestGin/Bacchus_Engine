@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "ModuleImporter.h"
-#include "FileSystem.h"
+#include "Resource.h"
 
 #include "ModuleTextures.h"
 #include "ModuleSceneManager.h"
@@ -41,19 +41,15 @@ bool ModuleImporter::Init(json file)
 
 bool ModuleImporter::Start()
 {
-	LoadFromPath("Assets/BakerHouse.fbx");
-	
+	/*LoadFromPath("Assets/BakerHouse.fbx");*/
+
 	return true;
 }
 
-update_status ModuleImporter::Update(float dt)
-{
-	return UPDATE_CONTINUE;
-}
 
 bool ModuleImporter::CleanUp()
 {
-	
+
 	aiDetachAllLogStreams();
 
 	if (IScene)
@@ -65,10 +61,18 @@ bool ModuleImporter::CleanUp()
 	return true;
 }
 
+ImporterScene* ModuleImporter::GetImporterScene() const
+{
+	return IScene;
+}
+
+
 bool ModuleImporter::LoadFromPath(const char* path)
 {
 
 	bool ret = true;
+
+	// MYTODO: Could JSONLoader be a new importer?
 
 	if (path)
 	{
@@ -81,36 +85,55 @@ bool ModuleImporter::LoadFromPath(const char* path)
 			ImportData data;
 			ret = IScene->Import(DroppedFile_path.data(), data);
 		}
+		// If it is a json file ...
+		else if (DroppedFile_path.find(".json") != std::string::npos || DroppedFile_path.find(".JSON") != std::string::npos)
+		{
+
+		}
 		// If it is an image file file ...
 		else if (DroppedFile_path.find(".dds") != std::string::npos || DroppedFile_path.find(".png") != std::string::npos)
 		{
-			ComponentMaterial* mat = App->scene_manager->GetSelectedGameObjects()->GetComponent<ComponentMaterial>(Component::ComponentType::Material);
-			
-			if (mat->Texture_path == "Default")
+			// MYTODO: We are not checking if the texture was already loaded, duplicating data
+
+			// --- Get Selected Game Object's Material ---
+			GameObject* Selected = App->scene_manager->GetSelectedGameObjects();
+			ComponentMaterial* mat = nullptr;
+
+			if (Selected)
 			{
-				/*App->scene_manager->GetGameObjects().at(App->scene_manager->GetSelectedGameObjects())->RemoveComponent(Component::ComponentType::Material);*/
+				mat = Selected->GetComponent<ComponentMaterial>(Component::ComponentType::Material);
 
-				mat = App->scene_manager->CreateEmptyMaterial();
+				if (mat)
+				{
+					if (mat->Texture_path == "Default")
+					{
+						mat = App->scene_manager->CreateEmptyMaterial();
 
-				App->scene_manager->GetSelectedGameObjects()->SetMaterial(mat);
+						App->scene_manager->GetSelectedGameObjects()->SetMaterial(mat);
+					}
+
+					mat->Texture_path = DroppedFile_path.data();
+
+					// --- If there is a material, assign diffuse texture ---
+					if (mat)
+					{
+						App->scene_manager->SetTextureToSelectedGO(App->tex->CreateTextureFromFile(path, mat->Texture_width, mat->Texture_height, mat->LibUID));
+
+					}
+				}
+				else
+					ret = false;
 			}
-
-			mat->Texture_path = DroppedFile_path.data();
-
-			if (mat)
-			{
-				App->scene_manager->SetTextureToSelectedGO(App->tex->CreateTextureFromFile(path, mat->Texture_width, mat->Texture_height));
-
-			}
+			else
+				ret = false;
 		}
-
 	}
 	else
 		ret = false;
 
-
 	return ret;
 }
+
 
 
 
