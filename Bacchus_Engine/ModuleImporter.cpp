@@ -7,6 +7,8 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "FileSystem.h"
+#include "BacchusEditor.h"
+#include "BlockheadImporter.h"
 
 #include "Importer.h"
 #include "ImporterScene.h"
@@ -82,6 +84,9 @@ bool ModuleImporter::LoadFromPath(const char* path)
 		// If it is a 3D Model ...
 		if (DroppedFile_path.find(".fbx") != std::string::npos || DroppedFile_path.find(".FBX") != std::string::npos)
 		{
+			//PopUp when fbx is dropped
+			App->bacchuseditor->blockheadImporter->OnOff();
+
 			ImportData data;
 			ret = IScene->Import(DroppedFile_path.data(), data);
 		}

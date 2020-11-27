@@ -6,7 +6,8 @@
 
 
 class ImporterScene;
-
+class Blockhead;
+class BlockheadImporter;
 
 class ModuleImporter : public Module
 {
