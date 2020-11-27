@@ -1,11 +1,14 @@
 #include "Application.h"
 #include "ModuleTextures.h"
+
 #include "ComponentRenderer.h"
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 #include "GameObject.h"
 #include "OpenGL.h"
+
+#include "ResourceMesh.h"
 
 #include "mmgr/mmgr.h"
 
@@ -25,17 +28,17 @@ void ComponentRenderer::Draw() const
 	glPushMatrix();
 	glMultMatrixf(transform->GetGlobalTransform().Transposed().ptr());
 
-	if (mesh && mesh->IsEnabled())
+	if (mesh && mesh->resource_mesh && mesh->IsEnabled())
 	{
-		DrawMesh(*mesh);
-		DrawNormals(*mesh);
+		DrawMesh(*mesh->resource_mesh, mesh->GetContainerGameObject()->GetComponent<ComponentMaterial>(Component::ComponentType::Material));
+		DrawNormals(*mesh->resource_mesh);
 		DrawAxis();
 
 		glPopMatrix();
 	}
 }
 
-inline void ComponentRenderer::DrawMesh(ComponentMesh& mesh) const
+inline void ComponentRenderer::DrawMesh(ResourceMesh& mesh, ComponentMaterial* mat) const
 {
 
 	//Draw Texture
@@ -45,14 +48,14 @@ inline void ComponentRenderer::DrawMesh(ComponentMesh& mesh) const
 	glActiveTexture(GL_TEXTURE0); // In case we had multitexturing, we should set which one is active 
 
 	//If the mesh has a material associated, get it
-	ComponentMaterial* mat = mesh.GetContainerGameObject()->GetComponent<ComponentMaterial>(Component::ComponentType::Material);
+	//ComponentMaterial* mat = mesh.GetContainerGameObject()->GetComponent<ComponentMaterial>(Component::ComponentType::Material);
 
 	if (mat && mat->IsEnabled())
 	{
 		if (this->checkers)
 			glBindTexture(GL_TEXTURE_2D, App->tex->GetCheckerTextureID()); // start using texture
 		else
-		glBindTexture(GL_TEXTURE_2D, mat->TextureID); // start using texture
+			glBindTexture(GL_TEXTURE_2D, mat->resource_material->resource_diffuse->buffer_id); // start using texture
 		glBindBuffer(GL_ARRAY_BUFFER, mesh.TextureCoordsID); // start using created buffer (tex coords)
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL); // Specify type of data format
 	}
@@ -78,7 +81,7 @@ inline void ComponentRenderer::DrawMesh(ComponentMesh& mesh) const
 
 }
 
-inline void ComponentRenderer::DrawNormals(const ComponentMesh& mesh) const
+inline void ComponentRenderer::DrawNormals(const ResourceMesh& mesh) const
 {
 	//Draw Mesh Normals
 
