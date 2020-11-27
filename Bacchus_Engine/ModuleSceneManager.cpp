@@ -101,8 +101,8 @@ void ModuleSceneManager::DrawRecursive(GameObject* go)
     {
         ComponentTransform* transform = go->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
 
-        glPushMatrix();
-        glMultMatrixf(transform->GetGlobalTransform().Transposed().ptr());
+       /* glPushMatrix();
+        glMultMatrixf(transform->GetGlobalTransform().Transposed().ptr());*/
 
         ComponentRenderer* Renderer = go->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer);
 
@@ -111,7 +111,7 @@ void ModuleSceneManager::DrawRecursive(GameObject* go)
             Renderer->Draw();
         }
 
-        glPopMatrix();
+       /* glPopMatrix();*/
     }
 }
 

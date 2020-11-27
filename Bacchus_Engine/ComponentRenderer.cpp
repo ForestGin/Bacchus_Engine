@@ -3,6 +3,7 @@
 #include "ComponentRenderer.h"
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
+#include "ComponentTransform.h"
 #include "GameObject.h"
 #include "OpenGL.h"
 
@@ -19,12 +20,18 @@ ComponentRenderer::~ComponentRenderer()
 void ComponentRenderer::Draw() const
 {
 	ComponentMesh* mesh = this->GO->GetComponent<ComponentMesh>(Component::ComponentType::Mesh);
+	ComponentTransform* transform = GO->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+
+	glPushMatrix();
+	glMultMatrixf(transform->GetGlobalTransform().Transposed().ptr());
 
 	if (mesh && mesh->IsEnabled())
 	{
 		DrawMesh(*mesh);
 		DrawNormals(*mesh);
 		DrawAxis();
+
+		glPopMatrix();
 	}
 }
 
