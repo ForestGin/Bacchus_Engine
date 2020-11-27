@@ -4,6 +4,7 @@
 #include "FileSystem.h"
 #include "ModuleRenderer3D.h"
 
+#include "ResourceMesh.h"
 
 #include "Assimp/include/scene.h"
 
@@ -96,7 +97,7 @@ bool ImporterMesh::Import(const ImportData& IData) const
 	return true;
 }
 
-void ImporterMesh::Save(ComponentMesh* mesh, const char* path) const
+void ImporterMesh::Save(ResourceMesh* mesh, const char* path) const
 {
 	// amount of indices / vertices / normals / texture_coords / AABB
 	uint ranges[4] = { mesh->IndicesSize, mesh->VerticesSize, mesh->NormalsSize, mesh->TexCoordsSize };
@@ -137,7 +138,7 @@ void ImporterMesh::Save(ComponentMesh* mesh, const char* path) const
 	}
 }
 
-void ImporterMesh::Load(const char* filename, ComponentMesh& mesh) const
+void ImporterMesh::Load(const char* filename, ResourceMesh& mesh) const
 {
 	
 	//Load mesh data

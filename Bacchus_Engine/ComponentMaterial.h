@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include <string>
+#include "ResourceMaterial.h"
 
 struct aiScene;
 
@@ -16,12 +17,7 @@ public:
 	void FreeTexture();
 
 public:
-	uint  TextureID = 0;
-	std::string Texture_path;
-	uint Texture_width = 0;
-	uint Texture_height = 0;
-
-	uint LibUID = 0;
+	ResourceMaterial* resource_material = nullptr;
 };
 
 #endif 

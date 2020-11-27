@@ -1,5 +1,7 @@
 #include "ResourceFolder.h"
 
+#include "mmgr/mmgr.h"
+
 ResourceFolder::ResourceFolder() : Resource(Resource::ResourceType::FOLDER)
 {
 }

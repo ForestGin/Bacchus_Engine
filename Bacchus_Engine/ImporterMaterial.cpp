@@ -4,6 +4,7 @@
 #include "ModuleTextures.h"
 
 #include "ComponentMaterial.h"
+#include "ResourceMaterial.h"
 
 #include "Assimp/include/scene.h"
 
@@ -43,8 +44,8 @@ bool ImporterMaterial::Import(const char* File_path, const ImportData& IData) co
 			// --- If we find the texture file, load it ---
 			//if (App->fs->Exists(directory.data()))
 			//{
-			MData.new_material->TextureID = App->tex->CreateTextureFromFile(directory.data(), MData.new_material->Texture_width, MData.new_material->Texture_height, MData.new_material->LibUID);
-			MData.new_material->Texture_path = directory.data();
+			MData.new_material->resource_diffuse->buffer_id = App->tex->CreateTextureFromFile(directory.data(), MData.new_material->resource_diffuse->Texture_width, MData.new_material->resource_diffuse->Texture_height, MData.new_material->resource_diffuse->GetUID());
+			MData.new_material->resource_diffuse->Texture_path = directory.data();
 			//}
 
 		}
@@ -53,9 +54,9 @@ bool ImporterMaterial::Import(const char* File_path, const ImportData& IData) co
 	return true;
 }
 
-void ImporterMaterial::Load(const char* filename, ComponentMaterial& mat)
+void ImporterMaterial::Load(const char* filename, ResourceMaterial& mat)
 {
-	mat.TextureID = App->tex->CreateTextureFromFile(filename, mat.Texture_width, mat.Texture_height, mat.LibUID, true);
-	mat.Texture_path = filename;
+	mat.resource_diffuse->buffer_id = App->tex->CreateTextureFromFile(filename, mat.resource_diffuse->Texture_width, mat.resource_diffuse->Texture_height, mat.resource_diffuse->GetUID(), true);
+	mat.resource_diffuse->Texture_path = filename;
 
 }
