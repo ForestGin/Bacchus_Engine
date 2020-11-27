@@ -4,12 +4,12 @@
 #include "Importer.h"
 
 struct aiMesh;
-class ResourceMesh;
+class ComponentMesh;
 
 struct ImportMeshData : public ImportData
 {
 	aiMesh* mesh = nullptr;
-	ResourceMesh* new_mesh = nullptr;
+	ComponentMesh* new_mesh = nullptr;
 };
 
 class ImporterMesh : public Importer
@@ -20,8 +20,8 @@ public:
 	virtual ~ImporterMesh();
 
 	bool Import(const ImportData& IData) const override;
-	void Save(ResourceMesh* mesh, const char* path) const;
-	void Load(const char* filename, ResourceMesh& mesh) const;
+	void Save(ComponentMesh* mesh, const char* path) const;
+	void Load(const char * filename, ComponentMesh& mesh) const;
 };
 
 #endif

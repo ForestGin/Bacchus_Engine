@@ -21,20 +21,19 @@ public:
 	};
 
 	Resource(ResourceType type);
-	virtual ~Resource();
+	~Resource();
 
 	uint GetUID() const;
-	void SetUID(uint UID);
 
 	ResourceType GetType() const;
 
 	const char* GetName() const;
 
-	void SetName(const char* name);
-	void SetOriginalFilename(const char* filename);
-
 	const char* GetOriginalFile() const;
 	const char* GetResourceFile() const;
+
+	void SetName(const char* name);
+	void SetOriginalFilename(const char* filename);
 
 	virtual void LoadOnMemory() {};
 	virtual void FreeMemory() {};

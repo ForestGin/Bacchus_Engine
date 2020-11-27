@@ -3,7 +3,6 @@
 
 #include "Resource.h"
 #include "Globals.h"
-#include "ResourceTexture.h"
 
 
 class ResourceMaterial : public Resource
@@ -13,7 +12,7 @@ public:
 	~ResourceMaterial();
 
 public:
-	ResourceTexture* resource_diffuse = nullptr;
+	uint  TextureID = 0;
 };
 
 #endif //__RESOURCE_MATERIAL_H__ 
