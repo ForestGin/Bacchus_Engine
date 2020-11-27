@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "Globals.h"
 
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
@@ -12,6 +11,7 @@
 #include "ModuleImporter.h"
 #include "ModuleTextures.h"
 #include "ModuleTimeManager.h"
+#include "ModuleResources.h"
 
 #include "mmgr/mmgr.h"
 
@@ -34,6 +34,7 @@ Application::Application()
 	importer = new ModuleImporter(true);
 	tex = new ModuleTextures(true);
 	scene_manager = new ModuleSceneManager(true);
+	res = new ModuleResources(true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -41,12 +42,14 @@ Application::Application()
 
 	// Main Modules
 	AddModule(time);
+
 	AddModule(hardware);
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
 	AddModule(fs);
 	AddModule(importer);
+	AddModule(res);
 	AddModule(tex);
 
 	//Scene

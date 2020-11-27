@@ -3,10 +3,15 @@
 #include "GameObject.h"
 #include "imgui/imgui.h"
 #include "BlockheadInspector.h"
+
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentRenderer.h"
 #include "ComponentTransform.h"
+
+#include "ResourceMesh.h"
+#include "ResourceMaterial.h"
+#include "ResourceTexture.h"
 
 #include "mmgr/mmgr.h"
 
@@ -135,7 +140,7 @@ bool BlockheadInspector::Draw()
 			if (ImGui::TreeNode("Mesh"))
 			{
 				std::string Triangle_count = "Triangles   ";
-				Triangle_count.append(std::to_string(mesh->IndicesSize / 3));
+				Triangle_count.append(std::to_string(mesh->resource_mesh->IndicesSize / 3));
 				ImGui::Text(Triangle_count.data());
 
 				ImGui::TreePop();
@@ -180,15 +185,15 @@ bool BlockheadInspector::Draw()
 			if (ImGui::TreeNode("Material"))
 			{
 				std::string Path = "Path: ";
-				Path.append(material->Texture_path);
+				Path.append(material->resource_material->resource_diffuse->Texture_path);
 
 				ImGui::Text(Path.data());
 
-				ImGui::Image((void*)(uint)&material->TextureID, ImVec2(150, 150), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+				ImGui::Image((void*)(uint)&material->resource_material->resource_diffuse->buffer_id, ImVec2(150, 150));
 
-				ImGui::Text(std::to_string(material->Texture_width).data());
+				ImGui::Text(std::to_string(material->resource_material->resource_diffuse->Texture_width).data());
 				ImGui::SameLine();
-				ImGui::Text(std::to_string(material->Texture_height).data());
+				ImGui::Text(std::to_string(material->resource_material->resource_diffuse->Texture_height).data());
 
 				ImGui::TreePop();
 			}

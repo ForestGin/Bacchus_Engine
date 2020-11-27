@@ -5,8 +5,11 @@
 #include "ModuleInput.h"
 #include "ModuleSceneManager.h"
 #include "GameObject.h"
+
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
+
+#include "ResourceMesh.h"
 
 #include "mmgr/mmgr.h"
 
@@ -289,7 +292,7 @@ void ModuleCamera3D::FrameObject(GameObject* GO)
 			{
 
 				Sphere s(transform->GetPosition(), 1);
-				s.Enclose(mesh->Vertices, mesh->VerticesSize);
+				s.Enclose(mesh->resource_mesh->Vertices, mesh->resource_mesh->VerticesSize);
 
 				s.r = s.Diameter() - Length(float3(Reference.x, Reference.y, Reference.z));
 				s.pos = transform->GetPosition();
