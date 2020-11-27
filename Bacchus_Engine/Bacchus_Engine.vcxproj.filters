@@ -198,9 +198,6 @@
     <ClCompile Include="ComponentMaterial.cpp">
       <Filter>GOs\Components</Filter>
     </ClCompile>
-    <ClCompile Include="CopmonentMesh.cpp">
-      <Filter>GOs\Components</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentRenderer.cpp">
       <Filter>GOs\Components</Filter>
     </ClCompile>
@@ -223,6 +220,15 @@
       <Filter>Editor\Blockheads</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTimeManager.cpp" />
+    <ClCompile Include="ComponentMesh.cpp" />
+    <ClCompile Include="ModuleImporter.cpp" />
+    <ClCompile Include="ResourceFolder.cpp" />
+    <ClCompile Include="ResourceMaterial.cpp" />
+    <ClCompile Include="ResourceMesh.cpp" />
+    <ClCompile Include="ResourceTexture.cpp" />
+    <ClCompile Include="BlockheadImporter.cpp">
+      <Filter>Editor\Blockheads</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -549,6 +555,14 @@
       <Filter>Editor\Blockheads</Filter>
     </ClInclude>
     <ClInclude Include="ModuleTimeManager.h" />
+    <ClInclude Include="ModuleImporter.h" />
+    <ClInclude Include="ResourceFolder.h" />
+    <ClInclude Include="ResourceMaterial.h" />
+    <ClInclude Include="ResourceMesh.h" />
+    <ClInclude Include="ResourceTexture.h" />
+    <ClInclude Include="BlockheadImporter.h">
+      <Filter>Editor\Blockheads</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Libs">
