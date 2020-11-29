@@ -1,5 +1,6 @@
 #include "ComponentMesh.h"
 
+#include "OpenGL.h"
 #include "Globals.h"
 #include "GameObject.h"
 

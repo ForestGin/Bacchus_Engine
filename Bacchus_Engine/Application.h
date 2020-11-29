@@ -36,7 +36,6 @@ class FileSystem;
 class ModuleImporter;
 class ModuleTextures;
 class ModuleSceneManager;
-class ModuleResources;
 class ModuleTimeManager;
 
 class Application
@@ -53,7 +52,6 @@ public:
 	ModuleImporter* importer = nullptr;
 	ModuleTextures* tex = nullptr;
 	ModuleSceneManager* scene_manager = nullptr;
-	ModuleResources* res = nullptr;
 	ModuleTimeManager* time = nullptr;
 
 public:

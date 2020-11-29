@@ -189,7 +189,7 @@ inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width,
 		LOG("|[error]: Image conversion failed. ERROR: %s", iluErrorString(ilGetError()));
 }
 
-uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& height, uint LibUID, bool load_existing) const
+uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& height, uint& LibUID, bool load_existing) const
 {
 	// --- In this function we use devil to load an image using the path given, extract pixel data and then create texture using CreateTextureFromImage ---
 
