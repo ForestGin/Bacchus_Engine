@@ -211,8 +211,8 @@
     <ClCompile Include="BlockheadToolbar.cpp">
       <Filter>Editor\Blockheads</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentMesh.cpp">
-      <Filter>GOs\Components</Filter>
+    <ClCompile Include="BlockheadImporter.cpp">
+      <Filter>Editor\Blockheads</Filter>
     </ClCompile>
     <ClCompile Include="ResourceFolder.cpp">
       <Filter>Resources</Filter>
@@ -225,9 +225,6 @@
     </ClCompile>
     <ClCompile Include="ResourceTexture.cpp">
       <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="FileSystem.cpp">
-      <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleCamera3D.cpp">
       <Filter>Modules</Filter>
@@ -255,6 +252,12 @@
     </ClCompile>
     <ClCompile Include="ModuleWindow.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
+      <Filter>GOs\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -572,6 +575,9 @@
     <ClInclude Include="BlockheadToolbar.h">
       <Filter>Editor\Blockheads</Filter>
     </ClInclude>
+    <ClInclude Include="BlockheadImporter.h">
+      <Filter>Editor\Blockheads</Filter>
+    </ClInclude>
     <ClInclude Include="ResourceFolder.h">
       <Filter>Resources</Filter>
     </ClInclude>
@@ -584,7 +590,7 @@
     <ClInclude Include="ResourceTexture.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem.h">
+    <ClInclude Include="Module.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleCamera3D.h">
@@ -614,7 +620,7 @@
     <ClInclude Include="ModuleWindow.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Module.h">
+    <ClInclude Include="FileSystem.h">
       <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
