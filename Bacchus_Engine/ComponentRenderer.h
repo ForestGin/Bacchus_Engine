@@ -5,8 +5,8 @@
 
 #define NORMAL_LENGTH 1
 
-class ResourceMesh;
-class ComponentMaterial;
+class ComponentMesh;
+
 
 class ComponentRenderer : public Component
 {
@@ -18,8 +18,8 @@ public:
 	void Draw() const;
 
 private:
-	inline void ComponentRenderer::DrawMesh(ResourceMesh& mesh, ComponentMaterial* mat) const;
-	inline void DrawNormals(const ResourceMesh& mesh) const;
+	inline void DrawMesh(ComponentMesh& mesh) const;
+	inline void DrawNormals(const ComponentMesh& mesh) const;
 	inline void DrawAxis() const;
 
 public:

@@ -2,24 +2,17 @@
 #include "OpenGL.h"
 #include "Application.h"
 #include "GameObject.h"
-
-#include "Math.h"
-
 #include "ModuleRenderer3D.h"
-#include "ModuleTextures.h"
-#include "ModuleImporter.h"
-#include "ImporterMaterial.h"
-#include "ImporterScene.h"
-#include "FileSystem.h"
-#include "ModuleResources.h"
-
-#include "ComponentTransform.h"
-#include "ComponentMaterial.h"
 #include "ComponentRenderer.h"
 #include "ComponentMesh.h"
-
-#include "ResourceMaterial.h"
-#include "ResourceTexture.h"
+#include "ImporterMaterial.h"
+#include "ComponentMaterial.h"
+#include "ModuleTextures.h"
+#include "ComponentTransform.h"
+#include "ModuleImporter.h"
+#include "ImporterScene.h"
+#include "FileSystem.h"
+#include "Math.h"
 
 #include "vSphere.h"
 #include "vCubesphere.h"
@@ -46,13 +39,13 @@ bool ModuleSceneManager::Init(json file)
 bool ModuleSceneManager::Start()
 {
 	DefaultMaterial = CreateEmptyMaterial();
-    DefaultMaterial->resource_material->resource_diffuse->Texture_path = "Default";
+	DefaultMaterial->Texture_path = "Default";
 
 	CheckersMaterial = CreateEmptyMaterial();
-    CheckersMaterial->resource_material->resource_diffuse->buffer_id = App->tex->GetCheckerTextureID();
-    CheckersMaterial->resource_material->resource_diffuse->Texture_path = "NaN";
-    CheckersMaterial->resource_material->resource_diffuse->Texture_width = CHECKERS_WIDTH;
-    CheckersMaterial->resource_material->resource_diffuse->Texture_height = CHECKERS_HEIGHT;
+	CheckersMaterial->TextureID = App->tex->GetCheckerTextureID();
+	CheckersMaterial->Texture_path = "NONE";
+	CheckersMaterial->Texture_width = CHECKERS_WIDTH;
+	CheckersMaterial->Texture_height = CHECKERS_HEIGHT;
 
 	return true;
 }
@@ -212,7 +205,7 @@ void ModuleSceneManager::SetTextureToSelectedGO(uint id)
     if (Material)
     {
         Material->FreeTexture();
-        Material->resource_material->resource_diffuse->buffer_id = id;
+        Material->TextureID = id;
     }
 }
 
@@ -249,10 +242,7 @@ ComponentMaterial* ModuleSceneManager::CreateEmptyMaterial()
 {
 
     ComponentMaterial* Material = new ComponentMaterial(Component::ComponentType::Material);
-    Material->resource_material = new ResourceMaterial;
-    Material->resource_material->resource_diffuse = new ResourceTexture;
-    App->res->AddResource(Material->resource_material);
-    App->res->AddResource(Material->resource_material->resource_diffuse);
+
 
     Materials.push_back(Material);
 
@@ -261,9 +251,7 @@ ComponentMaterial* ModuleSceneManager::CreateEmptyMaterial()
 
 void ModuleSceneManager::LoadPrimitiveArrays(GameObject& new_object, uint vertices_size, const float* vertices, uint indices_size, const uint* indices, uint normals_size, const float* normals, uint texCoords_size, const float* texCoords) const
 {
-    ComponentMesh* comp_mesh = (ComponentMesh*)new_object.AddComponent(Component::ComponentType::Mesh);
-    ResourceMesh* new_mesh = comp_mesh->resource_mesh = new ResourceMesh;
-    App->res->AddResource(comp_mesh->resource_mesh);
+    ComponentMesh* new_mesh = (ComponentMesh*)new_object.AddComponent(Component::ComponentType::Mesh);
 
     ComponentRenderer* Renderer = (ComponentRenderer*)new_object.AddComponent(Component::ComponentType::Renderer);
 

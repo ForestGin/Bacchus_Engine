@@ -110,19 +110,19 @@ bool ModuleImporter::LoadFromPath(const char* path)
 
 				if (mat)
 				{
-					if (mat->resource_material->resource_diffuse->Texture_path == "Default")
+					if (mat->Texture_path == "Default")
 					{
 						mat = App->scene_manager->CreateEmptyMaterial();
 
 						App->scene_manager->GetSelectedGameObjects()->SetMaterial(mat);
 					}
 
-					mat->resource_material->resource_diffuse->Texture_path = DroppedFile_path.data();
+					mat->Texture_path = DroppedFile_path.data();
 
 					// --- If there is a material, assign diffuse texture ---
 					if (mat)
 					{
-						App->scene_manager->SetTextureToSelectedGO(App->tex->CreateTextureFromFile(path, mat->resource_material->resource_diffuse->Texture_width, mat->resource_material->resource_diffuse->Texture_height, mat->resource_material->resource_diffuse->GetUID()));
+						App->scene_manager->SetTextureToSelectedGO(App->tex->CreateTextureFromFile(path, mat->Texture_width, mat->Texture_height, mat->LibUID));
 
 					}
 				}
