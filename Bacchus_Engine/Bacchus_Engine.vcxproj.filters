@@ -3,10 +3,6 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="ModuleCamera3D.cpp" />
-    <ClCompile Include="ModuleInput.cpp" />
-    <ClCompile Include="ModuleRenderer3D.cpp" />
-    <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="imgui\imgui.cpp">
       <Filter>External Libs\ImGui</Filter>
     </ClCompile>
@@ -121,8 +117,6 @@
     <ClCompile Include="MathGeoLib\include\Time\Clock.cpp">
       <Filter>External Libs\MathGeoLib\Time</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem.cpp" />
-    <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="Blockhead.cpp">
       <Filter>Editor\Blockheads</Filter>
     </ClCompile>
@@ -132,7 +126,6 @@
     <ClCompile Include="BlockheadSettings.cpp">
       <Filter>Editor\Blockheads</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="BlockheadConsole.cpp">
       <Filter>Editor\Blockheads</Filter>
     </ClCompile>
@@ -140,7 +133,6 @@
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>mmgr</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleSceneManager.cpp" />
     <ClCompile Include="Color.cpp">
       <Filter>Others</Filter>
     </ClCompile>
@@ -219,25 +211,58 @@
     <ClCompile Include="BlockheadToolbar.cpp">
       <Filter>Editor\Blockheads</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleTimeManager.cpp" />
-    <ClCompile Include="ComponentMesh.cpp" />
-    <ClCompile Include="ModuleImporter.cpp" />
-    <ClCompile Include="ResourceFolder.cpp" />
-    <ClCompile Include="ResourceMaterial.cpp" />
-    <ClCompile Include="ResourceMesh.cpp" />
-    <ClCompile Include="ResourceTexture.cpp" />
     <ClCompile Include="BlockheadImporter.cpp">
       <Filter>Editor\Blockheads</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceFolder.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMaterial.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMesh.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceTexture.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCamera3D.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleImporter.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleInput.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleRenderer3D.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleResources.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneManager.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTimeManager.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleWindow.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
+      <Filter>GOs\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="ModuleCamera3D.h" />
-    <ClInclude Include="ModuleRenderer3D.h" />
-    <ClInclude Include="Module.h" />
-    <ClInclude Include="ModuleInput.h" />
-    <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="imgui\imconfig.h">
       <Filter>External Libs\ImGui</Filter>
     </ClInclude>
@@ -442,8 +467,6 @@
     <ClInclude Include="MathGeoLib\include\Time\Clock.h">
       <Filter>External Libs\MathGeoLib\Time</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem.h" />
-    <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="Blockhead.h">
       <Filter>Editor\Blockheads</Filter>
     </ClInclude>
@@ -453,7 +476,6 @@
     <ClInclude Include="BlockheadSettings.h">
       <Filter>Editor\Blockheads</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="BlockheadConsole.h">
       <Filter>Editor\Blockheads</Filter>
     </ClInclude>
@@ -463,7 +485,6 @@
     <ClInclude Include="mmgr\nommgr.h">
       <Filter>mmgr</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleSceneManager.h" />
     <ClInclude Include="Color.h">
       <Filter>Others</Filter>
     </ClInclude>
@@ -554,14 +575,53 @@
     <ClInclude Include="BlockheadToolbar.h">
       <Filter>Editor\Blockheads</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTimeManager.h" />
-    <ClInclude Include="ModuleImporter.h" />
-    <ClInclude Include="ResourceFolder.h" />
-    <ClInclude Include="ResourceMaterial.h" />
-    <ClInclude Include="ResourceMesh.h" />
-    <ClInclude Include="ResourceTexture.h" />
     <ClInclude Include="BlockheadImporter.h">
       <Filter>Editor\Blockheads</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceFolder.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMaterial.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMesh.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceTexture.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Module.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCamera3D.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleImporter.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleInput.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleRenderer3D.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResources.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSceneManager.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTextures.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTimeManager.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleWindow.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
