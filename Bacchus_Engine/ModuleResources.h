@@ -27,6 +27,8 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	void CreateMetaFromUID(uint UID);
+
 	Resource* GetResource(uint UID);
 	Resource::ResourceType GetResourceTypeFromPath(const char* path);
 

@@ -259,6 +259,9 @@
     <ClCompile Include="ComponentMesh.cpp">
       <Filter>GOs\Components</Filter>
     </ClCompile>
+    <ClCompile Include="BlockHeadProject.cpp">
+      <Filter>Editor\Blockheads</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -622,6 +625,9 @@
     </ClInclude>
     <ClInclude Include="FileSystem.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockHeadProject.h">
+      <Filter>Editor\Blockheads</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
