@@ -24,10 +24,16 @@ public:
 
 	ImporterScene* GetImporterScene() const;
 
-private:
+//private:
+//
+//
+//	ImporterScene* IScene = nullptr;
+
+public:
 
 
 	ImporterScene* IScene = nullptr;
+	std::string DroppedFile_path;
 	
 };
 

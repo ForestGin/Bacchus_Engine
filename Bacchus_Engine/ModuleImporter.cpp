@@ -78,7 +78,7 @@ bool ModuleImporter::LoadFromPath(const char* path)
 
 	if (path)
 	{
-		std::string DroppedFile_path = path;
+		DroppedFile_path = path;
 		App->fs->NormalizePath(DroppedFile_path);
 
 		// If it is a 3D Model ...
@@ -87,8 +87,8 @@ bool ModuleImporter::LoadFromPath(const char* path)
 			//PopUp when fbx is dropped
 			App->bacchuseditor->blockheadImporter->OnOff();
 
-			ImportData data;
-			ret = IScene->Import(DroppedFile_path.data(), data);
+			/*ImportData data;
+			ret = IScene->Import(DroppedFile_path.data(), data);*/
 		}
 		// If it is a json file ...
 		else if (DroppedFile_path.find(".json") != std::string::npos || DroppedFile_path.find(".JSON") != std::string::npos)

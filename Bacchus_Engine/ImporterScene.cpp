@@ -16,6 +16,8 @@
 #include "ImporterMaterial.h"
 #include "ModuleCamera3D.h"
 #include "FileSystem.h"
+#include "BacchusEditor.h"
+#include "BlockheadImporter.h"
 
 #include "mmgr/mmgr.h"
 
@@ -102,9 +104,7 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 
 bool ImporterScene::Load(const char* exported_file) const
 {
-	// --- Load Scene/model file ---
 	json file = App->GetJLoader()->Load(exported_file);
-
 
 	std::vector<GameObject*> objects;
 

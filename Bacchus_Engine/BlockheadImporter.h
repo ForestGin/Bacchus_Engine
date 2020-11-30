@@ -4,7 +4,6 @@
 #include "Blockhead.h"
 
 
-
 class BlockheadImporter : public Blockhead
 {
 public:
@@ -14,11 +13,15 @@ public:
 
 	bool Draw();
 
+
+public:
+
+	bool applied = false;
+	bool defaulted = false;
+
 private:
 
-
-private:
-
+	bool TestImport();
 };
 
 #endif
