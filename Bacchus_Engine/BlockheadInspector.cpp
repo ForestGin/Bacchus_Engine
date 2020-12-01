@@ -25,7 +25,7 @@ bool BlockheadInspector::Draw()
 
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
-		GameObject* Selected = App->scene_manager->GetSelectedGameObjects();
+		Selected = App->scene_manager->GetSelectedGameObjects();
 
 		if (Selected == nullptr)
 		{
@@ -50,7 +50,7 @@ bool BlockheadInspector::Draw()
 
 		if (ImGui::TreeNode("Transform"))
 		{
-			ComponentTransform* transform = Selected->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+			transform = Selected->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
 
 			ImGui::Text("Position  ");
 			ImGui::SameLine();
@@ -93,7 +93,7 @@ bool BlockheadInspector::Draw()
 			ImGui::Text("Scale     ");
 			ImGui::SameLine();
 
-			float3 scale = transform->GetScale();
+			scale = transform->GetScale();
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 

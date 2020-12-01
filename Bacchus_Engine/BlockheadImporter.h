@@ -2,7 +2,10 @@
 #define __BLOCKHEAD_IMPORTER_H__
 
 #include "Blockhead.h"
+#include "Math.h"
 
+class GameObject;
+class ComponentTransform;
 
 class BlockheadImporter : public Blockhead
 {
@@ -13,15 +16,13 @@ public:
 
 	bool Draw();
 
-
-public:
-
-	bool applied = false;
-	bool defaulted = false;
-
 private:
 
 	bool TestImport();
+	
+	GameObject* importObject = nullptr;
+	/*ComponentTransform* importTransform = nullptr;
+	float3 importScale;*/
 };
 
 #endif

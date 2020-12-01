@@ -70,6 +70,9 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 
 	GameObject* rootnode = App->scene_manager->CreateEmptyGameObject();
 
+	//we make the selected game object the one we import to be able of modify the transform etc
+	/*App->scene_manager->SetSelectedGameObject(rootnode);*/
+
 	// --- Set root node name as file name with no extension ---
 	rootnode->SetName(rootnodename.data());
 
