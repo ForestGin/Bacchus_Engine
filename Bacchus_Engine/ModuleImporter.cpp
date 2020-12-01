@@ -9,6 +9,10 @@
 #include "FileSystem.h"
 #include "BacchusEditor.h"
 #include "BlockheadImporter.h"
+#include "ModuleResources.h"
+
+#include "ResourceMaterial.h"
+#include "ResourceTexture.h"
 
 #include "Importer.h"
 #include "ImporterScene.h"
@@ -74,8 +78,6 @@ bool ModuleImporter::LoadFromPath(const char* path)
 
 	bool ret = true;
 
-	// MYTODO: Could JSONLoader be a new importer?
-
 	if (path)
 	{
 		std::string DroppedFile_path = path;
@@ -100,7 +102,7 @@ bool ModuleImporter::LoadFromPath(const char* path)
 		{
 			// MYTODO: We are not checking if the texture was already loaded, duplicating data
 
-			// --- Get Selected Game Object's Material ---
+			//Get Selected Game Object's Material
 			GameObject* Selected = App->scene_manager->GetSelectedGameObjects();
 			ComponentMaterial* mat = nullptr;
 
@@ -113,13 +115,15 @@ bool ModuleImporter::LoadFromPath(const char* path)
 					if (mat->resource_material->resource_diffuse->Texture_path == "Default")
 					{
 						mat = App->scene_manager->CreateEmptyMaterial();
+						mat->resource_material = (ResourceMaterial*)App->res->CreateResource(Resource::ResourceType::MATERIAL);
+						mat->resource_material->resource_diffuse = (ResourceTexture*)App->res->CreateResource(Resource::ResourceType::TEXTURE);
 
 						App->scene_manager->GetSelectedGameObjects()->SetMaterial(mat);
 					}
 
 					mat->resource_material->resource_diffuse->Texture_path = DroppedFile_path.data();
 
-					// --- If there is a material, assign diffuse texture ---
+					//If there is a material, assign diffuse texture
 					if (mat)
 					{
 						App->scene_manager->SetTextureToSelectedGO(App->tex->CreateTextureFromFile(path, mat->resource_material->resource_diffuse->Texture_width, mat->resource_material->resource_diffuse->Texture_height, mat->resource_material->resource_diffuse->GetUID()));

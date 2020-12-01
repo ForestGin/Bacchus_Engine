@@ -4,8 +4,13 @@
 #include "ModuleSceneManager.h"
 #include "ModuleInput.h"
 
-#include "GameObject.h"
+#include "ModuleImporter.h"
+#include "ImporterScene.h"
+#include "BacchusEditor.h"
+#include "FileSystem.h"
 
+#include "GameObject.h"
+#include "BlockheadProject.h"
 
 #include "mmgr/mmgr.h"
 
@@ -24,6 +29,27 @@ bool BlockheadHierarchy::Draw()
 
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FBX"))
+			{
+				if (App->bacchuseditor->blockheadProject)
+				{
+					std::string extension;
+					App->fs->SplitFilePath(App->bacchuseditor->blockheadProject->dragged.data(), nullptr, nullptr, &extension);
+
+					if (extension.compare("fbx") == 0 || extension.compare("FBX") == 0)
+					{
+						ImportData data;
+						App->importer->GetImporterScene()->Import(App->bacchuseditor->blockheadProject->dragged.data(), data);
+						App->bacchuseditor->blockheadProject->dragged = "";
+					}
+				}
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
 		DrawRecursive(App->scene_manager->GetRootGO());
 	}
 	ImGui::End();

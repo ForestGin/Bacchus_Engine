@@ -38,7 +38,7 @@ bool BlockheadConsole::Draw()
 
 		if (ImGui::BeginChild("Scrollbar", ImVec2(0, 0), false, scrollFlags))
 		{
-			// --- Print logs to console ---
+			//Print logs to console
 
 			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 1)); // Tighten spacing
 

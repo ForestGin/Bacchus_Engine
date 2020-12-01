@@ -13,6 +13,7 @@ class BlockheadInspector;
 class BlockheadHierarchy;
 class BlockheadToolbar;
 class BlockheadImporter;
+class BlockheadProject;
 
 class BacchusEditor : public Module
 {
@@ -52,8 +53,9 @@ public:
 	BlockheadConsole*	blockheadConsole = nullptr;
 	BlockheadInspector* blockheadInspector = nullptr;
 	BlockheadHierarchy* blockheadHierarchy = nullptr;
-	BlockheadToolbar* blockheadToolbar = nullptr;
-	BlockheadImporter* blockheadImporter = nullptr;
+	BlockheadToolbar*	blockheadToolbar = nullptr;
+	BlockheadImporter*	blockheadImporter = nullptr;
+	BlockheadProject*	blockheadProject = nullptr;
 
 private:
 

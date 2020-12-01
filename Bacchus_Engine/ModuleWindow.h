@@ -22,7 +22,7 @@ public:
 	// On Resize
 	void UpdateWindowSize() const;
 
-	// --- Setters ---
+	//Setters
 	void SetFullscreen(bool value);
 	void SetResizable(bool value);
 	void SetBorderless(bool value);
@@ -32,10 +32,10 @@ public:
 	void SetWindowWidth(uint width);
 	void SetWindowHeight(uint height);
 
-	// --- Only App should access this, through SetAppName ---
+	//Only App should access this, through SetAppName
 	void SetWinTitle(const char* name);
 
-	// --- Getters ---
+	//Getters
 	void GetWinMaxMinSize(uint& min_width, uint& min_height, uint& max_width, uint& max_height) const;
 	uint GetWindowWidth();
 	uint GetWindowHeight();
@@ -47,7 +47,7 @@ public:
 	bool IsBorderless();
 	bool IsFullscreenDesktop();
 
-	// --- Save/Load ----
+	//Save/Load-
 	/*void SaveStatus(json& file) const override;
 	void LoadStatus(const json& file) override;*/
 

@@ -3,6 +3,7 @@
 
 #include "Blockhead.h"
 
+#include <string>
 
 class BlockheadProject : public Blockhead
 {
@@ -12,6 +13,12 @@ public:
 	~BlockheadProject();
 
 	bool Draw();
+
+	std::string dragged;
+
+private:
+
+	void RecursiveDirectoryDraw(const char* directory, const char* filter);
 };
 
 #endif

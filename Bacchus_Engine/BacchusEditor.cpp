@@ -13,7 +13,7 @@
 #include "BlockheadInspector.h"
 #include "BlockheadToolbar.h"
 #include "BlockheadImporter.h"
-
+#include "BlockheadProject.h"
 
 #include "imgui/imgui.h"
 #include "imgui/examples/imgui_impl_sdl.h"
@@ -54,6 +54,9 @@ bool BacchusEditor::Init(json file)
 
 	blockheadImporter = new BlockheadImporter("Importer");
 	blockheads.push_back(blockheadImporter);
+
+	blockheadProject = new BlockheadProject("Project");
+	blockheads.push_back(blockheadProject);
 
 	LoadStatus(file);
 
@@ -224,6 +227,11 @@ update_status BacchusEditor::Update(float dt)
 
 		if (ImGui::BeginMenu("Window"))
 		{
+			if (ImGui::MenuItem("Project"))
+			{
+				blockheadProject->OnOff();
+			}
+
 			if (ImGui::MenuItem("Console"))
 			{
 				blockheadConsole->OnOff();
@@ -327,6 +335,7 @@ bool BacchusEditor::CleanUp()
 	blockheadInspector = nullptr;
 	blockheadToolbar = nullptr;
 	blockheadImporter = nullptr;
+	blockheadProject = nullptr;
 
 	LOG("Unloading Bacchus...");
 	ImGui_ImplOpenGL3_Shutdown();

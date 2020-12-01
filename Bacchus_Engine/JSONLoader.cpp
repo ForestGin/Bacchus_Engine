@@ -9,7 +9,7 @@ json JSONLoader::Load(const char* File) const
 
 	bool ret = true;
 
-	// --- Create JSON object ---
+	//Create JSON object
 	json jsonfile;
 
 	if (File == nullptr)
@@ -21,7 +21,7 @@ json JSONLoader::Load(const char* File) const
 	else
 	{
 
-		// --- Load File ---
+		//Load File
 		std::ifstream ifs;
 		ifs.open(File);
 
@@ -33,7 +33,7 @@ json JSONLoader::Load(const char* File) const
 
 		else
 		{
-			// --- Parse File, put data in jsonfile ---
+			//Parse File, put data in jsonfile
 			try
 			{
 				jsonfile = json::parse(ifs);
@@ -54,7 +54,7 @@ json JSONLoader::Load(const char* File) const
 
 bool JSONLoader::Save(const char* File, json jsonfile)
 {
-	// --- Save to File, overwrite if exists ---
+	//Save to File, overwrite if exists
 	// Note setw, used to prettify JSON file (adding newlines and spaces)
 
 	bool ret = true;

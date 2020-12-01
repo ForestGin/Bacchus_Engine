@@ -259,7 +259,7 @@
     <ClCompile Include="ComponentMesh.cpp">
       <Filter>GOs\Components</Filter>
     </ClCompile>
-    <ClCompile Include="BlockHeadProject.cpp">
+    <ClCompile Include="BlockheadProject.cpp">
       <Filter>Editor\Blockheads</Filter>
     </ClCompile>
   </ItemGroup>
@@ -626,7 +626,7 @@
     <ClInclude Include="FileSystem.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="BlockHeadProject.h">
+    <ClInclude Include="BlockheadProject.h">
       <Filter>Editor\Blockheads</Filter>
     </ClInclude>
   </ItemGroup>

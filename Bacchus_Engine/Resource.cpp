@@ -40,7 +40,8 @@ void Resource::SetName(const char* name)
 
 void Resource::SetOriginalFilename(const char* filename)
 {
-	this->og_file = filename;
+	std::string new_name = filename;
+	this->og_file = new_name;
 }
 
 const char* Resource::GetOriginalFile() const

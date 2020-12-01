@@ -27,15 +27,17 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void CreateMetaFromUID(uint UID);
+	void CreateMetaFromUID(uint UID, const char* filename);
+
+	bool IsFileImported(const char* file);
 
 	Resource* GetResource(uint UID);
+	Resource* GetResource(const char* original_file);
 	Resource::ResourceType GetResourceTypeFromPath(const char* path);
 
-	void AddResource(Resource* resource);
-	void LoadResource(Resource* resource);
-	uint DeleteResource(uint UID);
-	void UnloadResource(uint UID);
+	uint GetUIDFromMeta(const char* file);
+
+	Resource* CreateResource(Resource::ResourceType type);
 
 private:
 	std::map<uint, Resource*> resources;

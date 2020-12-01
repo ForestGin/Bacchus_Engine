@@ -101,7 +101,7 @@
     <ClInclude Include="BlockheadHierarchy.h" />
     <ClInclude Include="BlockheadImporter.h" />
     <ClInclude Include="BlockheadInspector.h" />
-    <ClInclude Include="BlockHeadProject.h" />
+    <ClInclude Include="BlockheadProject.h" />
     <ClInclude Include="BlockheadSettings.h" />
     <ClInclude Include="BlockheadToolbar.h" />
     <ClInclude Include="Color.h" />
@@ -226,7 +226,7 @@
     <ClCompile Include="BlockheadHierarchy.cpp" />
     <ClCompile Include="BlockheadImporter.cpp" />
     <ClCompile Include="BlockheadInspector.cpp" />
-    <ClCompile Include="BlockHeadProject.cpp" />
+    <ClCompile Include="BlockheadProject.cpp" />
     <ClCompile Include="BlockheadSettings.cpp" />
     <ClCompile Include="BlockheadToolbar.cpp" />
     <ClCompile Include="Color.cpp" />

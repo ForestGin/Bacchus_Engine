@@ -1,8 +1,517 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   Application.cpp
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  Resource.cpp
-  ResourceFolder.cpp
-  ResourceTexture.cpp
+  BacchusHardware.cpp
+  Blockhead.cpp
+  BlockheadAbout.cpp
+  BlockheadConsole.cpp
+  BlockheadHierarchy.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  BlockheadImporter.cpp
+  BlockheadInspector.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  BlockheadProject.cpp
+  BlockheadSettings.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(286,30): warning C4552: '!=': result of expression not used
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(293,31): warning C4552: '!=': result of expression not used
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(300,29): warning C4552: '!=': result of expression not used
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(307,35): warning C4552: '!=': result of expression not used
+  BlockheadToolbar.cpp
+  Color.cpp
+  BacchusEditor.cpp
+  FileSystem.cpp
+  GameObject.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  glmath.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(12,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(27,17): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(43,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(53,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(53,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(72,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(87,17): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(103,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(600,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(618,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(618,33): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(758,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(778,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\glmath.cpp(778,33): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Globals.cpp
+  imgui_impl_opengl3.cpp
+  imgui_impl_sdl.cpp
+  imgui.cpp
   Generating Code...
-  Bacchus_Engine.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
+  Compiling...
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_widgets.cpp
+  Importer.cpp
+  ImporterMaterial.cpp
+  ImporterMesh.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ImporterScene.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(251,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(258,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(358,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(364,20): warning C4018: '<': signed/unsigned mismatch
+  JSONLoader.cpp
+  Light.cpp
+  log.cpp
+  Main.cpp
+  LCG.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\myassert.h(75,1): warning C4005: 'asserteq': macro redefinition
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\myassert.h(99): message : see previous definition of 'asserteq'
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\myassert.h(86,1): warning C4005: 'assertcmp': macro redefinition
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\myassert.h(108): message : see previous definition of 'assertcmp'
+  AABB.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(748,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::Polyhedron::Face *std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::_Emplace_reallocate<const _Ty&>(math::Polyhedron::Face *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::Polyhedron::Face *std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::_Emplace_reallocate<const _Ty&>(math::Polyhedron::Face *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(717): message : see reference to function template instantiation 'void std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::emplace_back<const _Ty&>(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(716): message : while compiling class template member function 'void std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::push_back(const _Ty &)'
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB.cpp(124): message : see reference to function template instantiation 'void std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::push_back(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Polyhedron.h(57): message : see reference to class template instantiation 'std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>' being compiled
+  Capsule.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(496,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4726): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::_Insert_string<char,std::char_traits<char>,unsigned int>(std::basic_ostream<char,std::char_traits<char>> &,const _Elem *const ,const _SizeT)' being compiled
+          with
+          [
+              _Elem=char,
+              _SizeT=unsigned int
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Capsule.cpp(425): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,std::allocator<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)' being compiled
+  Circle.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(748,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::float3 *std::vector<math::float3,std::allocator<math::float3>>::_Emplace_reallocate<const _Ty&>(math::float3 *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::float3 *std::vector<math::float3,std::allocator<math::float3>>::_Emplace_reallocate<const _Ty&>(math::float3 *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(717): message : see reference to function template instantiation 'void std::vector<math::float3,std::allocator<math::float3>>::emplace_back<const _Ty&>(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(716): message : while compiling class template member function 'void std::vector<math::float3,std::allocator<math::float3>>::push_back(const _Ty &)'
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Circle.cpp(240): message : see reference to function template instantiation 'void std::vector<math::float3,std::allocator<math::float3>>::push_back(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Circle.cpp(227): message : see reference to class template instantiation 'std::vector<math::float3,std::allocator<math::float3>>' being compiled
+  Cone.cpp
+  Cylinder.cpp
+  Frustum.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(748,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::Polyhedron::Face *std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::_Emplace_reallocate<const _Ty&>(math::Polyhedron::Face *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::Polyhedron::Face *std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::_Emplace_reallocate<const _Ty&>(math::Polyhedron::Face *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(717): message : see reference to function template instantiation 'void std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::emplace_back<const _Ty&>(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(716): message : while compiling class template member function 'void std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::push_back(const _Ty &)'
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Frustum.cpp(598): message : see reference to function template instantiation 'void std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::push_back(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Polyhedron.h(57): message : see reference to class template instantiation 'std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>' being compiled
+  Line.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(496,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4726): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::_Insert_string<char,std::char_traits<char>,unsigned int>(std::basic_ostream<char,std::char_traits<char>> &,const _Elem *const ,const _SizeT)' being compiled
+          with
+          [
+              _Elem=char,
+              _SizeT=unsigned int
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Line.cpp(420): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,std::allocator<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)' being compiled
+  LineSegment.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(496,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4726): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::_Insert_string<char,std::char_traits<char>,unsigned int>(std::basic_ostream<char,std::char_traits<char>> &,const _Elem *const ,const _SizeT)' being compiled
+          with
+          [
+              _Elem=char,
+              _SizeT=unsigned int
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\LineSegment.cpp(478): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,std::allocator<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)' being compiled
+  Generating Code...
+  Compiling...
+  OBB.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(748,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::Polyhedron::Face *std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::_Emplace_reallocate<const _Ty&>(math::Polyhedron::Face *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::Polyhedron::Face *std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::_Emplace_reallocate<const _Ty&>(math::Polyhedron::Face *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(717): message : see reference to function template instantiation 'void std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::emplace_back<const _Ty&>(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(716): message : while compiling class template member function 'void std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::push_back(const _Ty &)'
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\OBB.cpp(184): message : see reference to function template instantiation 'void std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>::push_back(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Polyhedron::Face
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Polyhedron.h(57): message : see reference to class template instantiation 'std::vector<math::Polyhedron::Face,std::allocator<math::Polyhedron::Face>>' being compiled
+  Plane.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(748,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::float3 *std::vector<math::float3,std::allocator<math::float3>>::_Emplace_reallocate<_Ty>(math::float3 *const ,_Ty &&)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::float3 *std::vector<math::float3,std::allocator<math::float3>>::_Emplace_reallocate<_Ty>(math::float3 *const ,_Ty &&)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(721): message : see reference to function template instantiation 'void std::vector<math::float3,std::allocator<math::float3>>::emplace_back<math::float3>(math::float3 &&)' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(720): message : while compiling class template member function 'void std::vector<math::float3,std::allocator<math::float3>>::push_back(_Ty &&)'
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Plane.cpp(333): message : see reference to function template instantiation 'void std::vector<math::float3,std::allocator<math::float3>>::push_back(_Ty &&)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Polygon.h(45): message : see reference to class template instantiation 'std::vector<math::float3,std::allocator<math::float3>>' being compiled
+  Polygon.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(748,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::float2 *std::vector<math::float2,std::allocator<math::float2>>::_Emplace_reallocate<_Ty>(math::float2 *const ,_Ty &&)' being compiled
+          with
+          [
+              _Ty=math::float2
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::float2 *std::vector<math::float2,std::allocator<math::float2>>::_Emplace_reallocate<_Ty>(math::float2 *const ,_Ty &&)' being compiled
+          with
+          [
+              _Ty=math::float2
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(721): message : see reference to function template instantiation 'void std::vector<math::float2,std::allocator<math::float2>>::emplace_back<math::float2>(math::float2 &&)' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(720): message : while compiling class template member function 'void std::vector<math::float2,std::allocator<math::float2>>::push_back(_Ty &&)'
+          with
+          [
+              _Ty=math::float2
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Polygon.cpp(786): message : see reference to function template instantiation 'void std::vector<math::float2,std::allocator<math::float2>>::push_back(_Ty &&)' being compiled
+          with
+          [
+              _Ty=math::float2
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Polygon.cpp(748): message : see reference to class template instantiation 'std::vector<math::float2,std::allocator<math::float2>>' being compiled
+  Polyhedron.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\ostream(284,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\ostream(269): message : while compiling class template member function 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(int)'
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Polyhedron.cpp(56): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(int)' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\istream(703): message : see reference to class template instantiation 'std::basic_ostream<char,std::char_traits<char>>' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\sstream(515): message : see reference to class template instantiation 'std::basic_iostream<char,std::char_traits<char>>' being compiled
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Polyhedron.cpp(54): message : see reference to class template instantiation 'std::basic_stringstream<char,std::char_traits<char>,std::allocator<char>>' being compiled
+  Ray.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(496,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4726): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::_Insert_string<char,std::char_traits<char>,unsigned int>(std::basic_ostream<char,std::char_traits<char>> &,const _Elem *const ,const _SizeT)' being compiled
+          with
+          [
+              _Elem=char,
+              _SizeT=unsigned int
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Ray.cpp(447): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,std::allocator<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)' being compiled
+  Sphere.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(748,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::Triangle *std::vector<math::Triangle,std::allocator<math::Triangle>>::_Emplace_reallocate<_Ty>(math::Triangle *const ,_Ty &&)' being compiled
+          with
+          [
+              _Ty=math::Triangle
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::Triangle *std::vector<math::Triangle,std::allocator<math::Triangle>>::_Emplace_reallocate<_Ty>(math::Triangle *const ,_Ty &&)' being compiled
+          with
+          [
+              _Ty=math::Triangle
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(721): message : see reference to function template instantiation 'void std::vector<math::Triangle,std::allocator<math::Triangle>>::emplace_back<math::Triangle>(math::Triangle &&)' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(720): message : while compiling class template member function 'void std::vector<math::Triangle,std::allocator<math::Triangle>>::push_back(_Ty &&)'
+          with
+          [
+              _Ty=math::Triangle
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Sphere.cpp(736): message : see reference to function template instantiation 'void std::vector<math::Triangle,std::allocator<math::Triangle>>::push_back(_Ty &&)' being compiled
+          with
+          [
+              _Ty=math::Triangle
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Sphere.cpp(722): message : see reference to class template instantiation 'std::vector<math::Triangle,std::allocator<math::Triangle>>' being compiled
+  Triangle.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(748,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::float3 *std::vector<math::float3,std::allocator<math::float3>>::_Emplace_reallocate<const _Ty&>(math::float3 *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::float3 *std::vector<math::float3,std::allocator<math::float3>>::_Emplace_reallocate<const _Ty&>(math::float3 *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(717): message : see reference to function template instantiation 'void std::vector<math::float3,std::allocator<math::float3>>::emplace_back<const _Ty&>(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(716): message : while compiling class template member function 'void std::vector<math::float3,std::allocator<math::float3>>::push_back(const _Ty &)'
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Triangle.cpp(268): message : see reference to function template instantiation 'void std::vector<math::float3,std::allocator<math::float3>>::push_back(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::float3
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\Polygon.h(45): message : see reference to class template instantiation 'std::vector<math::float3,std::allocator<math::float3>>' being compiled
+  TriangleMesh.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(748,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::Triangle *std::vector<math::Triangle,std::allocator<math::Triangle>>::_Emplace_reallocate<const _Ty&>(math::Triangle *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Triangle
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(708): message : see reference to function template instantiation 'math::Triangle *std::vector<math::Triangle,std::allocator<math::Triangle>>::_Emplace_reallocate<const _Ty&>(math::Triangle *const ,const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Triangle
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(717): message : see reference to function template instantiation 'void std::vector<math::Triangle,std::allocator<math::Triangle>>::emplace_back<const _Ty&>(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Triangle
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(716): message : while compiling class template member function 'void std::vector<math::Triangle,std::allocator<math::Triangle>>::push_back(const _Ty &)'
+          with
+          [
+              _Ty=math::Triangle
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\TriangleMesh.cpp(189): message : see reference to function template instantiation 'void std::vector<math::Triangle,std::allocator<math::Triangle>>::push_back(const _Ty &)' being compiled
+          with
+          [
+              _Ty=math::Triangle
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\TriangleMesh.cpp(182): message : see reference to class template instantiation 'std::vector<math::Triangle,std::allocator<math::Triangle>>' being compiled
+  BitOps.cpp
+  float2.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(936,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(1029): message : see reference to function template instantiation 'void std::vector<math::float2,std::allocator<math::float2>>::_Insert_range<_Iter>(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,_Iter,_Iter,std::forward_iterator_tag)' being compiled
+          with
+          [
+              _Iter=const math::float2 *,
+              _Ty=math::float2
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\vector(1029): message : see reference to function template instantiation 'void std::vector<math::float2,std::allocator<math::float2>>::_Insert_range<_Iter>(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,_Iter,_Iter,std::forward_iterator_tag)' being compiled
+          with
+          [
+              _Iter=const math::float2 *,
+              _Ty=math::float2
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\float2.cpp(532): message : see reference to function template instantiation 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>> std::vector<_Ty,std::allocator<_Ty>>::insert<const math::float2*,0>(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,_Iter,_Iter)' being compiled
+          with
+          [
+              _Ty=math::float2,
+              _Iter=const math::float2 *
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\float2.cpp(532): message : see reference to function template instantiation 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>> std::vector<_Ty,std::allocator<_Ty>>::insert<const math::float2*,0>(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,_Iter,_Iter)' being compiled
+          with
+          [
+              _Ty=math::float2,
+              _Iter=const math::float2 *
+          ]
+  float3.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(496,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4726): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::_Insert_string<char,std::char_traits<char>,unsigned int>(std::basic_ostream<char,std::char_traits<char>> &,const _Elem *const ,const _SizeT)' being compiled
+          with
+          [
+              _Elem=char,
+              _SizeT=unsigned int
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\float3.cpp(827): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,std::allocator<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)' being compiled
+  float3x3.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(496,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4726): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::_Insert_string<char,std::char_traits<char>,unsigned int>(std::basic_ostream<char,std::char_traits<char>> &,const _Elem *const ,const _SizeT)' being compiled
+          with
+          [
+              _Elem=char,
+              _SizeT=unsigned int
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\float3x3.cpp(1519): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,std::allocator<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)' being compiled
+  float3x4.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(496,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4726): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::_Insert_string<char,std::char_traits<char>,unsigned int>(std::basic_ostream<char,std::char_traits<char>> &,const _Elem *const ,const _SizeT)' being compiled
+          with
+          [
+              _Elem=char,
+              _SizeT=unsigned int
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\float3x4.cpp(1642): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,std::allocator<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)' being compiled
+  float4.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(496,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4726): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::_Insert_string<char,std::char_traits<char>,unsigned int>(std::basic_ostream<char,std::char_traits<char>> &,const _Elem *const ,const _SizeT)' being compiled
+          with
+          [
+              _Elem=char,
+              _SizeT=unsigned int
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\float4.cpp(1094): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,std::allocator<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)' being compiled
+  float4x4.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(496,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4726): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::_Insert_string<char,std::char_traits<char>,unsigned int>(std::basic_ostream<char,std::char_traits<char>> &,const _Elem *const ,const _SizeT)' being compiled
+          with
+          [
+              _Elem=char,
+              _SizeT=unsigned int
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\float4x4.cpp(2094): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,std::allocator<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)' being compiled
+  MathFunc.cpp
+  MathLog.cpp
+  MathOps.cpp
+  Polynomial.cpp
+  Quat.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(496,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\xstring(4726): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::_Insert_string<char,std::char_traits<char>,unsigned int>(std::basic_ostream<char,std::char_traits<char>> &,const _Elem *const ,const _SizeT)' being compiled
+          with
+          [
+              _Elem=char,
+              _SizeT=unsigned int
+          ]
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Math\Quat.cpp(776): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>,std::allocator<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)' being compiled
+  Generating Code...
+  Compiling...
+  SSEMath.cpp
+  TransformOps.cpp
+  Clock.cpp
+  mmgr.cpp
+  ModuleCamera3D.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(201,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(202,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(207,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(208,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(223,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  ModuleInput.cpp
+  ModuleRenderer3D.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ModuleResources.cpp
+  ModuleSceneManager.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(444,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  ModuleTextures.cpp
+  ModuleTimeManager.cpp
+  ModuleWindow.cpp
+  PerfTimer.cpp
+  Component.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ComponentMaterial.cpp
+  ComponentMesh.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ModuleImporter.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ComponentRenderer.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ComponentTransform.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Resource.cpp
+  Generating Code...
+  Compiling...
+  ResourceFolder.cpp
+  ResourceMaterial.cpp
+  ResourceMesh.cpp
+  ResourceTexture.cpp
+  Timer.cpp
+  vCubesphere.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vCubesphere.cpp(823,36): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vCubesphere.cpp(823,25): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\ostream(393,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\ostream(386): message : while compiling class template member function 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)'
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vCubesphere.cpp(109): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)' being compiled
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vCubesphere.cpp(101): message : see reference to class template instantiation 'std::basic_ostream<char,std::char_traits<char>>' being compiled
+  vCylinder.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vCylinder.cpp(607,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vCylinder.cpp(607,20): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vCylinder.cpp(675,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vCylinder.cpp(675,20): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\ostream(393,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\ostream(386): message : while compiling class template member function 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)'
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vCylinder.cpp(138): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)' being compiled
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vCylinder.cpp(128): message : see reference to class template instantiation 'std::basic_ostream<char,std::char_traits<char>>' being compiled
+  vIcosphere.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vIcosphere.cpp(197,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vIcosphere.cpp(197,20): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\ostream(393,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\ostream(386): message : while compiling class template member function 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)'
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vIcosphere.cpp(95): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)' being compiled
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vIcosphere.cpp(88): message : see reference to class template instantiation 'std::basic_ostream<char,std::char_traits<char>>' being compiled
+  vSphere.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vSphere.cpp(231,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vSphere.cpp(231,20): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vSphere.cpp(321,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vSphere.cpp(321,20): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\ostream(393,1): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29333\include\ostream(386): message : while compiling class template member function 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)'
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vSphere.cpp(111): message : see reference to function template instantiation 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)' being compiled
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\vSphere.cpp(103): message : see reference to class template instantiation 'std::basic_ostream<char,std::char_traits<char>>' being compiled
+  Generating Code...
+  LINK : .\Game\Bacchus_Engine.exe not found or not built by the last incremental link; performing full link
+  Bacchus_Engine.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Game\Bacchus_Engine.exe

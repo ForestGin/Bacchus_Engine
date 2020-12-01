@@ -111,7 +111,7 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	//LOG("Application Start --------------");
+	//LOG("Application Start-----------");
 	item = list_modules.begin();
 
 	while(item != list_modules.end() && ret == true)
@@ -125,14 +125,14 @@ bool Application::Init()
 	return ret;
 }
 
-// ---------------------------------------------
+//------------------------------------------
 void Application::PrepareUpdate()
 {
 
 	time->PrepareUpdate();
 }
 
-// ---------------------------------------------
+//------------------------------------------
 void Application::FinishUpdate()
 {
 	time->FinishUpdate();
@@ -148,7 +148,7 @@ void Application::SaveAllStatus()
 	std::string tmp2 = orgName;
 	config["Application"]["Organization"] = tmp2;
 
-	// --- Call Save of all modules ---
+	//Call Save of all modules
 
 	std::list<Module*>::const_iterator item = list_modules.begin();
 
@@ -280,7 +280,7 @@ std::vector<std::string>& Application::GetLogs()
 
 json Application::GetDefaultConfig() const
 {
-	// --- Create Config with default values ---
+	//Create Config with default values
 	json config = {
 		{"Application", {
 

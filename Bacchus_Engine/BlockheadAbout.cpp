@@ -24,14 +24,14 @@ bool BlockheadAbout::Draw()
 
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
-		// --- Introduction ---
+		//Introduction
 		ImGui::Separator();
 		ImGui::Text("Bacchus Engine");
 		ImGui::Text("Version 0.1 ");
 		ImGui::Text("Initial steps into game engine development");
 		ImGui::Text("By Oscar Larios and Pol Bosch (ForestGin)");
 
-		// --- Libraries --- //REVISION
+		//Libraries//REVISION
 		ImGui::Text("Libraries");
 		ImGui::Spacing();
 
@@ -67,7 +67,7 @@ bool BlockheadAbout::Draw()
 		if (ImGui::Button("mmgr")) { App->bacchuseditor->RequestBrowser("http://www.paulnettle.com/pub/FluidStudios/MemoryManagers/"); }
 		
 
-		// --- License ---
+		//License
 
 		ImGui::TextWrapped("MIT License");
 		ImGui::TextWrapped("Copyright(c) 2020 ForestGin");

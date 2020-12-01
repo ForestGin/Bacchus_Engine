@@ -41,7 +41,7 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 
 	std::string rootnodename = File_path;
 
-	// --- Remove the directory and file type, obtaining the file name ---
+	//Remove the directory and file type, obtaining the file name
 	uint count = rootnodename.find_last_of("/");
 	rootnodename = rootnodename.substr(count + 1, rootnodename.size());
 
@@ -49,51 +49,67 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 	std::string extension = rootnodename.substr(countdot, rootnodename.length());
 	rootnodename = rootnodename.substr(0, countdot);
 
-	// --- Duplicate File into Assets folder, save relative path ---
+	//Duplicate File into Assets folder, save relative path
 	std::string relative_path = ASSETS_FOLDER;
 	relative_path.append(rootnodename);
 	relative_path.append(extension);
 
+	//Check if File is already imported
 
-	// --- Copy File to Assets Folder ---
+	if (App->res->IsFileImported(relative_path.data()))
+	{uint model_uid = App->res->GetUIDFromMeta(relative_path.data());
+
+		if (extension == ".fbx" || extension == ".FBX")
+		{
+			std::string model_path = MODELS_FOLDER;
+			model_path.append(std::to_string(model_uid));
+			model_path.append(".model");
+			model_path = model_path.substr(1, model_path.size());
+			Load(model_path.data());
+		}
+
+		return false;
+	}
+
+	//Copy File to Assets Folder
 	App->fs->CopyFromOutsideFS(File_path, relative_path.data());
 
-	// --- Load file from assets folder ---
+	//Load file from assets folder
 	char* buffer;
 	uint size = App->fs->Load(relative_path.data(), &buffer);
 
-	// --- Import scene from path ---
+	//Import scene from path
 	const aiScene* scene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 
-	// --- Release data ---
+	// Release data
 	delete[] buffer;
 
 
 	GameObject* rootnode = App->scene_manager->CreateEmptyGameObject();
 
-	// --- Set root node name as file name with no extension ---
+	// Set root node name as file name with no extension
 	rootnode->SetName(rootnodename.data());
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		// --- Save Game objects to vector so we can save to lib later ---
+		//Save Game objects to vector so we can save to lib later
 		std::vector<GameObject*> scene_gos;
 		scene_gos.push_back(rootnode);
 
-		// --- Use scene->mNumMeshes to iterate on scene->mMeshes array ---
+		//Use scene->mNumMeshes to iterate on scene->mMeshes array
 		LoadNodes(scene->mRootNode, rootnode, scene, scene_gos, File_path);
 
-		// --- Save to Own format files in Library ---
+		//Save to Own format files in Library
 		std::string exported_file = SaveSceneToFile(scene_gos, rootnodename, MODEL);
 		exported_file = exported_file.substr(1, exported_file.size());
 
-		// --- Delete Everything once Library files have been created ---
+		//Delete Everything once Library files have been created
 		rootnode->RecursiveDelete(rootnode);
 
-		// --- Load from Library, our own format files ---
-		Load(exported_file.data());
+		//Load from Library, our own format files
+		//Load(exported_file.data());
 
-		// --- Free scene ---
+		//Free scene
 		aiReleaseImport(scene);
 
 	}
@@ -105,7 +121,7 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 
 bool ImporterScene::Load(const char* exported_file) const
 {
-	// --- Load Scene/model file ---
+	//Load Scene/model file
 	json file = App->GetJLoader()->Load(exported_file);
 
 
@@ -113,30 +129,32 @@ bool ImporterScene::Load(const char* exported_file) const
 
 	for (json::iterator it = file.begin(); it != file.end(); ++it)
 	{
-		// --- Create a Game Object for each node ---
+		//Create a Game Object for each node
 		GameObject* new_go = App->scene_manager->CreateEmptyGameObject();
 
-		// --- Retrieve GO's UID and name ---
+		//Retrieve GO's UID and name
 		new_go->SetName(it.key().data());
 		std::string uid = file[it.key()]["UID"];
 		new_go->GetUID() = std::stoi(uid);
 
-		// --- Iterate components ---
+		//Iterate components
 		json components = file[it.key()]["Components"];
 
 
 		for (json::iterator it2 = components.begin(); it2 != components.end(); ++it2)
 		{
-			// --- Determine ComponentType ---
+			//Determine ComponentType
 			std::string val = it2.key();
 			uint value = std::stoi(val);
 			Component::ComponentType type = (Component::ComponentType)value;
 
-			// --- Create components to fill ---
+			//Create components to fill
 			ComponentMesh* mesh = nullptr;
 			ComponentMaterial* mat = nullptr;
+			ResourceTexture* texture = nullptr;
+			ResourceMesh* rmesh = nullptr;
 
-			// --- Get path to component file ---
+			//Get path to component file
 			std::string component_path = components[val];
 			std::string diffuse_uid;
 			uint count;
@@ -149,18 +167,28 @@ bool ImporterScene::Load(const char* exported_file) const
 			case Component::ComponentType::Material:
 				component_path = component_path.substr(1, component_path.size());
 
-				// --- Check if Library file exists ---
+				//Check if Library file exists
 				if (App->fs->Exists(component_path.data()))
 				{
 
 					mat = App->scene_manager->CreateEmptyMaterial();
-					IMaterial->Load(component_path.data(), *mat->resource_material);
+					mat->resource_material = (ResourceMaterial*)App->res->CreateResource(Resource::ResourceType::MATERIAL);
+					texture = (ResourceTexture*)App->res->GetResource(component_path.data());
 
-					diffuse_uid = component_path;
-					App->fs->SplitFilePath(component_path.data(), nullptr, &diffuse_uid);
-					count = diffuse_uid.find_last_of(".");
-					diffuse_uid = diffuse_uid.substr(0, count);
-					mat->resource_material->resource_diffuse->SetUID(std::stoi(diffuse_uid));
+					if (texture)
+					{
+						mat->resource_material->resource_diffuse = texture;
+						texture->instances++;
+					}
+					else
+					{
+						IMaterial->Load(component_path.data(), *mat->resource_material);
+						diffuse_uid = component_path;
+						App->fs->SplitFilePath(component_path.data(), nullptr, &diffuse_uid);
+						count = diffuse_uid.find_last_of(".");
+						diffuse_uid = diffuse_uid.substr(0, count);
+						mat->resource_material->resource_diffuse->SetUID(std::stoi(diffuse_uid));
+					}
 
 					new_go->SetMaterial(mat);
 				}
@@ -170,13 +198,21 @@ bool ImporterScene::Load(const char* exported_file) const
 				break;
 
 			case Component::ComponentType::Mesh:
-				// --- Check if Library file exists ---
+				//Check if Library file exists
 				if (App->fs->Exists(component_path.data()))
 				{
+					rmesh = (ResourceMesh*)App->res->GetResource(component_path.data());
 					mesh = (ComponentMesh*)new_go->AddComponent(type);
-					mesh->resource_mesh = new ResourceMesh;
-					App->res->AddResource(mesh->resource_mesh);
-					IMesh->Load(component_path.data(), *mesh->resource_mesh);
+					if (rmesh)
+					{
+						mesh->resource_mesh = rmesh;
+						rmesh->instances++;
+					}
+					else
+					{
+						mesh->resource_mesh = (ResourceMesh*)App->res->CreateResource(Resource::ResourceType::MESH);
+						IMesh->Load(component_path.data(), *mesh->resource_mesh);
+					}
 				}
 				else
 					LOG("|[error]: Could not find %s", component_path.data());
@@ -189,7 +225,7 @@ bool ImporterScene::Load(const char* exported_file) const
 		objects.push_back(new_go);
 	}
 
-	// --- Parent GO's ---
+	//Parent GO's
 	for (uint i = 0; i < objects.size(); ++i)
 	{
 		std::string parent_uid = file[objects[i]->GetName()]["Parent"];
@@ -262,6 +298,7 @@ std::string ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, 
 	std::string meta_path;
 	char* meta_buffer = nullptr;
 
+	std::string filename = scene_name;
 	switch (exportedfile_type)
 	{
 		case MODEL:
@@ -269,9 +306,11 @@ std::string ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, 
 			new_uid = App->GetRandom().Int();
 			path.append(std::to_string(new_uid));
 			path.append(".model");
+			filename.append(".fbx");
+			App->res->CreateMetaFromUID(new_uid, filename.data());
 
 
-			// --- Create Meta ---
+			//Create Meta
 			meta["UID"] = std::to_string(new_uid);
 			jsondata = App->GetJLoader()->Serialize(meta);
 			meta_buffer = (char*)jsondata.data();
@@ -300,13 +339,13 @@ std::string ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, 
 
 void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiScene* scene, std::vector<GameObject*>& scene_gos, const char* File_path) const
 {
-	// --- Load Game Objects from Assimp scene ---
+	//Load Game Objects from Assimp scene
 
 	GameObject* nodeGo = nullptr;
 
 	if (node != scene->mRootNode && node->mNumMeshes > 1)
 	{
-		// --- Create GO per each node that contains a mesh ---
+		//Create GO per each node that contains a mesh
 		nodeGo = App->scene_manager->CreateEmptyGameObject();
 		nodeGo->SetName(node->mName.C_Str());
 		parent->AddChildGO(nodeGo);
@@ -315,60 +354,60 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 	else // If rootnode, set nodeGo as root
 		nodeGo = parent;
 
-	// --- Iterate children and repeat process ---
+	//Iterate children and repeat process
 	for (int i = 0; i < node->mNumChildren; ++i)
 	{
 		LoadNodes(node->mChildren[i], nodeGo, scene, scene_gos, File_path);
 	}
 
-	// --- Iterate and load meshes ---
+	//Iterate and load meshes
 	for (int j = 0; j < node->mNumMeshes; ++j)
 	{
-		// --- Create Game Object per mesh ---
+		//Create Game Object per mesh
 		GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
 		new_object->SetName(node->mName.C_Str());
 		nodeGo->AddChildGO(new_object);
 		scene_gos.push_back(new_object);
 
-		// --- Get Scene mesh associated to node's mesh at index ---
+		//Get Scene mesh associated to node's mesh at index
 		uint mesh_index = node->mMeshes[j];
 		aiMesh* mesh = scene->mMeshes[mesh_index];
 
 		if (mesh)
 		{
 
-			// --- Create new Component Mesh to store current scene mesh data ---
+			//Create new Component Mesh to store current scene mesh data
 			ComponentMesh* new_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
-			new_mesh->resource_mesh = new ResourceMesh;
-			App->res->AddResource(new_mesh->resource_mesh);
+			new_mesh->resource_mesh = (ResourceMesh*)App->res->CreateResource(Resource::ResourceType::MESH);
 
-			// --- Create Default components ---
+			//Create Default components
 			if (new_mesh)
 			{
-				// --- Import mesh data (fill new_mesh)---
+				//Import mesh data (fill new_mesh)---
 				ImportMeshData Mdata;
 				Mdata.mesh = mesh;
 				Mdata.new_mesh = new_mesh->resource_mesh;
 				IMesh->Import(Mdata);
 
-				// --- Create new Component Renderer to draw mesh ---
+				//Create new Component Renderer to draw mesh
 				ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
 
-				// --- Create new Component Material to store scene's, meshes will use this for now since we do not want to create a material for every mesh if not needed ---
+				//Create new Component Material to store scene's, meshes will use this for now since we do not want to create a material for every mesh if not needed
 				ComponentMaterial* Material = App->scene_manager->CreateEmptyMaterial();
+				Material->resource_material = (ResourceMaterial*)App->res->CreateResource(Resource::ResourceType::MATERIAL);
 
-				// --- Import Material Data (fill Material) --- 
+				//Import Material Data (fill Material)
 
 				ImportMaterialData MData;
 				MData.scene = scene;
 				MData.new_material = Material->resource_material;
 				IMaterial->Import(File_path, MData);
 
-				// --- Set Object's Material ---
+				//Set Object's Material
 				new_object->SetMaterial(Material);
 			}
 
-			// --- When the mesh is loaded, frame it with the camera ---
+			//When the mesh is loaded, frame it with the camera
 			App->camera->FrameObject(new_object);
 
 		}

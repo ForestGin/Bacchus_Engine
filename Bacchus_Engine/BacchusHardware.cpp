@@ -8,12 +8,12 @@
 
 BacchusHardware::BacchusHardware(bool start_enabled) : Module(start_enabled)
 {
-	// --- Retrieve SDL Version ---
+	//Retrieve SDL Version
 	SDL_version version;
 	SDL_GetVersion(&version);
 	sprintf_s(info.sdl_version, 25, "%i.%i.%i", version.major, version.minor, version.patch);
 
-	// --- Retrieve CPU and Memory Information ---
+	//Retrieve CPU and Memory Information
 	info.ram_gb = (float)SDL_GetSystemRAM() / (1024.f);
 	info.cpu_count = SDL_GetCPUCount();
 	info.l1_cachekb = SDL_GetCPUCacheLineSize();
@@ -37,12 +37,12 @@ BacchusHardware::~BacchusHardware()
 
 const hw_info& BacchusHardware::GetInfo() const
 {
-	// --- Retrieve GPU Information ---
+	//Retrieve GPU Information
 	const GLubyte* GPUvendor = glGetString(GL_VENDOR);
 	const GLubyte* GPU = glGetString(GL_RENDERER);
 	const GLubyte* GPUdriver = glGetString(GL_VERSION);
 
-	// --- NVIDIA EXTENSION!!! --- 
+	//NVIDIA EXTENSION!!!
 	GLint video_mem_budget = 0;
 	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &video_mem_budget);
 

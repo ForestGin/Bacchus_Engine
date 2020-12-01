@@ -31,13 +31,13 @@ bool ModuleWindow::Init(json file)
 	{
 		LOG("SDL_Init Video success");
 
-		// --- Get Display Data ---
+		//Get Display Data
 		SDL_DisplayMode display;
 		SDL_GetCurrentDisplayMode(0, &display);
 		display_Width = display.w;
 		display_Height = display.h;
 
-		// --- Assign Display Specific values to code vars ---
+		//Assign Display Specific values to code vars
 		screen_width = uint(display.w * 0.75f);
 		screen_height = uint(display.h * 0.75f);
 		RefreshRate = display.refresh_rate;
@@ -159,7 +159,7 @@ uint ModuleWindow::GetDisplayRefreshRate()
 
 void ModuleWindow::GetWinMaxMinSize(uint& min_width, uint& min_height, uint& max_width, uint& max_height) const
 {
-	// --- Function used to set bounds to window resize by user ---
+	//Function used to set bounds to window resize by user
 
 	max_width = display_Width;
 	max_height = display_Height;
@@ -205,7 +205,7 @@ void ModuleWindow::SetFullscreen(bool value)
 			if (SDL_SetWindowFullscreen(window, 0) != 0)
 				LOG("|[error]: Could not switch to windowed: %s\n", SDL_GetError());
 
-			//  --- To keep a default window size on deactivation ---
+			// To keep a default window size on deactivation
 			SetWindowWidth(uint(display_Width * 0.75f));
 			SetWindowHeight(uint(display_Height * 0.75f));
 		}
@@ -243,7 +243,7 @@ void ModuleWindow::SetFullscreenDesktop(bool value)
 			if (SDL_SetWindowFullscreen(window, 0) != 0)
 				LOG("|[error]: Could not switch to windowed: %s\n", SDL_GetError());
 
-			//  --- To keep a default window size on deactivation ---
+			// To keep a default window size on deactivation
 			SetWindowWidth(uint(display_Width * 0.75f));
 			SetWindowHeight(uint(display_Height * 0.75f));
 		}

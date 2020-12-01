@@ -143,6 +143,10 @@ bool BlockheadInspector::Draw()
 				Triangle_count.append(std::to_string(mesh->resource_mesh->IndicesSize / 3));
 				ImGui::Text(Triangle_count.data());
 
+				ImGui::Text("Instances:");
+				ImGui::SameLine();
+				ImGui::Text(std::to_string(mesh->resource_mesh->instances).data());
+
 				ImGui::TreePop();
 			}
 		}
@@ -190,6 +194,10 @@ bool BlockheadInspector::Draw()
 				ImGui::Text(Path.data());
 
 				ImGui::Image((void*)(uint)&material->resource_material->resource_diffuse->buffer_id, ImVec2(150, 150));
+				
+			ImGui::Text("Instances:");
+				ImGui::SameLine();
+				ImGui::Text(std::to_string(material->resource_material->resource_diffuse->instances).data());
 
 				ImGui::Text(std::to_string(material->resource_material->resource_diffuse->Texture_width).data());
 				ImGui::SameLine();

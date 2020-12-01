@@ -66,7 +66,7 @@ void GameObject::OnUpdateTransform(GameObject* GO)
 	ComponentTransform* transform = GO->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
 	transform->OnUpdateTransform(GO->parent->GetComponent<ComponentTransform>(Component::ComponentType::Transform)->GetGlobalTransform());
 
-	// --- Update all children ---
+	//Update all children
 	if (GO->childs.size() > 0)
 	{
 		for (std::vector<GameObject*>::iterator it = GO->childs.begin(); it != GO->childs.end(); ++it)
@@ -183,7 +183,7 @@ void GameObject::RemoveComponent(Component::ComponentType type)
 
 bool GameObject::HasComponent(Component::ComponentType type) const
 {
-	// --- Search for given type of component ---
+	//Search for given type of component
 
 	for (uint i = 0; i < components.size(); ++i)
 	{

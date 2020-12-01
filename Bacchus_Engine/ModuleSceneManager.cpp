@@ -45,10 +45,17 @@ bool ModuleSceneManager::Init(json file)
 
 bool ModuleSceneManager::Start()
 {
+    //Define Default and Checkers Materials
 	DefaultMaterial = CreateEmptyMaterial();
+    DefaultMaterial->resource_material = (ResourceMaterial*)App->res->CreateResource(Resource::ResourceType::MATERIAL);
+    DefaultMaterial->resource_material->resource_diffuse = (ResourceTexture*)App->res->CreateResource(Resource::ResourceType::TEXTURE);
+
     DefaultMaterial->resource_material->resource_diffuse->Texture_path = "Default";
 
 	CheckersMaterial = CreateEmptyMaterial();
+    CheckersMaterial->resource_material = (ResourceMaterial*)App->res->CreateResource(Resource::ResourceType::MATERIAL);
+    CheckersMaterial->resource_material->resource_diffuse = (ResourceTexture*)App->res->CreateResource(Resource::ResourceType::TEXTURE);
+
     CheckersMaterial->resource_material->resource_diffuse->buffer_id = App->tex->GetCheckerTextureID();
     CheckersMaterial->resource_material->resource_diffuse->Texture_path = "NaN";
     CheckersMaterial->resource_material->resource_diffuse->Texture_width = CHECKERS_WIDTH;
@@ -249,10 +256,6 @@ ComponentMaterial* ModuleSceneManager::CreateEmptyMaterial()
 {
 
     ComponentMaterial* Material = new ComponentMaterial(Component::ComponentType::Material);
-    Material->resource_material = new ResourceMaterial;
-    Material->resource_material->resource_diffuse = new ResourceTexture;
-    App->res->AddResource(Material->resource_material);
-    App->res->AddResource(Material->resource_material->resource_diffuse);
 
     Materials.push_back(Material);
 
@@ -261,10 +264,12 @@ ComponentMaterial* ModuleSceneManager::CreateEmptyMaterial()
 
 void ModuleSceneManager::LoadPrimitiveArrays(GameObject& new_object, uint vertices_size, const float* vertices, uint indices_size, const uint* indices, uint normals_size, const float* normals, uint texCoords_size, const float* texCoords) const
 {
-    ComponentMesh* comp_mesh = (ComponentMesh*)new_object.AddComponent(Component::ComponentType::Mesh);
-    ResourceMesh* new_mesh = comp_mesh->resource_mesh = new ResourceMesh;
-    App->res->AddResource(comp_mesh->resource_mesh);
+    //Obtain data from Songho Ann mesh arrays and load it into component mesh
 
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object.AddComponent(Component::ComponentType::Mesh);
+    ResourceMesh* new_mesh = (ResourceMesh*)App->res->CreateResource(Resource::ResourceType::MESH);
+
+    comp_mesh->resource_mesh = new_mesh;
     ComponentRenderer* Renderer = (ComponentRenderer*)new_object.AddComponent(Component::ComponentType::Renderer);
 
     //Vertices
