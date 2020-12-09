@@ -56,8 +56,8 @@ bool ImporterMaterial::Import(const char* File_path, const ImportData& IData) co
 				MData.new_material->resource_diffuse->buffer_id = App->tex->CreateTextureFromFile(directory.data(), MData.new_material->resource_diffuse->Texture_width, MData.new_material->resource_diffuse->Texture_height, MData.new_material->resource_diffuse->GetUID());
 				MData.new_material->resource_diffuse->SetOriginalFilename(directory.data());
 				MData.new_material->resource_diffuse->Texture_path = directory.data();
+				App->res->CreateMetaFromUID(MData.new_material->resource_diffuse->GetUID(), directory.data());
 			}
-
 		}
 	}
 
@@ -67,7 +67,7 @@ bool ImporterMaterial::Import(const char* File_path, const ImportData& IData) co
 void ImporterMaterial::Load(const char* filename, ResourceMaterial& mat)
 {
 	mat.resource_diffuse = (ResourceTexture*)App->res->CreateResource(Resource::ResourceType::TEXTURE);
-	mat.resource_diffuse->buffer_id = App->tex->CreateTextureFromFile(filename, mat.resource_diffuse->Texture_width, mat.resource_diffuse->Texture_height, mat.resource_diffuse->GetUID(), true);
+	mat.resource_diffuse->buffer_id = App->tex->CreateTextureFromFile(filename, mat.resource_diffuse->Texture_width, mat.resource_diffuse->Texture_height, mat.resource_diffuse->GetUID());
 	mat.resource_diffuse->Texture_path = filename;
 	mat.resource_diffuse->SetOriginalFilename(filename);
 }

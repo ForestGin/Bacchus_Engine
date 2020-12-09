@@ -159,7 +159,6 @@ void ModuleSceneManager::LoadScene()
 {
     std::string Scene_name = SCENES_FOLDER;
     Scene_name.append("SampleScene.scene");
-    Scene_name = Scene_name.substr(1, Scene_name.size());
 
     RecursiveFreeScene(root);
 
@@ -218,7 +217,7 @@ void ModuleSceneManager::SetTextureToSelectedGO(uint id)
 
     if (Material)
     {
-        Material->FreeTexture();
+        //Material->FreeTexture();
         Material->resource_material->resource_diffuse->buffer_id = id;
     }
 }

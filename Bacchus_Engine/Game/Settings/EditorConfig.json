@@ -10,7 +10,8 @@
         "Settings": true,
 	"Hierarchy": true,
 	"Inspector": true,
-	"Toolbar": true
+	"Toolbar": true,
+	"Project": true
         
     },
     "Input": null,

@@ -53,8 +53,7 @@ void ModuleResources::CreateMetaFromUID(uint UID, const char* filename)
 	jsondata = App->GetJLoader()->Serialize(jsonmeta);
 	meta_buffer = (char*)jsondata.data();
 
-	meta_path = ASSETS_FOLDER;
-	meta_path.append(filename);
+	meta_path = filename;
 	meta_path.append(".meta");
 
 	loaded_resources[UID] = meta;
@@ -136,12 +135,11 @@ Resource::ResourceType ModuleResources::GetResourceTypeFromPath(const char* path
 	return type;
 }
 
-uint ModuleResources::GetUIDFromMeta(const char* file)
+uint ModuleResources::GetUIDFromMeta(const char * file)
 {
 	std::string path = file;
 	path.append(".meta");
 	uint UID = 0;
-	path = path.substr(1, path.size());
 
 	if (App->fs->Exists(path.data()))
 	{

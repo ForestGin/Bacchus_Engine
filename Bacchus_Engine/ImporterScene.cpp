@@ -6,6 +6,7 @@
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
+#include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "ComponentRenderer.h"
@@ -57,14 +58,14 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 	//Check if File is already imported
 
 	if (App->res->IsFileImported(relative_path.data()))
-	{uint model_uid = App->res->GetUIDFromMeta(relative_path.data());
+	{
+		uint model_uid = App->res->GetUIDFromMeta(relative_path.data());
 
 		if (extension == ".fbx" || extension == ".FBX")
 		{
 			std::string model_path = MODELS_FOLDER;
 			model_path.append(std::to_string(model_uid));
 			model_path.append(".model");
-			model_path = model_path.substr(1, model_path.size());
 			Load(model_path.data());
 		}
 
@@ -72,7 +73,8 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 	}
 
 	//Copy File to Assets Folder
-	App->fs->CopyFromOutsideFS(File_path, relative_path.data());
+	if (!App->fs->Exists(relative_path.data()))
+		App->fs->CopyFromOutsideFS(File_path, relative_path.data());
 
 	//Load file from assets folder
 	char* buffer;
@@ -81,11 +83,17 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 	//Import scene from path
 	const aiScene* scene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 
+	GameObject* rootnode = nullptr;
 	// Release data
-	delete[] buffer;
+	if (buffer && size > 0)
+	{
+		delete[] buffer;
 
+		rootnode = App->scene_manager->CreateEmptyGameObject();
 
-	GameObject* rootnode = App->scene_manager->CreateEmptyGameObject();
+		//Set root node name as file name with no extension
+		rootnode->SetName(rootnodename.data());
+	}
 
 	// Set root node name as file name with no extension
 	rootnode->SetName(rootnodename.data());
@@ -97,7 +105,7 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 		scene_gos.push_back(rootnode);
 
 		//Use scene->mNumMeshes to iterate on scene->mMeshes array
-		LoadNodes(scene->mRootNode, rootnode, scene, scene_gos, File_path);
+		LoadNodes(scene->mRootNode, rootnode, scene, scene_gos, relative_path.data());
 
 		//Save to Own format files in Library
 		std::string exported_file = SaveSceneToFile(scene_gos, rootnodename, MODEL);
@@ -140,6 +148,19 @@ bool ImporterScene::Load(const char* exported_file) const
 		//Iterate components
 		json components = file[it.key()]["Components"];
 
+		ComponentTransform* transform = transform = new_go->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+
+		/*std::string posx = components[it.key()]["positionx"];
+		std::string posy = components[it.key()]["positiony"];
+		std::string posz = components[it.key()]["positionz"];
+
+		std::string rotx = components["0"]["rotationx"];
+		std::string roty = components["0"]["rotationy"];
+		std::string rotz = components["0"]["rotationz"];
+
+		std::string scalex = components["0"]["scalex"];
+		std::string scaley = components["0"]["scaley"];
+		std::string scalez = components["0"]["scalez"];*/
 
 		for (json::iterator it2 = components.begin(); it2 != components.end(); ++it2)
 		{
@@ -153,13 +174,27 @@ bool ImporterScene::Load(const char* exported_file) const
 			ComponentMaterial* mat = nullptr;
 			ResourceTexture* texture = nullptr;
 			ResourceMesh* rmesh = nullptr;
+			std::string tmp;
 
 			//Get path to component file
-			std::string component_path = components[val];
+			std::string component_path;
+
+			if (type != Component::ComponentType::Transform)
+			{
+				std::string tmppath = components[val];
+				component_path = tmppath;
+			}
+
 			std::string diffuse_uid;
 			uint count;
+
 			switch (type)
 			{
+			/*case Component::ComponentType::Transform:
+				transform->SetPosition(std::stof(posx), std::stof(posy), std::stof(posz));
+				transform->SetRotation(float3{ RADTODEG * std::stof(rotx), RADTODEG * std::stof(roty), RADTODEG * std::stof(rotz) });
+				transform->Scale(std::stof(scalex), std::stof(scaley), std::stof(scalez));
+				break;*/
 			case Component::ComponentType::Renderer:
 				new_go->AddComponent(Component::ComponentType::Renderer);
 				break;
@@ -221,7 +256,7 @@ bool ImporterScene::Load(const char* exported_file) const
 			}
 		}
 
-
+		/*transform->update_transform = true;*/
 		objects.push_back(new_go);
 	}
 
@@ -259,11 +294,29 @@ std::string ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, 
 		{
 			std::string component_path;
 
+			ComponentTransform* transform = transform = scene_gos[i]->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+			float3 position = transform->GetPosition();
+			float3 rotation = transform->GetRotation();
+			float3 scale = transform->GetScale();
+
 			switch (scene_gos[i]->GetComponents()[j]->GetType())
 			{
 
 				case Component::ComponentType::Transform:
-					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())] = component_path;
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())];
+
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())]["positionx"] = std::to_string(position.x);
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())]["positiony"] = std::to_string(position.y);
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())]["positionz"] = std::to_string(position.z);
+
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())]["rotationx"] = std::to_string(rotation.x);
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())]["rotationy"] = std::to_string(rotation.y);
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())]["rotationz"] = std::to_string(rotation.z);
+
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())]["scalex"] = std::to_string(scale.x);
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())]["scaley"] = std::to_string(scale.y);
+					file[scene_gos[i]->GetName()]["Components"][std::to_string((uint)scene_gos[i]->GetComponents()[j]->GetType())]["scalez"] = std::to_string(scale.z);
+
 					break;
 				case Component::ComponentType::Mesh:
 					component_path = MESHES_FOLDER;
@@ -293,12 +346,9 @@ std::string ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, 
 
 	std::string path;
 	uint new_uid;
-	json meta;
-	std::string jsondata;
-	std::string meta_path;
-	char* meta_buffer = nullptr;
+	std::string filename = ASSETS_FOLDER;
+	filename.append(scene_name);
 
-	std::string filename = scene_name;
 	switch (exportedfile_type)
 	{
 		case MODEL:
@@ -308,19 +358,8 @@ std::string ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, 
 			path.append(".model");
 			filename.append(".fbx");
 			App->res->CreateMetaFromUID(new_uid, filename.data());
-
-
-			//Create Meta
-			meta["UID"] = std::to_string(new_uid);
-			jsondata = App->GetJLoader()->Serialize(meta);
-			meta_buffer = (char*)jsondata.data();
-
-			meta_path = ASSETS_FOLDER;
-			meta_path.append(std::to_string(new_uid));
-			meta_path.append(".fbx.meta");
-
-			App->fs->Save(meta_path.data(), meta_buffer, jsondata.length());
 			break;
+
 
 		case SCENE:
 			path = SCENES_FOLDER;
@@ -388,6 +427,25 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 				Mdata.mesh = mesh;
 				Mdata.new_mesh = new_mesh->resource_mesh;
 				IMesh->Import(Mdata);
+
+				ComponentTransform* transform = new_object->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+
+				if (transform)
+				{
+					aiVector3D aiscale;
+					aiVector3D aiposition;
+					aiQuaternion airotation;
+					node->mTransformation.Decompose(aiscale, airotation, aiposition);
+					math::Quat quat;
+					quat.x = airotation.x;
+					quat.y = airotation.y;
+					quat.z = airotation.z;
+					quat.w = airotation.w;
+					float3 eulerangles = quat.ToEulerXYZ();
+					transform->SetPosition(aiposition.x, aiposition.y, aiposition.z);
+					transform->SetRotation(eulerangles);
+					transform->Scale(aiscale.x, aiscale.y, aiscale.z);
+				}
 
 				//Create new Component Renderer to draw mesh
 				ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);

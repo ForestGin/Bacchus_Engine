@@ -2,7 +2,10 @@
 #include "Application.h"
 #include "OpenGL.h"
 #include "ModuleImporter.h"
+
 #include "FileSystem.h"
+#include "ModuleResources.h"
+#include "ResourceTexture.h"
 
 #include "DevIL/include/il.h"
 #include "DevIL/include/ilu.h"
@@ -189,7 +192,7 @@ inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width,
 		LOG("|[error]: Image conversion failed. ERROR: %s", iluErrorString(ilGetError()));
 }
 
-uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& height, uint LibUID, bool load_existing) const
+uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& height, uint LibUID) const
 {
 	//In this function we use devil to load an image using the path given, extract pixel data and then create texture using CreateTextureFromImage
 
@@ -201,6 +204,8 @@ uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& 
 		return TextureID;
 	}
 
+	std::string final_path = path;
+
 	//Generate the image name (ID for buffer)
 	uint ImageName = 0;
 	ilGenImages(1, (ILuint*)&ImageName);
@@ -208,19 +213,32 @@ uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& 
 	//Bind the image
 	ilBindImage(ImageName);
 
+	bool load_existing = false;
 	std::string name = TEXTURES_FOLDER;
+	name.append(std::to_string(LibUID));
+	name.append(".dds");
 
-	//Extract the filename from the path
-	if (!load_existing)
+	// --- Look for meta, if found load image from library ---
+	if (App->res->IsFileImported(path))
 	{
-		//Only if the file is being imported (no copy in library)
-		LibUID = App->GetRandom().Int();
-		name.append(std::to_string(LibUID));
-		name.append(".dds");
+		uint uid = App->res->GetUIDFromMeta(path);
+		std::string lib_Tex = TEXTURES_FOLDER;
+		lib_Tex = lib_Tex.substr(1, lib_Tex.size());
+		lib_Tex.append(std::to_string(uid));
+		lib_Tex.append(".dds");
+		final_path = lib_Tex;
+
+		load_existing = true;
+	}
+	else if (final_path.find("Library") != std::string::npos)
+		load_existing = true;
+	else
+	{
+		App->res->CreateMetaFromUID(LibUID, path);
 	}
 
 	//Load the image into binded buffer and create texture from its pixel data
-	if (ilLoadImage(path))
+	if (ilLoadImage(final_path.data()))
 		CreateTextureFromImage(TextureID, width, height, name.data(), load_existing);
 	else
 		LOG("|[error]: DevIL could not load the image. ERROR: %s", iluErrorString(ilGetError()));
