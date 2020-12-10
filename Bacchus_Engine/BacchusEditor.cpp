@@ -1,9 +1,13 @@
 #include "Application.h"
 #include "Globals.h"
+
 #include "BacchusEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleSceneManager.h"
+
+#include "GameObject.h"
+#include "ComponentCamera.h"
 
 #include "Blockhead.h"
 #include "BlockheadAbout.h"
@@ -155,6 +159,19 @@ update_status BacchusEditor::Update(float dt)
 
 		if (ImGui::BeginMenu("GameObject"))
 		{
+			if (ImGui::MenuItem("Empty Game Object"))
+			{
+				App->scene_manager->CreateEmptyGameObject();
+			}
+
+			if (ImGui::MenuItem("Camera"))
+			{
+				GameObject* cam = App->scene_manager->CreateEmptyGameObject();
+				ComponentCamera* camera = (ComponentCamera*)cam->AddComponent(Component::ComponentType::Camera);
+				camera->SetFarPlane(10);
+				cam->AddComponent(Component::ComponentType::Renderer);
+			}
+
 			if (ImGui::BeginMenu("3D Object"))
 			{
 				if (ImGui::MenuItem("Tetrahedron"))

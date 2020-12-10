@@ -3,8 +3,6 @@
 #include "Application.h"
 #include "GameObject.h"
 
-#include "Math.h"
-
 #include "ModuleRenderer3D.h"
 #include "ModuleTextures.h"
 #include "ModuleImporter.h"
@@ -115,19 +113,12 @@ void ModuleSceneManager::DrawRecursive(GameObject* go)
 
     if (go->GetName() != root->GetName())
     {
-        ComponentTransform* transform = go->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
-
-        glPushMatrix();
-        glMultMatrixf(transform->GetGlobalTransform().Transposed().ptr());
-
         ComponentRenderer* Renderer = go->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer);
 
         if (Renderer && Renderer->IsEnabled()/*&& App->camera->camera->frustum.Intersects(go->GetAABB())*/)
         {
             Renderer->Draw();
         }
-
-        glPopMatrix();
     }
 }
 
@@ -261,6 +252,55 @@ ComponentMaterial* ModuleSceneManager::CreateEmptyMaterial()
     Materials.push_back(Material);
 
     return Material;
+}
+
+void ModuleSceneManager::DrawWireFromVertices(const float3* corners, Color color)
+{
+    glDisable(GL_LIGHTING);
+    glBegin(GL_LINES);
+
+    glColor4f(Green.r, Green.g, Green.b, Green.a);
+
+    //Between-planes right
+    glVertex3fv((GLfloat*)&corners[1]);
+    glVertex3fv((GLfloat*)&corners[5]);
+    glVertex3fv((GLfloat*)&corners[7]);
+    glVertex3fv((GLfloat*)&corners[3]);
+
+    //Between-planes left
+    glVertex3fv((GLfloat*)&corners[4]);
+    glVertex3fv((GLfloat*)&corners[0]);
+    glVertex3fv((GLfloat*)&corners[2]);
+    glVertex3fv((GLfloat*)&corners[6]);
+
+    //Far plane horizontal
+    glVertex3fv((GLfloat*)&corners[5]);
+    glVertex3fv((GLfloat*)&corners[4]);
+    glVertex3fv((GLfloat*)&corners[6]);
+    glVertex3fv((GLfloat*)&corners[7]);
+
+    //Near plane horizontal
+    glVertex3fv((GLfloat*)&corners[0]);
+    glVertex3fv((GLfloat*)&corners[1]);
+    glVertex3fv((GLfloat*)&corners[3]);
+    glVertex3fv((GLfloat*)&corners[2]);
+
+    //Near plane vertical
+    glVertex3fv((GLfloat*)&corners[1]);
+    glVertex3fv((GLfloat*)&corners[3]);
+    glVertex3fv((GLfloat*)&corners[0]);
+    glVertex3fv((GLfloat*)&corners[2]);
+
+    //Far plane vertical
+    glVertex3fv((GLfloat*)&corners[5]);
+    glVertex3fv((GLfloat*)&corners[7]);
+    glVertex3fv((GLfloat*)&corners[4]);
+    glVertex3fv((GLfloat*)&corners[6]);
+
+    glColor4f(1.0, 1.0, 1.0, 1.0);
+
+    glEnd();
+    glEnable(GL_LIGHTING);
 }
 
 void ModuleSceneManager::LoadPrimitiveArrays(GameObject& new_object, uint vertices_size, const float* vertices, uint indices_size, const uint* indices, uint normals_size, const float* normals, uint texCoords_size, const float* texCoords) const

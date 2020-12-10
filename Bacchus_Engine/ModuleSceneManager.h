@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include <vector>
+#include "Math.h"
+#include "Color.h"
 
 class GameObject;
 class ComponentMaterial;
@@ -21,6 +23,7 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	bool CleanUp();
+
 	GameObject* CreateEmptyGameObject();
 	ComponentMaterial* CreateEmptyMaterial();
 	void Draw();
@@ -32,6 +35,14 @@ public:
 	void LoadScene();
 	void RecursiveFreeScene(GameObject* go);
 
+	template <typename Box>
+	static void DrawWire(const Box& box, Color color)
+	{
+		float3 corners[8];
+		box.GetCornerPoints(corners);
+		DrawWireFromVertices(corners, color);
+	};
+	static void DrawWireFromVertices(const float3* corners, Color color);
 
 	GameObject* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false);
 	GameObject* CreateCubeSphere(float Radius = 1.0f, int sub = 3, bool smooth = false);
