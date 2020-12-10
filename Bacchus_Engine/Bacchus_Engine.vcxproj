@@ -106,6 +106,7 @@
     <ClInclude Include="BlockheadToolbar.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="BacchusEditor.h" />
+    <ClInclude Include="ComponentCamera.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="glmath.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="BlockheadToolbar.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="BacchusEditor.cpp" />
+    <ClCompile Include="ComponentCamera.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glmath.cpp" />

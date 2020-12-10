@@ -56,6 +56,12 @@ public:
 	void RemoveChildGO(GameObject* GO);
 	void OnUpdateTransform(GameObject* GO);
 
+	const AABB& GetAABB() const;
+	const OBB& GetOBB() const;
+
+private:
+	void UpdateAABB();
+
 
 public:
 	GameObject* parent = nullptr;
@@ -66,6 +72,9 @@ private:
 	std::string name;
 	std::vector<Component*> components;
 	bool active = false;
+
+	AABB aabb;
+	OBB obb;
 };
 
 #endif

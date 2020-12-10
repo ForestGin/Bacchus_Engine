@@ -2,10 +2,8 @@
 #define __COMPONENT_MATERIAL_H__
 
 #include "Component.h"
-#include <string>
 #include "ResourceMaterial.h"
 
-struct aiScene;
 
 class ComponentMaterial : public Component
 {

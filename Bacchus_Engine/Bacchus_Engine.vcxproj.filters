@@ -262,6 +262,9 @@
     <ClCompile Include="BlockheadProject.cpp">
       <Filter>Editor\Blockheads</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentCamera.cpp">
+      <Filter>GOs\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -628,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="BlockheadProject.h">
       <Filter>Editor\Blockheads</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentCamera.h">
+      <Filter>GOs\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

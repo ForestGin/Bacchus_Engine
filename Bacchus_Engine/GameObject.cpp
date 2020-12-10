@@ -1,9 +1,12 @@
 #include "Application.h"
 #include "GameObject.h"
+
 #include "ComponentMesh.h"
 #include "ComponentRenderer.h"
 #include "ComponentMaterial.h"
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
+
 #include "Math.h"
 
 #include "mmgr/mmgr.h"
@@ -131,7 +134,7 @@ bool GameObject::FindChildGO(GameObject* GO)
 
 Component* GameObject::AddComponent(Component::ComponentType type)
 {
-	static_assert(static_cast<int>(Component::ComponentType::Unknown) == 4, "Component Creation Switch needs to be updated");
+	static_assert(static_cast<int>(Component::ComponentType::Unknown) == 5, "Component Creation Switch needs to be updated");
 
 	Component* new_component = nullptr;
 
@@ -148,6 +151,9 @@ Component* GameObject::AddComponent(Component::ComponentType type)
 			break;
 		case Component::ComponentType::Renderer:
 			new_component = new ComponentRenderer(this);
+			break;
+		case Component::ComponentType::Camera:
+			new_component = new ComponentCamera(this);
 			break;
 		}
 
@@ -241,5 +247,36 @@ void GameObject::SetMaterial(ComponentMaterial* material)
 	{
 		RemoveComponent(Component::ComponentType::Material);
 		components.push_back(material);
+	}
+}
+
+const AABB& GameObject::GetAABB() const
+{
+	return aabb;
+}
+
+const OBB& GameObject::GetOBB() const
+{
+	return obb;
+}
+
+void GameObject::UpdateAABB()
+{
+	ComponentMesh* mesh = GetComponent<ComponentMesh>(Component::ComponentType::Mesh);
+	ComponentTransform* transform = GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+	if (mesh)
+	{
+		//AABB meshAABB = mesh->GetAABB();
+		obb = mesh->GetAABB();
+		obb.Transform(transform->GetGlobalTransform());
+
+		aabb.SetNegativeInfinity();
+		aabb.Enclose(obb);
+	}
+	else
+	{
+		aabb.SetNegativeInfinity();
+		aabb.SetFromCenterAndSize(transform->GetGlobalPosition(), float3(1, 1, 1));
+		obb = aabb;
 	}
 }

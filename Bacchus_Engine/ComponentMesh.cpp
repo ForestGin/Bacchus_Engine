@@ -16,4 +16,9 @@ ComponentMesh::~ComponentMesh()
 	
 }
 
+const AABB& ComponentMesh::GetAABB() const
+{
+	return resource_mesh->aabb;
+}
+
 
