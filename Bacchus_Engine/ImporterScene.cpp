@@ -98,6 +98,7 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 
 		// --- Delete Everything once Library files have been created ---
 		rootnode->RecursiveDelete(rootnode);
+		
 
 		// --- Load from Library, our own format files ---
 		Load(exported_file.data());
