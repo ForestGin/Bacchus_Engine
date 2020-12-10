@@ -16,11 +16,11 @@ public:
 
 	bool Draw();
 
-private:
 
 	bool TestImport();
 	
 	GameObject* importObject = nullptr;
+	
 	/*ComponentTransform* importTransform = nullptr;
 	float3 importScale;*/
 };

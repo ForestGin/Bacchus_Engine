@@ -68,7 +68,14 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 	delete[] buffer;
 
 
-	GameObject* rootnode = App->scene_manager->CreateEmptyGameObject();
+	/*GameObject* rootnode = App->scene_manager->CreateEmptyGameObject();
+
+	rootnode = App->bacchuseditor->blockheadImporter->importObject;*/
+	
+	//NOW IMPORTED GO WILL BE PROPERLY ASSIGNED TO NOT LEAVE COPIES
+	GameObject* rootnode = App->bacchuseditor->blockheadImporter->importObject;
+
+	
 
 	//we make the selected game object the one we import to be able of modify the transform etc
 	/*App->scene_manager->SetSelectedGameObject(rootnode);*/

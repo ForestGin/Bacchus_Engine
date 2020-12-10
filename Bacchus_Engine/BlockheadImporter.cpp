@@ -30,13 +30,11 @@ bool BlockheadImporter::Draw()
 
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
-
-		importObject = App->scene_manager->CreateEmptyGameObject();
-
+		
 		if (importObject == nullptr)
 		{
-			ImGui::End();
-			return false;
+			importObject = App->scene_manager->CreateEmptyGameObject();
+			App->scene_manager->SetSelectedGameObject(importObject);
 		}
 
 		ImGui::SetNextItemOpen(true);
@@ -105,6 +103,7 @@ bool BlockheadImporter::Draw()
 		{
 		
 			TestImport();
+	
 			OnOff();
 		
 		}
