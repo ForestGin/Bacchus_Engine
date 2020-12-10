@@ -21,10 +21,9 @@ public:
 	void FrameObject(GameObject* GO);
 
 private:
-	void LookAround(float dt);
+	void LookAround(float speed, float3 reference);
 	void Pan(float speed);
 	void Zoom(float speed);
-	void Orbit();
 
 
 public:
