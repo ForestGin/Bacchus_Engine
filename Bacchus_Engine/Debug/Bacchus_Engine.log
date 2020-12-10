@@ -9,11 +9,11 @@ C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(39
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(403,20): warning C4018: '<': signed/unsigned mismatch
   ModuleCamera3D.cpp
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(208,91): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(209,81): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(214,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(215,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(230,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(202,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(203,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(208,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(209,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(223,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   ModuleRenderer3D.cpp
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   Generating Code...
