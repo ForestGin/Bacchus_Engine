@@ -7,6 +7,8 @@
 
 #define MAX_LIGHTS 8
 
+class ComponentCamera;
+
 class ModuleRenderer3D : public Module
 {
 public:
@@ -20,7 +22,7 @@ public:
 	bool CleanUp();
 
 	void UpdateGLCapabilities();
-
+	void UpdateProjectionMatrix() const;
 	void OnResize(int width, int height);
 
 	uint CreateBufferFromData(uint Targetbuffer, uint size, void* data) const;
@@ -37,6 +39,8 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	ComponentCamera* active_camera = nullptr;
 
 	// Flags
 	bool vsync = true;

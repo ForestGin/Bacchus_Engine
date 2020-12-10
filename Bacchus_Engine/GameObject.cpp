@@ -77,6 +77,8 @@ void GameObject::OnUpdateTransform(GameObject* GO)
 			OnUpdateTransform(*it);
 		}
 	}
+
+	UpdateAABB();
 }
 
 void GameObject::RemoveChildGO(GameObject* GO)
@@ -148,6 +150,7 @@ Component* GameObject::AddComponent(Component::ComponentType type)
 			break;
 		case Component::ComponentType::Mesh:
 			new_component = new ComponentMesh(this);
+			UpdateAABB();
 			break;
 		case Component::ComponentType::Renderer:
 			new_component = new ComponentRenderer(this);

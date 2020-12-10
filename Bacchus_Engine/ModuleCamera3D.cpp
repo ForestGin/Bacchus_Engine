@@ -4,8 +4,9 @@
 #include "BacchusEditor.h"
 #include "ModuleInput.h"
 #include "ModuleSceneManager.h"
-#include "GameObject.h"
+#include "ModuleRenderer3D.h"
 
+#include "GameObject.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
@@ -22,7 +23,13 @@ ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 ModuleCamera3D::~ModuleCamera3D()
 {}
 
-// -----------------------------------------------------------------
+bool ModuleCamera3D::Init(json config)
+{
+	App->renderer3D->active_camera = camera;
+
+	return true;
+}
+
 bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
@@ -31,6 +38,8 @@ bool ModuleCamera3D::Start()
 	camera->frustum.pos = { 0.0f,1.0f,-5.0f };
 
 	reference = camera->frustum.pos;
+
+	camera->update_projection = true;
 
 	return ret;
 }
@@ -102,34 +111,6 @@ update_status ModuleCamera3D::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-void ModuleCamera3D::Look(const float3& Position, const float3& Reference, bool RotateAroundReference)
-{
-	this->camera->frustum.pos = Position;
-	this->reference = Reference;
-
-	this->camera->frustum.front = (Position - Reference).Normalized();
-	camera->frustum.up = Cross(camera->frustum.front, (Cross(float3::unitY, camera->frustum.front)).Normalized());
-
-	if (!RotateAroundReference)
-	{
-		this->reference = this->camera->frustum.pos;
-		this->camera->frustum.pos += camera->frustum.front * 0.05f;
-	}
-}
-
-void ModuleCamera3D::LookAt(const float3& Spot)
-{
-	reference = Spot;
-
-	math::float3 Z = -(camera->frustum.pos - reference).Normalized();
-	math::float3 X = math::Cross(math::float3(0.0f, 1.0f, 0.0f), Z).Normalized();
-	math::float3 Y = math::Cross(Z, X);
-
-	camera->frustum.front = Z;
-	camera->frustum.up = Y;
-
-}
-
 void ModuleCamera3D::LookAround(float speed, float3 reference)
 {
 	float dx = -App->input->GetMouseXMotion() * speed;
@@ -139,12 +120,14 @@ void ModuleCamera3D::LookAround(float speed, float3 reference)
 	math::Quat rotationY = math::Quat::RotateAxisAngle(camera->frustum.WorldRight(), dy * DEGTORAD);
 	math::Quat finalRotation = rotationX * rotationY;
 
-	camera->frustum.up = finalRotation * camera->frustum.up;
-	camera->frustum.front = finalRotation * camera->frustum.front;
+	camera->frustum.up = finalRotation.Mul(camera->frustum.up).Normalized();
+	camera->frustum.front = finalRotation.Mul(camera->frustum.front).Normalized();
 
 	float distance = (camera->frustum.pos - reference).Length();
 	camera->frustum.pos = reference + (-camera->frustum.front * distance);
-	this->reference = camera->frustum.pos + camera->frustum.front * (camera->frustum.pos).Length();
+	
+	if (!reference.Equals(this->reference))
+		this->reference = camera->frustum.pos + camera->frustum.front * (camera->frustum.pos).Length();
 }
 
 void ModuleCamera3D::Pan(float speed)
@@ -184,33 +167,26 @@ void ModuleCamera3D::Zoom(float speed)
 
 void ModuleCamera3D::FrameObject(GameObject* GO)
 {
-	
 	if (GO)
 	{
 		ComponentTransform* transform = GO->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+		ComponentMesh* mesh = GO->GetComponent<ComponentMesh>(Component::ComponentType::Mesh);
 
-		if (transform)
+		if (mesh && mesh->resource_mesh)
 		{
-			reference.x = transform->GetPosition().x;
-			reference.y = transform->GetPosition().y;
-			reference.z = transform->GetPosition().z;
+			AABB aabb;
+			aabb.SetNegativeInfinity();
+			aabb.Enclose(mesh->resource_mesh->Vertices, mesh->resource_mesh->VerticesSize);
+			aabb.Translate(transform->GetPosition());
+			float3 center = aabb.CenterPoint();
 
-			ComponentMesh* mesh = GO->GetComponent<ComponentMesh>(Component::ComponentType::Mesh);
+			reference.x = center.x;
+			reference.y = center.y;
+			reference.z = center.z;
 
-			if (mesh)
-			{
-
-				Sphere s(transform->GetPosition(), 1);
-				s.Enclose(mesh->resource_mesh->Vertices, mesh->resource_mesh->VerticesSize);
-
-				s.r = s.Diameter() - Length(float3(reference.x, reference.y, reference.z));
-				s.pos = transform->GetPosition();
-
-				Look(camera->frustum.pos, float3(s.Centroid().x, s.Centroid().y, s.Centroid().z), true);
-				float3 Movement = -camera->frustum.front * (2 * s.r);
-				camera->frustum.pos = reference - Movement;
-
-			}
+			float3 Movement = camera->frustum.front * (2 * mesh->GetAABB().HalfDiagonal().Length());
+			camera->frustum.pos = reference - Movement;
+		
 		}
 	}
 	

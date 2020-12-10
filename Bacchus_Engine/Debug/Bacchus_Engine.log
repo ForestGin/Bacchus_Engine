@@ -1,9 +1,41 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  Application.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  BacchusEditor.cpp
+  BlockheadInspector.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  BlockheadSettings.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(286,30): warning C4552: '!=': result of expression not used
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(293,31): warning C4552: '!=': result of expression not used
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(300,29): warning C4552: '!=': result of expression not used
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\BlockheadSettings.cpp(307,35): warning C4552: '!=': result of expression not used
+  ComponentCamera.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ComponentRenderer.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  GameObject.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ImporterMesh.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ImporterScene.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(286,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(293,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(397,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(403,20): warning C4018: '<': signed/unsigned mismatch
   ModuleCamera3D.cpp
 C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(161,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(162,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(167,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(168,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(181,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(144,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(145,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(150,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(151,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(164,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  ModuleInput.cpp
+  ModuleRenderer3D.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ModuleSceneManager.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(445,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  ModuleWindow.cpp
+  Generating Code...
   Bacchus_Engine.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Game\Bacchus_Engine.exe

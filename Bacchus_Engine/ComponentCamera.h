@@ -26,15 +26,10 @@ public:
 	void Look(const float3& position);
 	void OnUpdateTransform(const float4x4& global);
 
-private:
-	void UpdatePlanes();
-
 public:
 	Frustum		frustum;
 	bool		update_projection = true;
 	bool		culling = false;
-	bool		active_camera = false;
-	Plane		planes[6];
 };
 
 #endif 
