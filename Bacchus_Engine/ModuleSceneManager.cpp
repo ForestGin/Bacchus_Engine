@@ -227,9 +227,12 @@ GameObject* ModuleSceneManager::CreateEmptyGameObject()
     go_count++;
 
     GameObject* new_object = new GameObject(Name.data());
-    new_object->AddComponent(Component::ComponentType::Transform);
-    root->AddChildGO(new_object);
     
+    new_object->AddComponent(Component::ComponentType::Transform);
+    
+    new_object->UpdateAABB();
+    
+    root->AddChildGO(new_object);
 
     new_object->SetMaterial(DefaultMaterial);
 
@@ -248,7 +251,6 @@ GameObject* ModuleSceneManager::CreateRootGameObject()
 
 ComponentMaterial* ModuleSceneManager::CreateEmptyMaterial()
 {
-
     ComponentMaterial* Material = new ComponentMaterial(Component::ComponentType::Material);
 
     Materials.push_back(Material);
@@ -360,6 +362,8 @@ void ModuleSceneManager::LoadPrimitiveArrays(GameObject& new_object, uint vertic
     }
 
     new_mesh->TextureCoordsID = App->renderer3D->CreateBufferFromData(GL_ARRAY_BUFFER, sizeof(float) * new_mesh->TexCoordsSize, new_mesh->TexCoords);
+
+    new_mesh->CreateAABB();
 }
 
 GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stacks, bool smooth)

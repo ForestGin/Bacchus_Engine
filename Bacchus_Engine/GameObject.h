@@ -60,9 +60,7 @@ public:
 	const AABB& GetAABB() const;
 	const OBB& GetOBB() const;
 
-private:
 	void UpdateAABB();
-
 
 public:
 	GameObject* parent = nullptr;
