@@ -26,6 +26,7 @@ public:
 	void OnResize(int width, int height);
 
 	uint CreateBufferFromData(uint Targetbuffer, uint size, void* data) const;
+	void CreateFramebuffer();
 
 	// Sets 
 	bool SetVSync(bool vsync);
@@ -44,6 +45,10 @@ public:
 
 	ComponentCamera* active_camera = nullptr;
 	ComponentCamera* culling_camera = nullptr;
+
+	uint fbo = 0;
+	uint depthbuffer = 0;
+	uint rendertexture = 0;
 
 	// Flags
 	bool vsync = true;
