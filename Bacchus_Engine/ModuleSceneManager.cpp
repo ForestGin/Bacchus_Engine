@@ -11,8 +11,9 @@
 #include "FileSystem.h"
 #include "ModuleResources.h"
 #include "ModuleCamera3D.h"
-#include "ComponentCamera.h"
+#include "ModuleInput.h"
 
+#include "ComponentCamera.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 #include "ComponentRenderer.h"
@@ -132,27 +133,22 @@ void ModuleSceneManager::DrawScene()
             Renderer->Draw();
     }
 
-    //if (go->childs.size() > 0)
-    //{
-    //	for (std::vector<GameObject*>::iterator it = go->childs.begin(); it != go->childs.end(); ++it)
-    //	{
-    //		DrawRecursive(*it);
-    //	}
-    //}
+    //
+    if (App->camera->last_ray.IsFinite())
+    {
+        glDisable(GL_LIGHTING);
+        glBegin(GL_LINES);
 
-    //if (go->GetName() != root->GetName())
-    //{
-    //	// --- Search for Renderer Component --- 
-    //	ComponentRenderer* Renderer = go->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer);
+        glColor4f(Red.r, Red.g, Red.b, Red.a);
 
-    //	// --- If Found, draw the mesh ---
-    //	if (Renderer && Renderer->IsEnabled())
-    //	{
-    //		if(App->renderer3D->culling_camera->ContainsAABB(go->GetAABB())
-    //			|| go->GetComponent<ComponentCamera>(Component::ComponentType::Camera))
-    //			Renderer->Draw();
-    //	}
-    //}
+        glVertex3fv((GLfloat*)&App->camera->last_ray.a);
+        glVertex3fv((GLfloat*)&App->camera->last_ray.b);
+
+        glColor4f(1.0, 1.0, 1.0, 1.0);
+
+        glEnd();
+        glEnable(GL_LIGHTING);
+    }
 }
 
 GameObject* ModuleSceneManager::GetRootGO() const
@@ -208,6 +204,63 @@ void ModuleSceneManager::RecursiveDrawQuadtree(QuadtreeNode* node) const
     }
 
     DrawWire(node->box, Red);
+}
+
+void ModuleSceneManager::SelectFromRay(LineSegment& ray)
+{
+    //Static gos
+    std::map<float, GameObject*> candidate_gos;
+    tree.CollectIntersections(candidate_gos, ray);
+
+    //Non-static gos
+    for (std::vector<GameObject*>::iterator it = NoStaticGo.begin(); it != NoStaticGo.end(); it++)
+    {
+        if (ray.Intersects((*it)->GetAABB()))
+        {
+            float hit_near, hit_far;
+            if (ray.Intersects((*it)->GetOBB(), hit_near, hit_far))
+                candidate_gos[hit_near] = *it;
+        }
+    }
+
+    GameObject* toSelect = nullptr;
+    for (std::map<float, GameObject*>::iterator it = candidate_gos.begin(); it != candidate_gos.end() && toSelect == nullptr; it++)
+    {
+        //Testing Triangles
+        ComponentMesh* mesh = it->second->GetComponent<ComponentMesh>(Component::ComponentType::Mesh);
+
+        if (mesh)
+        {
+            ResourceMesh* resource_mesh = mesh->resource_mesh;
+
+            if (mesh->resource_mesh)
+            {
+                LineSegment local = ray;
+                local.Transform(it->second->GetComponent<ComponentTransform>(Component::ComponentType::Transform)->GetGlobalTransform().Inverted());
+            
+                for (uint j = 0; j < mesh->resource_mesh->IndicesSize / 3; j++)
+                {
+                    float3 a = mesh->resource_mesh->Vertices[mesh->resource_mesh->Indices[j * 3]];
+                    float3 b = mesh->resource_mesh->Vertices[mesh->resource_mesh->Indices[(j * 3) + 1]];
+                    float3 c = mesh->resource_mesh->Vertices[mesh->resource_mesh->Indices[(j * 3) + 2]];
+                    
+                    // Create Triangle given three vertices
+                    Triangle triangle(a, b, c);
+
+                    //Test ray/triangle intersection
+                    if (local.Intersects(triangle, nullptr, nullptr))
+                    {
+                        toSelect = it->second;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    //Set Selected
+    if (toSelect)
+        SelectedGameObject = toSelect;
 }
 
 void ModuleSceneManager::SaveStatus(json& file) const

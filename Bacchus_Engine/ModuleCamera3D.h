@@ -18,6 +18,7 @@ public:
 	bool CleanUp();
 
 	void FrameObject(GameObject* GO);
+	void OnMouseClick(const float mouse_x, const float mouse_y);
 
 private:
 	void LookAround(float speed, float3 reference);
@@ -30,6 +31,6 @@ public:
 
 	float3 reference = { 0.0f,0.0f,0.0f };
 	ComponentCamera* camera = nullptr;
-
+	LineSegment last_ray;
 	
 };

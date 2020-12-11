@@ -5,6 +5,7 @@
 #include "ModuleInput.h"
 #include "ModuleSceneManager.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleWindow.h"
 
 #include "GameObject.h"
 #include "ComponentMesh.h"
@@ -109,7 +110,32 @@ update_status ModuleCamera3D::Update(float dt)
 		}
 	}
 
+	//Mouse picking
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		float mouse_x = App->input->GetMouseX();
+		float mouse_y = App->input->GetMouseY();
+
+		OnMouseClick(mouse_x, mouse_y);
+	}
+
+
 	return UPDATE_CONTINUE;
+}
+
+void ModuleCamera3D::OnMouseClick(const float mouse_x, const float mouse_y)
+{
+	float normalized_x = mouse_x / (float)App->window->GetWindowWidth();
+	float normalized_y = 1.0f - (mouse_y / (float)App->window->GetWindowHeight());
+
+	//Normalizing mouse position
+	normalized_x = (normalized_x - 0.5) / 0.5;
+	normalized_y = (normalized_y - 0.5) / 0.5;
+
+	LineSegment ray = App->renderer3D->active_camera->frustum.UnProjectLineSegment(normalized_x, normalized_y);
+	last_ray = ray;
+
+	App->scene_manager->SelectFromRay(ray);
 }
 
 void ModuleCamera3D::LookAround(float speed, float3 reference)
