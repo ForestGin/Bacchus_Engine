@@ -109,3 +109,33 @@ void ComponentCamera::OnUpdateTransform(const float4x4& global)
 
 	update_projection = true;
 }
+
+bool ComponentCamera::ContainsAABB(const AABB& ref)
+{
+	float3 vCorner[8];
+	int iTotalIn = 0;
+	Plane Planes[8];
+	frustum.GetPlanes(Planes);
+
+	ref.GetCornerPoints(vCorner);
+	for (int p = 0; p < 6; ++p) {
+		int iInCount = 8;
+		int iPtIn = 1;
+		for (int i = 0; i < 8; ++i) {
+
+			if (Planes[p].IsOnPositiveSide(vCorner[i])) {
+				iPtIn = 0;
+				--iInCount;
+			}
+		}
+		if (iInCount == 0)
+			return false;
+		
+		iTotalIn += iPtIn;
+	}
+	
+	if (iTotalIn == 6)
+		return true;
+
+	return true;
+}

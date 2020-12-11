@@ -239,6 +239,12 @@ update_status BacchusEditor::Update(float dt)
 
 				ImGui::EndMenu();
 			}*/
+
+			if (ImGui::MenuItem("Redo Octree"))
+			{
+				App->scene_manager->RedoOctree();
+			}
+
 			ImGui::EndMenu();
 		}
 

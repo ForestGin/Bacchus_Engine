@@ -5,6 +5,7 @@
 #include <vector>
 #include "Math.h"
 #include "Color.h"
+#include "Quadtree.h"
 
 class GameObject;
 class ComponentMaterial;
@@ -26,8 +27,11 @@ public:
 
 	GameObject* CreateEmptyGameObject();
 	ComponentMaterial* CreateEmptyMaterial();
+
 	void Draw();
 	GameObject* GetRootGO() const;
+	void RedoOctree();
+	void RecursiveDrawQuadtree(QuadtreeNode* node) const;
 
 	void SaveStatus(json& file) const override;
 	void LoadStatus(const json& file) override;
@@ -71,12 +75,15 @@ public:
 	ComponentMaterial* CheckersMaterial = nullptr;
 	ComponentMaterial* DefaultMaterial = nullptr;
 
+	Quadtree tree;//Octree*
+
 private:
 
 	uint go_count = 0;
 	std::vector<ComponentMaterial*> Materials;
 	GameObject* SelectedGameObject = nullptr;
 	GameObject* root = nullptr;
+	std::vector<AABB> aabb;
 };
 
 #endif 

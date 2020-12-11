@@ -26,6 +26,8 @@ public:
 	void Look(const float3& position);
 	void OnUpdateTransform(const float4x4& global);
 
+	bool ContainsAABB(const AABB& ref);
+
 public:
 	Frustum		frustum;
 	bool		update_projection = true;

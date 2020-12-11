@@ -265,6 +265,9 @@
     <ClCompile Include="ComponentCamera.cpp">
       <Filter>GOs\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>Others</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -634,6 +637,9 @@
     </ClInclude>
     <ClInclude Include="ComponentCamera.h">
       <Filter>GOs\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadtree.h">
+      <Filter>Others</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

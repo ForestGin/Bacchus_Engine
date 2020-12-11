@@ -207,6 +207,7 @@
     <ClInclude Include="ModuleImporter.h" />
     <ClInclude Include="ComponentRenderer.h" />
     <ClInclude Include="ComponentTransform.h" />
+    <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceFolder.h" />
     <ClInclude Include="ResourceMaterial.h" />
@@ -299,6 +300,7 @@
     <ClCompile Include="ModuleImporter.cpp" />
     <ClCompile Include="ComponentRenderer.cpp" />
     <ClCompile Include="ComponentTransform.cpp" />
+    <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceFolder.cpp" />
     <ClCompile Include="ResourceMaterial.cpp" />

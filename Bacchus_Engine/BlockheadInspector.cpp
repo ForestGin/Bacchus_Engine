@@ -109,6 +109,9 @@ inline void BlockheadInspector::CreateGameObjectNode(GameObject& Selected) const
 	if (ImGui::InputText("", GOName, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
 		Selected.SetName(GOName);
 
+	ImGui::SameLine();
+	ImGui::Checkbox("Static", &Selected.Static);
+
 	ImGui::EndChild();
 }
 
@@ -198,12 +201,15 @@ inline void BlockheadInspector::CreateTransformNode(GameObject& Selected) const
 	ImGui::DragFloat("##SZ", &scale.z, 0.005f);
 
 	// --- Transform Set ---
-	if (!transform->GetPosition().Equals(position))
-		transform->SetPosition(position.x, position.y, position.z);
-	if (!transform->GetScale().Equals(scale))
-		transform->Scale(scale.x, scale.y, scale.z);
-	if (!transform->GetRotation().Equals(rotation))
-		transform->SetRotation(rotation);
+	if (!Selected.Static)
+	{
+		if (!transform->GetPosition().Equals(position))
+			transform->SetPosition(position.x, position.y, position.z);
+		if (!transform->GetScale().Equals(scale))
+			transform->Scale(scale.x, scale.y, scale.z);
+		if (!transform->GetRotation().Equals(rotation))
+			transform->SetRotation(rotation);
+	}
 
 }
 
