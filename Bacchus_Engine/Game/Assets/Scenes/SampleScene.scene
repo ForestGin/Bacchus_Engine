@@ -1,30 +1,22 @@
 {
-    "BakerHouse": {
+    "GameObject (0)": {
         "Components": {
-            "0": "",
-            "3": "/Library/Textures/913897961.dds"
-        },
-        "Parent": "345966737",
-        "UID": "1069901372"
-    },
-    "Baker_house": {
-        "Components": {
-            "0": "",
-            "1": "/Library/Meshes/682816427.mesh",
+            "0": {
+                "positionx": "0.000000",
+                "positiony": "0.000000",
+                "positionz": "0.000000",
+                "rotationx": "-0.000000",
+                "rotationy": "0.000000",
+                "rotationz": "-0.000000",
+                "scalex": "1.000000",
+                "scaley": "1.000000",
+                "scalez": "1.000000"
+            },
+            "1": "Library/Meshes/1810518331.mesh",
             "2": "",
-            "3": "/Library/Textures/913897961.dds"
+            "3": "Library/Textures/1048580132.dds"
         },
-        "Parent": "1069901372",
-        "UID": "2116659225"
-    },
-    "Chimney": {
-        "Components": {
-            "0": "",
-            "1": "/Library/Meshes/1664454175.mesh",
-            "2": "",
-            "3": "/Library/Textures/913897961.dds"
-        },
-        "Parent": "1069901372",
-        "UID": "2133123817"
+        "Parent": "2024842447",
+        "UID": "1899274"
     }
 }

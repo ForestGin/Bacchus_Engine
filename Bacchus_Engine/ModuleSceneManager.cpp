@@ -87,6 +87,7 @@ bool ModuleSceneManager::CleanUp()
 			delete Materials[i];
 	}
 	Materials.clear();
+    NoStaticGo.clear();
 
     DefaultMaterial = nullptr;
 	CheckersMaterial = nullptr;
@@ -98,33 +99,60 @@ void ModuleSceneManager::Draw()
 {
 	CreateGrid();
 
-    DrawRecursive(root);
+    DrawScene();
 
 }
 
-void ModuleSceneManager::DrawRecursive(GameObject* go)
+void ModuleSceneManager::DrawScene()
 {
     RecursiveDrawQuadtree(tree.root);
 
-    if (go->childs.size() > 0)
+    for (std::vector<GameObject*>::iterator it = NoStaticGo.begin(); it != NoStaticGo.end(); it++)
     {
-        for (std::vector<GameObject*>::iterator it = go->childs.begin(); it != go->childs.end(); ++it)
+        if ((*it)->GetName() != root->GetName())
         {
-            DrawRecursive(*it);
+            //Search for Renderer Component 
+            ComponentRenderer* Renderer = (*it)->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer);
+
+            //If Found, draw the mesh
+            if (Renderer && Renderer->IsEnabled())
+                    Renderer->Draw();
         }
     }
 
-    if (go->GetName() != root->GetName())
+    std::vector<GameObject*> static_go;
+    tree.CollectIntersections(static_go, App->renderer3D->culling_camera->frustum);
+
+    for (std::vector<GameObject*>::iterator it = static_go.begin(); it != static_go.end(); it++)
     {
-        ComponentRenderer* Renderer = go->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer);
+        //Search for Renderer Component
+        ComponentRenderer* Renderer = (*it)->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer);
 
         if (Renderer && Renderer->IsEnabled())
-        {
-            if (App->renderer3D->culling_camera->ContainsAABB(go->GetAABB())
-                || go->GetComponent<ComponentCamera>(Component::ComponentType::Camera))
-                Renderer->Draw();
-        }
+            Renderer->Draw();
     }
+
+    //if (go->childs.size() > 0)
+    //{
+    //	for (std::vector<GameObject*>::iterator it = go->childs.begin(); it != go->childs.end(); ++it)
+    //	{
+    //		DrawRecursive(*it);
+    //	}
+    //}
+
+    //if (go->GetName() != root->GetName())
+    //{
+    //	// --- Search for Renderer Component --- 
+    //	ComponentRenderer* Renderer = go->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer);
+
+    //	// --- If Found, draw the mesh ---
+    //	if (Renderer && Renderer->IsEnabled())
+    //	{
+    //		if(App->renderer3D->culling_camera->ContainsAABB(go->GetAABB())
+    //			|| go->GetComponent<ComponentCamera>(Component::ComponentType::Camera))
+    //			Renderer->Draw();
+    //	}
+    //}
 }
 
 GameObject* ModuleSceneManager::GetRootGO() const
@@ -135,14 +163,38 @@ GameObject* ModuleSceneManager::GetRootGO() const
 void ModuleSceneManager::RedoOctree()
 {
     std::vector<GameObject*> scene_gos;
-    GatherGameObjects(scene_gos, root);
+    tree.CollectObjects(scene_gos);
+
+    tree.SetBoundaries(AABB(float3(-10, 0, -10), float3(10, 10, 10)));
 
     for (uint i = 0; i < scene_gos.size(); ++i)
     {
-        tree.Erase(scene_gos[i]);
+        //tree.Erase(scene_gos[i]);
         tree.Insert(scene_gos[i]);
     }
 
+}
+
+void ModuleSceneManager::SetStatic(GameObject* go)
+{
+    if (!go->Static)
+    {
+        tree.Insert(go);
+
+        for (std::vector<GameObject*>::iterator it = NoStaticGo.begin(); it != NoStaticGo.end(); it++)
+        {
+            if ((*it) == go)
+            {
+                NoStaticGo.erase(it);
+                break;
+            }
+        }
+    }
+    else 
+    {
+        NoStaticGo.push_back(go);
+        tree.Erase(go);
+    }
 }
 
 void ModuleSceneManager::RecursiveDrawQuadtree(QuadtreeNode* node) const
@@ -256,12 +308,11 @@ GameObject* ModuleSceneManager::CreateEmptyGameObject()
     go_count++;
 
     GameObject* new_object = new GameObject(Name.data());
-    
+    NoStaticGo.push_back(new_object);
+
     new_object->AddComponent(Component::ComponentType::Transform);
     
     new_object->UpdateAABB();
-
-    tree.Insert(new_object);
     
     root->AddChildGO(new_object);
 
@@ -399,7 +450,7 @@ void ModuleSceneManager::LoadPrimitiveArrays(GameObject& new_object, uint vertic
 
 GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stacks, bool smooth)
 {
-    GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
+    GameObject* new_object = CreateEmptyGameObject();
 
     vSphere sphere(radius, sectors, stacks, smooth);
 
@@ -427,7 +478,7 @@ GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stac
 
 GameObject* ModuleSceneManager::CreateCubeSphere(float radius, int sub, bool smooth)
 {
-    GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
+    GameObject* new_object = CreateEmptyGameObject();
 
     vCubesphere cubesphere(radius, sub, smooth);
 
@@ -454,7 +505,7 @@ GameObject* ModuleSceneManager::CreateCubeSphere(float radius, int sub, bool smo
 
 GameObject* ModuleSceneManager::CreateIcoSphere(float radius, int subdivision, bool smooth)
 {
-    GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
+    GameObject* new_object = CreateEmptyGameObject();
 
     vIcosphere icosphere(radius,subdivision,smooth);
 
@@ -481,7 +532,7 @@ GameObject* ModuleSceneManager::CreateIcoSphere(float radius, int subdivision, b
 
 GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius, float height, int sectors, int stacks, bool smooth)
 {
-    GameObject* new_object = App->scene_manager->CreateEmptyGameObject();
+    GameObject* new_object = CreateEmptyGameObject();
 
     vCylinder cylinder(baseRadius, topRadius, height, sectors, stacks, smooth);
 
@@ -531,6 +582,9 @@ void ModuleSceneManager::CreateGrid() const
 
 void ModuleSceneManager::DestroyGameObject(GameObject* go)
 {
+    if (go->Static)
+        tree.Erase(go);
+
     go->parent->RemoveChildGO(go);
     go->RecursiveDelete();
 

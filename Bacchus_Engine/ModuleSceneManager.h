@@ -31,6 +31,7 @@ public:
 	void Draw();
 	GameObject* GetRootGO() const;
 	void RedoOctree();
+	void SetStatic(GameObject* go);
 	void RecursiveDrawQuadtree(QuadtreeNode* node) const;
 
 	void SaveStatus(json& file) const override;
@@ -69,7 +70,7 @@ private:
 		
 	void GatherGameObjects(std::vector<GameObject*>& scene_gos, GameObject* go);
 	GameObject* CreateRootGameObject();
-	void DrawRecursive(GameObject* go);
+	void DrawScene();
 
 public:
 	ComponentMaterial* CheckersMaterial = nullptr;
@@ -78,7 +79,7 @@ public:
 	Quadtree tree;//Octree*
 
 private:
-
+	std::vector<GameObject*> NoStaticGo;
 	uint go_count = 0;
 	std::vector<ComponentMaterial*> Materials;
 	GameObject* SelectedGameObject = nullptr;

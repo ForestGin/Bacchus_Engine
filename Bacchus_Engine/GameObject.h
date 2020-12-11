@@ -66,6 +66,7 @@ public:
 	GameObject* parent = nullptr;
 	std::vector<GameObject*> childs;
 	bool Static = false;
+
 private:
 	
 	uint UID = 0;
