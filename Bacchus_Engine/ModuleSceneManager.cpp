@@ -78,7 +78,7 @@ update_status ModuleSceneManager::Update(float dt)
 
 bool ModuleSceneManager::CleanUp()
 {
-    root->RecursiveDelete(root);
+    root->RecursiveDelete();
 
 	for (uint i = 0; i < Materials.size(); ++i)
 	{
@@ -115,9 +115,11 @@ void ModuleSceneManager::DrawRecursive(GameObject* go)
     {
         ComponentRenderer* Renderer = go->GetComponent<ComponentRenderer>(Component::ComponentType::Renderer);
 
-        if (Renderer && Renderer->IsEnabled()/*&& App->camera->camera->frustum.Intersects(go->GetAABB())*/)
+        if (Renderer && Renderer->IsEnabled())
         {
-            Renderer->Draw();
+            if (App->renderer3D->culling_camera->frustum.Intersects(go->GetAABB())
+                || go->GetComponent<ComponentCamera>(Component::ComponentType::Camera))
+                Renderer->Draw();
         }
     }
 }
@@ -448,15 +450,6 @@ GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius
 
     vCylinder cylinder(baseRadius, topRadius, height, sectors, stacks, smooth);
 
-    //cylinder.set(baseRadius, topRadius, height, sectors, stacks, smooth);
-
-    /*cylinder.setBaseRadius(baseRadius);
-    cylinder.setTopRadius(topRadius);
-    cylinder.setHeight(height);
-    cylinder.setSectorCount(sectors);
-    cylinder.setStackCount(stacks);
-    cylinder.setSmooth(smooth);*/
-
     uint vertices_size = cylinder.getVertexCount();
     const float* vertices = cylinder.getVertices();
 
@@ -504,7 +497,7 @@ void ModuleSceneManager::CreateGrid() const
 void ModuleSceneManager::DestroyGameObject(GameObject* go)
 {
     go->parent->RemoveChildGO(go);
-    go->RecursiveDelete(go);
+    go->RecursiveDelete();
 
     this->go_count--;
 }

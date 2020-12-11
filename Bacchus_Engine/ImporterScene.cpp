@@ -112,7 +112,7 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 		/*exported_file = exported_file.substr(1, exported_file.size());*/
 
 		//Delete Everything once Library files have been created
-		rootnode->RecursiveDelete(rootnode);
+		rootnode->RecursiveDelete();
 
 		//Load from Library, our own format files
 		//Load(exported_file.data());
@@ -275,6 +275,8 @@ bool ImporterScene::Load(const char* exported_file) const
 			}
 		}
 	}
+
+	App->scene_manager->GetRootGO()->OnUpdateTransform();
 
 	return true;
 }

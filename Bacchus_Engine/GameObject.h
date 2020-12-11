@@ -52,9 +52,10 @@ public:
 
 	void AddChildGO(GameObject* GO);
 	bool FindChildGO(GameObject* GO);
-	void RecursiveDelete(GameObject* GO, bool target = true);
 	void RemoveChildGO(GameObject* GO);
-	void OnUpdateTransform(GameObject* GO);
+
+	void RecursiveDelete(bool target = true);
+	void OnUpdateTransform();
 
 	const AABB& GetAABB() const;
 	const OBB& GetOBB() const;

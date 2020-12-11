@@ -29,6 +29,8 @@ public:
 
 	// Sets 
 	bool SetVSync(bool vsync);
+	void SetActiveCamera(ComponentCamera* camera);
+	void SetCullingCamera(ComponentCamera* camera);
 
 	// Gets
 	bool GetVSync() const;
@@ -41,6 +43,7 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	ComponentCamera* active_camera = nullptr;
+	ComponentCamera* culling_camera = nullptr;
 
 	// Flags
 	bool vsync = true;

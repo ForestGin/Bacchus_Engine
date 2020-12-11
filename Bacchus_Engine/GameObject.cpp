@@ -38,7 +38,7 @@ GameObject::~GameObject()
 void GameObject::Update(float dt)
 {
 	if (GetComponent<ComponentTransform>(Component::ComponentType::Transform)->update_transform)
-		OnUpdateTransform(this);
+		this->OnUpdateTransform();
 
 	for (std::vector<GameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
 	{
@@ -47,39 +47,41 @@ void GameObject::Update(float dt)
 
 }
 
-void GameObject::RecursiveDelete(GameObject* GO, bool target)
+void GameObject::RecursiveDelete(bool target)
 {
-	if (GO->childs.size() > 0)
+	if (this->childs.size() > 0)
 	{
-		for (std::vector<GameObject*>::iterator it = GO->childs.begin(); it != GO->childs.end(); ++it)
+		for (std::vector<GameObject*>::iterator it = this->childs.begin(); it != this->childs.end(); ++it)
 		{
-			RecursiveDelete(*it, false);
+			(*it)->RecursiveDelete(false);
 		}
-		GO->childs.clear();
+		this->childs.clear();
 	}
 
-	if (target && GO->parent)
-		GO->parent->RemoveChildGO(GO);
+	if (target && this->parent)
+		this->parent->RemoveChildGO(this);
 
-	delete GO;
+	delete this;
 }
 
-void GameObject::OnUpdateTransform(GameObject* GO)
+void GameObject::OnUpdateTransform()
 {
-	ComponentTransform* transform = GO->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
-	transform->OnUpdateTransform(GO->parent->GetComponent<ComponentTransform>(Component::ComponentType::Transform)->GetGlobalTransform());
+	ComponentTransform* transform = GetComponent<ComponentTransform>(Component::ComponentType::Transform);
 
-	ComponentCamera* camera = GO->GetComponent<ComponentCamera>(Component::ComponentType::Camera);
+	if (parent)
+		transform->OnUpdateTransform(parent->GetComponent<ComponentTransform>(Component::ComponentType::Transform)->GetGlobalTransform());
+
+	ComponentCamera* camera = GetComponent<ComponentCamera>(Component::ComponentType::Camera);
 
 	if (camera)
 		camera->OnUpdateTransform(transform->GetGlobalTransform());
 
 	//Update all children
-	if (GO->childs.size() > 0)
+	if (childs.size() > 0)
 	{
-		for (std::vector<GameObject*>::iterator it = GO->childs.begin(); it != GO->childs.end(); ++it)
+		for (std::vector<GameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
 		{
-			OnUpdateTransform(*it);
+			(*it)->OnUpdateTransform();
 		}
 	}
 
@@ -272,16 +274,17 @@ void GameObject::UpdateAABB()
 {
 	ComponentMesh* mesh = GetComponent<ComponentMesh>(Component::ComponentType::Mesh);
 	ComponentTransform* transform = GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+	
 	if (mesh)
 	{
-		//AABB meshAABB = mesh->GetAABB();
 		obb = mesh->GetAABB();
 		obb.Transform(transform->GetGlobalTransform());
 
 		aabb.SetNegativeInfinity();
 		aabb.Enclose(obb);
 	}
-	else
+	
+	if (!mesh)
 	{
 		aabb.SetNegativeInfinity();
 		aabb.SetFromCenterAndSize(transform->GetGlobalPosition(), float3(1, 1, 1));
