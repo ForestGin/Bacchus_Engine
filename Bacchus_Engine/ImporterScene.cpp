@@ -68,12 +68,20 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 	delete[] buffer;
 
 
-	/*GameObject* rootnode = App->scene_manager->CreateEmptyGameObject();
+	GameObject* rootnode = App->scene_manager->CreateEmptyGameObject();
+	ComponentTransform* transform = rootnode->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+	float3 scale = transform->GetScale();
+	scale.x = App->bacchuseditor->blockheadImporter->scale;
+	scale.y = App->bacchuseditor->blockheadImporter->scale;
+	scale.z = App->bacchuseditor->blockheadImporter->scale;
 
-	rootnode = App->bacchuseditor->blockheadImporter->importObject;*/
+	if (!transform->GetScale().Equals(scale))
+		transform->Scale(scale.x, scale.y, scale.z);
+
+	//rootnode = App->bacchuseditor->blockheadImporter->importObject;
 	
 	//NOW IMPORTED GO WILL BE PROPERLY ASSIGNED TO NOT LEAVE COPIES
-	GameObject* rootnode = App->bacchuseditor->blockheadImporter->importObject;
+	/*GameObject* rootnode = App->bacchuseditor->blockheadImporter->importObject;*/
 
 	
 

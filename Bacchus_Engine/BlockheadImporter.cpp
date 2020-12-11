@@ -28,28 +28,22 @@ bool BlockheadImporter::Draw()
 	ImGuiWindowFlags settingsFlags = 0;
 	settingsFlags = ImGuiWindowFlags_NoDocking;
 
-	if (importObject == nullptr)
+	/*if (importObject == nullptr)
 	{
 		importObject = App->scene_manager->CreateEmptyGameObject();
 		App->scene_manager->SetSelectedGameObject(importObject);
-	}
+	}*/
 
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
-		
-		/*if (importObject == nullptr)
-		{
-			importObject = App->scene_manager->CreateEmptyGameObject();
-			App->scene_manager->SetSelectedGameObject(importObject);
-		}*/
 
 		ImGui::SetNextItemOpen(true);
 	
 		if (ImGui::TreeNode("Transform"))
 		{
-			ComponentTransform* importTransform = importObject->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+			/*ComponentTransform* importTransform = importObject->GetComponent<ComponentTransform>(Component::ComponentType::Transform);*/
 
-			float3  importScale = importTransform->GetScale();
+			/*float3  importScale = importTransform->GetScale();*/
 
 			
 
@@ -59,13 +53,13 @@ bool BlockheadImporter::Draw()
 			
 			ImGui::InputFloat("Scale", &scale);
 
-			importScale.x = scale;
+			/*importScale.x = scale;
 			importScale.y = scale;
-			importScale.z = scale;
+			importScale.z = scale;*/
 
 
-			if (!importTransform->GetScale().Equals(importScale))
-				importTransform->Scale(importScale.x, importScale.y, importScale.z);
+			/*if (!importTransform->GetScale().Equals(importScale))
+				importTransform->Scale(importScale.x, importScale.y, importScale.z);*/
 
 		
 
@@ -82,8 +76,6 @@ bool BlockheadImporter::Draw()
 		{
 		
 			TestImport();
-			/*importObject->RecursiveDelete(importObject);*/
-			/*Destroy();*/
 
 			OnOff();
 		
@@ -107,11 +99,4 @@ bool BlockheadImporter::TestImport()
 
 
 	return ret;
-}
-
-void BlockheadImporter::Destroy()
-{
-	App->scene_manager->DestroyGameObject(importObject);
-	importObject = nullptr;
-	App->scene_manager->SetSelectedGameObject(nullptr);
 }

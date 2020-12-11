@@ -18,12 +18,13 @@ public:
 
 
 	bool TestImport();
-	void Destroy();
 	
-	GameObject* importObject = nullptr;
-	float scale = 1;
+	
+	/*GameObject* importObject = nullptr;*/
+	float scale = 1.0f;
 	/*ComponentTransform* importTransform = nullptr;
 	float3 importScale;*/
+	float3 importScale;
 };
 
 #endif
