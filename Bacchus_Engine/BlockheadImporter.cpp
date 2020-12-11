@@ -28,24 +28,13 @@ bool BlockheadImporter::Draw()
 	ImGuiWindowFlags settingsFlags = 0;
 	settingsFlags = ImGuiWindowFlags_NoDocking;
 
-	/*if (importObject == nullptr)
-	{
-		importObject = App->scene_manager->CreateEmptyGameObject();
-		App->scene_manager->SetSelectedGameObject(importObject);
-	}*/
-
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
 
 		ImGui::SetNextItemOpen(true);
 	
 		if (ImGui::TreeNode("Transform"))
-		{
-			/*ComponentTransform* importTransform = importObject->GetComponent<ComponentTransform>(Component::ComponentType::Transform);*/
-
-			/*float3  importScale = importTransform->GetScale();*/
-
-			
+		{			
 
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
@@ -53,15 +42,24 @@ bool BlockheadImporter::Draw()
 			
 			ImGui::InputFloat("Scale", &scale);
 
-			/*importScale.x = scale;
-			importScale.y = scale;
-			importScale.z = scale;*/
+			ImGui::SameLine();
+			ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
 
 
-			/*if (!importTransform->GetScale().Equals(importScale))
-				importTransform->Scale(importScale.x, importScale.y, importScale.z);*/
+			ImGui::InputFloat("Axis", &axis);
 
-		
+
+			if (ImGui::Button("IgnoreCam"))
+			{
+				SetCamIgnored();
+			}
+
+			if (ImGui::Button("FLIP"))
+			{
+				SetFlipped();
+
+			}
+
 
 			ImGui::TreePop();
 			
@@ -99,4 +97,14 @@ bool BlockheadImporter::TestImport()
 
 
 	return ret;
+}
+
+void BlockheadImporter::SetFlipped()
+{
+	App->importer->IScene->FlipIt();
+}
+
+void BlockheadImporter::SetCamIgnored()
+{
+	App->importer->IScene->IgnoreCam();
 }

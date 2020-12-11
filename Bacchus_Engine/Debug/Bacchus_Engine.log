@@ -1,8 +1,4 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  ImporterScene.cpp
+  BlockheadImporter.cpp
 F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(110,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(257,20): warning C4018: '<': signed/unsigned mismatch
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(264,21): warning C4018: '<': signed/unsigned mismatch
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(359,20): warning C4018: '<': signed/unsigned mismatch
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(365,20): warning C4018: '<': signed/unsigned mismatch
   Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe

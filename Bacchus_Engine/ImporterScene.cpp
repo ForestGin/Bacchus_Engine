@@ -19,6 +19,7 @@
 #include "BacchusEditor.h"
 #include "BlockheadImporter.h"
 
+
 #include "mmgr/mmgr.h"
 
 
@@ -70,13 +71,22 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 
 	GameObject* rootnode = App->scene_manager->CreateEmptyGameObject();
 	ComponentTransform* transform = rootnode->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
+
 	float3 scale = transform->GetScale();
 	scale.x = App->bacchuseditor->blockheadImporter->scale;
 	scale.y = App->bacchuseditor->blockheadImporter->scale;
 	scale.z = App->bacchuseditor->blockheadImporter->scale;
 
+	float3 rotation = transform->GetRotation();
+	rotation.x = App->bacchuseditor->blockheadImporter->axis;
+	rotation.y = App->bacchuseditor->blockheadImporter->axis;
+	rotation.z = App->bacchuseditor->blockheadImporter->axis;
+
+
 	if (!transform->GetScale().Equals(scale))
 		transform->Scale(scale.x, scale.y, scale.z);
+	if (!transform->GetRotation().Equals(rotation))
+		transform->SetRotation(rotation);
 
 	//rootnode = App->bacchuseditor->blockheadImporter->importObject;
 	
@@ -344,6 +354,17 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 
 	GameObject* nodeGo = nullptr;
 
+	//---check for cameras and lights in scene
+	if (scene->mNumCameras != 0)
+	{
+		LOG("File has camera");//if fbx has camera, create component camera before loading 
+	}
+	if (scene->mNumLights != 0)
+	{
+		LOG("File has lights");//if fbx has lights, crate component light?
+	}
+	//----
+
 	if (node != scene->mRootNode && node->mNumMeshes > 1)
 	{
 		// --- Create GO per each node that contains a mesh ---
@@ -420,9 +441,10 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 				MData.scene = scene;
 				MData.new_material = Material;
 				IMaterial->Import(File_path, MData);
-
+				
 				// --- Set Object's Material ---
 				new_object->SetMaterial(Material);
+				
 			}
 
 			// --- When the mesh is loaded, frame it with the camera ---
@@ -430,4 +452,14 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 
 		}
 	}
+}
+
+void ImporterScene::FlipIt()
+{
+	fliped = !fliped;
+}
+
+void ImporterScene::IgnoreCam()
+{
+	cam = !cam;
 }

@@ -18,13 +18,14 @@ public:
 
 
 	bool TestImport();
+	void SetFlipped();
+	void SetCamIgnored();
+		
 	
-	
-	/*GameObject* importObject = nullptr;*/
 	float scale = 1.0f;
-	/*ComponentTransform* importTransform = nullptr;
-	float3 importScale;*/
+	float axis = 0.0f;
 	float3 importScale;
+	float3 importRotation;
 };
 
 #endif
