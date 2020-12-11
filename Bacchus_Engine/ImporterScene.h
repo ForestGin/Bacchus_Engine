@@ -38,13 +38,15 @@ public:
 	std::string SaveSceneToFile(std::vector<GameObject*>& scene_gos, std::string& scene_name, ExportFileTypes exportedfile_type) const;
 	void FlipIt();
 	void IgnoreCam();
-	
 private:
 	void LoadNodes(const aiNode* node, GameObject* parent, const aiScene* scene, std::vector<GameObject*>& scene_gos, const char* File_path) const;
 	ImporterMesh* IMesh = nullptr;
 	ImporterMaterial* IMaterial = nullptr;
-	bool fliped = false;
+	
 	bool cam = false;
+
+public:
+	bool fliped = false;
 	
 };
 

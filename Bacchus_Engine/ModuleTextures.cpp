@@ -3,6 +3,8 @@
 #include "OpenGL.h"
 #include "ModuleImporter.h"
 #include "FileSystem.h"
+#include "Importer.h"
+#include "ImporterScene.h"
 
 #include "DevIL/include/il.h"
 #include "DevIL/include/ilu.h"
@@ -156,8 +158,8 @@ inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width,
 
 	width = imageInfo.Width;
 	height = imageInfo.Height;
-
-	if (imageInfo.Origin == IL_ORIGIN_UPPER_LEFT && !load_existing)
+	//now included bool to check from importer
+	if (imageInfo.Origin == IL_ORIGIN_UPPER_LEFT && !load_existing && App->importer->IScene->fliped)
 		iluFlipImage();
 
 	// --- Convert the image into a suitable format to work with ---
