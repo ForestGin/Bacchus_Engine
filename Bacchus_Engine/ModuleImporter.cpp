@@ -23,7 +23,7 @@
 
 void MyAssimpCallback(const char* msg, char* userData)
 {
-	LOG("[Assimp]: %s", msg);
+	CONSOLE_LOG("[Assimp]: %s", msg);
 }
 
 ModuleImporter::ModuleImporter(bool start_enabled) : Module(start_enabled)
@@ -37,7 +37,7 @@ ModuleImporter::~ModuleImporter()
 
 bool ModuleImporter::Init(json file)
 {
-	//Stream LOG messages to MyAssimpCallback, that sends them to console
+	//Stream CONSOLE_LOG messages to MyAssimpCallback, that sends them to console
 	struct aiLogStream stream;
 	stream.callback = MyAssimpCallback;
 	aiAttachLogStream(&stream);

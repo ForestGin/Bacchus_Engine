@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "GameObject.h"
 
+#include "ModuleSceneManager.h"
+
 #include "ComponentMesh.h"
 #include "ComponentRenderer.h"
 #include "ComponentMaterial.h"
@@ -60,6 +62,10 @@ void GameObject::RecursiveDelete(bool target)
 
 	if (target && this->parent)
 		this->parent->RemoveChildGO(this);
+
+	this->Static = true;
+	App->scene_manager->SetStatic(this);
+	App->scene_manager->tree.Erase(this);
 
 	delete this;
 }
@@ -177,7 +183,7 @@ Component* GameObject::AddComponent(Component::ComponentType type)
 	else
 	{
 		
-		LOG("|[error]: The current Game Object already has a component of the type given");
+		CONSOLE_LOG("|[error]: The current Game Object already has a component of the type given");
 
 	}
 

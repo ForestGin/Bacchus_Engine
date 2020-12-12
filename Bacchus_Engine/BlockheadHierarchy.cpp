@@ -121,7 +121,7 @@ void BlockheadHierarchy::DrawRecursive(GameObject* Go)
 
 		if (ImGui::IsWindowFocused() && Go == App->scene_manager->GetSelectedGameObjects() && App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
 		{
-			LOG("Destroying: %s ...", Go->GetName().data());
+			CONSOLE_LOG("Destroying: %s ...", Go->GetName().data());
 			to_destroy = Go;
 		}
 

@@ -15,7 +15,7 @@ json JSONLoader::Load(const char* File) const
 	if (File == nullptr)
 	{
 		ret = false;
-		LOG("|[error]: JSONLoader::Load : %c was nullptr", File);
+		CONSOLE_LOG("|[error]: JSONLoader::Load : %c was nullptr", File);
 	}
 
 	else
@@ -27,7 +27,7 @@ json JSONLoader::Load(const char* File) const
 
 		if (!ifs.is_open())
 		{
-			LOG("|[error]: JSONLoader::Load could not open File: %c", File);
+			CONSOLE_LOG("|[error]: JSONLoader::Load could not open File: %c", File);
 			ret = false;
 		}
 
@@ -40,7 +40,7 @@ json JSONLoader::Load(const char* File) const
 			}
 			catch (json::parse_error & e)
 			{
-				LOG("|[error]: Parse Error in loading file: %c", e.what());
+				CONSOLE_LOG("|[error]: Parse Error in loading file: %c", e.what());
 			}
 
 			ifs.close();
@@ -64,7 +64,7 @@ bool JSONLoader::Save(const char* File, json jsonfile)
 
 	if (!file.is_open())
 	{
-		LOG("|[error]: JSONLoader::Save could not open File: %c", File);
+		CONSOLE_LOG("|[error]: JSONLoader::Save could not open File: %c", File);
 		ret = false;
 	}
 	else

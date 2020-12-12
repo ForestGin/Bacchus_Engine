@@ -79,8 +79,9 @@ public:
 
 	Quadtree tree;//Octree*
 
-private:
 	std::vector<GameObject*> NoStaticGo;
+
+private:
 	uint go_count = 0;
 	std::vector<ComponentMaterial*> Materials;
 	GameObject* SelectedGameObject = nullptr;

@@ -122,7 +122,7 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 
 	}
 	else
-		LOG("|[error]: Error loading FBX %s", &File_path);
+		CONSOLE_LOG("|[error]: Error loading FBX %s", &File_path);
 
 	return true;
 }
@@ -228,7 +228,7 @@ bool ImporterScene::Load(const char* exported_file) const
 					new_go->SetMaterial(mat);
 				}
 				else
-					LOG("|[error]: Could not find %s", component_path.data());
+					CONSOLE_LOG("|[error]: Could not find %s", component_path.data());
 
 				break;
 
@@ -250,7 +250,7 @@ bool ImporterScene::Load(const char* exported_file) const
 					}
 				}
 				else
-					LOG("|[error]: Could not find %s", component_path.data());
+					CONSOLE_LOG("|[error]: Could not find %s", component_path.data());
 				break;
 
 			}

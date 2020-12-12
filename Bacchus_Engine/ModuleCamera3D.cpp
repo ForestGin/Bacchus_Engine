@@ -34,13 +34,11 @@ bool ModuleCamera3D::Init(json config)
 
 bool ModuleCamera3D::Start()
 {
-	LOG("Setting up the camera");
+	CONSOLE_LOG("Setting up the camera");
 	bool ret = true;
 
-	camera->frustum.pos = { 0.0f,1.0f,-5.0f };
-
-	reference = camera->frustum.pos;
-
+	camera->frustum.SetPos(float3(0.0f, 1.0f, -5.0f));
+	reference = camera->frustum.Pos();
 	camera->update_projection = true;
 
 	return ret;
@@ -49,7 +47,7 @@ bool ModuleCamera3D::Start()
 // -----------------------------------------------------------------
 bool ModuleCamera3D::CleanUp()
 {
-	LOG("Cleaning camera");
+	CONSOLE_LOG("Cleaning camera");
 
 	delete camera;
 
@@ -72,17 +70,17 @@ update_status ModuleCamera3D::Update(float dt)
 		{
 			//WASD: Free movement
 
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += camera->frustum.front * speed;
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= camera->frustum.front * speed;
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += camera->frustum.Front() * speed;
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= camera->frustum.Front() * speed;
 
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= camera->frustum.WorldRight() * speed;
 			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += camera->frustum.WorldRight() * speed;
 
 			//RIGHT CLICK: Look Around
-			LookAround(speed, camera->frustum.pos);
+			LookAround(speed, camera->frustum.Pos());
 		}
 
-		camera->frustum.pos += newPos;
+		camera->frustum.SetPos(camera->frustum.Pos() + newPos);
 		reference += newPos;
 
 		//MOUSE WHEEL PRESS: Pan
@@ -147,49 +145,49 @@ void ModuleCamera3D::LookAround(float speed, float3 reference)
 	math::Quat rotationY = math::Quat::RotateAxisAngle(camera->frustum.WorldRight(), dy * DEGTORAD);
 	math::Quat finalRotation = rotationX * rotationY;
 
-	camera->frustum.up = finalRotation.Mul(camera->frustum.up).Normalized();
-	camera->frustum.front = finalRotation.Mul(camera->frustum.front).Normalized();
+	camera->frustum.SetUp(finalRotation.Mul(camera->frustum.Up()).Normalized());
+	camera->frustum.SetFront(finalRotation.Mul(camera->frustum.Front()).Normalized());
 
-	float distance = (camera->frustum.pos - reference).Length();
-	camera->frustum.pos = reference + (-camera->frustum.front * distance);
+	float distance = (camera->frustum.Pos() - reference).Length();
+	camera->frustum.SetPos(reference + (-camera->frustum.Front() * distance));
 	
 	if (!reference.Equals(this->reference))
-		this->reference = camera->frustum.pos + camera->frustum.front * (camera->frustum.pos).Length();
+		this->reference = camera->frustum.Pos() + camera->frustum.Front() * (camera->frustum.Pos()).Length();
 }
 
 void ModuleCamera3D::Pan(float speed)
 {
 	int dx = -App->input->GetMouseXMotion();
 	int dy = App->input->GetMouseYMotion();
-	float factor = abs(camera->frustum.pos.y) / 100.0f;
+	float factor = abs(camera->frustum.Pos().y) / 100.0f;
 	
 	if (factor < 0.5f)
 		factor = 0.5f;
 
 	if (dx != 0)
 	{
-		camera->frustum.pos += speed * camera->frustum.WorldRight() * dx * factor;
+		camera->frustum.SetPos(camera->frustum.Pos() + (speed * camera->frustum.WorldRight() * dx * factor));
 		reference += speed * camera->frustum.WorldRight() * dx * factor;
 	}
 
 	if (dy != 0)
 	{
-		camera->frustum.pos += speed * camera->frustum.up * dy * factor;
-		reference += speed * camera->frustum.up * dy * factor;
+		camera->frustum.SetPos(camera->frustum.Pos() + speed * camera->frustum.Up() * dy * factor);
+		reference += speed * camera->frustum.Up() * dy * factor;
 	}
 }
 
 void ModuleCamera3D::Zoom(float speed)
 {
-	float factor = abs(camera->frustum.pos.y);
+	float factor = abs(camera->frustum.Pos().y);
 	if (factor < 1.0f)
 	{
 		factor = 1.0f;
 	}
 
 	int mouse_wheel = App->input->GetMouseZ();
-	float3 Movement = camera->frustum.front * mouse_wheel * speed * factor;
-	camera->frustum.pos += Movement;
+	float3 Movement = camera->frustum.Front() * mouse_wheel * speed * factor;
+	camera->frustum.SetPos(camera->frustum.Pos() + Movement);
 }
 
 void ModuleCamera3D::FrameObject(GameObject* GO)
@@ -211,9 +209,8 @@ void ModuleCamera3D::FrameObject(GameObject* GO)
 			reference.y = center.y;
 			reference.z = center.z;
 
-			float3 Movement = camera->frustum.front * (2 * mesh->GetAABB().HalfDiagonal().Length());
-			camera->frustum.pos = reference - Movement;
-		
+			float3 Movement = camera->frustum.Front() * (2 * mesh->GetAABB().HalfDiagonal().Length());
+			camera->frustum.SetPos(reference - Movement);
 		}
 	}
 	

@@ -35,11 +35,11 @@ bool ModuleTextures::Init(json file)
 		iluGetInteger(ILU_VERSION_NUM) < ILU_VERSION ||
 		ilutGetInteger(ILUT_VERSION_NUM) < ILUT_VERSION)
 	{
-		LOG("|[error]: DevIL version is different. Exiting...");
+		CONSOLE_LOG("|[error]: DevIL version is different. Exiting...");
 		ret = false;
 	}
 
-	LOG("Initializing DevIL Version: %i", IL_VERSION);
+	CONSOLE_LOG("Initializing DevIL Version: %i", IL_VERSION);
 	//Initializing DevIL
 
 	// Initialize IL
@@ -144,7 +144,7 @@ uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uin
 	//Unbind texture
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	LOG("Loaded Texture: ID: %i , Width: %i , Height: %i ", TextureID, width, height);
+	CONSOLE_LOG("Loaded Texture: ID: %i , Width: %i , Height: %i ", TextureID, width, height);
 
 	//Returning id so a mesh can use it (and destroy buffer when done)
 
@@ -189,7 +189,7 @@ inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width,
 		}
 	}
 	else
-		LOG("|[error]: Image conversion failed. ERROR: %s", iluErrorString(ilGetError()));
+		CONSOLE_LOG("|[error]: Image conversion failed. ERROR: %s", iluErrorString(ilGetError()));
 }
 
 uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& height, uint LibUID) const
@@ -200,7 +200,7 @@ uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& 
 
 	if (path == nullptr)
 	{
-		LOG("|[error]: Error at loading texture from path. ERROR: Path %s was nullptr", path);
+		CONSOLE_LOG("|[error]: Error at loading texture from path. ERROR: Path %s was nullptr", path);
 		return TextureID;
 	}
 
@@ -241,7 +241,7 @@ uint ModuleTextures::CreateTextureFromFile(const char* path, uint& width, uint& 
 	if (ilLoadImage(final_path.data()))
 		CreateTextureFromImage(TextureID, width, height, name.data(), load_existing);
 	else
-		LOG("|[error]: DevIL could not load the image. ERROR: %s", iluErrorString(ilGetError()));
+		CONSOLE_LOG("|[error]: DevIL could not load the image. ERROR: %s", iluErrorString(ilGetError()));
 
 	//Release Image data (we have already extracted the necessary information)
 	ilDeleteImages(1, (const ILuint*)&ImageName);

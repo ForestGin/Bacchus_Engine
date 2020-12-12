@@ -69,7 +69,7 @@ bool BacchusEditor::Init(json file)
 
 bool BacchusEditor::Start()
 {
-	LOG("Loading Engine UI...");
+	CONSOLE_LOG("Loading Engine UI...");
 	bool ret = true;
 
 	// Initialize imgui
@@ -360,7 +360,7 @@ bool BacchusEditor::CleanUp()
 	blockheadImporter = nullptr;
 	blockheadProject = nullptr;
 
-	LOG("Unloading Bacchus...");
+	CONSOLE_LOG("Unloading Bacchus...");
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
@@ -475,7 +475,7 @@ void BacchusEditor::LoadStatus(const json& file)
 		if (file["GUI"].find(blockheads[i]->GetName()) != file["GUI"].end())
 			blockheads[i]->SetOnOff(file["GUI"][blockheads[i]->GetName()]);
 		else
-			LOG("|[error]: Could not find sub-node %s in GUI JSON Node, please check JSON EditorConfig", blockheads[i]->GetName());
+			CONSOLE_LOG("|[error]: Could not find sub-node %s in GUI JSON Node, please check JSON EditorConfig", blockheads[i]->GetName());
 	}
 };
 
