@@ -48,6 +48,15 @@ bool BlockheadImporter::Draw()
 
 			ImGui::InputFloat("Axis", &axis);
 
+			if (ImGui::Button("X-UP"))
+			{
+				SetXAxis();
+			}
+
+			if (ImGui::Button("Z-UP"))
+			{
+				SetZAxis();
+			}
 
 			if (ImGui::Button("IgnoreCam"))
 			{
@@ -98,6 +107,9 @@ bool BlockheadImporter::TestImport()
 	//reset image flip selection
 	App->importer->IScene->fliped = false;
 
+	App->importer->IScene->Xaxis = false;
+	App->importer->IScene->Zaxis = false;
+
 	return ret;
 }
 
@@ -109,4 +121,14 @@ void BlockheadImporter::SetFlipped()
 void BlockheadImporter::SetCamIgnored()
 {
 	App->importer->IScene->IgnoreCam();
+}
+
+void BlockheadImporter::SetXAxis()
+{
+	App->importer->IScene->XAxisUp();
+}
+
+void BlockheadImporter::SetZAxis()
+{
+	App->importer->IScene->ZAxisUp();
 }

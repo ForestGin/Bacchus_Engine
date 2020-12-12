@@ -20,6 +20,8 @@ public:
 	bool TestImport();
 	void SetFlipped();
 	void SetCamIgnored();
+	void SetXAxis();
+	void SetZAxis();
 		
 	
 	float scale = 1.0f;

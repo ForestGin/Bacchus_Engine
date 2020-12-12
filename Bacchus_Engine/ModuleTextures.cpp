@@ -134,6 +134,9 @@ uint ModuleTextures::CreateTextureFromPixels(int internalFormat, uint width, uin
 
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
 
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
 	if (!CheckersTexture)
 	{
 		// --- Generate Mipmap of the recently created texture (Note that we are using it in texture size reduction only)---
@@ -163,12 +166,13 @@ inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width,
 	{
 		iluFlipImage();	
 	}
-
+	
 	
 
 	// --- Convert the image into a suitable format to work with ---
 	if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 	{
+		
 		// --- Create the texture ---
 		TextureID = CreateTextureFromPixels(ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
 

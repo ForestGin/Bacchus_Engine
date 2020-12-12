@@ -78,15 +78,25 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 	scale.z = App->bacchuseditor->blockheadImporter->scale;
 
 	float3 rotation = transform->GetRotation();
-	rotation.x = App->bacchuseditor->blockheadImporter->axis;
+	/*rotation.x = App->bacchuseditor->blockheadImporter->axis;
 	rotation.y = App->bacchuseditor->blockheadImporter->axis;
-	rotation.z = App->bacchuseditor->blockheadImporter->axis;
+	rotation.z = App->bacchuseditor->blockheadImporter->axis;*/
 
+	if (Xaxis)
+	{
+		rotation.z = 90.0f;
+	}
+
+	if (Zaxis)
+	{
+		rotation.x = -90.0f;
+	}
 
 	if (!transform->GetScale().Equals(scale))
 		transform->Scale(scale.x, scale.y, scale.z);
 	if (!transform->GetRotation().Equals(rotation))
 		transform->SetRotation(rotation);
+
 
 	//rootnode = App->bacchuseditor->blockheadImporter->importObject;
 	
@@ -436,7 +446,6 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 				ComponentMaterial* Material = App->scene_manager->CreateEmptyMaterial();
 
 				// --- Import Material Data (fill Material) --- 
-
 				ImportMaterialData MData;
 				MData.scene = scene;
 				MData.new_material = Material;
@@ -462,4 +471,14 @@ void ImporterScene::FlipIt()
 void ImporterScene::IgnoreCam()
 {
 	cam = !cam;
+}
+
+void ImporterScene::XAxisUp()
+{
+	Xaxis = !Xaxis;
+}
+
+void ImporterScene::ZAxisUp()
+{
+	Zaxis = !Zaxis;
 }
