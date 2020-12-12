@@ -109,7 +109,6 @@
     <ClInclude Include="ComponentCamera.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Importer.h" />
     <ClInclude Include="ImporterMaterial.h" />
@@ -254,7 +253,6 @@
     <ClCompile Include="ComponentCamera.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_sdl.cpp" />

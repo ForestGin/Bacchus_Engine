@@ -50,6 +50,7 @@ void ModuleResources::CreateMetaFromUID(uint UID, const char* filename)
 
 	// Create Meta 
 	jsonmeta["UID"] = std::to_string(UID);
+	jsonmeta["DATE"] = std::to_string(App->fs->GetLastModificationTime(filename));
 	jsondata = App->GetJLoader()->Serialize(jsonmeta);
 	meta_buffer = (char*)jsondata.data();
 
@@ -69,41 +70,6 @@ bool ModuleResources::IsFileImported(const char* file)
 	path.append(".meta");
 
 	ret = App->fs->Exists(path.data());
-
-	return ret;
-}
-
-Resource* ModuleResources::GetResource(uint UID)
-{
-	Resource* ret = nullptr;
-	//If resource is loaded into memory, return pointer to it, else load it
-	std::map<uint, Resource*>::iterator it = resources.find(UID);
-	if (it != resources.end())
-		ret = it->second;
-	else
-	{
-		//If resource is not in memory, search in library
-		std::map<uint, ResourceMeta>::iterator it = loaded_resources.find(UID);
-		if (it != loaded_resources.end())
-		{
-			switch (it->second.type)
-			{
-			case Resource::ResourceType::MESH:
-				break;
-			case Resource::ResourceType::TEXTURE:
-				break;
-			case Resource::ResourceType::MATERIAL:
-				break;
-			}
-		}
-
-		if (ret)
-		{
-			ret->SetOriginalFilename(it->second.original_file.data());
-			ret->SetName(it->second.resource_name.data());
-			CONSOLE_LOG("Loaded Resource: %s", ret->GetName());
-		}
-	}
 
 	return ret;
 }
@@ -149,6 +115,26 @@ uint ModuleResources::GetUIDFromMeta(const char * file)
 	}
 
 	return UID;
+}
+
+uint ModuleResources::GetModDateFromMeta(const char* file)
+{
+	std::string path = file;
+	path.append(".meta");
+	uint DATE = 0;
+
+	if (App->fs->Exists(path.data()))
+	{
+		json file = App->GetJLoader()->Load(path.data());
+		
+		if (file.contains("DATE"))
+		{
+			std::string date = file["DATE"];
+			DATE = std::stoi(date);
+		}
+	}
+
+	return DATE;
 }
 
 Resource* ModuleResources::CreateResource(Resource::ResourceType type)

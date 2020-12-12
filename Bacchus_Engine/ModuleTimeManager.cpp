@@ -8,7 +8,7 @@
 
 ModuleTimeManager::ModuleTimeManager(bool start_enabled) : Module(start_enabled)
 {
-	/*CONSOLE_LOG("Initializing Time Manager");*/
+	CONSOLE_LOG("Initializing Time Manager");
 
 	name = "TimeManager";
 	Realtime_clock.Start();

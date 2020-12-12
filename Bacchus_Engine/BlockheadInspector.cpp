@@ -314,6 +314,17 @@ inline void BlockheadInspector::CreateCameraNode(GameObject& Selected) const
 			camera->culling ? App->renderer3D->SetCullingCamera(camera) : App->renderer3D->SetCullingCamera(nullptr);
 
 
+		ImGui::Text("FOV");
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
+
+		float fov = camera->GetFOV();
+
+		ImGui::DragFloat("##FOV", &fov, 0.005f);
+
+		if (fov != camera->GetFOV())
+			camera->SetFOV(fov);
+
 		ImGui::TreePop();
 	}
 

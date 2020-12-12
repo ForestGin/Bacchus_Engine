@@ -1,7 +1,6 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "glmath.h"
 #include "Light.h"
 //#include "JSONLoader.h"
 
@@ -40,9 +39,7 @@ public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	mat3x3 NormalMatrix;
-	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
-
+	
 	ComponentCamera* active_camera = nullptr;
 	ComponentCamera* culling_camera = nullptr;
 

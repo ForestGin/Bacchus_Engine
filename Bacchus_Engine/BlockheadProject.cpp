@@ -2,8 +2,9 @@
 #include "Application.h"
 #include "FileSystem.h"
 
-#include "Imgui/imgui.h"
+#include "ModuleResources.h"
 
+#include "Imgui/imgui.h"
 
 #include "mmgr/mmgr.h"
 
@@ -22,7 +23,8 @@ bool BlockheadProject::Draw()
 
 	if (ImGui::Begin(name, &enabled, settingsFlags))
 	{
-		RecursiveDirectoryDraw(ASSETS_FOLDER, nullptr);
+		static std::vector<std::string> filters;
+		RecursiveDirectoryDraw(ASSETS_FOLDER, filters);
 	}
 
 	ImGui::End();
@@ -31,7 +33,7 @@ bool BlockheadProject::Draw()
 	return true;
 }
 
-void BlockheadProject::RecursiveDirectoryDraw(const char* directory, const char* filter)
+void BlockheadProject::RecursiveDirectoryDraw(const char* directory, std::vector<std::string>& filters)
 {
 	std::vector<std::string> files;
 	std::vector<std::string> dirs;
@@ -45,7 +47,7 @@ void BlockheadProject::RecursiveDirectoryDraw(const char* directory, const char*
 	{
 		if (ImGui::TreeNodeEx((dir + (*it)).c_str(), 0, "%s/", (*it).c_str()))
 		{
-			RecursiveDirectoryDraw((dir + (*it)).c_str(), filter);
+			RecursiveDirectoryDraw((dir + (*it)).c_str(), filters);
 			ImGui::TreePop();
 		}
 	}
@@ -56,12 +58,23 @@ void BlockheadProject::RecursiveDirectoryDraw(const char* directory, const char*
 	{
 		const std::string& str = *it;
 
-		bool ok = true;
+		bool pass_filter = false;
 
-		if (filter && str.substr(str.find_last_of(".") + 1) != filter)
-			ok = false;
+		if (filters.size() > 0)
+		{
+			for (uint i = 0; i < filters.size(); ++i)
+			{
+				if (str.substr(str.find_last_of(".") + 1) == filters[i])
+				{
+					pass_filter = true;
+					break;
+				}
+			}
+		}
+		else
+			pass_filter = true;
 
-		if (ok && ImGui::TreeNodeEx(str.c_str(), ImGuiTreeNodeFlags_Leaf))
+		if (pass_filter && ImGui::TreeNodeEx(str.c_str(), ImGuiTreeNodeFlags_Leaf))
 		{
 			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 			{
@@ -70,6 +83,27 @@ void BlockheadProject::RecursiveDirectoryDraw(const char* directory, const char*
 				dragged = ASSETS_FOLDER;
 				dragged.append(str.data());
 				ImGui::EndDragDropSource();
+			}
+
+			std::string path = directory;
+			path.append((*it).data());
+
+			uint saved_date = App->res->GetModDateFromMeta(path.data());
+
+			// TO BE IMPLEMENTED 
+			// --- If file is changed, reimport ---
+			if (App->fs->GetLastModificationTime(path.data()) != saved_date)
+			{
+
+			}
+			// --- If file is deleted, delete all related files in library and meta ---
+			else if (saved_date == 0)
+			{
+				//uint uid = App->resources->GetUIDFromMeta(path.data());
+
+				//std::string lib_path = MODELS_FOLDER;
+
+
 			}
 
 			ImGui::TreePop();

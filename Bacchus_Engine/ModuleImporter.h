@@ -26,8 +26,8 @@ public:
 
 private:
 
-
 	ImporterScene* IScene = nullptr;
+	void ImportAssets(const char* directory, std::vector<std::string>& filters);
 	
 };
 

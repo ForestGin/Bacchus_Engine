@@ -1,22 +1,60 @@
 {
-    "GameObject (0)": {
+    "BakerHouse": {
         "Components": {
             "0": {
                 "positionx": "0.000000",
                 "positiony": "0.000000",
                 "positionz": "0.000000",
-                "rotationx": "-0.000000",
+                "rotationx": "0.000000",
                 "rotationy": "0.000000",
-                "rotationz": "-0.000000",
+                "rotationz": "0.000000",
                 "scalex": "1.000000",
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1810518331.mesh",
-            "2": "",
-            "3": "Library/Textures/1048580132.dds"
+            "3": "Library/Textures/875072529.dds"
         },
-        "Parent": "2024842447",
-        "UID": "1899274"
+        "Parent": "75021197",
+        "UID": "1069901372"
+    },
+    "Baker_house": {
+        "Components": {
+            "0": {
+                "positionx": "0.000000",
+                "positiony": "0.000000",
+                "positionz": "0.000000",
+                "rotationx": "0.000000",
+                "rotationy": "0.000000",
+                "rotationz": "0.000000",
+                "scalex": "1.000000",
+                "scaley": "1.000000",
+                "scalez": "1.000000"
+            },
+            "1": "Library/Meshes/926493155.mesh",
+            "2": "",
+            "3": "Library/Textures/875072529.dds"
+        },
+        "Parent": "1069901372",
+        "UID": "2116659225"
+    },
+    "Chimney": {
+        "Components": {
+            "0": {
+                "positionx": "0.000000",
+                "positiony": "0.000000",
+                "positionz": "0.000000",
+                "rotationx": "0.000000",
+                "rotationy": "0.000000",
+                "rotationz": "0.000000",
+                "scalex": "1.000000",
+                "scaley": "1.000000",
+                "scalez": "1.000000"
+            },
+            "1": "Library/Meshes/1561122963.mesh",
+            "2": "",
+            "3": "Library/Textures/875072529.dds"
+        },
+        "Parent": "1069901372",
+        "UID": "2133123817"
     }
 }

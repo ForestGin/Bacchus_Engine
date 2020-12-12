@@ -277,6 +277,12 @@ unsigned int FileSystem::Load(const char* path, const char* file, char** buffer)
 	return Load(full_path.c_str(), buffer);
 }
 
+uint FileSystem::GetLastModificationTime(const char* file)
+{
+	return PHYSFS_getLastModTime(file);
+}
+
+
 // Read a whole file and put it in a new buffer
 uint FileSystem::Load(const char* file, char** buffer) const
 {

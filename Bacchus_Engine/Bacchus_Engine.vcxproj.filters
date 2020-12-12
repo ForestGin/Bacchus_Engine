@@ -136,9 +136,6 @@
     <ClCompile Include="Color.cpp">
       <Filter>Others</Filter>
     </ClCompile>
-    <ClCompile Include="glmath.cpp">
-      <Filter>Others</Filter>
-    </ClCompile>
     <ClCompile Include="JSONLoader.cpp">
       <Filter>Others</Filter>
     </ClCompile>
@@ -534,9 +531,6 @@
       <Filter>mmgr</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
-      <Filter>Others</Filter>
-    </ClInclude>
-    <ClInclude Include="glmath.h">
       <Filter>Others</Filter>
     </ClInclude>
     <ClInclude Include="JSON\json.hpp">

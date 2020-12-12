@@ -102,7 +102,7 @@ void ImporterMesh::Save(ResourceMesh* mesh, const char* path) const
 	// amount of indices / vertices / normals / texture_coords / AABB
 	uint ranges[4] = { mesh->IndicesSize, mesh->VerticesSize, mesh->NormalsSize, mesh->TexCoordsSize };
 
-	uint size = sizeof(ranges) + sizeof(uint) * mesh->IndicesSize + sizeof(float3) * mesh->VerticesSize + sizeof(float3)*mesh->NormalsSize + sizeof(float)* mesh->TexCoordsSize;
+	uint size = sizeof(ranges) + sizeof(uint) * mesh->IndicesSize + sizeof(float) * 3 * mesh->VerticesSize + sizeof(float) * 3 * mesh->NormalsSize + sizeof(float) * mesh->TexCoordsSize;
 
 	char* data = new char[size]; // Allocate
 	char* cursor = data;
@@ -115,18 +115,19 @@ void ImporterMesh::Save(ResourceMesh* mesh, const char* path) const
 	memcpy(cursor, mesh->Indices, bytes);	
 
 	cursor += bytes; // Store vertices
-	bytes = sizeof(float3) * mesh->VerticesSize;
+	bytes = sizeof(float) * mesh->VerticesSize * 3;
 	memcpy(cursor, mesh->Vertices, bytes);
 
 	
 	cursor += bytes;//SAVE NORMAL
-	bytes = sizeof(float3) * mesh->NormalsSize;
+	bytes = sizeof(float) * mesh->NormalsSize * 3;
 	memcpy(cursor, mesh->Normals, bytes);
 
 	
 	cursor += bytes;//SAVE TEXCOORD
-	bytes = sizeof(uint) * mesh->TexCoordsSize;
-	memcpy(cursor, mesh->TexCoords, bytes);
+	bytes = sizeof(float) * mesh->TexCoordsSize;
+	if (mesh->TexCoords)
+		memcpy(cursor, mesh->TexCoords, bytes);
 
 	App->fs->Save(path, data, size);
 
@@ -166,7 +167,7 @@ void ImporterMesh::Load(const char* filename, ResourceMesh& mesh) const
 
 	//Load Vertices
 	cursor += bytes;
-	bytes = sizeof(float3) * mesh.VerticesSize;
+	bytes = sizeof(float) * 3 * mesh.VerticesSize;
 	mesh.Vertices = new float3[mesh.VerticesSize];
 	memcpy(mesh.Vertices, cursor, bytes);
 
@@ -174,7 +175,7 @@ void ImporterMesh::Load(const char* filename, ResourceMesh& mesh) const
 
 	//Load Normals
 	cursor += bytes;
-	bytes = sizeof(float3) * mesh.NormalsSize;
+	bytes = sizeof(float) * 3 * mesh.NormalsSize;
 	mesh.Normals = new float3[mesh.NormalsSize];
 	memcpy(mesh.Normals, cursor, bytes);
 

@@ -4,6 +4,7 @@
 #include "Blockhead.h"
 
 #include <string>
+#include <vector>
 
 class BlockheadProject : public Blockhead
 {
@@ -18,7 +19,8 @@ public:
 
 private:
 
-	void RecursiveDirectoryDraw(const char* directory, const char* filter);
+	void RecursiveDirectoryDraw(const char* directory, std::vector<std::string>& filters);
 };
 
 #endif
+

@@ -30,7 +30,7 @@ bool ImporterMaterial::Import(const char* File_path, const ImportData& IData) co
 	if (MData.scene->HasMaterials())
 	{
 		//Get scene's first material
-		aiMaterial* material = MData.scene->mMaterials[0];
+		aiMaterial* material = MData.scene->mMaterials[MData.mesh->mMaterialIndex];
 
 		if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
 		{
@@ -39,8 +39,18 @@ bool ImporterMaterial::Import(const char* File_path, const ImportData& IData) co
 			//Specify type of texture to retrieve (in this case DIFFUSE/ALBEDO)---
 			material->GetTexture(aiTextureType_DIFFUSE, 0, &Texture_path);
 
+			std::string final_path = Texture_path.C_Str();
+			App->fs->SplitFilePath(final_path.data(), nullptr, &final_path);
+
 			//Build whole path to texture file
-			directory.append(Texture_path.C_Str());
+			directory.append(final_path);
+
+			//Duplicate texture in assets folder
+			std::string assetpath = ASSETS_FOLDER;
+			assetpath.append(final_path);
+
+			if (!App->fs->Exists(assetpath.data()))
+				App->fs->CopyFromOutsideFS(directory.data(), assetpath.data());
 
 			//If we find the texture file, load it
 			ResourceTexture* texture = (ResourceTexture*)App->res->GetResource(directory.data());
@@ -56,7 +66,7 @@ bool ImporterMaterial::Import(const char* File_path, const ImportData& IData) co
 				MData.new_material->resource_diffuse->buffer_id = App->tex->CreateTextureFromFile(directory.data(), MData.new_material->resource_diffuse->Texture_width, MData.new_material->resource_diffuse->Texture_height, MData.new_material->resource_diffuse->GetUID());
 				MData.new_material->resource_diffuse->SetOriginalFilename(directory.data());
 				MData.new_material->resource_diffuse->Texture_path = directory.data();
-				App->res->CreateMetaFromUID(MData.new_material->resource_diffuse->GetUID(), directory.data());
+				App->res->CreateMetaFromUID(MData.new_material->resource_diffuse->GetUID(), assetpath.data());
 			}
 		}
 	}
