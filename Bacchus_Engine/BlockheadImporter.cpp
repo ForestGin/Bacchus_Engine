@@ -74,7 +74,7 @@ bool BlockheadImporter::Draw()
 		{
 		
 			TestImport();
-
+			
 			OnOff();
 		
 		}
@@ -95,6 +95,8 @@ bool BlockheadImporter::TestImport()
 	ImportData data;
 	ret = App->importer->IScene->Import(App->importer->DroppedFile_path.data(), data);
 
+	//reset image flip selection
+	App->importer->IScene->fliped = false;
 
 	return ret;
 }

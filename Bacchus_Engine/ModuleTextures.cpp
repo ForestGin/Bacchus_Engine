@@ -160,13 +160,18 @@ inline void ModuleTextures::CreateTextureFromImage(uint& TextureID, uint& width,
 	height = imageInfo.Height;
 	//now included bool to check from importer
 	if (imageInfo.Origin == IL_ORIGIN_UPPER_LEFT && !load_existing && App->importer->IScene->fliped)
-		iluFlipImage();
+	{
+		iluFlipImage();	
+	}
+
+	
 
 	// --- Convert the image into a suitable format to work with ---
 	if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 	{
 		// --- Create the texture ---
 		TextureID = CreateTextureFromPixels(ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
+
 
 		if (!load_existing)
 		{
