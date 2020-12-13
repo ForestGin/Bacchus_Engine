@@ -2,8 +2,8 @@
     "BakerHouse": {
         "Components": {
             "0": {
-                "positionx": "0.000000",
-                "positiony": "-2.280000",
+                "positionx": "-3.905000",
+                "positiony": "0.000000",
                 "positionz": "0.000000",
                 "rotationx": "-0.000000",
                 "rotationy": "0.000000",
@@ -11,9 +11,10 @@
                 "scalex": "1.000000",
                 "scaley": "1.000000",
                 "scalez": "1.000000"
-            }
+            },
+            "3": "Library/Textures/432327282.dds"
         },
-        "Parent": "680223740",
+        "Parent": "551637999",
         "UID": "880015534"
     },
     "Baker_house": {
@@ -153,7 +154,7 @@
             "2": "",
             "3": "Library/Textures/1681677831.dds"
         },
-        "Parent": "680223740",
+        "Parent": "551637999",
         "UID": "1431321258"
     },
     "City_building_011": {
@@ -233,7 +234,7 @@
             "2": "",
             "3": "Library/Textures/1681677831.dds"
         },
-        "Parent": "680223740",
+        "Parent": "551637999",
         "UID": "1303100237"
     },
     "City_building_017": {
@@ -253,7 +254,7 @@
             "2": "",
             "3": "Library/Textures/1681677831.dds"
         },
-        "Parent": "680223740",
+        "Parent": "551637999",
         "UID": "1973287169"
     },
     "City_building_022": {
@@ -610,7 +611,8 @@
                 "scalez": "1.000000"
             },
             "1": "Library/Meshes/1539279731.mesh",
-            "2": ""
+            "2": "",
+            "3": "Library/Textures/432327282.dds"
         },
         "Parent": "1097214230",
         "UID": "1775760264"
@@ -629,7 +631,8 @@
                 "scalez": "1.000000"
             },
             "1": "Library/Meshes/1871665583.mesh",
-            "2": ""
+            "2": "",
+            "3": "Library/Textures/432327282.dds"
         },
         "Parent": "1097214230",
         "UID": "283691702"
@@ -648,7 +651,8 @@
                 "scalez": "1.000000"
             },
             "1": "Library/Meshes/317715710.mesh",
-            "2": ""
+            "2": "",
+            "3": "Library/Textures/432327282.dds"
         },
         "Parent": "1097214230",
         "UID": "560814935"
@@ -665,9 +669,10 @@
                 "scalex": "1.000000",
                 "scaley": "1.000000",
                 "scalez": "1.000000"
-            }
+            },
+            "3": "Library/Textures/432327282.dds"
         },
-        "Parent": "680223740",
+        "Parent": "551637999",
         "UID": "1097214230"
     }
 }

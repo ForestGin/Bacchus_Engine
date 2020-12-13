@@ -301,14 +301,16 @@ uint FileSystem::Load(const char* file, char** buffer) const
 			if (readed != size)
 			{
 				CONSOLE_LOG("File System error while reading from file %s: %s\n", file, PHYSFS_getLastError());
-				/*if (buffer)
-				{
-					delete buffer;
-					buffer = nullptr;
-				}*/
+
+				//if (buffer)
+				//{
+				//	delete[] buffer;
+				//	buffer = nullptr;
+				//}
 			}
 			else
 				ret = readed;
+
 		}
 
 		if (PHYSFS_close(fs_file) == 0)

@@ -121,12 +121,16 @@ inline void BlockheadInspector::CreateGameObjectNode(GameObject& Selected) const
 inline void BlockheadInspector::CreateTransformNode(GameObject& Selected) const
 {
 	ComponentTransform* transform = Selected.GetComponent<ComponentTransform>(Component::ComponentType::Transform);
-
+	float3 position;
+	float3 rotation;
+	float3 scale;
+	
+	if (transform != NULL)
+		position = transform->GetPosition();
 	// --- Transform Position ---
 	ImGui::Text("Position  ");
 	ImGui::SameLine();
-
-	float3 position = transform->GetPosition();
+	
 	ImGui::Text("X");
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
@@ -150,10 +154,11 @@ inline void BlockheadInspector::CreateTransformNode(GameObject& Selected) const
 	ImGui::DragFloat("##PZ", &position.z, 0.005f);
 
 	// --- Transform Rotation ---
+	if (transform != NULL)
+		rotation = transform->GetRotation();
+	
 	ImGui::Text("Rotation  ");
 	ImGui::SameLine();
-
-	float3 rotation = transform->GetRotation();
 	ImGui::Text("X");
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);
@@ -177,10 +182,12 @@ inline void BlockheadInspector::CreateTransformNode(GameObject& Selected) const
 	ImGui::DragFloat("##RZ", &rotation.z, 0.005f);
 
 	// --- Transform Scale ---
+	if (transform != NULL)
+		scale = transform->GetScale();
+
 	ImGui::Text("Scale     ");
 	ImGui::SameLine();
-
-	float3 scale = transform->GetScale();
+	
 	ImGui::Text("X");
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(ImGui::GetWindowWidth() * 0.15f);

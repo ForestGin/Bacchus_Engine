@@ -1,43 +1,43 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  BlockheadHierarchy.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  BlockheadInspector.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   BacchusEditor.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  GameObject.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  ImporterScene.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(314,20): warning C4018: '<': signed/unsigned mismatch
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(321,21): warning C4018: '<': signed/unsigned mismatch
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(460,20): warning C4018: '<': signed/unsigned mismatch
-F:\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(466,20): warning C4018: '<': signed/unsigned mismatch
-  ModuleCamera3D.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(114,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(115,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(130,38): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(131,38): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(169,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(170,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(175,81): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(176,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(189,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  ModuleSceneManager.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-F:\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(732,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  BlockheadHierarchy.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  BlockheadInspector.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   Component.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   ComponentMesh.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  ModuleImporter.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   ComponentRenderer.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   ComponentTransform.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  GameObject.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ImporterScene.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(314,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(321,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(460,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ImporterScene.cpp(466,20): warning C4018: '<': signed/unsigned mismatch
+  ModuleCamera3D.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(114,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(115,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(130,38): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(131,38): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(169,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(170,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(175,81): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(176,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleCamera3D.cpp(189,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  ModuleImporter.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ModuleSceneManager.cpp
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\ModuleSceneManager.cpp(732,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   Quadtree.cpp
-F:\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\MathGeoLib\include\Geometry\AABB2D.h(135,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   Generating Code...
-  Bacchus_Engine.vcxproj -> F:\Bacchus_Engine\Bacchus_Engine\.\Game\Bacchus_Engine.exe
+  Bacchus_Engine.vcxproj -> C:\Users\W10\Documents\GitHub\Bacchus_Engine\Bacchus_Engine\Game\Bacchus_Engine.exe

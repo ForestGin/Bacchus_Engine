@@ -31,12 +31,14 @@ public:
 	{
 		if (components.size() < 10)
 		{
-
 			for (uint i = 0; i < components.size(); ++i)
 			{
-				if (components[i]->GetType() == type)
+				if (components[i] != nullptr)
 				{
-					return ((TComponent*)(components[i]));
+					if (components[i]->GetType() == type)
+					{
+						return ((TComponent*)(components[i]));
+					}
 				}
 			}
 		}

@@ -245,9 +245,9 @@ uint& GameObject::GetUID()
 std::string GameObject::GetName() const
 {
 	//Prevents weird bug after deleting GOs where the "name" string was still existing(but unreadable) an had a size of multiple billions of elements
-	if (name.size() < 100)
+	if (name.size() < 100 && name.size() > 1)
 	{
-		return name;
+			return name;
 	}
 	else return "root";
 }
