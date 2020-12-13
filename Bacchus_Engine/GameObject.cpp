@@ -62,6 +62,7 @@ void GameObject::RecursiveDelete(bool target)
 		{
 			(*it)->RecursiveDelete(false);
 		}
+
 		this->childs.clear();
 	}
 
@@ -243,7 +244,12 @@ uint& GameObject::GetUID()
 
 std::string GameObject::GetName() const
 {
-	return name;
+	//Prevents weird bug after deleting GOs where the "name" string was still existing(but unreadable) an had a size of multiple billions of elements
+	if (name.size() < 100)
+	{
+		return name;
+	}
+	else return "root";
 }
 
 bool& GameObject::GetActive()
