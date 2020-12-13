@@ -11,7 +11,8 @@
 	"Hierarchy": true,
 	"Inspector": true,
 	"Toolbar": true,
-	"Project": true
+	"Project": true,
+	"Importer": false
         
     },
     "Input": null,

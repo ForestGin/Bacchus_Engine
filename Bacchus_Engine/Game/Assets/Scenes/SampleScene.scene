@@ -1,4 +1,61 @@
 {
+    "BakerHouse": {
+        "Components": {
+            "0": {
+                "positionx": "0.000000",
+                "positiony": "-2.280000",
+                "positionz": "0.000000",
+                "rotationx": "-0.000000",
+                "rotationy": "0.000000",
+                "rotationz": "-0.000000",
+                "scalex": "1.000000",
+                "scaley": "1.000000",
+                "scalez": "1.000000"
+            }
+        },
+        "Parent": "680223740",
+        "UID": "880015534"
+    },
+    "Baker_house": {
+        "Components": {
+            "0": {
+                "positionx": "0.000000",
+                "positiony": "0.000000",
+                "positionz": "0.000000",
+                "rotationx": "-0.000000",
+                "rotationy": "0.000000",
+                "rotationz": "-0.000000",
+                "scalex": "1.000000",
+                "scaley": "1.000000",
+                "scalez": "1.000000"
+            },
+            "1": "Library/Meshes/1515294139.mesh",
+            "2": "",
+            "3": "Library/Textures/1114199818.dds"
+        },
+        "Parent": "880015534",
+        "UID": "301232044"
+    },
+    "Chimney": {
+        "Components": {
+            "0": {
+                "positionx": "0.000000",
+                "positiony": "0.000000",
+                "positionz": "0.000000",
+                "rotationx": "-0.000000",
+                "rotationy": "0.000000",
+                "rotationz": "-0.000000",
+                "scalex": "1.000000",
+                "scaley": "1.000000",
+                "scalez": "1.000000"
+            },
+            "1": "Library/Meshes/2000527351.mesh",
+            "2": "",
+            "3": "Library/Textures/1114199818.dds"
+        },
+        "Parent": "880015534",
+        "UID": "1159092444"
+    },
     "City_building_001": {
         "Components": {
             "0": {
@@ -12,11 +69,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1795506355.mesh",
-            "2": ""
+            "1": "Library/Meshes/1384375040.mesh",
+            "2": "",
+            "3": "Library/Textures/1831638786.dds"
         },
-        "Parent": "95532627",
-        "UID": "1307636568"
+        "Parent": "1097214230",
+        "UID": "742763292"
     },
     "City_building_004": {
         "Components": {
@@ -31,11 +89,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/320169608.mesh",
-            "2": ""
+            "1": "Library/Meshes/1011099393.mesh",
+            "2": "",
+            "3": "Library/Textures/1184471852.dds"
         },
-        "Parent": "95532627",
-        "UID": "337227622"
+        "Parent": "1097214230",
+        "UID": "874142851"
     },
     "City_building_007": {
         "Components": {
@@ -50,11 +109,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/2072333232.mesh",
-            "2": ""
+            "1": "Library/Meshes/361098833.mesh",
+            "2": "",
+            "3": "Library/Textures/1941348080.dds"
         },
-        "Parent": "95532627",
-        "UID": "39346680"
+        "Parent": "1097214230",
+        "UID": "797477599"
     },
     "City_building_008": {
         "Components": {
@@ -69,11 +129,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1370605024.mesh",
-            "2": ""
+            "1": "Library/Meshes/1618280511.mesh",
+            "2": "",
+            "3": "Library/Textures/1368540853.dds"
         },
-        "Parent": "95532627",
-        "UID": "119282527"
+        "Parent": "1097214230",
+        "UID": "268902794"
     },
     "City_building_010": {
         "Components": {
@@ -88,11 +149,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1142357179.mesh",
-            "2": ""
+            "1": "Library/Meshes/709036884.mesh",
+            "2": "",
+            "3": "Library/Textures/1681677831.dds"
         },
-        "Parent": "475317203",
-        "UID": "87202107"
+        "Parent": "680223740",
+        "UID": "1431321258"
     },
     "City_building_011": {
         "Components": {
@@ -107,11 +169,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/2072333232.mesh",
-            "2": ""
+            "1": "Library/Meshes/361098833.mesh",
+            "2": "",
+            "3": "Library/Textures/1941348080.dds"
         },
-        "Parent": "95532627",
-        "UID": "1575131105"
+        "Parent": "1097214230",
+        "UID": "573934265"
     },
     "City_building_013": {
         "Components": {
@@ -126,11 +189,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/2139776161.mesh",
-            "2": ""
+            "1": "Library/Meshes/1797791022.mesh",
+            "2": "",
+            "3": "Library/Textures/565156416.dds"
         },
-        "Parent": "95532627",
-        "UID": "383180668"
+        "Parent": "1097214230",
+        "UID": "1189139840"
     },
     "City_building_014": {
         "Components": {
@@ -145,11 +209,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/2032239573.mesh",
-            "2": ""
+            "1": "Library/Meshes/603881810.mesh",
+            "2": "",
+            "3": "Library/Textures/1184471852.dds"
         },
-        "Parent": "95532627",
-        "UID": "694430916"
+        "Parent": "1097214230",
+        "UID": "559458002"
     },
     "City_building_016": {
         "Components": {
@@ -164,30 +229,32 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1142357179.mesh",
-            "2": ""
+            "1": "Library/Meshes/709036884.mesh",
+            "2": "",
+            "3": "Library/Textures/1681677831.dds"
         },
-        "Parent": "475317203",
-        "UID": "703751111"
+        "Parent": "680223740",
+        "UID": "1303100237"
     },
     "City_building_017": {
         "Components": {
             "0": {
-                "positionx": "1.945000",
+                "positionx": "0.000000",
                 "positiony": "0.000000",
                 "positionz": "0.000000",
-                "rotationx": "-0.000000",
+                "rotationx": "0.000000",
                 "rotationy": "0.000000",
-                "rotationz": "-0.000000",
+                "rotationz": "0.000000",
                 "scalex": "1.000000",
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1142357179.mesh",
-            "2": ""
+            "1": "Library/Meshes/709036884.mesh",
+            "2": "",
+            "3": "Library/Textures/1681677831.dds"
         },
-        "Parent": "475317203",
-        "UID": "1444402412"
+        "Parent": "680223740",
+        "UID": "1973287169"
     },
     "City_building_022": {
         "Components": {
@@ -202,11 +269,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1738712885.mesh",
-            "2": ""
+            "1": "Library/Meshes/1568136691.mesh",
+            "2": "",
+            "3": "Library/Textures/1179511218.dds"
         },
-        "Parent": "95532627",
-        "UID": "1317616065"
+        "Parent": "1097214230",
+        "UID": "632062853"
     },
     "City_building_023": {
         "Components": {
@@ -221,11 +289,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/2072333232.mesh",
-            "2": ""
+            "1": "Library/Meshes/361098833.mesh",
+            "2": "",
+            "3": "Library/Textures/1941348080.dds"
         },
-        "Parent": "95532627",
-        "UID": "1972125882"
+        "Parent": "1097214230",
+        "UID": "1123330745"
     },
     "City_building_024": {
         "Components": {
@@ -240,11 +309,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1370605024.mesh",
-            "2": ""
+            "1": "Library/Meshes/1618280511.mesh",
+            "2": "",
+            "3": "Library/Textures/1368540853.dds"
         },
-        "Parent": "95532627",
-        "UID": "698354466"
+        "Parent": "1097214230",
+        "UID": "2132836600"
     },
     "City_building_026": {
         "Components": {
@@ -259,11 +329,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1571552489.mesh",
-            "2": ""
+            "1": "Library/Meshes/1470917925.mesh",
+            "2": "",
+            "3": "Library/Textures/1179511218.dds"
         },
-        "Parent": "95532627",
-        "UID": "1751007842"
+        "Parent": "1097214230",
+        "UID": "1722294706"
     },
     "City_building_028": {
         "Components": {
@@ -278,11 +349,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/268028944.mesh",
-            "2": ""
+            "1": "Library/Meshes/71860914.mesh",
+            "2": "",
+            "3": "Library/Textures/1356057903.dds"
         },
-        "Parent": "95532627",
-        "UID": "309093217"
+        "Parent": "1097214230",
+        "UID": "1267468900"
     },
     "City_building_030": {
         "Components": {
@@ -297,11 +369,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/268028944.mesh",
-            "2": ""
+            "1": "Library/Meshes/71860914.mesh",
+            "2": "",
+            "3": "Library/Textures/1356057903.dds"
         },
-        "Parent": "95532627",
-        "UID": "1690052503"
+        "Parent": "1097214230",
+        "UID": "399774530"
     },
     "City_building_031": {
         "Components": {
@@ -316,11 +389,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/268028944.mesh",
-            "2": ""
+            "1": "Library/Meshes/71860914.mesh",
+            "2": "",
+            "3": "Library/Textures/1356057903.dds"
         },
-        "Parent": "95532627",
-        "UID": "1508082374"
+        "Parent": "1097214230",
+        "UID": "954127305"
     },
     "City_building_032": {
         "Components": {
@@ -335,11 +409,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/320169608.mesh",
-            "2": ""
+            "1": "Library/Meshes/1011099393.mesh",
+            "2": "",
+            "3": "Library/Textures/1184471852.dds"
         },
-        "Parent": "95532627",
-        "UID": "1016582883"
+        "Parent": "1097214230",
+        "UID": "875852210"
     },
     "City_building_033": {
         "Components": {
@@ -354,11 +429,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1794203736.mesh",
-            "2": ""
+            "1": "Library/Meshes/69337730.mesh",
+            "2": "",
+            "3": "Library/Textures/565156416.dds"
         },
-        "Parent": "95532627",
-        "UID": "235685616"
+        "Parent": "1097214230",
+        "UID": "855498100"
     },
     "City_building_034": {
         "Components": {
@@ -373,11 +449,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1577009007.mesh",
-            "2": ""
+            "1": "Library/Meshes/1966345521.mesh",
+            "2": "",
+            "3": "Library/Textures/1179511218.dds"
         },
-        "Parent": "95532627",
-        "UID": "962113257"
+        "Parent": "1097214230",
+        "UID": "1755187752"
     },
     "City_building_035": {
         "Components": {
@@ -392,11 +469,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/268028944.mesh",
-            "2": ""
+            "1": "Library/Meshes/71860914.mesh",
+            "2": "",
+            "3": "Library/Textures/1356057903.dds"
         },
-        "Parent": "95532627",
-        "UID": "752094800"
+        "Parent": "1097214230",
+        "UID": "1500349790"
     },
     "City_building_036": {
         "Components": {
@@ -411,11 +489,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/2139776161.mesh",
-            "2": ""
+            "1": "Library/Meshes/1797791022.mesh",
+            "2": "",
+            "3": "Library/Textures/565156416.dds"
         },
-        "Parent": "95532627",
-        "UID": "383474834"
+        "Parent": "1097214230",
+        "UID": "522697762"
     },
     "City_building_037": {
         "Components": {
@@ -430,11 +509,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/695139825.mesh",
-            "2": ""
+            "1": "Library/Meshes/1153988585.mesh",
+            "2": "",
+            "3": "Library/Textures/1179511218.dds"
         },
-        "Parent": "95532627",
-        "UID": "1064377226"
+        "Parent": "1097214230",
+        "UID": "343880307"
     },
     "City_building_038": {
         "Components": {
@@ -449,11 +529,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/638287533.mesh",
-            "2": ""
+            "1": "Library/Meshes/181074721.mesh",
+            "2": "",
+            "3": "Library/Textures/1179511218.dds"
         },
-        "Parent": "95532627",
-        "UID": "1911426748"
+        "Parent": "1097214230",
+        "UID": "1981950491"
     },
     "City_building_039": {
         "Components": {
@@ -468,11 +549,12 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/268028944.mesh",
-            "2": ""
+            "1": "Library/Meshes/71860914.mesh",
+            "2": "",
+            "3": "Library/Textures/1356057903.dds"
         },
-        "Parent": "95532627",
-        "UID": "2118198868"
+        "Parent": "1097214230",
+        "UID": "1133664136"
     },
     "City_building_040": {
         "Components": {
@@ -487,87 +569,89 @@
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/268028944.mesh",
-            "2": ""
+            "1": "Library/Meshes/71860914.mesh",
+            "2": "",
+            "3": "Library/Textures/1356057903.dds"
         },
-        "Parent": "95532627",
-        "UID": "1037543505"
+        "Parent": "1097214230",
+        "UID": "1386508848"
     },
     "City_building_041": {
         "Components": {
             "0": {
-                "positionx": "-0.160000",
+                "positionx": "0.000000",
                 "positiony": "0.000000",
                 "positionz": "0.000000",
-                "rotationx": "-0.000000",
+                "rotationx": "0.000000",
                 "rotationy": "0.000000",
-                "rotationz": "-0.000000",
+                "rotationz": "0.000000",
                 "scalex": "1.000000",
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1795506355.mesh",
-            "2": ""
+            "1": "Library/Meshes/1384375040.mesh",
+            "2": "",
+            "3": "Library/Textures/1831638786.dds"
         },
-        "Parent": "95532627",
-        "UID": "958319977"
+        "Parent": "1097214230",
+        "UID": "220212040"
     },
     "Line002": {
         "Components": {
             "0": {
-                "positionx": "0.455000",
+                "positionx": "0.000000",
                 "positiony": "0.000000",
                 "positionz": "0.000000",
-                "rotationx": "-0.000000",
+                "rotationx": "0.000000",
                 "rotationy": "0.000000",
-                "rotationz": "-0.000000",
+                "rotationz": "0.000000",
                 "scalex": "1.000000",
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/957701441.mesh",
+            "1": "Library/Meshes/1539279731.mesh",
             "2": ""
         },
-        "Parent": "95532627",
-        "UID": "571516342"
+        "Parent": "1097214230",
+        "UID": "1775760264"
     },
     "Object010": {
         "Components": {
             "0": {
-                "positionx": "-0.155000",
+                "positionx": "0.000000",
                 "positiony": "0.000000",
                 "positionz": "0.000000",
-                "rotationx": "-0.000000",
+                "rotationx": "0.000000",
                 "rotationy": "0.000000",
-                "rotationz": "-0.000000",
+                "rotationz": "0.000000",
                 "scalex": "1.000000",
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/911505666.mesh",
+            "1": "Library/Meshes/1871665583.mesh",
             "2": ""
         },
-        "Parent": "95532627",
-        "UID": "1981425469"
+        "Parent": "1097214230",
+        "UID": "283691702"
     },
     "Plane001": {
         "Components": {
             "0": {
-                "positionx": "-0.455000",
+                "positionx": "0.000000",
                 "positiony": "0.000000",
                 "positionz": "0.000000",
-                "rotationx": "-0.000000",
+                "rotationx": "0.000000",
                 "rotationy": "0.000000",
-                "rotationz": "-0.000000",
+                "rotationz": "0.000000",
                 "scalex": "1.000000",
                 "scaley": "1.000000",
                 "scalez": "1.000000"
             },
-            "1": "Library/Meshes/1059751805.mesh",
+            "1": "Library/Meshes/317715710.mesh",
             "2": ""
         },
-        "Parent": "95532627",
-        "UID": "994275521"
+        "Parent": "1097214230",
+        "UID": "560814935"
     },
     "Street environment_V01": {
         "Components": {
@@ -583,7 +667,7 @@
                 "scalez": "1.000000"
             }
         },
-        "Parent": "475317203",
-        "UID": "95532627"
+        "Parent": "680223740",
+        "UID": "1097214230"
     }
 }
