@@ -96,8 +96,12 @@ bool ModuleSceneManager::CleanUp()
     root->RecursiveDelete();
     NoStaticGo.clear();
 
-    delete CheckersMaterial;
-    delete DefaultMaterial;
+    for (uint i = 0; i < Materials.size(); ++i)
+    {
+        if (Materials[i])
+            delete Materials[i];
+    }
+    Materials.clear();
 
     DefaultMaterial = nullptr;
 	CheckersMaterial = nullptr;
@@ -115,7 +119,8 @@ void ModuleSceneManager::Draw()
 
 void ModuleSceneManager::DrawScene()
 {
-    RecursiveDrawQuadtree(tree.root);
+    if (display_tree)
+        RecursiveDrawQuadtree(tree.root);
 
     for (std::vector<GameObject*>::iterator it = NoStaticGo.begin(); it != NoStaticGo.end(); it++)
     {
@@ -142,8 +147,8 @@ void ModuleSceneManager::DrawScene()
             Renderer->Draw();
     }
 
-    //
-    if (App->camera->last_ray.IsFinite())
+    //Draw RAy
+    /*if (App->camera->last_ray.IsFinite())
     {
         glDisable(GL_LIGHTING);
         glBegin(GL_LINES);
@@ -157,7 +162,7 @@ void ModuleSceneManager::DrawScene()
 
         glEnd();
         glEnable(GL_LIGHTING);
-    }
+    }*/
 }
 
 GameObject* ModuleSceneManager::GetRootGO() const
@@ -381,6 +386,9 @@ GameObject* ModuleSceneManager::CreateEmptyGameObject()
     
     root->AddChildGO(new_object);
 
+    if (DefaultMaterial)
+        DefaultMaterial->resource_material->resource_diffuse->instances++;
+
     new_object->SetMaterial(DefaultMaterial);
 
     return new_object;
@@ -399,6 +407,7 @@ GameObject* ModuleSceneManager::CreateRootGameObject()
 ComponentMaterial* ModuleSceneManager::CreateEmptyMaterial()
 {
     ComponentMaterial* Material = new ComponentMaterial(Component::ComponentType::Material);
+    Materials.push_back(Material);
 
     return Material;
 }

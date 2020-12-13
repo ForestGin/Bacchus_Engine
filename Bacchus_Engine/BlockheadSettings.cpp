@@ -7,6 +7,7 @@
 #include "ModuleRenderer3D.h"
 #include "BacchusHardware.h"
 #include "ModuleTimeManager.h"
+#include "ModuleSceneManager.h"
 
 #include "mmgr/mmgr.h"
 
@@ -306,6 +307,12 @@ void BlockheadSettings::RendererNode() const
 	{
 		App->renderer3D->color_material != App->renderer3D->color_material;
 
+	}
+
+	//color material
+	if (ImGui::Checkbox("Bounding Boxes", &App->scene_manager->display_boundingboxes))
+	{
+		App->scene_manager->display_boundingboxes != App->scene_manager->display_boundingboxes;
 	}
 }
 

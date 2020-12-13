@@ -47,6 +47,9 @@ void ComponentRenderer::Draw() const
 		ModuleSceneManager::DrawWire(camera->frustum, White);
 	
 	ModuleSceneManager::DrawWire(GO->GetAABB(), Green);
+
+	if (App->scene_manager->display_boundingboxes)
+		ModuleSceneManager::DrawWire(GO->GetAABB(), Green);
 }
 
 inline void ComponentRenderer::DrawMesh(ResourceMesh& mesh, ComponentMaterial* mat) const
