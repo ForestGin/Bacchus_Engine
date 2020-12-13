@@ -11,6 +11,7 @@ class GameObject;
 class ComponentMaterial;
 struct aiScene;
 struct ImportMaterialData;
+class ResourceMesh;
 
 class ModuleSceneManager : public Module
 {
@@ -49,11 +50,17 @@ public:
 		DrawWireFromVertices(corners, color);
 	};
 	static void DrawWireFromVertices(const float3* corners, Color color);
-
-	GameObject* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false);
-	GameObject* CreateCubeSphere(float Radius = 1.0f, int sub = 3, bool smooth = false);
-	GameObject* CreateIcoSphere(float radius = 1.0f, int subdivision = 1, bool smooth = false);
-	GameObject* CreateCylinder(float baseRadius = 1.0f, float topRadius = 1.0f, float height = 1.0f, int sectorCount = 36, int stackCount = 1, bool smooth = false);
+	
+	GameObject* LoadTetrahedron();
+	GameObject* LoadCube();
+	GameObject* LoadOctahedron();
+	GameObject* LoadIcosahedron();
+	GameObject* LoadSphere();
+	GameObject* LoadCubeSphere();
+	GameObject* LoadIcoSphere();
+	GameObject* LoadPyramid();
+	GameObject* LoadCylinder();
+	GameObject* LoadCone();
 
 	void CreateGrid() const;
 
@@ -63,12 +70,17 @@ public:
 	void DestroyGameObject(GameObject* go);
 
 private:
-	void LoadPrimitiveArrays(GameObject& new_object,
+	void LoadPrimitiveArrays(ResourceMesh* new_mesh,
 	uint vertices_size, const float* vertices,
 	uint indices_size, const uint* indices,
 	uint normals_size, const float* normals,
 	uint texCoords_size, const float* texCoords) const;
-		
+	
+	ResourceMesh* CreateSphere(float Radius = 1.0f, int sectors = 36, int stackCount = 18, bool smooth = false);
+	ResourceMesh* CreateCubeSphere(float Radius = 1.0f, int sub = 3, bool smooth = false);
+	ResourceMesh* CreateIcoSphere(float radius = 1.0f, int subdivision = 1, bool smooth = false);
+	ResourceMesh* CreateCylinder(float baseRadius = 1.0f, float topRadius = 1.0f, float height = 1.0f, int sectorCount = 36, int stackCount = 1, bool smooth = false);
+	
 	void GatherGameObjects(std::vector<GameObject*>& scene_gos, GameObject* go);
 	GameObject* CreateRootGameObject();
 	void DrawScene();
@@ -83,10 +95,21 @@ public:
 
 private:
 	uint go_count = 0;
-	std::vector<ComponentMaterial*> Materials;
 	GameObject* SelectedGameObject = nullptr;
 	GameObject* root = nullptr;
 	std::vector<AABB> aabb;
+
+	ResourceMesh* tetrahedron = nullptr;
+	ResourceMesh* cube = nullptr;
+	ResourceMesh* octahedron = nullptr;
+	ResourceMesh* icosahedron = nullptr;
+	ResourceMesh* sphere = nullptr;
+	ResourceMesh* cubesphere = nullptr;
+	ResourceMesh* icosphere = nullptr;
+	ResourceMesh* pyramid = nullptr;
+	ResourceMesh* cylinder = nullptr;
+	ResourceMesh* cone = nullptr;
+
 };
 
 #endif 

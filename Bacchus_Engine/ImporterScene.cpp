@@ -98,18 +98,18 @@ bool ImporterScene::Import(const char* File_path, const ImportData& IData) const
 		std::vector<GameObject*> scene_gos;
 		scene_gos.push_back(rootnode);
 
+		//Load all meshes
+		LoadSceneMeshes(scene);
+
 		//Use scene->mNumMeshes to iterate on scene->mMeshes array
 		LoadNodes(scene->mRootNode, rootnode, scene, scene_gos, relative_path.data(), File_path);
 
 		//Save to Own format files in Library
 		std::string exported_file = SaveSceneToFile(scene_gos, rootnodename, MODEL);
-		/*exported_file = exported_file.substr(1, exported_file.size());*/
-
-		//Delete Everything once Library files have been created
+		
+		// --- Free everything ---
+		FreeSceneMeshes();
 		rootnode->RecursiveDelete();
-
-		//Load from Library, our own format files
-		//Load(exported_file.data());
 
 		//Free scene
 		aiReleaseImport(scene);
@@ -418,6 +418,27 @@ std::string ImporterScene::SaveSceneToFile(std::vector<GameObject*>& scene_gos, 
 	return path;
 }
 
+void ImporterScene::LoadSceneMeshes(const aiScene* scene) const
+{
+	for (uint i = 0; i < scene->mNumMeshes; ++i)
+	{
+		ResourceMesh* resource_mesh = (ResourceMesh*)App->res->CreateResource(Resource::ResourceType::MESH);
+
+		// --- Import mesh data (fill new_mesh)---
+		ImportMeshData Mdata;
+		Mdata.mesh = scene->mMeshes[i];
+		Mdata.new_mesh = resource_mesh;
+		IMesh->Import(Mdata);
+
+		scene_meshes[i] = resource_mesh;
+	}
+}
+
+void ImporterScene::FreeSceneMeshes() const
+{
+	scene_meshes.clear();
+}
+
 void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiScene* scene, std::vector<GameObject*>& scene_gos, const char* File_path, const char* original_path) const
 {
 	//Load Game Objects from Assimp scene
@@ -459,17 +480,14 @@ void ImporterScene::LoadNodes(const aiNode* node, GameObject* parent, const aiSc
 
 			//Create new Component Mesh to store current scene mesh data
 			ComponentMesh* new_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
-			new_mesh->resource_mesh = (ResourceMesh*)App->res->CreateResource(Resource::ResourceType::MESH);
+			
+			//Assign previously loaded mesh
+			new_mesh->resource_mesh = scene_meshes[mesh_index];
 
 			//Create Default components
 			if (new_mesh)
 			{
-				//Import mesh data (fill new_mesh)---
-				ImportMeshData Mdata;
-				Mdata.mesh = mesh;
-				Mdata.new_mesh = new_mesh->resource_mesh;
-				IMesh->Import(Mdata);
-
+				
 				ComponentTransform* transform = new_object->GetComponent<ComponentTransform>(Component::ComponentType::Transform);
 
 				if (transform)

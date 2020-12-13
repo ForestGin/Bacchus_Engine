@@ -110,8 +110,11 @@ uint ModuleResources::GetUIDFromMeta(const char * file)
 	if (App->fs->Exists(path.data()))
 	{
 		json file = App->GetJLoader()->Load(path.data());
-		std::string uid = file["UID"];
-		UID = std::stoi(uid);
+		if (file.contains("UID"))
+		{
+			std::string uid = file["UID"];
+			UID = std::stoi(uid);
+		}
 	}
 
 	return UID;

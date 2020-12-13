@@ -15,7 +15,7 @@
 #define SWB 6
 #define NWB 7
 
-#define QUADTREE_MAX_ITEMS 4
+#define QUADTREE_MAX_ITEMS 10
 #define QUADTREE_MIN_SIZE 10.0f 
 
 
@@ -42,8 +42,8 @@ bool QuadtreeNode::IsLeaf() const
 void QuadtreeNode::Insert(GameObject* go)
 {
 	if (IsLeaf() == true &&
-		(objects.size() < QUADTREE_MAX_ITEMS /*||
-		(box.HalfSize().LengthSq() <= QUADTREE_MIN_SIZE * QUADTREE_MIN_SIZE))*/))
+		(objects.size() < QUADTREE_MAX_ITEMS ||
+			(box.HalfSize().LengthSq() <= QUADTREE_MIN_SIZE * QUADTREE_MIN_SIZE)))
 		objects.push_back(go);
 	else
 	{
@@ -154,7 +154,13 @@ void QuadtreeNode::RedistributeChilds()
 		{
 			it = objects.erase(it);
 			for (int i = 0; i < 8; ++i)
-				if (intersects[i]) childs[i]->Insert(go);
+			{
+				if (intersects[i])
+				{
+					childs[i]->Insert(go);
+					break;
+				}
+			}
 		}
 	}
 }

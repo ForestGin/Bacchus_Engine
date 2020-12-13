@@ -41,7 +41,7 @@ ModuleSceneManager::~ModuleSceneManager()
 bool ModuleSceneManager::Init(json file)
 {
     root = CreateRootGameObject();
-    tree.SetBoundaries(AABB(float3(-10, 0, -10), float3(10, 10, 10)));
+    tree.SetBoundaries(AABB(float3(-100, -100, -100), float3(100, 100, 100)));
 
 	return true;
 }
@@ -64,6 +64,18 @@ bool ModuleSceneManager::Start()
     CheckersMaterial->resource_material->resource_diffuse->Texture_width = CHECKERS_WIDTH;
     CheckersMaterial->resource_material->resource_diffuse->Texture_height = CHECKERS_HEIGHT;
 
+    //Create primitives
+    tetrahedron = CreateCylinder(1, 0, 1, 3, 1, false);
+    cube = CreateCubeSphere(1, 0, false);
+    octahedron = CreateSphere(1, 4, 2, false);
+    icosahedron = CreateIcoSphere(1, 0, false);
+    sphere = CreateSphere(1, 36, 18, false);
+    cubesphere = CreateCubeSphere(1, 3, false);
+    icosphere = CreateIcoSphere(1, 3, false);
+    pyramid = CreateCylinder(1, 0, 1, 4, 1, false);
+    cylinder = CreateCylinder(1, 1, 1, 36, 4, false);
+    cone = CreateCylinder(1, 0, 1, 36, 4, false);
+
 	return true;
 }
 
@@ -82,14 +94,10 @@ update_status ModuleSceneManager::Update(float dt)
 bool ModuleSceneManager::CleanUp()
 {
     root->RecursiveDelete();
-
-	for (uint i = 0; i < Materials.size(); ++i)
-	{
-		if (Materials[i])
-			delete Materials[i];
-	}
-	Materials.clear();
     NoStaticGo.clear();
+
+    delete CheckersMaterial;
+    delete DefaultMaterial;
 
     DefaultMaterial = nullptr;
 	CheckersMaterial = nullptr;
@@ -162,7 +170,7 @@ void ModuleSceneManager::RedoOctree()
     std::vector<GameObject*> scene_gos;
     tree.CollectObjects(scene_gos);
 
-    tree.SetBoundaries(AABB(float3(-10, 0, -10), float3(10, 10, 10)));
+    tree.SetBoundaries(AABB(float3(-100, -100, -100), float3(100, 100, 100)));
 
     for (uint i = 0; i < scene_gos.size(); ++i)
     {
@@ -392,8 +400,6 @@ ComponentMaterial* ModuleSceneManager::CreateEmptyMaterial()
 {
     ComponentMaterial* Material = new ComponentMaterial(Component::ComponentType::Material);
 
-    Materials.push_back(Material);
-
     return Material;
 }
 
@@ -446,15 +452,9 @@ void ModuleSceneManager::DrawWireFromVertices(const float3* corners, Color color
     glEnable(GL_LIGHTING);
 }
 
-void ModuleSceneManager::LoadPrimitiveArrays(GameObject& new_object, uint vertices_size, const float* vertices, uint indices_size, const uint* indices, uint normals_size, const float* normals, uint texCoords_size, const float* texCoords) const
+void ModuleSceneManager::LoadPrimitiveArrays(ResourceMesh* new_mesh, uint vertices_size, const float* vertices, uint indices_size, const uint* indices, uint normals_size, const float* normals, uint texCoords_size, const float* texCoords) const
 {
     //Obtain data from Songho Ann mesh arrays and load it into component mesh
-
-    ComponentMesh* comp_mesh = (ComponentMesh*)new_object.AddComponent(Component::ComponentType::Mesh);
-    ResourceMesh* new_mesh = (ResourceMesh*)App->res->CreateResource(Resource::ResourceType::MESH);
-
-    comp_mesh->resource_mesh = new_mesh;
-    ComponentRenderer* Renderer = (ComponentRenderer*)new_object.AddComponent(Component::ComponentType::Renderer);
 
     //Vertices
     new_mesh->VerticesSize = vertices_size / 3;
@@ -505,9 +505,9 @@ void ModuleSceneManager::LoadPrimitiveArrays(GameObject& new_object, uint vertic
     new_mesh->CreateAABB();
 }
 
-GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stacks, bool smooth)
+ResourceMesh* ModuleSceneManager::CreateSphere(float radius, int sectors, int stacks, bool smooth)
 {
-    GameObject* new_object = CreateEmptyGameObject();
+    ResourceMesh* new_mesh = (ResourceMesh*)App->res->CreateResource(Resource::ResourceType::MESH);
 
     vSphere sphere(radius, sectors, stacks, smooth);
 
@@ -527,21 +527,17 @@ GameObject* ModuleSceneManager::CreateSphere(float radius, int sectors, int stac
 
     uint texCoords_size = sphere.getTexCoordCount();
     const float* texCoords = sphere.getTexCoords();
+    
+    LoadPrimitiveArrays(new_mesh, vertices_size, vertices, indices_size, indices, normals_size, normals, texCoords_size, texCoords);
 
-    LoadPrimitiveArrays(*new_object, vertices_size, vertices, indices_size, indices, normals_size, normals, texCoords_size, texCoords);
-
-    return new_object;
+    return new_mesh;
 }
 
-GameObject* ModuleSceneManager::CreateCubeSphere(float radius, int sub, bool smooth)
+ResourceMesh* ModuleSceneManager::CreateCubeSphere(float radius, int sub, bool smooth)
 {
-    GameObject* new_object = CreateEmptyGameObject();
+    ResourceMesh* new_mesh = (ResourceMesh*)App->res->CreateResource(Resource::ResourceType::MESH);
 
     vCubesphere cubesphere(radius, sub, smooth);
-
-    /*cubesphere.setRadius(radius);
-    cubesphere.setSubdivision(sub);
-    cubesphere.setSmooth(smooth);*/
 
     uint vertices_size = cubesphere.getVertexCount();
     const float* vertices = cubesphere.getVertices();
@@ -555,20 +551,16 @@ GameObject* ModuleSceneManager::CreateCubeSphere(float radius, int sub, bool smo
     uint texCoords_size = cubesphere.getTexCoordCount();
     const float* texCoords = cubesphere.getTexCoords();
 
-    LoadPrimitiveArrays(*new_object, vertices_size, vertices, indices_size, indices, normals_size, normals, texCoords_size, texCoords);
+    LoadPrimitiveArrays(new_mesh, vertices_size, vertices, indices_size, indices, normals_size, normals, texCoords_size, texCoords);
 
-    return new_object;
+    return new_mesh;
 }
 
-GameObject* ModuleSceneManager::CreateIcoSphere(float radius, int subdivision, bool smooth)
+ResourceMesh* ModuleSceneManager::CreateIcoSphere(float radius, int subdivision, bool smooth)
 {
-    GameObject* new_object = CreateEmptyGameObject();
+    ResourceMesh* new_mesh = (ResourceMesh*)App->res->CreateResource(Resource::ResourceType::MESH);
 
     vIcosphere icosphere(radius,subdivision,smooth);
-
-    /*icosphere.setRadius(radius);
-    icosphere.setSubdivision(subdivision);
-    icosphere.setSmooth(smooth);*/
 
     uint vertices_size = icosphere.getVertexCount();
     const float* vertices = icosphere.getVertices();
@@ -582,14 +574,14 @@ GameObject* ModuleSceneManager::CreateIcoSphere(float radius, int subdivision, b
     uint texCoords_size = icosphere.getTexCoordCount();
     const float* texCoords = icosphere.getTexCoords();
 
-    LoadPrimitiveArrays(*new_object, vertices_size, vertices, indices_size, indices, normals_size, normals, texCoords_size, texCoords);
+    LoadPrimitiveArrays(new_mesh, vertices_size, vertices, indices_size, indices, normals_size, normals, texCoords_size, texCoords);
 
-    return new_object;
+    return new_mesh;
 }
 
-GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius, float height, int sectors, int stacks, bool smooth)
+ResourceMesh* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius, float height, int sectors, int stacks, bool smooth)
 {
-    GameObject* new_object = CreateEmptyGameObject();
+    ResourceMesh* new_mesh = (ResourceMesh*)App->res->CreateResource(Resource::ResourceType::MESH);
 
     vCylinder cylinder(baseRadius, topRadius, height, sectors, stacks, smooth);
 
@@ -605,7 +597,117 @@ GameObject* ModuleSceneManager::CreateCylinder(float baseRadius, float topRadius
     uint texCoords_size = cylinder.getTexCoordCount();
     const float* texCoords = cylinder.getTexCoords();
 
-    LoadPrimitiveArrays(*new_object, vertices_size, vertices, indices_size, indices, normals_size, normals, texCoords_size, texCoords);
+    LoadPrimitiveArrays(new_mesh, vertices_size, vertices, indices_size, indices, normals_size, normals, texCoords_size, texCoords);
+
+    return new_mesh;
+}
+
+GameObject* ModuleSceneManager::LoadTetrahedron()
+{
+    GameObject* new_object = CreateEmptyGameObject();
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
+    comp_mesh->resource_mesh = tetrahedron;
+    tetrahedron->instances++;
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::LoadCube()
+{
+    GameObject* new_object = CreateEmptyGameObject();
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
+    comp_mesh->resource_mesh = cube;
+    cube->instances++;
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::LoadOctahedron()
+{
+    GameObject* new_object = CreateEmptyGameObject();
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
+    comp_mesh->resource_mesh = octahedron;
+    octahedron->instances++;
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::LoadIcosahedron()
+{
+    GameObject* new_object = CreateEmptyGameObject();
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
+    comp_mesh->resource_mesh = icosahedron;
+    icosahedron->instances++;
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::LoadSphere()
+{
+    GameObject* new_object = CreateEmptyGameObject();
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
+    comp_mesh->resource_mesh = sphere;
+    sphere->instances++;
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::LoadCubeSphere()
+{
+    GameObject* new_object = CreateEmptyGameObject();
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
+    comp_mesh->resource_mesh = cubesphere;
+    cubesphere->instances++;
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::LoadIcoSphere()
+{
+    GameObject* new_object = CreateEmptyGameObject();
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
+    comp_mesh->resource_mesh = icosphere;
+    icosphere->instances++;
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::LoadPyramid()
+{
+    GameObject* new_object = CreateEmptyGameObject();
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
+    comp_mesh->resource_mesh = pyramid;
+    pyramid->instances++;
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::LoadCylinder()
+{
+    GameObject* new_object = CreateEmptyGameObject();
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
+    comp_mesh->resource_mesh = cylinder;
+    cylinder->instances++;
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
+
+    return new_object;
+}
+
+GameObject* ModuleSceneManager::LoadCone()
+{
+    GameObject* new_object = CreateEmptyGameObject();
+    ComponentMesh* comp_mesh = (ComponentMesh*)new_object->AddComponent(Component::ComponentType::Mesh);
+    comp_mesh->resource_mesh = cone;
+    cone->instances++;
+    ComponentRenderer* Renderer = (ComponentRenderer*)new_object->AddComponent(Component::ComponentType::Renderer);
 
     return new_object;
 }

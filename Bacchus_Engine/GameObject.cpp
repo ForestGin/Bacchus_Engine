@@ -28,8 +28,7 @@ GameObject::~GameObject()
 	{
 		if (*it)
 		{
-			if((*it)->GetType() != Component::ComponentType::Material)
-				delete(*it);
+			delete(*it);
 
 			*it = nullptr;
 		}
